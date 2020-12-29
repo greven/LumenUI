@@ -5,6 +5,8 @@ local E, C = ns.E, ns.C
 
 local M = E:AddModule("Minimap")
 
+local isInit = false
+
 local cfg = C.modules.minimap
 
 -- Lua
@@ -38,9 +40,7 @@ local PVP_COLOR_MAP = {
 	["sanctuary"] = "sanctuary",
 }
 
--- -- ---------------
-
-local isInit = false
+-- ---------------
 
 local function hasTrackingBorderRegion(self)
 	for i = 1, select("#", self:GetRegions()) do
@@ -87,35 +87,41 @@ function M:IsInit()
 end
 
 function M:Init()
-	-- if not isInit and cfg.enabled then
-	-- 	if not IsAddOnLoaded("Blizzard_TimeManager") then
-	-- 		LoadAddOn("Blizzard_TimeManager")
-	-- 	end
+	if not isInit and cfg.enabled then
+		if not IsAddOnLoaded("Blizzard_TimeManager") then
+			LoadAddOn("Blizzard_TimeManager")
+		end
 
-	-- 	local level = Minimap:GetFrameLevel()
-	-- 	local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
-	-- 	holder:SetSize(1, 1)
-	-- 	holder:SetPoint(unpack(cfg.pos))
+		local level = Minimap:GetFrameLevel()
+		local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
+		holder:SetSize(1, 1)
+		holder:SetPoint(unpack(cfg.pos))
 
-	-- 	Minimap:EnableMouseWheel()
-	-- 	Minimap:ClearAllPoints()
-	-- 	Minimap:SetParent(holder)
+		Minimap:EnableMouseWheel()
+		Minimap:ClearAllPoints()
+		Minimap:SetParent(holder)
 
-	-- 	Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
-	-- 	Minimap:SetPoint("BOTTOM", 0, 0)
+		Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
+		Minimap:SetPoint("BOTTOM", 0, 0)
 
-	-- 	Minimap:RegisterEvent("ZONE_CHANGED")
-	-- 	Minimap:RegisterEvent("ZONE_CHANGED_INDOORS")
-	-- 	Minimap:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+		Minimap:RegisterEvent("ZONE_CHANGED")
+		Minimap:RegisterEvent("ZONE_CHANGED_INDOORS")
+		Minimap:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
-	-- 	RegisterStateDriver(Minimap, "visibility", "[petbattle] hide; show")
+		Minimap:HookScript("OnEvent", function(self, event)
+			if event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
+				print(event)
+			end
+		end)
 
-	-- 	Minimap.UpdateSize = minimap_UpdateSize
+		RegisterStateDriver(Minimap, "visibility", "[petbattle] hide; show")
 
-	-- 	isInit = true
+		Minimap.UpdateSize = minimap_UpdateSize
 
-	-- 	self:Update()
-	-- end
+		isInit = true
+
+		self:Update()
+	end
 end
 
 function M:Update()
