@@ -31,11 +31,9 @@ end
 
 function UF:CreatePlayerFrame(frame)
   E.SetBackdrop(frame, 2)
-  -- E.SetBackdrop(frame, nil, -2, 2, 2, -2)
 
+  -- Health
   local health = UF:CreateHealthBar(frame)
-  health:SetHeight(12)
-  health:SetWidth(100)
 
   frame.Update = frame_Update
 

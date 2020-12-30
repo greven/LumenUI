@@ -30,6 +30,8 @@ end
 
 
 function UF:CreateTargetFrame(frame)
+  E.SetBackdrop(frame, 2)
+
   local health = UF:CreateHealthBar(frame)
   health:SetHeight(12)
   health:SetWidth(100)

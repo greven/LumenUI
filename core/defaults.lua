@@ -10,13 +10,14 @@ M.fonts = {
 
 M.textures = {
   backdrop = "Interface\\ChatFrame\\ChatFrameBackground",
+  bg = Media.."textures\\bg",
   statusbar = Media.."textures\\statusbar",
   glow = Media.."textures\\glow"
 }
 
 D.colors = {
   text = {1, 1, 1},
-  backdrop = {0, 0, 0, 0.8}
+  backdrop = {0, 0, 0, 0.85}
 }
 
 D.theme = {
@@ -35,25 +36,33 @@ D.modules = {
       player = {
         enabled = true,
         width = 120,
-        height = 40,
+        height = 20,
         pos = {"CENTER", "UIParent", "CENTER", 0, -200},
         health = {
           color = {
             class = true,
             reaction = false
           }
+        },
+        power = {
+          height = 2,
+          gap = 2
         }
       },
       target = {
         enabled = true,
-        width = 100,
-        height = 20,
+        width = 300,
+        height = 26,
         pos = {"TOP", "UIParent", "TOP", 0, -50},
         health = {
           color = {
             class = true,
             reaction = true
           }
+        },
+        power = {
+          height = 2,
+          gap = 2
         }
       },
     }
