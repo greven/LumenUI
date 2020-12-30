@@ -14,6 +14,26 @@ local PlayerHasToy = _G.PlayerHasToy
 
 -- ---------------
 
+local hearthstoneToys = {
+  93672, -- Dark Portal
+  54452, -- Ethereal Portal
+  142542, -- Tome of Town Portal
+  64488, -- The Innkeeper's Daughter
+  163045, -- Headless Horeseman's Hearthstone
+  162973, -- Greatfather Winter's Hearthstone
+  165669, -- Lunar Elder's Hearthstone
+  166747, -- Brewfest Reveler's Hearthstone
+  166746, -- Fire Eater's Hearthstone
+  168907, -- Holographic Digitalization Hearthstone
+  165802, -- Noble Gardener's Hearthstone
+  165670, -- Peddlefeet's Lovely Hearthstone
+  172179, -- Eternal Traveler's Hearthstone
+  184353, -- Kyrian Hearthstone
+  183716, -- Venthyr Sinstone
+  182773, -- Necrolord Hearthstone
+  180290 -- Night Fae Hearthstone
+}
+
 -- Reload UI
 CreateFrame("Button", E.ADDON_NAME .. "ReloadButton"):SetScript("OnClick", ReloadUI)
 
@@ -36,27 +56,6 @@ end)
 
 -- Hearthstone
 local toys = {}
-local hearthstoneToys = {
-  93672, -- Dark Portal
-  54452, -- Ethereal Portal
-  142542, -- Tome of Town Portal
-  64488, -- The Innkeeper's Daughter
-  163045, -- Headless Horeseman's Hearthstone
-  162973, -- Greatfather Winter's Hearthstone
-  165669, -- Lunar Elder's Hearthstone
-  166747, -- Brewfest Reveler's Hearthstone
-  166746, -- Fire Eater's Hearthstone
-  168907, -- Holographic Digitalization Hearthstone
-  165802, -- Noble Gardener's Hearthstone
-  165670, -- Peddlefeet's Lovely Hearthstone
-  172179, -- Eternal Traveler's Hearthstone
-  184353, -- Kyrian Hearthstone
-  183716, -- Venthyr Sinstone
-  182773, -- Necrolord Hearthstone
-  180290 -- Night Fae Hearthstone
-}
-
--- Hearthstone
 local function setHearthstoneCustomText()
   local Button = CreateFrame("Button", E.ADDON_NAME .. "HearthstoneButton", nil, "SecureActionButtonTemplate")
   Button:SetAttribute("type", "macro")

@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, M = ns.E, ns.M
+local E, C, M = ns.E, ns.C, ns.M
 
 -- Fontstring
 function E:CreateString(text, size, color, anchor, x, y)
@@ -23,18 +23,24 @@ function E:CreateString(text, size, color, anchor, x, y)
   return fs
 end
 
-function E:CreateBackdrop(alpha)
+function E:CreateBackdrop(offset, alpha)
   local frame = self
   if self:GetObjectType() == "Texture" then frame = self:GetParent() end
 
-  if not frame.__backdrop then
-    local bg = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+  if not frame._backdrop then
     local lvl = frame:GetFrameLevel()
-    bg:SetOutside(self)
-    bg:SetFrameLevel(lvl == 0 and 0 or lvl - 1)
-    bg:SetBackdrop({bgFile = M.textures.backdrop, tile = false})
-    bg:SetBackdropColor(0, 0, 0, a or unpack(C.colors.backdrop))
-    frame.__backdrop = bg
+    local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+    backdrop:SetFrameLevel(lvl == 0 and 0 or lvl - 1)
+    backdrop:SetOutside(frame, offset, offset)
+    backdrop:SetBackdrop({bgFile = M.textures.backdrop, tile = false})
+    if alpha then
+      backdrop:SetBackdropColor(0, 0, 0, alpha)
+    else
+      backdrop:SetBackdropColor(unpack(C.colors.backdrop))
+    end
+
+    frame._backdrop = backdrop
+    return backdrop
   end
 end
 
@@ -44,20 +50,20 @@ end
 -- Backdrop shadow
 function E:CreateShadow(size, override)
   if not override and not C.theme.shadows then return end
-  if self.__shadow then return end
+  if self._shadow then return end
 
   local frame = self
-		if self:GetObjectType() == "Texture" then frame = self:GetParent() end
+  if self:GetObjectType() == "Texture" then frame = self:GetParent() end
 
-    local shadowBackdrop = {edgeFile = M.textures.glow}
-		shadowBackdrop.edgeSize = size or 5
-		self.__shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-		self.__shadow:SetOutside(self, size or 4, size or 4)
-		self.__shadow:SetBackdrop(shadowBackdrop)
-		self.__shadow:SetBackdropBorderColor(0, 0, 0, size and 1 or .4)
-		self.__shadow:SetFrameLevel(1)
+  local shadowBackdrop = {edgeFile = M.textures.glow}
+  shadowBackdrop.edgeSize = size or 5
+  self._shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+  self._shadow:SetOutside(self, size or 4, size or 4)
+  self._shadow:SetBackdrop(shadowBackdrop)
+  self._shadow:SetBackdropBorderColor(0, 0, 0, size and 1 or .4)
+  self._shadow:SetFrameLevel(1)
 
-		return self.__shadow
+	return self._shadow
 end
 
 -- Glow parent
@@ -66,6 +72,15 @@ function E:CreateGlow(size)
   frame:SetPoint("CENTER")
   frame:SetSize(size+8, size+8)
   return frame
+end
+
+function E:SetBackdrop(offset, alpha, x1, y1, x2, y2)
+  local bg = E.CreateBackdrop(self, offset, alpha)
+  if x1 then
+    bg:SetPoint("TOPLEFT", self, x1, y1)
+		bg:SetPoint("BOTTOMRIGHT", self, x2, y2)
+  end
+  return bg
 end
 
 -- Add API (Credits: NDui)

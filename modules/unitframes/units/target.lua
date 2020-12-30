@@ -7,7 +7,7 @@ local isInit = false
 
 -- ---------------
 
-function UF:HasPlayerFrame()
+function UF:HasTargetFrame()
 	return isInit
 end
 
@@ -29,10 +29,7 @@ local function frame_Update(self)
 end
 
 
-function UF:CreatePlayerFrame(frame)
-  E.SetBackdrop(frame, 2)
-  -- E.SetBackdrop(frame, nil, -2, 2, 2, -2)
-
+function UF:CreateTargetFrame(frame)
   local health = UF:CreateHealthBar(frame)
   health:SetHeight(12)
   health:SetWidth(100)

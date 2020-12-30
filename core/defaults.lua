@@ -1,18 +1,22 @@
 local _, ns = ...
 local E, D, C, M = ns.E, ns.D, ns.C, ns.M
 
+local Media = "Interface\\AddOns\\LumenUI\\media\\"
+
 M.fonts = {
-  main = "Interface\\AddOns\\LumenUI\\media\\fonts\\BigNoodleTitling.ttf"
+  main = Media.."fonts\\Oswald.ttf",
+  bib = Media.."fonts\\BigNoodleTitling.ttf"
 }
 
 M.textures = {
   backdrop = "Interface\\ChatFrame\\ChatFrameBackground",
-  glow = "Interface\\AddOns\\LumenUI\\media\\textures\\glow"
+  statusbar = Media.."textures\\statusbar",
+  glow = Media.."textures\\glow"
 }
 
 D.colors = {
   text = {1, 1, 1},
-  backdrop = {0, 0, 0, 0.9}
+  backdrop = {0, 0, 0, 0.8}
 }
 
 D.theme = {
@@ -30,7 +34,28 @@ D.modules = {
     units = {
       player = {
         enabled = true,
-      }
+        width = 120,
+        height = 40,
+        pos = {"CENTER", "UIParent", "CENTER", 0, -200},
+        health = {
+          color = {
+            class = true,
+            reaction = false
+          }
+        }
+      },
+      target = {
+        enabled = true,
+        width = 100,
+        height = 20,
+        pos = {"TOP", "UIParent", "TOP", 0, -50},
+        health = {
+          color = {
+            class = true,
+            reaction = true
+          }
+        }
+      },
     }
   },
   misc = {}

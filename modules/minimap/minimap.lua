@@ -110,7 +110,7 @@ function M:Init()
 
 		Minimap:HookScript("OnEvent", function(self, event)
 			if event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
-				print(event)
+				-- print(event)
 			end
 		end)
 
