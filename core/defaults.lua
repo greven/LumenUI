@@ -20,7 +20,7 @@ M.textures = {
   statusbar = Media.."textures\\statusbar",
   gradient = Media.."textures\\gradient",
   glow = Media.."textures\\glow",
-  line = Media.."textures\\line",
+  lines = Media.."textures\\lines",
 }
 
 -- ---------------
@@ -41,28 +41,6 @@ D.global = {
   },
   shadows = {
     alpha = 0.4
-  }
-}
-
-D.colors = {
-  text = rgb(255, 255, 255),
-  disconnected = rgb(136, 136, 136),
-  threat = {
-    [1] = rgb(175, 175, 175),
-    [2] = rgb(254, 254, 118),
-    [3] = rgb(254, 152, 0),
-    [4] = rgb(254, 0, 0),
-  },
-  reaction = {
-    [1] = rgb(182, 34, 32), -- Hated
-    [2] = rgb(182, 34, 32), -- Hostile
-    [3] = rgb(182, 92, 32), -- Unfriendly
-    [4] = rgb(220, 180, 52), -- Neutral
-    [5] = rgb(132, 181, 26), -- Friendly
-    [6] = rgb(132, 181, 26), -- Honored
-    [7] = rgb(132, 181, 26), -- Revered
-    [8] = rgb(132, 181, 26), -- Exalted
-    [9] = rgb(0, 110, 255) -- Paragon (Reputation)
   }
 }
 
@@ -108,24 +86,24 @@ D.modules = {
             class = true,
             reaction = true
           },
-          text = {
-            tag = "",
-            size = "",
-            h_alignment = "CENTER",
-            v_alignment = "MIDDLE",
-            point1 = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 6},
-          },
+          -- text = {
+          --   tag = "",
+          --   size = "",
+          --   h_alignment = "CENTER",
+          --   v_alignment = "MIDDLE",
+          --   point = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 6},
+          -- },
         },
         power = {
           height = 2,
           gap = 2,
-          text = {
-            tag = "",
-            size = "",
-            h_alignment = "CENTER",
-            v_alignment = "MIDDLE",
-            -- point1 = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 0},
-          },
+          -- text = {
+          --   tag = "",
+          --   size = "",
+          --   h_alignment = "CENTER",
+          --   v_alignment = "MIDDLE",
+          --   point = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 0},
+          -- },
         },
         name = {
           tag = "[lum:name(upcase)]",
@@ -144,8 +122,8 @@ D.modules = {
           background = {
             enabled = true,
             width = 220,
-            height = 12,
-            texture = M.textures.line,
+            height = 16,
+            texture = M.textures.lines,
             point = {
               p = "CENTER",
               anchor = "Name",

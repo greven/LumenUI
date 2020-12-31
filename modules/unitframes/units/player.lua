@@ -38,15 +38,14 @@ function UF:CreatePlayerFrame(frame)
 	textParent:SetAllPoints()
   frame.TextParent = textParent
 
-  E.SetBackdrop(frame, 2)
-  E.CreateShadow(frame)
-
   -- Health
   self:CreateHealthBar(frame)
 
   -- Name
   -- self:CreateName(frame, textParent)
-  -- frame:Tag(frame.Name, "[lum:name(uppcase)]")
+
+  E.SetBackdrop(frame, 2)
+  E.CreateShadow(frame)
 
   frame.Update = frame_Update
 

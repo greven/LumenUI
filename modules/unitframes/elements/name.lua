@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C, M = ns.E, ns.C, ns.M
 
+-- ---------------
+
 local UF = E:GetModule("UnitFrames")
 
 -- ---------------
@@ -11,7 +13,7 @@ local function updateTextPoint(frame, fontString, config)
   end
 end
 
-local function updateBackgroundPoint(frame, bg, config)
+local function updateTexturePoint(frame, bg, config)
   if bg and config and config.p and config.p ~= "" then
     bg:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.ap, config.x, config.y)
   end
@@ -36,7 +38,7 @@ local function element_UpdatePoints(self)
 
   self:ClearAllPoints()
   updateTextPoint(self.__owner, self, config.point)
-  updateBackgroundPoint(self.__owner, self.bg, config.background.point)
+  updateTexturePoint(self.__owner, self.bg, config.background.point)
 end
 
 local function element_UpdateTags(self)
@@ -49,12 +51,13 @@ local function element_UpdateTags(self)
 	end
 end
 
-local function element_UpdateBackground(self)
+local function element_UpdateTexture(self)
   local config = self._config.background
 
   if config.enabled and config.texture ~= "" then
     self.bg:SetTexture(config.texture)
     self.bg:SetSize(config.width, config.height)
+    self.bg:SetVertexColor(E:GetUnitColor('target'))
   end
 end
 
@@ -62,7 +65,7 @@ local function frame_UpdateName(self)
 	local element = self.Name
 	element:UpdateConfig()
 	element:UpdateFonts()
-  element:UpdateBackground()
+  element:UpdateTexture()
 	element:UpdatePoints()
   element:UpdateTags()
 end
@@ -77,7 +80,7 @@ function UF:CreateName(frame, textParent)
   element.UpdateFonts = element_UpdateFonts
   element.UpdatePoints = element_UpdatePoints
   element.UpdateTags = element_UpdateTags
-  element.UpdateBackground = element_UpdateBackground
+  element.UpdateTexture = element_UpdateTexture
 
   frame.UpdateName = frame_UpdateName
   frame.Name = element

@@ -1,15 +1,17 @@
 local _, ns = ...
 local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
-local UF = E:GetModule("UnitFrames")
-
-local isInit = false
-
 -- Lua
 local _G = getfenv(0)
 
 local UnitIsPlayer = _G.UnitIsPlayer
 local UnitReaction = _G.UnitReaction
+
+-- ---------------
+
+local UF = E:GetModule("UnitFrames")
+
+local isInit = false
 
 -- ---------------
 
@@ -36,6 +38,10 @@ local function frame_Update(self)
   end
 end
 
+local function frame_PostUpdate(self)
+  self:UpdateName()
+end
+
 
 function UF:CreateTargetFrame(frame)
   local level = frame:GetFrameLevel()
@@ -44,9 +50,6 @@ function UF:CreateTargetFrame(frame)
 	textParent:SetFrameLevel(level + 9)
 	textParent:SetAllPoints()
   frame.TextParent = textParent
-
-  E.SetBackdrop(frame, 2)
-  E.CreateShadow(frame)
 
   -- Health
   self:CreateHealthBar(frame)
@@ -57,7 +60,11 @@ function UF:CreateTargetFrame(frame)
   -- Portrait
   self:CreatePortrait(frame)
 
+  E.SetBackdrop(frame, 2)
+  E.CreateShadow(frame)
+
   frame.Update = frame_Update
+  frame.PostUpdate = frame_PostUpdate
 
   isInit = true
 end

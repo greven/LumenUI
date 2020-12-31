@@ -1,5 +1,5 @@
 local A, ns = ...
-local E = ns.E
+local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
@@ -19,7 +19,7 @@ E.ADDON_NAME = A
 E.PLAYER_CLASS = select(2, UnitClass("player"))
 E.PLAYER_NAME = UnitName("player")
 E.NAME_REALM = UnitName("player") .. " - " .. GetRealmName()
-E.CLASS_COLOR = RAID_CLASS_COLORS[E.PLAYER_CLASS]
+E.CLASS_COLOR = C.colors.class[E.PLAYER_CLASS]
 
 -- !ClassColors addon
 if (IsAddOnLoaded("!ClassColors") and CUSTOM_CLASS_COLORS) then

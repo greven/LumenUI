@@ -4,6 +4,8 @@ local E, C, M = ns.E, ns.C, ns.M
 -- Lua
 local _G = getfenv(0)
 
+-- ---------------
+
 -- Fontstring
 function E:CreateString(size, color, font, anchor, x, y)
   local fs = self:CreateFontString(nil, "OVERLAY")

@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
+-- ---------------
+
 local UF = E:GetModule("UnitFrames")
 
 -- ---------------

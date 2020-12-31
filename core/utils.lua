@@ -1,7 +1,7 @@
 -- Credits: ls_UI
 
 local _, ns = ...
-local E = ns.E
+local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
@@ -240,20 +240,20 @@ do
 	end
 
 	-- Class colors
-	function E:ClassColor(unit)
+	function E:GetUnitClassColor(unit)
 		local class = select(2, UnitClass(unit))
-		local color = RAID_CLASS_COLORS[class]
+		local color = C.colors.class[class] or RAID_CLASS_COLORS[class]
 
 		if not color then return .5, .5, .5 end
 		return color.r, color.g, color.b
 	end
 
-	function E:UnitColor(unit)
+	function E:GetUnitColor(unit)
 		if not unit then return end
 		local r, g, b = 1, 1, 1
 
 		if UnitIsPlayer(unit) then
-			r, g, b = E:ClassColor(unit)
+			r, g, b = E:GetUnitClassColor(unit)
 		elseif UnitIsTapDenied(unit) then
 			r, g, b = .6, .6, .6
 		else
