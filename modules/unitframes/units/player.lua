@@ -21,6 +21,7 @@ local function frame_Update(self)
 
     self:UpdateSize()
     self:UpdateHealth()
+    -- self:UpdateName()
   else
     if self:IsEnabled() then
       self:Disable()
@@ -30,10 +31,22 @@ end
 
 
 function UF:CreatePlayerFrame(frame)
+  local level = frame:GetFrameLevel()
+
+  local textParent = CreateFrame("Frame", nil, frame)
+	textParent:SetFrameLevel(level + 9)
+	textParent:SetAllPoints()
+  frame.TextParent = textParent
+
   E.SetBackdrop(frame, 2)
+  E.CreateShadow(frame)
 
   -- Health
-  local health = UF:CreateHealthBar(frame)
+  self:CreateHealthBar(frame)
+
+  -- Name
+  -- self:CreateName(frame, textParent)
+  -- frame:Tag(frame.Name, "[lum:name(uppcase)]")
 
   frame.Update = frame_Update
 

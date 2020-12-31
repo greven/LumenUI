@@ -1,17 +1,20 @@
 local _, ns = ...
 local E, C, M = ns.E, ns.C, ns.M
 
+-- Lua
+local _G = getfenv(0)
+
 -- Fontstring
-function E:CreateString(text, size, color, anchor, x, y)
+function E:CreateString(size, color, font, anchor, x, y)
   local fs = self:CreateFontString(nil, "OVERLAY")
-  fs:SetFont(M.fonts.main, size, "THINOUTLINE")
-  fs:SetText(text)
+  fs:SetFont(font or M.fonts.main, size or 12, "OUTLINE")
+  fs:SetJustifyH("CENTER")
   fs:SetWordWrap(false)
 
   if color and type(color) == "boolean" then
-    fs:SetTextColor(unpack(E.CLASS_COLOR))
+    fs:SetTextColor(E:GetRGB(E.CLASS_COLOR))
   else
-    fs:SetTextColor(unpack(C.colors.text))
+    fs:SetTextColor(E:GetRGB(C.colors.text))
   end
 
   if anchor and x and y then
@@ -28,15 +31,15 @@ function E:CreateBackdrop(offset, alpha)
   if self:GetObjectType() == "Texture" then frame = self:GetParent() end
 
   if not frame._backdrop then
-    local lvl = frame:GetFrameLevel()
+    local level = frame:GetFrameLevel()
     local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-    backdrop:SetFrameLevel(lvl == 0 and 0 or lvl - 1)
+    backdrop:SetFrameLevel(level == 0 and 0 or level - 1)
     backdrop:SetOutside(frame, offset, offset)
     backdrop:SetBackdrop({bgFile = M.textures.backdrop, tile = false})
     if alpha then
       backdrop:SetBackdropColor(0, 0, 0, alpha)
     else
-      backdrop:SetBackdropColor(unpack(C.colors.backdrop))
+      backdrop:SetBackdropColor(E:GetRGBA(C.global.backdrop.color, C.global.backdrop.alpha))
     end
 
     frame._backdrop = backdrop
@@ -48,8 +51,7 @@ function E:CreateBorder(parent, drawLayer, drawLevel)
 end
 
 -- Backdrop shadow
-function E:CreateShadow(size, override)
-  if not override and not C.theme.shadows then return end
+function E:CreateShadow(size, alpha)
   if self._shadow then return end
 
   local frame = self
@@ -58,9 +60,9 @@ function E:CreateShadow(size, override)
   local shadowBackdrop = {edgeFile = M.textures.glow}
   shadowBackdrop.edgeSize = size or 5
   self._shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-  self._shadow:SetOutside(self, size or 4, size or 4)
+  self._shadow:SetOutside(self, size or 5, size or 5)
   self._shadow:SetBackdrop(shadowBackdrop)
-  self._shadow:SetBackdropBorderColor(0, 0, 0, size and 1 or .4)
+  self._shadow:SetBackdropBorderColor(0, 0, 0, C.global.shadows.alpha)
   self._shadow:SetFrameLevel(1)
 
 	return self._shadow

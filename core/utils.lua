@@ -18,6 +18,12 @@ local m_modf = _G.math.modf
 
 local s_format = _G.string.format
 local s_utf8sub = _G.string.utf8sub
+local s_split = _G.string.split
+
+local UnitClass = _G.UnitClass
+local UnitReaction = _G.UnitReaction
+local UnitIsPlayer = _G.UnitIsPlayer
+local UnitIsTapDenied = _G.UnitIsTapDenied
 
 -- ---------------
 -- > Math
@@ -184,14 +190,19 @@ end
 do
   local rgb_hex_cache = {}
 
-  local function hex(r, g, b)
-    local key = r .. "-" .. g .. "-" .. b
-    if rgb_hex_cache[key] then
-			return rgb_hex_cache[key]
-    end
+	local function hex(r, g, b)
+		if r then
+			if type(r) == "table" then
+				if r.r then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
+			end
 
-    rgb_hex_cache[key] = s_format("ff%.2x%.2x%.2x", clamp(r) * 255, clamp(g) * 255, clamp(b) * 255)
-		return rgb_hex_cache[key]
+			local key = r .. "-" .. g .. "-" .. b
+			if rgb_hex_cache[key] then
+				return rgb_hex_cache[key]
+			end
+			rgb_hex_cache[key] = s_format("%.2x%.2x%.2x", clamp(r) * 255, clamp(g) * 255, clamp(b) * 255)
+			return rgb_hex_cache[key]
+		end
   end
 
   function E:ToHex(r, g, b)
@@ -225,8 +236,36 @@ do
   end
 
   function E:TextColor(text, color)
-		return "|c" .. color.hex .. text .. "|r"
-  end
+		return "|cff" .. color.hex .. text .. "|r"
+	end
+
+	-- Class colors
+	function E:ClassColor(unit)
+		local class = select(2, UnitClass(unit))
+		local color = RAID_CLASS_COLORS[class]
+
+		if not color then return .5, .5, .5 end
+		return color.r, color.g, color.b
+	end
+
+	function E:UnitColor(unit)
+		if not unit then return end
+		local r, g, b = 1, 1, 1
+
+		if UnitIsPlayer(unit) then
+			r, g, b = E:ClassColor(unit)
+		elseif UnitIsTapDenied(unit) then
+			r, g, b = .6, .6, .6
+		else
+			local reaction = UnitReaction(unit, "player")
+			if reaction then
+				local color = FACTION_BAR_COLORS[reaction]
+				r, g, b = color.r, color.g, color.b
+			end
+		end
+
+		return r, g, b
+	end
 
   -- Gradients
   local function calcGradient(perc, ...)
@@ -261,5 +300,39 @@ do
 			color[2].r, color[2].g, color[2].b,
 			color[3].r, color[3].g, color[3].b
 		))
+	end
+end
+
+-- -------------------
+-- > Points & Anchors
+-- -------------------
+
+function E:ResolveAnchorPoint(frame, children)
+	if not frame then
+		children = {s_split(".", children)}
+
+		local anchor = _G[children[1]]
+
+		assert(anchor, "Invalid anchor: "..children[1]..".")
+
+		for i = 2, #children do
+			anchor = anchor[children[i]]
+		end
+
+		return anchor
+	else
+		if not children or children == "" then
+			return frame
+		else
+			local anchor = frame
+
+			children = {s_split(".", children)}
+
+			for i = 1, #children do
+				anchor = anchor[children[i]]
+			end
+
+			return anchor
+		end
 	end
 end

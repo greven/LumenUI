@@ -3,6 +3,7 @@ local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
+
 local unpack = _G.unpack
 local next = _G.next
 
@@ -35,7 +36,7 @@ function UF:CreateUnitFrame(unit, name)
     else
       local object = oUF:Spawn(unit, name .. "Frame")
       object:UpdateConfig()
-      object:SetPoint(unpack(object._config.pos))
+      object:SetPoint(unpack(object._config.point))
 			objects[unit] = object
     end
 

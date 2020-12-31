@@ -95,7 +95,7 @@ function M:Init()
 		local level = Minimap:GetFrameLevel()
 		local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
 		holder:SetSize(1, 1)
-		holder:SetPoint(unpack(cfg.pos))
+		holder:SetPoint(unpack(cfg.point))
 
 		Minimap:EnableMouseWheel()
 		Minimap:ClearAllPoints()
