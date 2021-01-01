@@ -31,7 +31,11 @@ end
 
 
 function UF:CreatePlayerFrame(frame)
+  local config = C.modules.unitframes.units[frame._unit]
   local level = frame:GetFrameLevel()
+
+  E.SetBackdrop(frame, 2)
+  E.CreateShadow(frame)
 
   local textParent = CreateFrame("Frame", nil, frame)
 	textParent:SetFrameLevel(level + 9)
@@ -40,12 +44,6 @@ function UF:CreatePlayerFrame(frame)
 
   -- Health
   self:CreateHealthBar(frame)
-
-  -- Name
-  -- self:CreateName(frame, textParent)
-
-  E.SetBackdrop(frame, 2)
-  E.CreateShadow(frame)
 
   frame.Update = frame_Update
 

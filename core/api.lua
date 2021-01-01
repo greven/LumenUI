@@ -9,7 +9,7 @@ local _G = getfenv(0)
 -- Fontstring
 function E:CreateString(size, color, font, anchor, x, y)
   local fs = self:CreateFontString(nil, "OVERLAY")
-  fs:SetFont(font or M.fonts.main, size or 12, "OUTLINE")
+  fs:SetFont(font or M.fonts.normal, size or 12, "OUTLINE")
   fs:SetJustifyH("CENTER")
   fs:SetWordWrap(false)
 

@@ -9,9 +9,13 @@ local UF = E:GetModule("UnitFrames")
 
 -- Health Bar
 do
-  -- local function element_PostUpdate(self)
-  --   print("element_PostUpdate")
-  -- end
+  local function element_PostUpdateColor(self)
+    local unit = self.__owner._unit
+
+    -- if self.bg then
+    --   self.bg:SetVertexColor(E:GetUnitColor(unit))
+    -- end
+  end
 
   local function element_UpdateConfig(self)
 		local unit = self.__owner._unit
@@ -20,6 +24,9 @@ do
 
   local function element_UpdateColors(self)
     local config = self._config
+    self.colorHealth = config.health.color.health
+    self.colorTapping = config.health.color.tapping
+    self.colorDisconnected = config.health.color.disconnected
 		self.colorClass = config.health.color.class
 		self.colorReaction = config.health.color.reaction
     self:ForceUpdate()
@@ -44,22 +51,23 @@ do
   end
 
   function UF:CreateHealthBar(frame)
+    local config = C.modules.unitframes.units[frame._unit].health
+
     local element = CreateFrame("StatusBar", nil, frame)
     element:SetPoint("TOPLEFT", frame)
     element:SetPoint("TOPRIGHT", frame)
-    element:SetStatusBarTexture(M.textures.statusbar)
+    element:SetStatusBarTexture(C.global.statusbar.texture)
+    element:GetStatusBarTexture():SetHorizTile(false)
+    element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
 
-    -- local bg = element:CreateTexture(nil, "BACKGROUND")
-    -- bg:SetAllPoints()
-    -- bg:SetTexture(M.textures.bg)
-    -- bg:SetAlpha(C.global.statusbar.bg.alpha)
-    -- bg.multiplier = C.global.statusbar.bg.mult
-    -- element.bg = bg
+    local bg = element:CreateTexture(nil, "BACKGROUND")
+    bg:SetAllPoints()
+    bg:SetTexture(C.global.statusbar.bg.texture)
+    bg:SetAlpha(C.global.statusbar.bg.alpha)
+    bg.multiplier = C.global.statusbar.bg.multiplier
+    element.bg = bg
 
-    element.colorHealth = true
-    element.colorTapping = true
-    element.colorDisconnected = true
-    -- element.PostUpdate = element_PostUpdate
+    element.PostUpdateColor = element_PostUpdateColor
     element.UpdateConfig = element_UpdateConfig
     element.UpdateColors = element_UpdateColors
     element.UpdateSize = element_UpdateSize

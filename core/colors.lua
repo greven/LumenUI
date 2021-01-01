@@ -8,7 +8,7 @@ local function rgb(r, g, b)
 end
 
 D.colors = {
-  text = rgb(255, 255, 255),
+  text = rgb(250, 250, 250),
   disconnected = rgb(136, 136, 136),
   class = {
     HUNTER = rgb(170, 211, 114),
@@ -39,5 +39,35 @@ D.colors = {
     [6] = rgb(132, 181, 26), -- Honored
     [7] = rgb(132, 181, 26), -- Revered
     [8] = rgb(132, 181, 26), -- Exalted
-  }
+  },
+  power = {
+    MANA = rgb(15, 135, 235),
+    RAGE = rgb(240, 26, 48),
+    FOCUS = rgb(242, 128, 64),
+    ENERGY = rgb(246, 190, 50),
+    COMBO_POINTS = rgb(240, 26, 48),
+    RUNES = rgb(0, 200, 228),
+    RUNIC_POWER = rgb(134, 239, 254),
+    SOUL_SHARDS = rgb(162, 92, 244),
+    LUNAR_POWER = rgb(90, 152, 235),
+    HOLY_POWER = rgb(245, 245, 124),
+    MAELSTROM = rgb(25, 160, 240),
+    INSANITY = rgb(136, 72, 210),
+    CHI = rgb(10, 205, 155),
+    ARCANE_CHARGES = rgb(112, 75, 250),
+    FURY = rgb(240, 34, 45),
+    PAIN = rgb(243, 157, 0),
+    AMMOSLOT = rgb(217, 140, 0),
+    FUEL = rgb(12, 125, 125),
+    STAGGER = {
+      [1] = rgb(132, 181, 26), -- Low
+      [2] = rgb(220, 180, 52), -- Medium
+      [3] = rgb(182, 34, 32), -- High
+    },
+  },
+  runes = {
+    [1] = rgb(225, 75, 75), -- Blood
+    [2] = rgb(50, 160, 250), -- Frost
+    [3] = rgb(100, 225, 125), -- Unholy
+  },
 }

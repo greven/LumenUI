@@ -10,7 +10,9 @@ end
 -- ---------------
 
 M.fonts = {
-  main = Media.."fonts\\Oswald.ttf",
+  light = Media.."fonts\\Oswald-Light.ttf",
+  normal = Media.."fonts\\Oswald.ttf",
+  medium = Media.."fonts\\Oswald-Medium.ttf",
   big = Media.."fonts\\BigNoodleTitling.ttf"
 }
 
@@ -18,25 +20,33 @@ M.textures = {
   backdrop = "Interface\\ChatFrame\\ChatFrameBackground",
   bg = Media.."textures\\bg",
   statusbar = Media.."textures\\statusbar",
-  gradient = Media.."textures\\gradient",
   glow = Media.."textures\\glow",
-  lines = Media.."textures\\lines",
+  neon = Media.."textures\\neon",
+  mint = Media.."textures\\mint",
+  line = Media.."textures\\line",
 }
 
 -- ---------------
 
 D.global = {
   fonts = {
-    units = M.fonts.main
+    units = {
+      font = M.fonts.medium,
+      outline = false,
+			shadow = true,
+    }
   },
   backdrop = {
     color = rgb(0, 0, 0),
-    alpha = 0.85
+    alpha = 0.8
   },
   statusbar = {
+    texture = M.textures.statusbar,
+    color = rgb(30, 30, 30),
     bg = {
-      alpha = 0.25,
-      mult = 0.25
+      texture = M.textures.bg,
+      alpha = 0.4,
+      multiplier = 0.4
     }
   },
   shadows = {
@@ -78,25 +88,34 @@ D.modules = {
       },
       target = {
         enabled = true,
-        width = 320,
-        height = 30,
+        width = 280,
+        height = 28,
         point = {"TOP", "UIParent", "TOP", 0, -60},
         health = {
           color = {
+            health = true,
+            tapping = true,
+            disconnected = true,
             class = true,
             reaction = true
           },
-          -- text = {
-          --   tag = "",
-          --   size = "",
-          --   h_alignment = "CENTER",
-          --   v_alignment = "MIDDLE",
-          --   point = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 6},
-          -- },
+          text = {
+            tag = "",
+            size = "",
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 6},
+          },
         },
         power = {
-          height = 2,
+          height = 1,
           gap = 2,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
           -- text = {
           --   tag = "",
           --   size = "",
@@ -107,7 +126,7 @@ D.modules = {
         },
         name = {
           tag = "[lum:name(upcase)]",
-          size = 16,
+          size = 14,
           outline = true,
           h_alignment = "CENTER",
           v_alignment = "MIDDLE",
@@ -121,9 +140,10 @@ D.modules = {
           },
           background = {
             enabled = true,
-            width = 220,
-            height = 16,
-            texture = M.textures.lines,
+            width = 280,
+            height = 14,
+            texture = M.textures.line,
+            alpha = 0.9,
             point = {
               p = "CENTER",
               anchor = "Name",
@@ -135,8 +155,28 @@ D.modules = {
         },
         portrait = {
           enabled = true,
-          modelAlpha = 0.25,
-          desaturation = 1.0
+          style = "3D",
+          width = 50,
+          modelAlpha = 1.0,
+          desaturation = 0.0,
+          point = {
+            p = "RIGHT",
+            anchor = "",
+            ap = "LEFT",
+            x = 16,
+            y = 0
+          },
+        },
+        unitIndicator = {
+          enabled = true,
+          width = 4,
+          point = {
+            p = "RIGHT",
+            anchor = "",
+            ap = "LEFT",
+            x = -6,
+            y = 0
+          },
         }
       },
     }

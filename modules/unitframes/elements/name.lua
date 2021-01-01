@@ -7,6 +7,14 @@ local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
+local function update(self)
+  if not (self.unit and self:IsShown()) then return end
+
+  local element = self.Name
+  -- element:SetTextColor(E:GetUnitColor(self.unit))
+  element.bg:SetVertexColor(E:GetUnitColor(self.unit))
+end
+
 local function updateTextPoint(frame, fontString, config)
   if config and config.p and config.p ~= "" then
 		fontString:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.ap, config.x, config.y)
@@ -27,10 +35,10 @@ end
 local function element_UpdateFonts(self)
   local config = self._config
 
- self:SetFont(C.global.fonts.units, config.size, config.outline and "OUTLINE" or nil)
- self:SetJustifyH(config.h_alignment)
- self:SetJustifyV(config.v_alignment)
- self:SetWordWrap(config.word_wrap)
+  self:SetFont(C.global.fonts.units.font, config.size, config.outline and "OUTLINE" or nil)
+  self:SetJustifyH(config.h_alignment)
+  self:SetJustifyV(config.v_alignment)
+  self:SetWordWrap(config.word_wrap)
 end
 
 local function element_UpdatePoints(self)
@@ -57,7 +65,7 @@ local function element_UpdateTexture(self)
   if config.enabled and config.texture ~= "" then
     self.bg:SetTexture(config.texture)
     self.bg:SetSize(config.width, config.height)
-    self.bg:SetVertexColor(E:GetUnitColor('target'))
+    self.bg:SetAlpha((config.alpha and config.alpha) or 0.1)
   end
 end
 
@@ -72,8 +80,9 @@ end
 
 function UF:CreateName(frame, textParent)
   local element = E.CreateString((textParent or frame))
-
   element.bg = frame:CreateTexture(nil, "BACKGROUND")
+
+  hooksecurefunc(frame, "Show", update)
 
   element.__owner = frame
   element.UpdateConfig = element_UpdateConfig
