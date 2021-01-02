@@ -11,10 +11,11 @@ local UF = E:GetModule("UnitFrames")
 do
   local function element_PostUpdateColor(self)
     local unit = self.__owner._unit
+    local config = self._config
 
-    -- if self.bg then
-    --   self.bg:SetVertexColor(E:GetUnitColor(unit))
-    -- end
+    if self.bg and config.health.color.reverse then
+      self.bg:SetVertexColor(E:GetUnitColor(unit))
+    end
   end
 
   local function element_UpdateConfig(self)
@@ -24,11 +25,18 @@ do
 
   local function element_UpdateColors(self)
     local config = self._config
-    self.colorHealth = config.health.color.health
-    self.colorTapping = config.health.color.tapping
-    self.colorDisconnected = config.health.color.disconnected
-		self.colorClass = config.health.color.class
-		self.colorReaction = config.health.color.reaction
+
+    self.colorHealth = not config.health.color.reverse and config.health.color.health
+    self.colorTapping = not config.health.color.reverse and config.health.color.tapping
+    self.colorDisconnected = not config.health.color.reverse and config.health.color.disconnected
+		self.colorClass = not config.health.color.reverse and config.health.color.class
+    self.colorReaction = not config.health.color.reverse and config.health.color.reaction
+
+    if config.health.color.reverse then
+      self.bg:SetTexture(C.global.statusbar.texture)
+      self.bg:SetAlpha(1)
+    end
+
     self:ForceUpdate()
   end
 
@@ -59,11 +67,15 @@ do
     element:SetStatusBarTexture(C.global.statusbar.texture)
     element:GetStatusBarTexture():SetHorizTile(false)
     element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
+    E:SmoothBar(element)
+
+    element.GainLossIndicators = E:CreateGainLossIndicators(element)
+		element.GainLossIndicators.Gain = nil
 
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
     bg:SetTexture(C.global.statusbar.bg.texture)
-    bg:SetAlpha(C.global.statusbar.bg.alpha)
+    bg:SetAlpha(0.5)
     bg.multiplier = C.global.statusbar.bg.multiplier
     element.bg = bg
 

@@ -8,8 +8,11 @@ local function rgb(r, g, b)
 end
 
 D.colors = {
+  dark_gray = rgb(30, 30, 30),
   text = rgb(250, 250, 250),
   disconnected = rgb(136, 136, 136),
+  gain = rgb(120, 225, 107),
+  loss = rgb(140, 29, 30),
   class = {
     HUNTER = rgb(170, 211, 114),
     WARLOCK = rgb(135, 135, 237),

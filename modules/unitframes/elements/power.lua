@@ -50,6 +50,12 @@ do
     element:SetStatusBarTexture(M.textures.neon)
     element:GetStatusBarTexture():SetHorizTile(false)
 
+    local bg = element:CreateTexture(nil, "BACKGROUND")
+    bg:SetAllPoints()
+    bg:SetTexture(C.global.statusbar.bg.texture)
+    bg.multiplier = C.global.statusbar.bg.multiplier
+    element.bg = bg
+
     element.UpdateConfig = element_UpdateConfig
     element.UpdateColors = element_UpdateColors
     element.UpdateSize = element_UpdateSize

@@ -42,11 +42,10 @@ D.global = {
   },
   statusbar = {
     texture = M.textures.statusbar,
-    color = rgb(30, 30, 30),
+    color = D.colors.dark_gray,
     bg = {
       texture = M.textures.bg,
-      alpha = 0.4,
-      multiplier = 0.4
+      multiplier = 0.25
     }
   },
   shadows = {
@@ -93,6 +92,7 @@ D.modules = {
         point = {"TOP", "UIParent", "TOP", 0, -60},
         health = {
           color = {
+            reverse = false,
             health = true,
             tapping = true,
             disconnected = true,
