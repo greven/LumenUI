@@ -1,6 +1,14 @@
 local _, ns = ...
 local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
+-- Lua
+local _G = getfenv(0)
+
+local UnitGUID = _G.UnitGUID
+local UnitIsConnected = _G.UnitIsConnected
+local UnitIsDeadOrGhost = _G.UnitIsDeadOrGhost
+local CreateColor = _G.CreateColor
+
 -- ---------------
 
 local UF = E:GetModule("UnitFrames")
@@ -9,15 +17,36 @@ local UF = E:GetModule("UnitFrames")
 
 -- Health
 do
+	local function element_PostUpdate(self, unit, cur, max)
+    local unitGUID = UnitGUID(unit)
+    local config = self._config
+
+		self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
+		self.GainLossIndicators._UnitGUID = unitGUID
+
+		if not (self:IsShown() and max and max ~= 0) or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+			self:SetMinMaxValues(0, 1)
+			self:SetValue(0)
+    end
+
+    if config.color.reverse and config.color.smooth then
+      local color = CreateColor(oUF:ColorGradient(cur, max, unpack(self.smoothGradient)))
+      self.bg:SetVertexColor(E:GetRGB(color))
+    end
+	end
+
   local function element_PostUpdateColor(self)
     local unit = self.__owner._unit
     local config = self._config
 
-    if self.bg and config.color.reverse then
+    if config.color.reverse then
       self:SetStatusBarTexture(M.textures.vertlines)
-      self:SetAlpha(0.9)
-      self.bg:SetVertexColor(E:GetUnitColor(unit))
+      self:SetAlpha(0.92)
+
       self.bg:SetAlpha(0.9)
+      if not config.color.smooth then
+        self.bg:SetVertexColor(E:GetUnitColor(unit))
+      end
     end
   end
 
@@ -30,11 +59,11 @@ do
   local function element_UpdateColors(self)
     local config = self._config
 
-    -- Red, Yellow, White
+    -- Red, Yellow, Class Color
     self.smoothGradient = {
       0.86, 0.15, 0.15,
       0.92, 0.70, 0.03,
-      1, 1, 1
+      E:GetRGB(E.CLASS_COLOR)
     }
 
     self.colorSmooth = config.color.smooth
@@ -92,6 +121,7 @@ do
     bg.multiplier = 0.3
     element.bg = bg
 
+    element.PostUpdate = element_PostUpdate
     element.PostUpdateColor = element_PostUpdateColor
     element.UpdateConfig = element_UpdateConfig
     element.UpdateColors = element_UpdateColors

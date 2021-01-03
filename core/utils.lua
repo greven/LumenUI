@@ -268,7 +268,7 @@ do
 	end
 
   -- Gradients
-  local function calcGradient(perc, ...)
+	local function calcGradient(perc, ...)
 		local num = select("#", ...)
 
 		if perc >= 1 then
@@ -284,7 +284,7 @@ do
 		return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc, b1 + (b2 - b1) * relperc
   end
 
-  function E:GetGradientAsRGB(perc, color)
+	function E:GetGradientAsRGB(perc, color)
 		return calcGradient(
 			perc,
 			color[1].r, color[1].g, color[1].b,
