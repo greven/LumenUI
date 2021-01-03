@@ -29,16 +29,22 @@ local function frame_UpdateSize(self)
   self:SetSize(width, height)
 end
 
--- function UF:UpdateHealthColors()
--- 	local color = oUF.colors.health
--- 	color[1], color[2], color[3] = E:GetRGB(C.db.global.colors.health)
+function UF:UpdateHealthColors()
+	local color = oUF.colors.health
+	color[1], color[2], color[3] = E:GetRGB(C.colors.health)
 
--- 	color = oUF.colors.tapped
--- 	color[1], color[2], color[3] = E:GetRGB(C.db.global.colors.tapped)
+	color = oUF.colors.tapped
+	color[1], color[2], color[3] = E:GetRGB(C.colors.tapped)
 
--- 	color = oUF.colors.disconnected
--- 	color[1], color[2], color[3] = E:GetRGB(C.db.global.colors.disconnected)
--- end
+	color = oUF.colors.disconnected
+  color[1], color[2], color[3] = E:GetRGB(C.colors.disconnected)
+
+  oUF.colors.smooth = {
+    220 / 255, 68 / 255, 54 / 255,
+    246 / 255, 196 / 255, 66 / 255,
+    46 / 255, 172 / 255, 52 / 255
+  }
+end
 
 function UF:UpdateReactionColors()
   local color = oUF.colors.reaction
@@ -105,6 +111,7 @@ end
 function UF:Init()
   if not isInit and cfg.enabled then
     self:UpdateReactionColors()
+    self:UpdateHealthColors()
     self:UpdatePowerColors()
 
     oUF:Factory(function()

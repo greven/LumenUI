@@ -77,6 +77,7 @@ D.modules = {
           y = -220
         },
         health = {
+          enabled = true,
           change_threshold = 0.001,
           color = {
             reverse = true,
@@ -84,7 +85,7 @@ D.modules = {
             health = true,
             tapping = true,
             disconnected = true,
-            class = true,
+            class = false,
             reaction = true
           },
           text = {
@@ -102,6 +103,7 @@ D.modules = {
           },
         },
         power = {
+          enabled = true,
           height = 1.5,
           gap = 1.5,
           change_threshold = 0.01,
@@ -181,9 +183,10 @@ D.modules = {
           y = -60
         },
         health = {
+          enabled = true,
           color = {
             reverse = false,
-            smooth = true,
+            smooth = false,
             health = true,
             tapping = true,
             disconnected = true,
@@ -205,6 +208,7 @@ D.modules = {
           },
         },
         power = {
+          enabled = true,
           height = 1,
           gap = 2,
           color = {

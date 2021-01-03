@@ -38,7 +38,11 @@ end
 -- Power
 do
 	local function element_PostUpdate(self, unit, cur, _, max)
-		local shouldShown = self:IsShown() and max and max ~= 0
+    local shouldShown = self:IsShown() and max and max ~= 0
+
+    if self.UpdateContainer then
+			self:UpdateContainer(shouldShown)
+		end
 
 		local unitGUID = UnitGUID(unit)
 		self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
@@ -66,7 +70,8 @@ do
     self.colorPower = config.color.power
     self.colorTapping = config.color.tapping
     self.colorDisconnected = config.color.disconnected
-		self.colorClass = config.color.class
+    self.colorClass = config.color.class
+
     self:ForceUpdate()
   end
 
@@ -78,6 +83,7 @@ do
     self:SetPoint("BOTTOM", frame, 0, 0)
     self:SetPoint("LEFT", frame, 0, 0)
     self:SetPoint("RIGHT", frame, 0, 0)
+
     self:ForceUpdate()
   end
 
@@ -107,7 +113,22 @@ do
     element:UpdateColors()
     element:UpdateSize()
     element:UpdateFonts()
-		element:UpdateTextPoints()
+    element:UpdateTextPoints()
+    element:UpdateGainLossColors()
+		element:UpdateGainLossPoints()
+    element:UpdateGainLossThreshold()
+
+    if element._config.enabled and not self:IsElementEnabled("Power") then
+			self:EnableElement("Power")
+		elseif not element._config.enabled and self:IsElementEnabled("Power") then
+			self:DisableElement("Power")
+    end
+
+		if self:IsElementEnabled("Power") then
+			element:ForceUpdate()
+		elseif element.UpdateContainer then
+			element:UpdateContainer(false)
+		end
   end
 
   function UF:CreatePowerBar(frame, textParent)

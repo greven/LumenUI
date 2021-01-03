@@ -18,7 +18,7 @@ local function element_PostUpdate(self)
   if config.style == "2D" then
     self:SetDesaturation(config.desaturation)
     self:SetTexCoord(0.1,0.9,0.1,0.9)
-  else
+  else -- 3D
     self:SetDesaturation(config.desaturation)
     self:SetModelAlpha(config.modelAlpha)
     self:SetCamDistanceScale(0.8)

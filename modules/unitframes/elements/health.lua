@@ -30,7 +30,7 @@ do
     end
 
     if config.color.reverse and config.color.smooth then
-      local color = CreateColor(oUF:ColorGradient(cur, max, unpack(self.smoothGradient)))
+      local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
       self.bg:SetVertexColor(E:GetRGB(color))
     end
 	end
@@ -41,11 +41,16 @@ do
 
     if config.color.reverse then
       self:SetStatusBarTexture(M.textures.vertlines)
-      self:SetAlpha(0.92)
+      self:SetAlpha(0.95)
 
-      self.bg:SetAlpha(0.9)
       if not config.color.smooth then
-        self.bg:SetVertexColor(E:GetUnitColor(unit))
+        if config.color.class then
+          self.bg:SetVertexColor(E:GetUnitColor(unit))
+        elseif config.color.health then
+          self.bg:SetVertexColor(E:GetRGB(C.colors.health))
+        else
+          self.bg:SetVertexColor(E:GetRGB(C.global.statusbar.color))
+        end
       end
     end
   end
@@ -58,13 +63,6 @@ do
 
   local function element_UpdateColors(self)
     local config = self._config
-
-    -- Red, Yellow, Class Color
-    self.smoothGradient = {
-      0.86, 0.15, 0.15,
-      0.92, 0.70, 0.03,
-      E:GetRGB(E.CLASS_COLOR)
-    }
 
     self.colorSmooth = config.color.smooth
     self.colorHealth = not config.color.reverse and config.color.health
@@ -92,6 +90,18 @@ do
     self:SetPoint("LEFT", frame, 0, 0)
     self:SetPoint("RIGHT", frame, 0, 0)
     self:ForceUpdate()
+  end
+
+  local function element_UpdateGainLossPoints(self)
+		self.GainLossIndicators:UpdatePoints(self._config.orientation)
+	end
+
+	local function element_UpdateGainLossThreshold(self)
+		self.GainLossIndicators:UpdateThreshold(self._config.change_threshold)
+	end
+
+	local function element_UpdateGainLossColors(self)
+		self.GainLossIndicators:UpdateColors()
 	end
 
   local function frame_UpdateHealth(self)
@@ -99,6 +109,10 @@ do
     element:UpdateConfig()
     element:UpdateColors()
     element:UpdateSize()
+    element:UpdateGainLossColors()
+		element:UpdateGainLossPoints()
+		element:UpdateGainLossThreshold()
+		element:ForceUpdate()
   end
 
   function UF:CreateHealthBar(frame, textParent)
@@ -126,6 +140,9 @@ do
     element.UpdateConfig = element_UpdateConfig
     element.UpdateColors = element_UpdateColors
     element.UpdateSize = element_UpdateSize
+    element.UpdateGainLossColors = element_UpdateGainLossColors
+		element.UpdateGainLossPoints = element_UpdateGainLossPoints
+		element.UpdateGainLossThreshold = element_UpdateGainLossThreshold
 
     frame.UpdateHealth = frame_UpdateHealth
     frame.Health = element

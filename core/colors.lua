@@ -14,7 +14,7 @@ local b = {
   light_orange = rgb(253, 186, 116), orange = rgb(249, 115, 22), dark_orange = rgb(194, 65, 12),
   light_amber = rgb(252, 211, 77), amber = rgb(245, 158, 11), dark_amber = rgb(180, 83, 9),
   light_yellow = rgb(253, 224, 71), yellow = rgb(234, 179, 8), dark_yellow = rgb(161, 98, 7),
-  light_green = rgb(134, 239, 172), green = rgb(34, 197, 94), dark_green = rgb(21, 128, 61),
+  light_green = rgb(134, 239, 172), green = rgb(22, 163, 74), dark_green = rgb(21, 128, 61),
   light_emerald = rgb(110, 231, 183), emerald = rgb(16, 185, 129), dark_emerald = rgb(4, 120, 87),
   light_cyan = rgb(103, 232, 249), cyan = rgb(6, 182, 212), dark_cyan = rgb(14, 116, 144),
   light_blue = rgb(147, 197, 253), blue = rgb(59, 130, 246), dark_blue = rgb(29, 78, 216),
@@ -24,9 +24,10 @@ local b = {
 D.colors = {
   text = rgb(250, 250, 250),
   disconnected = b.gray,
-  gain = b.light_green,
+  tapped = b.light_gray,
+  health = b.green,
+  gain = b.light_emerald,
   loss = b.dark_red,
-
   class = {
     HUNTER = rgb(170, 211, 114),
     WARLOCK = rgb(135, 135, 237),
@@ -47,6 +48,27 @@ D.colors = {
     [3] = rgb(254, 152, 0),
     [4] = rgb(254, 0, 0),
   },
+  quality = {
+    [0] = rgb(157, 157, 157),
+    [1] = rgb(255, 255, 255),
+    [2] = rgb(30, 255, 0),
+    [3] = rgb(0, 112, 221),
+    [4] = rgb(163, 53, 238),
+    [5] = rgb(255, 128, 0),
+    [6] = rgb(230, 204, 128),
+    [7] = rgb(0, 204, 255),
+    [8] = rgb(0, 204, 255),
+  },
+  gyr = {
+    [1] = rgb(46, 172, 52),
+    [2] = rgb(246, 196, 66),
+    [3] = rgb(220, 68, 54),
+  },
+  ryg = {
+    [1] = rgb(220, 68, 54),
+    [2] = rgb(246, 196, 66),
+    [3] = rgb(46, 172, 52),
+  },
   reaction = {
     [1] = b.red, -- Hated
     [2] = b.red, -- Hostile
@@ -56,6 +78,47 @@ D.colors = {
     [6] = b.green, -- Honored
     [7] = b.green, -- Revered
     [8] = b.green, -- Exalted
+  },
+  difficulty = {
+    impossible = rgb(220, 68, 54),
+    very_difficult = rgb(230, 118, 47),
+    difficult = rgb(246, 196, 66),
+    standard = rgb(46, 172, 52),
+    trivial = rgb(136, 137, 135),
+  },
+  faction = {
+    Alliance = rgb(74, 84, 232),
+    -- Horde = rgb(230, 13, 18),
+    Neutral = rgb(233, 232, 231)
+  },
+  artifact = rgb(217, 202, 146),
+  honor = rgb(255, 77, 35),
+  xp = {
+    [1] = rgb(0, 99, 224), -- rested
+    [2] = rgb(147, 0, 140), -- normal
+  },
+  prediction = {
+    my_heal = rgb(20, 228, 187),
+    other_heal = rgb(11, 169, 139),
+    damage_absorb = rgb(53, 187, 244),
+    heal_absorb = rgb(178, 50, 43),
+    power_cost = rgb(120, 181, 231),
+  },
+  zone = {
+    contested = rgb(246, 196, 66),
+    friendly = rgb(46, 172, 52),
+    hostile = rgb(220, 68, 54),
+    sanctuary = rgb(80, 219, 249),
+  },
+  debuff = {
+    None = rgb(204, 0, 0),
+    Magic = rgb(51, 153, 255),
+    Curse = rgb(153, 0, 255),
+    Disease = rgb(153, 102, 0),
+    Poison = rgb(0, 153, 0),
+  },
+  buff = {
+    Enchant = rgb(123, 44, 181),
   },
   power = {
     MANA = rgb(15, 135, 235),

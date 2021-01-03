@@ -2,4 +2,5 @@ api:
   ☐ gain and loss indicators (statusbar)
 
 unitframes:
-  ☐
+  ☐ Mouseover Tooltip not showing?
+  ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing??
