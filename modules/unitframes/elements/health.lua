@@ -7,34 +7,48 @@ local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
--- Health Bar
+-- Health
 do
   local function element_PostUpdateColor(self)
     local unit = self.__owner._unit
     local config = self._config
 
-    if self.bg and config.health.color.reverse then
+    if self.bg and config.color.reverse then
+      self:SetStatusBarTexture(M.textures.vertlines)
+      self:SetAlpha(0.9)
       self.bg:SetVertexColor(E:GetUnitColor(unit))
+      self.bg:SetAlpha(0.9)
     end
   end
 
   local function element_UpdateConfig(self)
 		local unit = self.__owner._unit
-		self._config = E:CopyTable(C.modules.unitframes.units[unit], self._config)
+		self._config = E:CopyTable(C.modules.unitframes.units[unit].health, self._config)
+		self._config.power = E:CopyTable(C.modules.unitframes.units[unit].power, self._config.power)
   end
 
   local function element_UpdateColors(self)
     local config = self._config
 
-    self.colorHealth = not config.health.color.reverse and config.health.color.health
-    self.colorTapping = not config.health.color.reverse and config.health.color.tapping
-    self.colorDisconnected = not config.health.color.reverse and config.health.color.disconnected
-		self.colorClass = not config.health.color.reverse and config.health.color.class
-    self.colorReaction = not config.health.color.reverse and config.health.color.reaction
+    -- Red, Yellow, White
+    self.smoothGradient = {
+      0.86, 0.15, 0.15,
+      0.92, 0.70, 0.03,
+      1, 1, 1
+    }
 
-    if config.health.color.reverse then
+    self.colorSmooth = config.color.smooth
+    self.colorHealth = not config.color.reverse and config.color.health
+    self.colorTapping = not config.color.reverse and config.color.tapping
+    self.colorDisconnected = not config.color.reverse and config.color.disconnected
+		self.colorClass = not config.color.smooth and config.color.class
+    self.colorReaction = not config.color.smooth and not config.color.reverse and config.color.reaction
+
+    if config.color.reverse then
+      self.colorClass = false
+      self.colorSmooth = false
       self.bg:SetTexture(C.global.statusbar.texture)
-      self.bg:SetAlpha(1)
+      self.bg:SetAlpha(0.9)
     end
 
     self:ForceUpdate()
@@ -58,14 +72,13 @@ do
     element:UpdateSize()
   end
 
-  function UF:CreateHealthBar(frame)
+  function UF:CreateHealthBar(frame, textParent)
     local config = C.modules.unitframes.units[frame._unit].health
 
     local element = CreateFrame("StatusBar", nil, frame)
     element:SetPoint("TOPLEFT", frame)
     element:SetPoint("TOPRIGHT", frame)
     element:SetStatusBarTexture(C.global.statusbar.texture)
-    element:GetStatusBarTexture():SetHorizTile(false)
     element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
     E:SmoothBar(element)
 
@@ -74,9 +87,9 @@ do
 
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
-    bg:SetTexture(C.global.statusbar.bg.texture)
+    bg:SetTexture(M.textures.vertlines)
     bg:SetAlpha(0.5)
-    bg.multiplier = C.global.statusbar.bg.multiplier
+    bg.multiplier = 0.3
     element.bg = bg
 
     element.PostUpdateColor = element_PostUpdateColor

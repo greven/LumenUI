@@ -11,19 +11,18 @@ local function update(self)
   if not (self.unit and self:IsShown()) then return end
 
   local element = self.Name
-  -- element:SetTextColor(E:GetUnitColor(self.unit))
   element.bg:SetVertexColor(E:GetUnitColor(self.unit))
 end
 
 local function updateTextPoint(frame, fontString, config)
   if config and config.p and config.p ~= "" then
-		fontString:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.ap, config.x, config.y)
+    E:SetPosition(fontString, config, frame)
   end
 end
 
 local function updateTexturePoint(frame, bg, config)
   if bg and config and config.p and config.p ~= "" then
-    bg:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.ap, config.x, config.y)
+    E:SetPosition(bg, config, frame)
   end
 end
 
@@ -35,7 +34,7 @@ end
 local function element_UpdateFonts(self)
   local config = self._config
 
-  self:SetFont(C.global.fonts.units.font, config.size, config.outline and "OUTLINE" or nil)
+  self:SetFont(M.fonts.medium, config.size, config.outline and "OUTLINE" or nil)
   self:SetJustifyH(config.h_alignment)
   self:SetJustifyV(config.v_alignment)
   self:SetWordWrap(config.word_wrap)

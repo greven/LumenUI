@@ -78,7 +78,7 @@ function UF:CreateUnitFrame(unit, name)
     else
       local object = oUF:Spawn(unit, name .. "Frame")
       object:UpdateConfig()
-      object:SetPoint(unpack(object._config.point))
+      E:SetPosition(object, object._config.point)
 			objects[unit] = object
     end
 

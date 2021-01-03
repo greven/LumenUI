@@ -17,12 +17,12 @@ M.fonts = {
 }
 
 M.textures = {
-  backdrop = "Interface\\ChatFrame\\ChatFrameBackground",
-  bg = Media.."textures\\bg",
   statusbar = Media.."textures\\statusbar",
-  glow = Media.."textures\\glow",
+  flat = Media.."textures\\statusbar",
+  vertlines = Media.."textures\\vertlines",
   neon = Media.."textures\\neon",
   mint = Media.."textures\\mint",
+  glow = Media.."textures\\glow",
   line = Media.."textures\\line",
 }
 
@@ -31,7 +31,10 @@ M.textures = {
 D.global = {
   fonts = {
     units = {
-      font = M.fonts.medium,
+      font = {
+        text = M.fonts.normal,
+        number = M.fonts.big,
+      },
       outline = false,
 			shadow = true,
     }
@@ -42,11 +45,7 @@ D.global = {
   },
   statusbar = {
     texture = M.textures.statusbar,
-    color = D.colors.dark_gray,
-    bg = {
-      texture = M.textures.bg,
-      multiplier = 0.25
-    }
+    color = D.colors.dark_gray
   },
   shadows = {
     alpha = 0.4
@@ -67,32 +66,21 @@ D.modules = {
     },
     units = {
       player = {
-        enabled = false,
-        width = 160,
-        height = 20,
-        point = {"CENTER", "UIParent", "CENTER", 0, -200},
-        health = {
-          color = {
-            class = true,
-            reaction = false
-          }
-        },
-        power = {
-          height = 2,
-          gap = 1
-        },
-        portrait = {
-          enabled = false
-        }
-      },
-      target = {
         enabled = true,
-        width = 280,
-        height = 28,
-        point = {"TOP", "UIParent", "TOP", 0, -60},
+        width = 180,
+        height = 18,
+        point = {
+          p = "CENTER",
+          anchor = "UIParent",
+          ap = "CENTER",
+          x = 0,
+          y = -220
+        },
         health = {
+          change_threshold = 0.001,
           color = {
-            reverse = false,
+            reverse = true,
+            smooth = true,
             health = true,
             tapping = true,
             disconnected = true,
@@ -104,7 +92,116 @@ D.modules = {
             size = "",
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
-            point = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 6},
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
+          },
+        },
+        power = {
+          height = 1.5,
+          gap = 1.5,
+          change_threshold = 0.01,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
+          text = {
+            tag = "",
+            size = "16",
+            outline = true,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
+          },
+        },
+        name = {
+          tag = "[lum:name(upcase)]",
+          size = 14,
+          outline = true,
+          h_alignment = "CENTER",
+          v_alignment = "MIDDLE",
+          word_wrap = false,
+          point = {
+            p = "BOTTOM",
+            anchor = "Health",
+            ap = "TOP",
+            x = 0,
+            y = 6
+          },
+          background = {
+            enabled = true,
+            width = 280,
+            height = 14,
+            texture = M.textures.line,
+            alpha = 0.9,
+            point = {
+              p = "CENTER",
+              anchor = "Name",
+              ap = "CENTER",
+              x = 0,
+              y = 1
+            },
+          }
+        },
+        unitIndicator = {
+          enabled = true,
+          width = 1.5,
+          height = 18,
+          hideOutOfCombat = true,
+          point = {
+            p = "RIGHT",
+            anchor = "",
+            ap = "LEFT",
+            x = -5,
+            y = 0
+          },
+        }
+      },
+      target = {
+        enabled = true,
+        width = 280,
+        height = 28,
+        point = {
+          p = "TOP",
+          anchor = "UIParent",
+          ap = "TOP",
+          x = 0,
+          y = -60
+        },
+        health = {
+          color = {
+            reverse = false,
+            smooth = true,
+            health = true,
+            tapping = true,
+            disconnected = true,
+            class = true,
+            reaction = true
+          },
+          text = {
+            tag = "",
+            size = "",
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
           },
         },
         power = {
@@ -116,13 +213,20 @@ D.modules = {
             disconnected = false,
             class = false
           },
-          -- text = {
-          --   tag = "",
-          --   size = "",
-          --   h_alignment = "CENTER",
-          --   v_alignment = "MIDDLE",
-          --   point = {p = "BOTTOM", anchor = "", ap = "TOP", x = 0, y = 0},
-          -- },
+          text = {
+            tag = "",
+            size = "14",
+            outline = true,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
+          },
         },
         name = {
           tag = "[lum:name(upcase)]",
@@ -157,19 +261,22 @@ D.modules = {
           enabled = true,
           style = "3D",
           width = 50,
+          height = 28,
           modelAlpha = 1.0,
           desaturation = 0.0,
           point = {
             p = "RIGHT",
             anchor = "",
             ap = "LEFT",
-            x = 16,
+            x = -6,
             y = 0
           },
         },
         unitIndicator = {
           enabled = true,
-          width = 4,
+          width = 2,
+          height = 28,
+          hideOutOfCombat = false,
           point = {
             p = "RIGHT",
             anchor = "",

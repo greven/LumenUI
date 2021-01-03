@@ -28,8 +28,8 @@ local function frame_Update(self)
     end
 
     self:UpdateSize()
-    self:UpdatePower()
     self:UpdateHealth()
+    self:UpdatePower()
     self:UpdateName()
     self:UpdatePortrait()
     self:UpdateUnitIndicator()
@@ -42,7 +42,6 @@ end
 
 -- local function frame_PostUpdate(self)
 -- end
-
 
 function UF:CreateTargetFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
@@ -57,31 +56,18 @@ function UF:CreateTargetFrame(frame)
   frame.TextParent = textParent
 
   local portraitParent = CreateFrame("Frame", nil, frame)
-  -- portraitParent:SetPoint(config.portrait.point.p,
-  --   E:ResolveAnchorPoint(frame, config.portrait.point.anchor),
-  --   config.portrait.point.ap, config.point.x, config.point.y)
-  -- portraitParent:SetSize(config.portrait.width, config.portrait.height)
-  portraitParent:SetPoint("TOPRIGHT", frame, "TOPLEFT", -6, 0)
-  portraitParent:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", -6, 0)
-  portraitParent:SetWidth(config.portrait.width)
+  portraitParent:SetSize(config.portrait.width, config.portrait.height)
+  E:SetPosition(portraitParent, config.portrait.point, frame)
   E.SetBackdrop(portraitParent, 2)
   E.CreateShadow(portraitParent)
 
-  -- Health
-  self:CreateHealthBar(frame)
-
-  -- Power
-  self:CreatePowerBar(frame)
-
-  -- Name
+  self:CreateHealthBar(frame, textParent)
+  self:CreatePowerBar(frame, textParent)
   self:CreateName(frame, textParent)
-
-  -- Portrait
   self:CreatePortrait(frame, portraitParent)
   self:CreateUnitIndicator(frame, portraitParent)
 
   frame.Update = frame_Update
-  -- frame.PostUpdate = frame_PostUpdate
 
   isInit = true
 end

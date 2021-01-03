@@ -336,3 +336,11 @@ function E:ResolveAnchorPoint(frame, children)
 		end
 	end
 end
+
+function E:SetPosition(frame, point, relative)
+	local anchor = point.anchor
+	if relative then
+		anchor = E:ResolveAnchorPoint(relative, anchor)
+	end
+	frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
+end

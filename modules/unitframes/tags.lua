@@ -24,7 +24,8 @@ local tagSharedEvents = tags.SharedEvents
 
 local events = {
   name = "UNIT_NAME_UPDATE",
-  color = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE UNIT_FACTION UNIT_CONNECTION"
+  color = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE UNIT_FACTION UNIT_CONNECTION",
+  power = "",
 }
 
 local _tags = {
@@ -49,6 +50,16 @@ local _tags = {
       return E:ToHex(1, 1, 1)
     end
   end,
+
+  power = function(unit)
+
+  end
+
+  -- power = function(unit)
+  --   local type, _, r, g, b = UnitPowerType(unit)
+  --   print(type, r, g, b)
+  --   if not r then return
+  -- end,
 }
 
 for tag, func in next, _tags do

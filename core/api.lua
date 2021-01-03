@@ -37,7 +37,7 @@ function E:CreateBackdrop(offset, alpha)
     local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     backdrop:SetFrameLevel(level == 0 and 0 or level - 1)
     backdrop:SetOutside(frame, offset, offset)
-    backdrop:SetBackdrop({bgFile = M.textures.backdrop, tile = false})
+    backdrop:SetBackdrop({bgFile = M.textures.flat, tile = false})
     if alpha then
       backdrop:SetBackdropColor(0, 0, 0, alpha)
     else
@@ -135,7 +135,7 @@ do
   end
 
 	local function addapi(object)
-		local mt = getmetatable(object).__index
+    local mt = getmetatable(object).__index
 		if not object.SetInside then mt.SetInside = SetInside end
     if not object.SetOutside then mt.SetOutside = SetOutside end
 		if not object.DisabledPixelSnap then

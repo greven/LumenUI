@@ -21,14 +21,15 @@ local function frame_Update(self)
 
     self:UpdateSize()
     self:UpdateHealth()
+    self:UpdatePower()
     -- self:UpdateName()
+    self:UpdateUnitIndicator()
   else
     if self:IsEnabled() then
       self:Disable()
     end
   end
 end
-
 
 function UF:CreatePlayerFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
@@ -42,8 +43,9 @@ function UF:CreatePlayerFrame(frame)
 	textParent:SetAllPoints()
   frame.TextParent = textParent
 
-  -- Health
-  self:CreateHealthBar(frame)
+  self:CreateHealthBar(frame, textParent)
+  self:CreatePowerBar(frame, textParent)
+  self:CreateUnitIndicator(frame)
 
   frame.Update = frame_Update
 
