@@ -23,7 +23,11 @@ local s_split = _G.string.split
 local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
 local UnitIsPlayer = _G.UnitIsPlayer
+local UnitPlayerControlled = _G.UnitPlayerControlled
 local UnitIsTapDenied = _G.UnitIsTapDenied
+local UnitIsConnected = _G.UnitIsConnected
+local UnitIsGhost = _G.UnitIsGhost
+local UnitIsDead = _G.UnitIsDead
 
 -- ---------------
 -- > Math
@@ -322,6 +326,16 @@ end
 -- ---------------
 
 do
+	function E:GetUnitStatus(unit)
+		if(not UnitIsConnected(unit)) then
+			return 'Offline'
+		elseif(UnitIsGhost(unit)) then
+			return 'Ghost'
+		elseif(UnitIsDead(unit)) then
+			return 'Dead'
+		end
+	end
+
 	function E:GetUnitColor(unit, colorByClass, colorByReaction)
 		if not UnitIsConnected(unit) then
 			return C.colors.disconnected

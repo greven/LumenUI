@@ -3,4 +3,5 @@ api:
 
 unitframes:
   ☐ Mouseover Tooltip not showing?
+  ✔ UnitIndicator: Show Threat when in combat and show threat level @done(21-01-04 13:32)
   ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing??

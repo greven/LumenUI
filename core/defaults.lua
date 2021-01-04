@@ -41,7 +41,7 @@ D.global = {
   },
   backdrop = {
     color = rgb(0, 0, 0),
-    alpha = 0.8
+    alpha = 0.85
   },
   statusbar = {
     texture = M.textures.statusbar,
@@ -68,13 +68,13 @@ D.modules = {
       player = {
         enabled = true,
         width = 180,
-        height = 18,
+        height = 16,
         point = {
           p = "CENTER",
           anchor = "UIParent",
           ap = "CENTER",
           x = 0,
-          y = -220
+          y = -260
         },
         health = {
           enabled = true,
@@ -114,8 +114,8 @@ D.modules = {
             class = false
           },
           text = {
-            tag = "[lum:power]",
-            size = "14",
+            tag = "[lum:power_cur]",
+            size = "13",
             outline = true,
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
@@ -160,7 +160,7 @@ D.modules = {
         unitIndicator = {
           enabled = true,
           width = 1.5,
-          height = 18,
+          height = 16,
           hideOutOfCombat = true,
           point = {
             p = "RIGHT",

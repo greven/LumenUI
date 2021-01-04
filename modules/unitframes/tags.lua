@@ -14,22 +14,11 @@ local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
 local UnitIsPlayer = _G.UnitIsPlayer
 local UnitIsTapDenied = _G.UnitIsTapDenied
+local UnitPowerType = _G.UnitPowerType
 local UnitPower = _G.UnitPower
-local UnitIsConnected = _G.UnitIsConnected
-local UnitIsGhost = _G.UnitIsGhost
-local UnitIsDead = _G.UnitIsDead
+local UnitPowerMax = _G.UnitPowerMax
 
 -- ---------------
-
-local function Status(unit)
-	if(not UnitIsConnected(unit)) then
-		return 'Offline'
-	elseif(UnitIsGhost(unit)) then
-		return 'Ghost'
-	elseif(UnitIsDead(unit)) then
-		return 'Dead'
-	end
-end
 
 local tags = oUF.Tags
 local tagMethods = tags.Methods
@@ -39,7 +28,7 @@ local tagSharedEvents = tags.SharedEvents
 local events = {
   name = "UNIT_NAME_UPDATE",
   color = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE UNIT_FACTION UNIT_CONNECTION",
-  power = "UNIT_POWER_FREQUENT UNIT_MAXPOWER",
+  power_cur = "UNIT_POWER_FREQUENT UNIT_MAXPOWER",
 }
 
 local _tags = {
@@ -50,27 +39,20 @@ local _tags = {
     return name
   end,
 
+  -- Color unit by disconnected, tapped, class or reaction
   color = function(unit)
-    local class = select(2, UnitClass(unit))
-    local reaction = UnitReaction(unit, "player")
-
-    if UnitIsTapDenied(unit) then
-      return E:ToHex(oUF.colors.tapped)
-    elseif UnitIsPlayer(unit) then
-      return E:ToHex(oUF.colors.class[class])
-    elseif reaction then
-      return E:ToHex(oUF.colors.reaction[reaction])
-    else
-      return E:ToHex(1, 1, 1)
-    end
+    E:GetUnitColor(unit, true, true)
   end,
 
-  power = function(unit)
-    if Status(unit) then return end
+  -- Power value
+  power_cur = function(unit)
+    if E:GetUnitStatus(unit) then return end
 
-    local cur = UnitPower(unit)
-    if(cur > 0) then
-      return E:FormatNumber(cur)
+    local type = UnitPowerType(unit)
+    local max = UnitPowerMax(unit, type)
+    if max and max ~= 0 then
+      local cur = UnitPower(unit, type)
+      if cur > 0 then return E:FormatNumber(cur) end
     end
   end,
 }

@@ -1,6 +1,11 @@
 local _, ns = ...
 local E, C, M = ns.E, ns.C, ns.M
 
+-- Lua
+local _G = getfenv(0)
+
+local UnitPlayerControlled = _G.UnitPlayerControlled
+
 -- ---------------
 
 local UF = E:GetModule("UnitFrames")
@@ -17,7 +22,11 @@ local function update(self)
   if not inCombat then
     element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
   else
-    element:SetStatusBarColor(E:GetRGB(C.colors.red))
+    if not UnitPlayerControlled(self.unit) then
+      element:SetStatusBarColor(E:GetRGB(E:GetUnitReactionColor("target")))
+    else
+      element:SetStatusBarColor(E:GetRGB(C.colors.red))
+    end
   end
 
   if config then
