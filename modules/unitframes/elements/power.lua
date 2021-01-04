@@ -58,7 +58,7 @@ do
 		self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
 		self.GainLossIndicators._UnitGUID = unitGUID
 
-		if shouldShown then
+		if shouldShown and cur ~= max then
 			self.Text:Show()
 		else
 			self.Text:Hide()
@@ -67,7 +67,7 @@ do
 		if not shouldShown or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
 			self:SetMinMaxValues(0, 1)
 			self:SetValue(0)
-		end
+    end
 	end
 
   local function element_UpdateConfig(self)

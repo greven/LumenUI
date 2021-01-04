@@ -40,9 +40,6 @@ local function frame_Update(self)
   end
 end
 
--- local function frame_PostUpdate(self)
--- end
-
 function UF:CreateTargetFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
   local level = frame:GetFrameLevel()

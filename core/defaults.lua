@@ -80,7 +80,7 @@ D.modules = {
           enabled = true,
           change_threshold = 0.001,
           color = {
-            reverse = false,
+            reverse = true,
             smooth = true,
             health = true,
             tapping = true,
@@ -114,7 +114,7 @@ D.modules = {
             class = false
           },
           text = {
-            tag = "",
+            tag = "[lum:power]",
             size = "14",
             outline = true,
             h_alignment = "CENTER",
