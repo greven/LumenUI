@@ -234,7 +234,7 @@ D.modules = {
         },
         name = {
           tag = "[lum:name(upcase)]",
-          size = 14,
+          size = 13,
           outline = true,
           h_alignment = "CENTER",
           v_alignment = "MIDDLE",

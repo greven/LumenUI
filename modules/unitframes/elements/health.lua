@@ -39,9 +39,6 @@ do
     local unit = self.__owner._unit
     local config = self._config
 
-
-    -- E:GetRGB(E:GetUnitColor(self.unit, true, true))
-
     if config.color.reverse then
       if not config.color.smooth then
         if config.color.health then
@@ -50,14 +47,6 @@ do
           self.bg:SetVertexColor(E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction)))
         end
       end
-    --     if config.color.class then
-    --       self.bg:SetVertexColor(E:GetUnitColor(unit))
-    --     elseif config.color.health then
-    --       self.bg:SetVertexColor(E:GetRGB(C.colors.health))
-    --     else
-    --       self.bg:SetVertexColor(E:GetRGB(C.global.statusbar.color))
-    --     end
-    --   end
     end
   end
 

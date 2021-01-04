@@ -26,8 +26,8 @@ D.colors = {
   disconnected = b.gray,
   tapped = b.light_gray,
   health = b.green,
-  gain = b.light_emerald,
-  loss = b.dark_red,
+  gain = b.green,
+  loss = b.red,
   class = {
     HUNTER = rgb(170, 211, 114),
     WARLOCK = rgb(135, 135, 237),
@@ -70,9 +70,9 @@ D.colors = {
     [3] = rgb(22, 163, 74),
   },
   smooth = {
-    185 / 255, 28 / 255, 28 / 255,
-    253 / 255, 224 / 255, 71 / 255,
-    22 / 255, 163 / 255, 74 / 255
+    185 / 255, 28 / 255, 28 / 255, -- rgb(185, 28, 28)
+    253 / 255, 224 / 255, 71 / 255, -- rgb(253, 224, 71)
+    22 / 255, 163 / 255, 74 / 255 -- rgb(22, 163, 74)
   },
   reaction = {
     [1] = b.red, -- Hated
