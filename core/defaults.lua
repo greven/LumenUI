@@ -80,7 +80,7 @@ D.modules = {
           enabled = true,
           change_threshold = 0.001,
           color = {
-            reverse = true,
+            reverse = false,
             smooth = true,
             health = true,
             tapping = true,
@@ -115,16 +115,16 @@ D.modules = {
           },
           text = {
             tag = "",
-            size = "16",
+            size = "14",
             outline = true,
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
             point = {
-              p = "BOTTOM",
-              anchor = "",
-              ap = "TOP",
+              p = "CENTER",
+              anchor = "Power",
+              ap = "CENTER",
               x = 0,
-              y = 6
+              y = 0
             },
           },
         },

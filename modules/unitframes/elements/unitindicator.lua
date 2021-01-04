@@ -15,7 +15,7 @@ local function update(self)
   local config = element._config
 
   if not inCombat then
-    element:SetStatusBarColor(E:GetUnitColor(self.unit))
+    element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
   else
     element:SetStatusBarColor(E:GetRGB(C.colors.red))
   end

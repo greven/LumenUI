@@ -11,7 +11,7 @@ local function update(self)
   if not (self.unit and self:IsShown()) then return end
 
   local element = self.Name
-  element.bg:SetVertexColor(E:GetUnitColor(self.unit))
+  element.bg:SetVertexColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
 end
 
 local function updateTextPoint(frame, fontString, config)

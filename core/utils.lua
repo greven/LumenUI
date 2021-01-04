@@ -239,34 +239,6 @@ do
 		return "|cff" .. color.hex .. text .. "|r"
 	end
 
-	-- Class colors
-	function E:GetUnitClassColor(unit)
-		local class = select(2, UnitClass(unit))
-		local color = C.colors.class[class] or RAID_CLASS_COLORS[class]
-
-		if not color then return .5, .5, .5 end
-		return color.r, color.g, color.b
-	end
-
-	function E:GetUnitColor(unit)
-		if not unit then return end
-		local r, g, b = 1, 1, 1
-
-		if UnitIsPlayer(unit) then
-			r, g, b = E:GetUnitClassColor(unit)
-		elseif UnitIsTapDenied(unit) then
-			r, g, b = .6, .6, .6
-		else
-			local reaction = UnitReaction(unit, "player")
-			if reaction then
-				local color = FACTION_BAR_COLORS[reaction]
-				r, g, b = color.r, color.g, color.b
-			end
-		end
-
-		return r, g, b
-	end
-
   -- Gradients
 	local function calcGradient(perc, ...)
 		local num = select("#", ...)
@@ -343,4 +315,119 @@ function E:SetPosition(frame, point, relative)
 		anchor = E:ResolveAnchorPoint(relative, anchor)
 	end
 	frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
+end
+
+-- ---------------
+-- > Units
+-- ---------------
+
+do
+	function E:GetUnitColor(unit, colorByClass, colorByReaction)
+		if not UnitIsConnected(unit) then
+			return C.colors.disconnected
+		elseif not UnitPlayerControlled(unit) and UnitIsTapDenied(unit) then
+			return C.colors.tapped
+		elseif colorByClass and UnitIsPlayer(unit) then
+			return self:GetUnitClassColor(unit)
+		elseif colorByReaction then
+			return self:GetUnitReactionColor(unit)
+		end
+
+		return C.colors.dark_gray
+	end
+
+	function E:GetUnitClassColor(unit)
+		return C.colors.class[select(2, UnitClass(unit))] or C.colors.white
+	end
+
+	function E:GetUnitReactionColor(unit)
+		if select(2, UnitDetailedThreatSituation("player", unit)) ~= nil then
+			return C.colors.reaction[2]
+		end
+
+		return C.colors.reaction[UnitReaction(unit, "player")] or C.colors.reaction[4]
+	end
+
+	function E:GetUnitClassification(unit)
+		local classification = UnitClassification(unit)
+		if classification == "rare" then
+			return "R"
+		elseif classification == "rareelite" then
+			return "R+"
+		elseif classification == "elite" then
+			return "+"
+		elseif classification == "worldboss" then
+			return "B"
+		elseif classification == "minus" then
+			return "-"
+		end
+
+		return ""
+	end
+
+	function E:GetUnitPVPStatus(unit)
+		local faction = "Neutral"
+
+		if UnitExists(unit) then
+			faction = UnitFactionGroup(unit)
+
+			if UnitIsPVPFreeForAll(unit) then
+				return true, "FFA"
+			elseif UnitIsPVP(unit) and faction and faction ~= "Neutral" then
+				if UnitIsMercenary(unit) then
+					if faction == "Horde" then
+						faction = "Alliance"
+					elseif faction == "Alliance" then
+						faction = "Horde"
+					end
+				end
+
+				return true, faction
+			end
+		end
+
+		return false, faction
+	end
+
+	function E:GetUnitSpecializationInfo(unit)
+		if UnitExists(unit) then
+			local isPlayer = UnitIsUnit(unit, "player")
+			local specID = isPlayer and GetSpecialization() or GetInspectSpecialization(unit)
+
+			if specID and specID > 0 then
+				if isPlayer then
+					local _, name = GetSpecializationInfo(specID)
+
+					return name
+				else
+					local _, name = GetSpecializationInfoByID(specID)
+
+					return name
+				end
+			end
+		end
+
+		-- return L["UNKNOWN"] -- TODO: "LOCALIZE THIS?"
+		return "UNKNOWN"
+	end
+
+	-- GetRelativeDifficultyColor function in UIParent.lua
+	function E:GetRelativeDifficultyColor(unitLevel, challengeLevel)
+		local diff = challengeLevel - unitLevel
+		if diff >= 5 then
+			return C.colors.difficulty.impossible
+		elseif diff >= 3 then
+			return C.colors.difficulty.very_difficult
+		elseif diff >= -4 then
+			return C.colors.difficulty.difficult
+		elseif -diff <= UnitQuestTrivialLevelRange("player") then
+			return C.colors.difficulty.standard
+		else
+			return C.colors.difficulty.trivial
+		end
+	end
+
+	function E:GetCreatureDifficultyColor(level)
+		return self:GetRelativeDifficultyColor(UnitEffectiveLevel("player"), level > 0 and level or 199)
+	end
 end

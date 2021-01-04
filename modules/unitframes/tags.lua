@@ -14,8 +14,22 @@ local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
 local UnitIsPlayer = _G.UnitIsPlayer
 local UnitIsTapDenied = _G.UnitIsTapDenied
+local UnitPower = _G.UnitPower
+local UnitIsConnected = _G.UnitIsConnected
+local UnitIsGhost = _G.UnitIsGhost
+local UnitIsDead = _G.UnitIsDead
 
 -- ---------------
+
+local function Status(unit)
+	if(not UnitIsConnected(unit)) then
+		return 'Offline'
+	elseif(UnitIsGhost(unit)) then
+		return 'Ghost'
+	elseif(UnitIsDead(unit)) then
+		return 'Dead'
+	end
+end
 
 local tags = oUF.Tags
 local tagMethods = tags.Methods
@@ -25,7 +39,7 @@ local tagSharedEvents = tags.SharedEvents
 local events = {
   name = "UNIT_NAME_UPDATE",
   color = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE UNIT_FACTION UNIT_CONNECTION",
-  power = "",
+  power = "UNIT_POWER_FREQUENT UNIT_MAXPOWER",
 }
 
 local _tags = {
@@ -52,14 +66,13 @@ local _tags = {
   end,
 
   power = function(unit)
+    if Status(unit) then return end
 
-  end
-
-  -- power = function(unit)
-  --   local type, _, r, g, b = UnitPowerType(unit)
-  --   print(type, r, g, b)
-  --   if not r then return
-  -- end,
+    local cur = UnitPower(unit)
+    if(cur > 0) then
+      return E:FormatNumber(cur)
+    end
+  end,
 }
 
 for tag, func in next, _tags do

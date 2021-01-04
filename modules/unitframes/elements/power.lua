@@ -31,8 +31,18 @@ local function updateTextPoint(frame, fontString, config)
   fontString:ClearAllPoints()
 
   if config and config.p then
-    fontString:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.rP, config.x, config.y)
+    E:SetPosition(fontString, config, frame)
   end
+end
+
+local function updateTag(frame, fontString, tag)
+	if tag ~= "" then
+		frame:Tag(fontString, tag)
+		fontString:UpdateTag()
+	else
+		frame:Untag(fontString)
+		fontString:SetText("")
+	end
 end
 
 -- Power
@@ -92,7 +102,11 @@ do
   end
 
   local function element_UpdateTextPoints(self)
-    updateTextPoint(self.__owner, self.Text, self._config.text.point1)
+    updateTextPoint(self.__owner, self.Text, self._config.text.point)
+  end
+
+  local function element_UpdateTags(self)
+    updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
   end
 
   local function element_UpdateGainLossPoints(self)
@@ -114,6 +128,7 @@ do
     element:UpdateSize()
     element:UpdateFonts()
     element:UpdateTextPoints()
+    element:UpdateTags()
     element:UpdateGainLossColors()
 		element:UpdateGainLossPoints()
     element:UpdateGainLossThreshold()
@@ -149,7 +164,6 @@ do
     element.bg = bg
 
     element.Text = E.CreateString((textParent or frame))
-    element.Text:SetText(69)
 
     element.frequentUpdates = true
     element.PostUpdate = element_PostUpdate
@@ -158,6 +172,7 @@ do
     element.UpdateColors = element_UpdateColors
     element.UpdateSize = element_UpdateSize
     element.UpdateTextPoints = element_UpdateTextPoints
+    element.UpdateTags = element_UpdateTags
     element.UpdateGainLossColors = element_UpdateGainLossColors
 		element.UpdateGainLossPoints = element_UpdateGainLossPoints
 		element.UpdateGainLossThreshold = element_UpdateGainLossThreshold
