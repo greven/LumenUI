@@ -16,22 +16,22 @@ local UF = E:GetModule("UnitFrames")
 
 local function updateFont(fontString, config)
   fontString:SetFont(C.global.fonts.units.font.number, config.size, config.outline and "OUTLINE" or nil)
-  -- fontString:SetJustifyH(config.h_alignment)
-  -- fontString:SetJustifyV(config.v_alignment)
-  -- fontString:SetWordWrap(false)
+  fontString:SetJustifyH(config.h_alignment)
+  fontString:SetJustifyV(config.v_alignment)
+  fontString:SetWordWrap(false)
 
-	-- if config.shadow then
-	-- 	fontString:SetShadowOffset(1, -1)
-	-- else
-	-- 	fontString:SetShadowOffset(0, 0)
-	-- end
+	if config.shadow then
+		fontString:SetShadowOffset(1, -1)
+	else
+		fontString:SetShadowOffset(0, 0)
+	end
 end
 
 local function updateTextPoint(frame, fontString, config)
   fontString:ClearAllPoints()
 
   if config and config.p then
-    -- fontString:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.rP, config.x, config.y)
+    fontString:SetPoint(config.p, E:ResolveAnchorPoint(frame, config.anchor), config.rP, config.x, config.y)
   end
 end
 
@@ -149,7 +149,7 @@ do
     element.bg = bg
 
     element.Text = E.CreateString((textParent or frame))
-    element.Text:SetText(59)
+    element.Text:SetText(69)
 
     element.frequentUpdates = true
     element.PostUpdate = element_PostUpdate

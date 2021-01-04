@@ -40,9 +40,6 @@ do
     local config = self._config
 
     if config.color.reverse then
-      self:SetStatusBarTexture(M.textures.vertlines)
-      self:SetAlpha(0.95)
-
       if not config.color.smooth then
         if config.color.class then
           self.bg:SetVertexColor(E:GetUnitColor(unit))
@@ -72,8 +69,11 @@ do
     self.colorReaction = not config.color.smooth and not config.color.reverse and config.color.reaction
 
     if config.color.reverse then
+
       self.colorClass = false
       self.colorSmooth = false
+      self:SetStatusBarTexture(M.textures.vertlines)
+      self:SetAlpha(0.96)
       self.bg:SetTexture(C.global.statusbar.texture)
       self.bg:SetAlpha(0.9)
     end

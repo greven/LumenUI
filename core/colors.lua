@@ -10,7 +10,7 @@ end
 local b = {
   black = rgb(0, 0, 0), white = rgb(255, 255, 255),
   light_gray = rgb(210, 210, 210), gray = rgb(82, 82, 82), dark_gray = rgb(26, 26, 26),
-  light_red = rgb(252, 165, 165), red = rgb(220, 38, 38), dark_red = rgb(185, 28, 28),
+  light_red = rgb(252, 165, 165), red = rgb(220, 48, 38), dark_red = rgb(185, 28, 28),
   light_orange = rgb(253, 186, 116), orange = rgb(249, 115, 22), dark_orange = rgb(194, 65, 12),
   light_amber = rgb(252, 211, 77), amber = rgb(245, 158, 11), dark_amber = rgb(180, 83, 9),
   light_yellow = rgb(253, 224, 71), yellow = rgb(234, 179, 8), dark_yellow = rgb(161, 98, 7),
@@ -60,14 +60,19 @@ D.colors = {
     [8] = rgb(0, 204, 255),
   },
   gyr = {
-    [1] = rgb(46, 172, 52),
-    [2] = rgb(246, 196, 66),
-    [3] = rgb(220, 68, 54),
+    [1] = rgb(22, 163, 74),
+    [2] = rgb(253, 224, 71),
+    [3] = rgb(220, 48, 38),
   },
   ryg = {
-    [1] = rgb(220, 68, 54),
-    [2] = rgb(246, 196, 66),
-    [3] = rgb(46, 172, 52),
+    [1] = rgb(220, 48, 38),
+    [2] = rgb(253, 224, 71),
+    [3] = rgb(22, 163, 74),
+  },
+  smooth = {
+    185 / 255, 28 / 255, 28 / 255,
+    253 / 255, 224 / 255, 71 / 255,
+    22 / 255, 163 / 255, 74 / 255
   },
   reaction = {
     [1] = b.red, -- Hated
