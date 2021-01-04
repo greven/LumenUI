@@ -5,8 +5,6 @@ local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 local _G = getfenv(0)
 
 local UnitGUID = _G.UnitGUID
-local UnitIsConnected = _G.UnitIsConnected
-local UnitIsDeadOrGhost = _G.UnitIsDeadOrGhost
 
 -- ---------------
 
@@ -45,6 +43,30 @@ local function updateTag(frame, fontString, tag)
 	end
 end
 
+local function element_UpdateFonts(self)
+  updateFont(self.Text, self._config.text)
+end
+
+local function element_UpdateTextPoints(self)
+  updateTextPoint(self.__owner, self.Text, self._config.text.point)
+end
+
+local function element_UpdateTags(self)
+  updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
+end
+
+local function element_UpdateGainLossPoints(self)
+  self.GainLossIndicators:UpdatePoints("HORIZONTAL")
+end
+
+local function element_UpdateGainLossThreshold(self)
+  self.GainLossIndicators:UpdateThreshold(self._config.change_threshold)
+end
+
+local function element_UpdateGainLossColors(self)
+  self.GainLossIndicators:UpdateColors()
+end
+
 -- Power
 do
 	local function element_PostUpdate(self, unit, cur, _, max)
@@ -64,7 +86,7 @@ do
 			self.Text:Hide()
 		end
 
-		if not shouldShown or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+		if not shouldShown or E:UnitIsDisconnectedOrDeadOrGhost(unit) then
 			self:SetMinMaxValues(0, 1)
 			self:SetValue(0)
     end
@@ -73,16 +95,6 @@ do
   local function element_UpdateConfig(self)
 		local unit = self.__owner._unit
 		self._config = E:CopyTable(C.modules.unitframes.units[unit].power, self._config)
-  end
-
-  local function element_UpdateColors(self)
-    local config = self._config
-    self.colorPower = config.color.power
-    self.colorTapping = config.color.tapping
-    self.colorDisconnected = config.color.disconnected
-    self.colorClass = config.color.class
-
-    self:ForceUpdate()
   end
 
   local function element_UpdateSize(self)
@@ -97,28 +109,14 @@ do
     self:ForceUpdate()
   end
 
-  local function element_UpdateFonts(self)
-    updateFont(self.Text, self._config.text)
-  end
+  local function element_UpdateColors(self)
+    local config = self._config
+    self.colorPower = config.color.power
+    self.colorTapping = config.color.tapping
+    self.colorDisconnected = config.color.disconnected
+    self.colorClass = config.color.class
 
-  local function element_UpdateTextPoints(self)
-    updateTextPoint(self.__owner, self.Text, self._config.text.point)
-  end
-
-  local function element_UpdateTags(self)
-    updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
-  end
-
-  local function element_UpdateGainLossPoints(self)
-    self.GainLossIndicators:UpdatePoints("HORIZONTAL")
-  end
-
-  local function element_UpdateGainLossThreshold(self)
-    self.GainLossIndicators:UpdateThreshold(self._config.change_threshold)
-  end
-
-  local function element_UpdateGainLossColors(self)
-    self.GainLossIndicators:UpdateColors()
+    self:ForceUpdate()
   end
 
   local function frame_UpdatePower(self)
@@ -155,8 +153,6 @@ do
     element:SetStatusBarTexture(M.textures.neon)
     E:SmoothBar(element)
 
-    element.GainLossIndicators = E:CreateGainLossIndicators(element)
-
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
     bg:SetTexture(M.textures.flat)
@@ -164,6 +160,8 @@ do
     element.bg = bg
 
     element.Text = E.CreateString((textParent or frame))
+
+    element.GainLossIndicators = E:CreateGainLossIndicators(element)
 
     element.frequentUpdates = true
     element.PostUpdate = element_PostUpdate

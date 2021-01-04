@@ -11,9 +11,9 @@ local UnitReaction = _G.UnitReaction
 
 local UF = E:GetModule("UnitFrames")
 
-local isInit = false
-
 -- ---------------
+
+local isInit = false
 
 function UF:HasTargetFrame()
 	return isInit

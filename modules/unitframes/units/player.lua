@@ -1,11 +1,13 @@
 local _, ns = ...
 local E, C, oUF = ns.E, ns.C, ns.oUF
 
+-- ---------------
+
 local UF = E:GetModule("UnitFrames")
 
-local isInit = false
-
 -- ---------------
+
+local isInit = false
 
 function UF:HasPlayerFrame()
 	return isInit

@@ -326,7 +326,7 @@ end
 -- ---------------
 
 do
-	function E:GetUnitStatus(unit)
+	function E:UnitIsDisconnectedOrDeadOrGhost(unit)
 		if(not UnitIsConnected(unit)) then
 			return 'Offline'
 		elseif(UnitIsGhost(unit)) then

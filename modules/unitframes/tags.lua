@@ -46,7 +46,7 @@ local _tags = {
 
   -- Power value
   power_cur = function(unit)
-    if E:GetUnitStatus(unit) then return end
+    if E:UnitIsDisconnectedOrDeadOrGhost(unit) then return end
 
     local type = UnitPowerType(unit)
     local max = UnitPowerMax(unit, type)
