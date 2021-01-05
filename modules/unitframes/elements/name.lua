@@ -34,10 +34,16 @@ end
 local function element_UpdateFonts(self)
   local config = self._config
 
-  self:SetFont(M.fonts.medium, config.size, config.outline and "OUTLINE" or nil)
+  self:SetFont(config.font or M.fonts.big, config.size, config.outline and "OUTLINE" or nil)
   self:SetJustifyH(config.h_alignment)
   self:SetJustifyV(config.v_alignment)
   self:SetWordWrap(config.word_wrap)
+
+	if config.shadow then
+		self:SetShadowOffset(1, -1)
+	else
+		self:SetShadowOffset(0, 0)
+	end
 end
 
 local function element_UpdatePoints(self)
