@@ -10,10 +10,10 @@ end
 -- ---------------
 
 M.fonts = {
-  light = Media.."fonts\\Oswald-Light.ttf",
   normal = Media.."fonts\\Oswald.ttf",
+  light = Media.."fonts\\Oswald-Light.ttf",
   medium = Media.."fonts\\Oswald-Medium.ttf",
-  big = Media.."fonts\\BigNoodleTitling.ttf"
+  big = Media.."fonts\\BebasNeue.ttf"
 }
 
 M.textures = {
@@ -80,17 +80,19 @@ D.modules = {
           enabled = true,
           change_threshold = 0.001,
           color = {
-            reverse = true,
+            reverse = false,
             smooth = true,
             health = true,
             tapping = true,
             disconnected = true,
-            class = false,
+            class = true,
             reaction = true
           },
           text = {
             tag = "",
             size = "",
+            outline = true,
+            shadow = false,
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
             point = {
@@ -117,6 +119,7 @@ D.modules = {
             tag = "[lum:power_cur]",
             size = "13",
             outline = true,
+            shadow = false,
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
             point = {
@@ -129,9 +132,10 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:name(upcase)]",
+          tag = "[lum:name]",
           size = 14,
           outline = true,
+          shadow = false,
           h_alignment = "CENTER",
           v_alignment = "MIDDLE",
           word_wrap = false,
@@ -196,6 +200,8 @@ D.modules = {
           text = {
             tag = "",
             size = "",
+            outline = true,
+            shadow = false,
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
             point = {
@@ -221,6 +227,7 @@ D.modules = {
             tag = "",
             size = "14",
             outline = true,
+            shadow = false,
             h_alignment = "CENTER",
             v_alignment = "MIDDLE",
             point = {
@@ -234,8 +241,9 @@ D.modules = {
         },
         name = {
           tag = "[lum:name(upcase)]",
-          size = 13,
+          size = 17,
           outline = true,
+          shadow = false,
           h_alignment = "CENTER",
           v_alignment = "MIDDLE",
           word_wrap = false,
@@ -244,7 +252,7 @@ D.modules = {
             anchor = "Health",
             ap = "TOP",
             x = 0,
-            y = 6
+            y = 4
           },
           background = {
             enabled = true,
