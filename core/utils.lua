@@ -204,7 +204,7 @@ do
 			if rgb_hex_cache[key] then
 				return rgb_hex_cache[key]
 			end
-			rgb_hex_cache[key] = s_format("%.2x%.2x%.2x", clamp(r) * 255, clamp(g) * 255, clamp(b) * 255)
+			rgb_hex_cache[key] = s_format("ff%.2x%.2x%.2x", clamp(r) * 255, clamp(g) * 255, clamp(b) * 255)
 			return rgb_hex_cache[key]
 		end
   end

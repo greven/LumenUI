@@ -232,7 +232,7 @@ do
 		return true
 	end
 
-	local frame = CreateFrame("Frame", "LSBarSmoother")
+	local frame = CreateFrame("Frame", "LumBarSmoother")
 
 	local function onUpdate(_, elapsed)
 		for object, target in next, activeObjects do

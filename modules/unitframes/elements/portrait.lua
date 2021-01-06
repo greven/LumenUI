@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, M = ns.E, ns.C, ns.M
 
 -- ---------------
 
@@ -10,6 +10,47 @@ local UF = E:GetModule("UnitFrames")
 local function element_UpdateConfig(self)
   local unit = self.__owner._unit
 	self._config = E:CopyTable(C.modules.unitframes.units[unit].portrait, self._config)
+end
+
+local function element_UpdateFonts(self)
+  local element = self.Text
+  local config = self._config.text
+
+  if element then
+    element:SetFont(config.font or M.fonts.big, config.size, config.outline and "OUTLINE" or nil)
+    element:SetJustifyH(config.h_alignment)
+    element:SetJustifyV(config.v_alignment)
+    element:SetWordWrap(config.word_wrap)
+
+    if config.shadow then
+      element:SetShadowOffset(1, -1)
+    else
+      element:SetShadowOffset(0, 0)
+    end
+  end
+end
+
+local function element_UpdateTextPoints(self)
+  local config = self._config.text.point
+
+  self.Text:ClearAllPoints()
+
+  if config and config.p then
+    E:SetPosition(self.Text, config, self)
+  end
+end
+
+local function element_UpdateTags(self)
+  if self.Text then
+    local config = self._config.text
+    if config.tag ~= "" then
+      self.__owner:Tag(self.Text, config.tag)
+      self.Text:UpdateTag()
+    else
+      self.__owner:Untag(self.Text)
+		  self.Text:SetText("")
+    end
+  end
 end
 
 local function element_PostUpdate(self)
@@ -52,6 +93,9 @@ local function frame_UpdatePortrait(self)
 
   if self:IsElementEnabled("Portrait") then
     element:SetInside()
+    element:UpdateFonts()
+    element:UpdateTextPoints()
+    element:UpdateTags()
 
     element:Show()
 	  element:ForceUpdate()
@@ -60,14 +104,25 @@ end
 
 function UF:CreatePortrait(frame, parent)
   frame.Portrait2D = (parent or frame):CreateTexture(nil, "ARTWORK")
-  frame.Portrait2D.UpdateConfig = element_UpdateConfig
   frame.Portrait2D.PostUpdate = element_PostUpdate
+  frame.Portrait2D.UpdateConfig = element_UpdateConfig
+  frame.Portrait2D.UpdateFonts = element_UpdateFonts
+  frame.Portrait2D.UpdateTextPoints = element_UpdateTextPoints
+  frame.Portrait2D.UpdateTags = element_UpdateTags
   frame.Portrait = frame.Portrait2D
 
 	frame.Portrait3D = CreateFrame("PlayerModel", nil, parent or frame)
-	frame.Portrait3D.UpdateConfig = element_UpdateConfig
   frame.Portrait3D.PostUpdate = element_PostUpdate
+  frame.Portrait3D.UpdateConfig = element_UpdateConfig
+  frame.Portrait3D.UpdateFonts = element_UpdateFonts
+  frame.Portrait3D.UpdateTextPoints = element_UpdateTextPoints
+  frame.Portrait3D.UpdateTags = element_UpdateTags
+
+  local text = E.CreateString((parent or frame))
+  frame.Portrait2D.Text = text
+  frame.Portrait3D.Text = text
 
   frame.UpdatePortrait = frame_UpdatePortrait
+
 	return frame.Portrait2D
 end

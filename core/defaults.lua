@@ -23,6 +23,7 @@ M.textures = {
   neon = Media.."textures\\neon",
   mint = Media.."textures\\mint",
   glow = Media.."textures\\glow",
+  vertstatus = Media.."textures\\vertstatus",
   line = Media.."textures\\line",
 }
 
@@ -80,7 +81,7 @@ D.modules = {
           enabled = true,
           change_threshold = 0.001,
           color = {
-            reverse = false,
+            reverse = true,
             smooth = true,
             health = true,
             tapping = true,
@@ -90,7 +91,7 @@ D.modules = {
           },
           text = {
             tag = "",
-            size = "",
+            size = 14,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -117,7 +118,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:power_cur]",
-            size = "13",
+            size = 12,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -199,7 +200,7 @@ D.modules = {
           },
           text = {
             tag = "",
-            size = "",
+            size = 14,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -225,7 +226,7 @@ D.modules = {
           },
           text = {
             tag = "",
-            size = "14",
+            size = 14,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -240,7 +241,7 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:name(upcase)]",
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name]",
           size = 17,
           outline = true,
           shadow = false,
@@ -282,6 +283,21 @@ D.modules = {
             ap = "LEFT",
             x = -6,
             y = 0
+          },
+          text = {
+            tag = "[lum:npc_type(color)]",
+            size = 13,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 4
+            },
           },
         },
         unitIndicator = {

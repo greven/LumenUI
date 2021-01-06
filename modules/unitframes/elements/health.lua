@@ -67,13 +67,12 @@ do
     self.colorReaction = not config.color.smooth and not config.color.reverse and config.color.reaction
 
     if config.color.reverse then
-
       self.colorClass = false
       self.colorSmooth = false
       self:SetStatusBarTexture(M.textures.vertlines)
-      self:SetAlpha(0.96)
+      self:SetAlpha(0.94)
       self.bg:SetTexture(C.global.statusbar.texture)
-      self.bg:SetAlpha(0.9)
+      self.bg:SetAlpha(0.62)
     end
 
     self:ForceUpdate()
@@ -129,7 +128,7 @@ do
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
     bg:SetTexture(M.textures.vertlines)
-    bg:SetAlpha(0.5)
+    bg:SetAlpha(0.4)
     bg.multiplier = 0.3
     element.bg = bg
 
