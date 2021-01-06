@@ -199,18 +199,18 @@ D.modules = {
             reaction = true
           },
           text = {
-            tag = "",
+            tag = "[lum:health_cur(true)]",
             size = 14,
             outline = true,
             shadow = false,
-            h_alignment = "CENTER",
+            h_alignment = "RIGHT",
             v_alignment = "MIDDLE",
             point = {
-              p = "BOTTOM",
+              p = "RIGHT",
               anchor = "",
-              ap = "TOP",
-              x = 0,
-              y = 6
+              ap = "RIGHT",
+              x = -6,
+              y = 0
             },
           },
         },
@@ -285,7 +285,7 @@ D.modules = {
             y = 0
           },
           text = {
-            tag = "[lum:npc_type(color)]",
+            tag = "[lum:npc_type(true)]",
             size = 13,
             outline = true,
             shadow = false,

@@ -33,6 +33,7 @@ local tagSharedEvents = tags.SharedEvents
 local events = {
   color = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE UNIT_FACTION UNIT_CONNECTION",
   color_difficulty = "UNIT_LEVEL PLAYER_LEVEL_UP",
+  health_cur = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
   level = "UNIT_LEVEL PLAYER_LEVEL_UP",
   name = "UNIT_NAME_UPDATE",
   npc_type = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
@@ -48,6 +49,16 @@ local _tags = {
 
   color_difficulty = function(unit)
     return "|c" .. E:ToHex(GetCreatureDifficultyColor(UnitEffectiveLevel(unit)))
+  end,
+
+  health_cur = function(unit, _, colorCap)
+    if not UnitIsConnected(unit) then
+      return "Offline"
+    elseif UnitIsDeadOrGhost(unit) then
+      return "Dead"
+    else
+      return E:FormatNumber(UnitHealth(unit), colorCap) or ""
+    end
   end,
 
   -- Unit level
@@ -72,13 +83,13 @@ local _tags = {
     local classification = UnitClassification(unit)
 
     if classification == "worldboss" or UnitLevel(unit) <= 0 then
-      return color and "|c"..E:ToHex(C.colors.difficulty.impossible).."Boss|r" or "Boss"
+      return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) .. "Boss|r" or "Boss"
     elseif classification == "rare" then
       return color and "|cff008FF7Rare|r" or "Rare"
     elseif classification == "rareelite" then
-      return color and "|cff008FF7Rare|r |c"..E:ToHex(C.colors.difficulty.difficult).."Elite|r" or "Rare Elite"
+      return color and "|cff008FF7Rare|r |c" .. E:ToHex(C.colors.difficulty.difficult) .. "Elite|r" or "Rare Elite"
     elseif classification == "elite" then
-      return color and "|c"..E:ToHex(C.colors.difficulty.difficult).."Elite|r" or "Elite"
+      return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) .. "Elite|r" or "Elite"
     end
 
     return ""

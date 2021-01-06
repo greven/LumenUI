@@ -15,9 +15,40 @@ local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
+local function updateFont(fontString, config)
+  fontString:SetFont(C.global.fonts.units.font.number, config.size, config.outline and "THINOUTLINE" or nil)
+  fontString:SetJustifyH(config.h_alignment)
+  fontString:SetJustifyV(config.v_alignment)
+  fontString:SetWordWrap(false)
+
+  if config.shadow then
+    fontString:SetShadowOffset(1, -1)
+  else
+    fontString:SetShadowOffset(0, 0)
+  end
+end
+
+local function updateTextPoint(frame, fontString, config)
+  fontString:ClearAllPoints()
+
+  if config and config.p then
+    E:SetPosition(fontString, config, frame)
+  end
+end
+
+local function updateTag(frame, fontString, tag)
+  if tag ~= "" then
+    frame:Tag(fontString, tag)
+    fontString:UpdateTag()
+  else
+    frame:Untag(fontString)
+    fontString:SetText("")
+  end
+end
+
 -- Health
 do
-	local function element_PostUpdate(self, unit, cur, max)
+  local function element_PostUpdate(self, unit, cur, max)
     local unitGUID = UnitGUID(unit)
     local config = self._config
 
@@ -48,6 +79,18 @@ do
         end
       end
     end
+  end
+
+  local function element_UpdateFonts(self)
+    updateFont(self.Text, self._config.text)
+  end
+
+  local function element_UpdateTextPoints(self)
+    updateTextPoint(self.__owner, self.Text, self._config.text.point)
+  end
+
+  local function element_UpdateTags(self)
+    updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
   end
 
   local function element_UpdateConfig(self)
@@ -106,6 +149,9 @@ do
     element:UpdateConfig()
     element:UpdateColors()
     element:UpdateSize()
+    element:UpdateFonts()
+    element:UpdateTextPoints()
+    element:UpdateTags()
     element:UpdateGainLossColors()
 		element:UpdateGainLossPoints()
 		element:UpdateGainLossThreshold()
@@ -122,6 +168,8 @@ do
     element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
     E:SmoothBar(element)
 
+    element.Text = E.CreateString((textParent or frame))
+
     element.GainLossIndicators = E:CreateGainLossIndicators(element)
 		element.GainLossIndicators.Gain = nil
 
@@ -137,9 +185,12 @@ do
     element.UpdateConfig = element_UpdateConfig
     element.UpdateColors = element_UpdateColors
     element.UpdateSize = element_UpdateSize
+    element.UpdateFonts = element_UpdateFonts
+    element.UpdateTextPoints = element_UpdateTextPoints
+    element.UpdateTags = element_UpdateTags
     element.UpdateGainLossColors = element_UpdateGainLossColors
 		element.UpdateGainLossPoints = element_UpdateGainLossPoints
-		element.UpdateGainLossThreshold = element_UpdateGainLossThreshold
+    element.UpdateGainLossThreshold = element_UpdateGainLossThreshold
 
     frame.UpdateHealth = frame_UpdateHealth
     frame.Health = element

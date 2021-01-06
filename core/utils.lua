@@ -20,6 +20,7 @@ local s_format = _G.string.format
 local s_utf8sub = _G.string.utf8sub
 local s_split = _G.string.split
 
+local BreakUpLargeNumbers = _G.BreakUpLargeNumbers
 local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
 local UnitIsPlayer = _G.UnitIsPlayer
@@ -53,41 +54,37 @@ function E:NumberToPerc(v1, v2)
   return (v1 and v2) and (v1 / v2 * 100) or nil
 end
 
-function E:FormatNumber(val)
-  if val >= 1E6 then
-    local i, f = m_modf(val / 1E6)
-    return s_format(SECOND_NUMBER_CAP, BreakUpLargeNumbers(i), f * 10)
-  elseif val >= 1E4 then
-    local i, f = m_modf(val / 1E3)
-    return s_format(FIRST_NUMBER_CAP, BreakUpLargeNumbers(i), f * 10)
-  elseif val >= 0 then
-    return BreakUpLargeNumbers(val)
-  else
-    return 0
-  end
+
+function E:FormatNumber(val, colorCap)
+	local FIRST_NUMBER_CAP = "%s.%d" .. _G.FIRST_NUMBER_CAP_NO_SPACE
+	local SECOND_NUMBER_CAP = "%s.%d" .. _G.SECOND_NUMBER_CAP_NO_SPACE
+
+	if colorCap then
+		FIRST_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.FIRST_NUMBER_CAP_NO_SPACE .. "|r"
+		SECOND_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
+	end
+
+	if val >= 1E6 then
+		local i, f = m_modf(val / 1E6)
+		return s_format(SECOND_NUMBER_CAP, BreakUpLargeNumbers(i), f * 10)
+	elseif val >= 1E4 then
+		local i, f = m_modf(val / 1E3)
+		return s_format(FIRST_NUMBER_CAP, BreakUpLargeNumbers(i), f * 10)
+	elseif val >= 0 then
+		return BreakUpLargeNumbers(val)
+	else
+		return 0
+	end
 end
 
-do
-  local FIRST_NUMBER_CAP = "%s.%d" .. _G.FIRST_NUMBER_CAP_NO_SPACE
-  local SECOND_NUMBER_CAP = "%s.%d" .. _G.SECOND_NUMBER_CAP_NO_SPACE
 
+do
   local D_D_ABBR = _G.DAY_ONELETTER_ABBR:gsub("[ .]", "")
   local D_H_ABBR = _G.HOUR_ONELETTER_ABBR:gsub("[ .]", "")
   local D_M_ABBR = _G.MINUTE_ONELETTER_ABBR:gsub("[ .]", "")
   local D_S_ABBR = _G.SECOND_ONELETTER_ABBR:gsub("[ .]", "")
   local D_MS_ABBR = "%d" .. _G.MILLISECONDS_ABBR
   local F_MS_ABBR = "%.1f" .. _G.MILLISECONDS_ABBR
-
-  local F_D_ABBR = D_D_ABBR:gsub("%%d", "%%.1f")
-  local F_H_ABBR = D_H_ABBR:gsub("%%d", "%%.1f")
-  local F_M_ABBR = D_M_ABBR:gsub("%%d", "%%.1f")
-  local F_S_ABBR = D_S_ABBR:gsub("%%d", "%%.1f")
-
-  local X_XX_FORMAT = "%d:%02d"
-	local D = "%d"
-  local F = "%.1f"
-
-  local BreakUpLargeNumbers = _G.BreakUpLargeNumbers
 
   -- s: value in seconds
   -- returns: formatted time and color
