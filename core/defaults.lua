@@ -132,6 +132,24 @@ D.modules = {
             },
           },
         },
+        castbar = {
+          enabled = true,
+          latency = false,
+          height = 20,
+          icon = {
+            position = "LEFT", -- "RIGHT", "NONE"
+          },
+          text = {
+            size = 12,
+          },
+          point = {
+            p = "CENTER",
+            anchor = "",
+            ap = "CENTER",
+            x = 0,
+            y = 0
+          },
+        },
         name = {
           tag = "[lum:name]",
           size = 14,

@@ -1,7 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="castbar.lua" />
   <Script file="health.lua" />
-  <Script file="power.lua" />
   <Script file="name.lua" />
   <Script file="portrait.lua" />
+  <Script file="power.lua" />
   <Script file="unitindicator.lua" />
 </Ui>
