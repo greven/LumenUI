@@ -56,11 +56,18 @@ do
 		self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
 		self.GainLossIndicators._UnitGUID = unitGUID
 
-		if not (self:IsShown() and max and max ~= 0) or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
-			self:SetMinMaxValues(0, 1)
-      self:SetValue(0)
+    if config.color.reverse and config.color.smooth then
+      local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
+      self.bg:SetVertexColor(E:GetRGB(color))
     end
 
+    if config.hideTextWhenMax and cur == max then
+			self.Text:Hide()
+		else
+			self.Text:Show()
+    end
+
+    -- Kill Range texture
     if config.killRange and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
       self.KillRange:Hide()
       self.KillRange.glow:Hide()
@@ -71,9 +78,9 @@ do
       end
     end
 
-    if config.color.reverse and config.color.smooth then
-      local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
-      self.bg:SetVertexColor(E:GetRGB(color))
+    if not (self:IsShown() and max and max ~= 0) or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+			self:SetMinMaxValues(0, 1)
+      self:SetValue(0)
     end
 	end
 
@@ -94,14 +101,26 @@ do
 
   local function element_UpdateFonts(self)
     updateFont(self.Text, self._config.text)
+
+    if self.Text.perc then
+      updateFont(self.Text.perc, self._config.perc)
+    end
   end
 
   local function element_UpdateTextPoints(self)
     updateTextPoint(self.__owner, self.Text, self._config.text.point)
+
+    if self._config.perc then
+      updateTextPoint(self.__owner, self.Text.perc, self._config.perc.point)
+    end
   end
 
   local function element_UpdateTags(self)
     updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
+
+    if self._config.perc then
+      updateTag(self.__owner, self.Text.perc, self._config.enabled and self._config.perc.tag or "")
+    end
   end
 
   local function element_UpdateConfig(self)
@@ -124,9 +143,9 @@ do
       self.colorClass = false
       self.colorSmooth = false
       self:SetStatusBarTexture(M.textures.vertlines)
-      self:SetAlpha(0.94)
+      self:SetAlpha(0.96)
       self.bg:SetTexture(C.global.statusbar.texture)
-      self.bg:SetAlpha(0.62)
+      self.bg:SetAlpha(0.9)
     end
 
     self:ForceUpdate()
@@ -187,6 +206,12 @@ do
     E:SmoothBar(element)
 
     element.Text = (textParent or element):CreateFontString(nil, "ARTWORK")
+
+    if config.perc then
+      local perc = element:CreateFontString(nil, "BACKGROUND")
+      perc:SetTextColor(0.4, 0.4, 0.4, 0.8)
+      element.Text.perc = perc
+    end
 
     element.GainLossIndicators = E:CreateGainLossIndicators(element)
 		element.GainLossIndicators.Gain = nil

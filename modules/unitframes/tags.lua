@@ -16,6 +16,8 @@ local UnitIsTapDenied = _G.UnitIsTapDenied
 local UnitPowerType = _G.UnitPowerType
 local UnitPower = _G.UnitPower
 local UnitPowerMax = _G.UnitPowerMax
+local UnitHealth = _G.UnitHealth
+local UnitHealthMax = _G.UnitHealthMax
 local UnitLevel = _G.UnitLevel
 local UnitIsWildBattlePet = _G.UnitIsWildBattlePet
 local UnitIsBattlePetCompanion = _G.UnitIsBattlePetCompanion
@@ -34,6 +36,8 @@ local events = {
   color = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE UNIT_FACTION UNIT_CONNECTION",
   color_difficulty = "UNIT_LEVEL PLAYER_LEVEL_UP",
   health_cur = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
+  health_cur_perc = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
+  health_perc = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
   level = "UNIT_LEVEL PLAYER_LEVEL_UP",
   name = "UNIT_NAME_UPDATE",
   npc_type = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
@@ -58,6 +62,29 @@ local _tags = {
       return "Dead"
     else
       return E:FormatNumber(UnitHealth(unit), colorCap) or ""
+    end
+  end,
+
+  health_cur_perc = function(unit)
+    if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+      return ""
+    else
+      local cur, max = UnitHealth(unit), UnitHealthMax(unit)
+
+      if cur == max then
+        return E:FormatNumber(cur)
+      else
+        return s_format("%s - %.1f%%", E:FormatNumber(cur), E:NumberToPerc(cur, max))
+      end
+    end
+  end,
+
+  health_perc = function(unit)
+    if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+      return ""
+    else
+      local cur, max = UnitHealth(unit), UnitHealthMax(unit)
+      return s_format("%d%%", E:NumberToPerc(cur, max))
     end
   end,
 

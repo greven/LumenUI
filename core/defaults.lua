@@ -3,6 +3,8 @@ local E, D, C, M = ns.E, ns.D, ns.C, ns.M
 
 local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
+local playerHeight = 18
+
 local function rgb(r, g, b)
 	return E:SetRGB({}, r, g, b)
 end
@@ -70,7 +72,7 @@ D.modules = {
       player = {
         enabled = true,
         width = 180,
-        height = 16,
+        height = playerHeight,
         point = {
           p = "CENTER",
           anchor = "UIParent",
@@ -80,6 +82,8 @@ D.modules = {
         },
         health = {
           enabled = true,
+          hideTextWhenMax = true,
+          killRange = false,
           change_threshold = 0.001,
           color = {
             reverse = true,
@@ -91,18 +95,18 @@ D.modules = {
             reaction = true
           },
           text = {
-            tag = "",
-            size = 14,
+            tag = "[lum:health_cur(true)]",
+            size = 11,
             outline = true,
             shadow = false,
-            h_alignment = "CENTER",
+            h_alignment = "RIGHT",
             v_alignment = "MIDDLE",
             point = {
-              p = "BOTTOM",
+              p = "RIGHT",
               anchor = "",
-              ap = "TOP",
-              x = 0,
-              y = 6
+              ap = "RIGHT",
+              x = -4,
+              y = 1
             },
           },
         },
@@ -184,7 +188,7 @@ D.modules = {
         unitIndicator = {
           enabled = true,
           width = 1.5,
-          height = 16,
+          height = playerHeight,
           hideOutOfCombat = true,
           point = {
             p = "RIGHT",
@@ -208,7 +212,8 @@ D.modules = {
         },
         health = {
           enabled = true,
-          killRange = true,
+          hideTextWhenMax = false,
+          killRange = false,
           color = {
             reverse = false,
             smooth = false,
@@ -230,6 +235,21 @@ D.modules = {
               anchor = "",
               ap = "RIGHT",
               x = -6,
+              y = 0
+            },
+          },
+          perc = {
+            tag = "[lum:health_perc]",
+            size = 14,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "RIGHT",
+              anchor = "Health.Text",
+              ap = "LEFT",
+              x = -4,
               y = 0
             },
           },
