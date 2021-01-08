@@ -25,7 +25,7 @@ local function frame_Update(self)
     self:UpdateHealth()
     self:UpdatePower()
     -- self:UpdateName()
-    -- self:UpdateCastbar()
+    self:UpdateCastbar()
     self:UpdateUnitIndicator()
   else
     if self:IsEnabled() then
@@ -48,7 +48,7 @@ function UF:CreatePlayerFrame(frame)
 
   self:CreateHealthBar(frame, textParent)
   self:CreatePowerBar(frame, textParent)
-  -- self:CreateCastbar(frame)
+  self:CreateCastbar(frame)
   self:CreateUnitIndicator(frame)
 
   frame.Update = frame_Update

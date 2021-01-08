@@ -139,20 +139,32 @@ D.modules = {
         },
         castbar = {
           enabled = true,
-          latency = false,
+          width = 100,
           height = 20,
+          latency = false,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
           },
           text = {
             size = 12,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "RIGHT",
+              anchor = "",
+              ap = "RIGHT",
+              x = -4,
+              y = 1
+            },
           },
           point = {
             p = "CENTER",
             anchor = "",
             ap = "CENTER",
             x = 0,
-            y = 0
+            y = -60
           },
         },
         name = {
@@ -207,8 +219,8 @@ D.modules = {
           p = "TOP",
           anchor = "UIParent",
           ap = "TOP",
-          x = 0,
-          y = -60
+          x = 25,
+          y = -80
         },
         health = {
           enabled = true,
