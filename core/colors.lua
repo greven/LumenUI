@@ -75,6 +75,39 @@ D.colors = {
     253 / 255, 224 / 255, 71 / 255, -- rgb(253, 224, 71)
     22 / 255, 163 / 255, 74 / 255 -- rgb(22, 163, 74)
   },
+  button = {
+    normal = rgb(255, 255, 255),
+    unusable = rgb(107, 108, 107),
+    mana = rgb(32, 98, 165),
+    range = rgb(140, 29, 30),
+  },
+  castbar = {
+    casting = b.amber,
+    channeling = b.dark_green,
+    failed = b.dark_red,
+    notinterruptible = b.gray,
+    class = {
+      HUNTER = b.dark_green,
+      WARLOCK = b.dark_violet,
+      PRIEST = b.violet,
+      PALADIN = b.light_amber,
+      MAGE = b.dark_blue,
+      ROGUE = b.dark_orange,
+      DRUID = b.dark_orange,
+      SHAMAN = b.dark_blue,
+      WARRIOR = b.dark_red,
+      DEATHKNIGHT = b.dark_red,
+      MONK = b.emerald,
+      DEMONHUNTER = b.dark_purple
+    }
+  },
+  cooldown = {
+    expiration = rgb(240, 32, 30),
+    second = rgb(246, 196, 66),
+    minute = rgb(255, 255, 255),
+    hour = rgb(255, 255, 255),
+    day = rgb(255, 255, 255),
+  },
   reaction = {
     [1] = b.red, -- Hated
     [2] = b.red, -- Hostile
@@ -156,20 +189,6 @@ D.colors = {
     [2] = rgb(50, 160, 250), -- Frost
     [3] = rgb(100, 225, 125), -- Unholy
   },
-  castbar = {
-    HUNTER = b.dark_green,
-    WARLOCK = b.dark_violet,
-    PRIEST = b.violet,
-    PALADIN = b.light_amber,
-    MAGE = b.dark_blue,
-    ROGUE = b.dark_orange,
-    DRUID = b.dark_orange,
-    SHAMAN = b.dark_blue,
-    WARRIOR = b.dark_red,
-    DEATHKNIGHT = b.dark_red,
-    MONK = b.emerald,
-    DEMONHUNTER = b.dark_purple
-  }
 }
 
 E:CopyTable(b, D.colors)

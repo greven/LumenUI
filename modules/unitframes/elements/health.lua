@@ -115,6 +115,15 @@ do
     end
   end
 
+  local function element_UpdateKillZone(self)
+    if self._config.killRange then
+      self.KillRange:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
+      self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT", self:GetWidth() * 0.2, 0)
+      self.KillRange.spark:SetSize(1, self:GetHeight())
+      self.KillRange.spark:SetPoint("LEFT", self, "LEFT", self:GetWidth() * 0.2, 0)
+    end
+  end
+
   local function element_UpdateTags(self)
     updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
 
@@ -160,13 +169,6 @@ do
     self:SetPoint("LEFT", frame, 0, 0)
     self:SetPoint("RIGHT", frame, 0, 0)
     self:ForceUpdate()
-
-    if self.KillRange then
-      self.KillRange:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
-      self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT", self:GetWidth() * 0.2, 0)
-      self.KillRange.spark:SetSize(1, self:GetHeight())
-      self.KillRange.spark:SetPoint("LEFT", self, "LEFT", self:GetWidth() * 0.2, 0)
-    end
   end
 
   local function element_UpdateGainLossPoints(self)
@@ -191,7 +193,8 @@ do
     element:UpdateTags()
     element:UpdateGainLossColors()
 		element:UpdateGainLossPoints()
-		element:UpdateGainLossThreshold()
+    element:UpdateGainLossThreshold()
+    element:UpdateKillZone()
 		element:ForceUpdate()
   end
 
@@ -223,21 +226,18 @@ do
     bg.multiplier = 0.3
     element.bg = bg
 
-    if config.killRange then
-      kr = element:CreateTexture(nil, "OVERLAY")
-      kr:SetTexture("Interface\\BUTTONS\\WHITE8X8")
-      kr:SetVertexColor(1, 0, 0)
-      kr:SetBlendMode("ADD")
-      kr:SetAlpha(0.2)
+    kr = element:CreateTexture(nil, "OVERLAY")
+    kr:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+    kr:SetVertexColor(1, 0, 0)
+    kr:SetBlendMode("ADD")
+    kr:SetAlpha(0.2)
 
-      kr.spark = element:CreateTexture(nil, "OVERLAY")
-      kr.spark:SetTexture("Interface\\BUTTONS\\WHITE8X8")
-      kr.spark:SetVertexColor(1, 0.25, 0.25)
-      kr.spark:SetBlendMode("ADD")
-      kr.spark:SetAlpha(0.6)
-
-      element.KillRange = kr
-    end
+    kr.spark = element:CreateTexture(nil, "OVERLAY")
+    kr.spark:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+    kr.spark:SetVertexColor(1, 0.25, 0.25)
+    kr.spark:SetBlendMode("ADD")
+    kr.spark:SetAlpha(0.6)
+    element.KillRange = kr
 
     element.PostUpdate = element_PostUpdate
     element.PostUpdateColor = element_PostUpdateColor
@@ -246,6 +246,7 @@ do
     element.UpdateSize = element_UpdateSize
     element.UpdateFonts = element_UpdateFonts
     element.UpdateTextPoints = element_UpdateTextPoints
+    element.UpdateKillZone = element_UpdateKillZone
     element.UpdateTags = element_UpdateTags
     element.UpdateGainLossColors = element_UpdateGainLossColors
 		element.UpdateGainLossPoints = element_UpdateGainLossPoints

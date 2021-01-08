@@ -139,7 +139,7 @@ D.modules = {
         },
         castbar = {
           enabled = true,
-          width = 260,
+          width = 300,
           height = 22,
           color = D.colors.dark_blue,
           colorClass = true,
@@ -147,6 +147,7 @@ D.modules = {
           latency = false,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
+            gap = 6
           },
           text = {
             size = 13,
