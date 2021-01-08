@@ -13,7 +13,8 @@ M.fonts = {
   normal = Media.."fonts\\Oswald.ttf",
   light = Media.."fonts\\Oswald-Light.ttf",
   medium = Media.."fonts\\Oswald-Medium.ttf",
-  big = Media.."fonts\\BebasNeue.ttf"
+  condensed = Media.."fonts\\BebasNeue.ttf",
+  big = Media.."fonts\\BigNoodleTitling.ttf"
 }
 
 M.textures = {
@@ -34,7 +35,7 @@ D.global = {
     units = {
       font = {
         text = M.fonts.normal,
-        number = M.fonts.big,
+        number = M.fonts.condensed,
       },
       outline = false,
 			shadow = true,
@@ -207,6 +208,7 @@ D.modules = {
         },
         health = {
           enabled = true,
+          killRange = true,
           color = {
             reverse = false,
             smooth = false,

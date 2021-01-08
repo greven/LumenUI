@@ -34,7 +34,7 @@ end
 local function element_UpdateFonts(self)
   local config = self._config
 
-  self:SetFont(config.font or M.fonts.big, config.size, config.outline and "OUTLINE" or nil)
+  self:SetFont(config.font or M.fonts.condensed, config.size, config.outline and "OUTLINE" or nil)
   self:SetJustifyH(config.h_alignment)
   self:SetJustifyV(config.v_alignment)
   self:SetWordWrap(config.word_wrap)
@@ -84,7 +84,7 @@ local function frame_UpdateName(self)
 end
 
 function UF:CreateName(frame, textParent)
-  local element = E.CreateString((textParent or frame))
+  local element = (textParent or frame):CreateFontString(nil, "ARTWORK")
   element.bg = frame:CreateTexture(nil, "BACKGROUND")
 
   hooksecurefunc(frame, "Show", update)

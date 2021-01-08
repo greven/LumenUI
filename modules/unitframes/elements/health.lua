@@ -7,6 +7,7 @@ local _G = getfenv(0)
 local UnitGUID = _G.UnitGUID
 local UnitIsConnected = _G.UnitIsConnected
 local UnitIsDeadOrGhost = _G.UnitIsDeadOrGhost
+local UnitCanAttack = _G.UnitCanAttack
 local CreateColor = _G.CreateColor
 
 -- ---------------
@@ -57,7 +58,17 @@ do
 
 		if not (self:IsShown() and max and max ~= 0) or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
 			self:SetMinMaxValues(0, 1)
-			self:SetValue(0)
+      self:SetValue(0)
+    end
+
+    if config.killRange and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
+      self.KillRange:Hide()
+      self.KillRange.glow:Hide()
+    else
+      if config.killRange then
+        self.KillRange:Show()
+        self.KillRange.glow:Show()
+      end
     end
 
     if config.color.reverse and config.color.smooth then
@@ -130,6 +141,13 @@ do
     self:SetPoint("LEFT", frame, 0, 0)
     self:SetPoint("RIGHT", frame, 0, 0)
     self:ForceUpdate()
+
+    if self.KillRange then
+      self.KillRange:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
+      self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT", self:GetWidth() * 0.2, 0)
+      self.KillRange.glow:SetSize(1, self:GetHeight())
+      self.KillRange.glow:SetPoint("LEFT", self, "LEFT", self:GetWidth() * 0.2, 0)
+    end
   end
 
   local function element_UpdateGainLossPoints(self)
@@ -168,7 +186,7 @@ do
     element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
     E:SmoothBar(element)
 
-    element.Text = E.CreateString((textParent or frame))
+    element.Text = (textParent or element):CreateFontString(nil, "ARTWORK")
 
     element.GainLossIndicators = E:CreateGainLossIndicators(element)
 		element.GainLossIndicators.Gain = nil
@@ -179,6 +197,22 @@ do
     bg:SetAlpha(0.4)
     bg.multiplier = 0.3
     element.bg = bg
+
+    if config.killRange then
+      kr = element:CreateTexture(nil, "OVERLAY")
+      kr:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+      kr:SetVertexColor(1, 0, 0)
+      kr:SetBlendMode("ADD")
+      kr:SetAlpha(0.2)
+
+      kr.glow = element:CreateTexture(nil, "OVERLAY")
+      kr.glow:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+      kr.glow:SetVertexColor(1, 0.25, 0.25)
+      kr.glow:SetBlendMode("ADD")
+      kr.glow:SetAlpha(0.6)
+
+      element.KillRange = kr
+    end
 
     element.PostUpdate = element_PostUpdate
     element.PostUpdateColor = element_PostUpdateColor

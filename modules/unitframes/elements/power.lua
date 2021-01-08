@@ -159,7 +159,7 @@ do
     bg.multiplier = 0.1
     element.bg = bg
 
-    element.Text = E.CreateString((textParent or frame))
+    element.Text = (textParent or element):CreateFontString(nil, "ARTWORK")
 
     element.GainLossIndicators = E:CreateGainLossIndicators(element)
 
