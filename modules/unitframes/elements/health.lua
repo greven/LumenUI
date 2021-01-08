@@ -70,11 +70,11 @@ do
     -- Kill Range texture
     if config.killRange and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
       self.KillRange:Hide()
-      self.KillRange.glow:Hide()
+      self.KillRange.spark:Hide()
     else
       if config.killRange then
         self.KillRange:Show()
-        self.KillRange.glow:Show()
+        self.KillRange.spark:Show()
       end
     end
 
@@ -164,8 +164,8 @@ do
     if self.KillRange then
       self.KillRange:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
       self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT", self:GetWidth() * 0.2, 0)
-      self.KillRange.glow:SetSize(1, self:GetHeight())
-      self.KillRange.glow:SetPoint("LEFT", self, "LEFT", self:GetWidth() * 0.2, 0)
+      self.KillRange.spark:SetSize(1, self:GetHeight())
+      self.KillRange.spark:SetPoint("LEFT", self, "LEFT", self:GetWidth() * 0.2, 0)
     end
   end
 
@@ -230,11 +230,11 @@ do
       kr:SetBlendMode("ADD")
       kr:SetAlpha(0.2)
 
-      kr.glow = element:CreateTexture(nil, "OVERLAY")
-      kr.glow:SetTexture("Interface\\BUTTONS\\WHITE8X8")
-      kr.glow:SetVertexColor(1, 0.25, 0.25)
-      kr.glow:SetBlendMode("ADD")
-      kr.glow:SetAlpha(0.6)
+      kr.spark = element:CreateTexture(nil, "OVERLAY")
+      kr.spark:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+      kr.spark:SetVertexColor(1, 0.25, 0.25)
+      kr.spark:SetBlendMode("ADD")
+      kr.spark:SetAlpha(0.6)
 
       element.KillRange = kr
     end

@@ -18,6 +18,7 @@ local b = {
   light_emerald = rgb(110, 231, 183), emerald = rgb(16, 185, 129), dark_emerald = rgb(4, 120, 87),
   light_cyan = rgb(103, 232, 249), cyan = rgb(6, 182, 212), dark_cyan = rgb(14, 116, 144),
   light_blue = rgb(147, 197, 253), blue = rgb(59, 130, 246), dark_blue = rgb(29, 78, 216),
+  light_violet = rgb(196, 181, 253), violet = rgb(139, 92, 246), dark_violet = rgb(109, 40, 217),
   light_purple = rgb(216, 180, 254), purple = rgb(168, 85, 247), dark_purple = rgb(126, 34, 206),
 }
 
@@ -85,10 +86,10 @@ D.colors = {
     [8] = b.green, -- Exalted
   },
   difficulty = {
-    impossible = rgb(220, 68, 54),
+    impossible = rgb(230, 48, 54),
     very_difficult = rgb(230, 118, 47),
     difficult = rgb(246, 196, 66),
-    standard = rgb(46, 172, 52),
+    standard = rgb(22, 163, 74),
     trivial = rgb(136, 137, 135),
   },
   faction = {
@@ -155,6 +156,20 @@ D.colors = {
     [2] = rgb(50, 160, 250), -- Frost
     [3] = rgb(100, 225, 125), -- Unholy
   },
+  castbar = {
+    HUNTER = b.dark_green,
+    WARLOCK = b.dark_violet,
+    PRIEST = b.violet,
+    PALADIN = b.light_amber,
+    MAGE = b.dark_blue,
+    ROGUE = b.dark_orange,
+    DRUID = b.dark_orange,
+    SHAMAN = b.dark_blue,
+    WARRIOR = b.dark_red,
+    DEATHKNIGHT = b.dark_red,
+    MONK = b.emerald,
+    DEMONHUNTER = b.dark_purple
+  }
 }
 
 E:CopyTable(b, D.colors)

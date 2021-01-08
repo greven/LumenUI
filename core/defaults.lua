@@ -36,7 +36,7 @@ D.global = {
   fonts = {
     units = {
       font = {
-        text = M.fonts.normal,
+        text = M.fonts.condensed,
         number = M.fonts.condensed,
       },
       outline = false,
@@ -78,7 +78,7 @@ D.modules = {
           anchor = "UIParent",
           ap = "CENTER",
           x = 0,
-          y = -260
+          y = -240
         },
         health = {
           enabled = true,
@@ -139,25 +139,19 @@ D.modules = {
         },
         castbar = {
           enabled = true,
-          width = 100,
-          height = 20,
+          width = 260,
+          height = 22,
+          color = D.colors.dark_blue,
+          colorClass = true,
+          max = true,
           latency = false,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
           },
           text = {
-            size = 12,
+            size = 13,
             outline = true,
             shadow = false,
-            h_alignment = "RIGHT",
-            v_alignment = "MIDDLE",
-            point = {
-              p = "RIGHT",
-              anchor = "",
-              ap = "RIGHT",
-              x = -4,
-              y = 1
-            },
           },
           point = {
             p = "CENTER",
