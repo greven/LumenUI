@@ -66,7 +66,6 @@ function UF:CreatePlayerFrame(frame)
   elseif E.PLAYER_CLASS == "DEATHKNIGHT" then
     self:CreateRunes(frame)
   end
-
   self:CreateClassPower(frame)
 
   frame.Update = frame_Update

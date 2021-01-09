@@ -319,7 +319,7 @@ D.modules = {
           max = false,
           latency = false,
           icon = {
-            position = "RIGHT", -- "RIGHT", "NONE"
+            position = "LEFT", -- "RIGHT", "NONE"
             gap = 5
           },
           text = {
@@ -332,7 +332,7 @@ D.modules = {
             anchor = "Health",
             ap = "BOTTOMLEFT",
             x = -57,
-            y = -8
+            y = -42
           },
         },
         name = {
@@ -407,6 +407,9 @@ D.modules = {
             x = -6,
             y = 0
           },
+        },
+        auras = {
+          enabled = true
         }
       },
     }

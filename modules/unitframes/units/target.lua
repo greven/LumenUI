@@ -33,6 +33,7 @@ local function frame_Update(self)
     self:UpdateName()
     self:UpdateCastbar()
     self:UpdatePortrait()
+    self:UpdateAuras()
     self:UpdateUnitIndicator()
   else
     if self:IsEnabled() then
@@ -64,6 +65,7 @@ function UF:CreateTargetFrame(frame)
   self:CreateName(frame, textParent)
   self:CreatePortrait(frame, portraitParent)
   self:CreateCastbar(frame)
+  self:CreateAuras(frame, "target")
   self:CreateUnitIndicator(frame, portraitParent)
 
   frame.Update = frame_Update
