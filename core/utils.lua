@@ -251,7 +251,7 @@ do
 			return r, g, b
 		end
 
-		local i, relperc = Math.modf(perc * (num / 3 - 1))
+		local i, relperc = m_modf(perc * (num / 3 - 1))
 		local r1, g1, b1, r2, g2, b2 = select((i * 3) + 1, ...)
 
 		return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc, b1 + (b2 - b1) * relperc

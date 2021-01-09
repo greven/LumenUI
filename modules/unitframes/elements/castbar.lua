@@ -23,15 +23,19 @@ local function updateFont(fontString, config)
 end
 
 local function element_PostCastStart(self)
+	local unit = self.__owner.unit
+
 	if self.notInterruptible then
 		self:SetStatusBarColor(E:GetRGB(C.colors.castbar.notinterruptible))
 
 		if self.Icon then
-			self.Icon:SetDesaturated(true)
+			if not unit == "player" then
+				self.Icon:SetDesaturated(true)
+			end
 		end
 	else
 		if self.casting then
-			if self._config.class_colored then
+			if self._config.color_by_class then
 				self:SetStatusBarColor(E:GetRGB(C.colors.castbar.class[E.PLAYER_CLASS]))
 			else
 				self:SetStatusBarColor(E:GetRGB(C.colors.castbar.casting))
@@ -114,7 +118,7 @@ local function element_UpdateIcon(self)
 end
 
 local function element_UpdateColors(self)
-	if self._config.class_colored then
+	if self._config.color_by_class then
 		self:SetStatusBarColor(E:GetRGB(C.colors.castbar.class[E.PLAYER_CLASS]))
 	end
 end

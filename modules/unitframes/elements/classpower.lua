@@ -44,7 +44,7 @@ local function createElement(parent, num, name)
 	for i = 1, num do
 		local bar = CreateFrame("StatusBar", "$parent" .. name .. i, element)
 		bar:SetFrameLevel(level)
-		bar:SetStatusBarTexture(M.textures.flat)
+		bar:SetStatusBarTexture("Interface\\BUTTONS\\WHITE8X8")
     bar:SetScript("OnValueChanged", bar_OnValueChanged)
     E.SetBackdrop(bar, 2)
     E.CreateShadow(bar)
@@ -201,7 +201,7 @@ do
 				if i == 1 then
 					bar:SetPoint("LEFT", 0, 0)
 				else
-					bar:SetPoint("LEFT", element[i - 1], "RIGHT", element._config.gap, 0)
+					bar:SetPoint("LEFT", element[i - 1], "RIGHT", element._config.gap or 2, 0)
 				end
 			else
 				if layout and i <= max then
@@ -214,7 +214,7 @@ do
 				if i == 1 then
 					bar:SetPoint("BOTTOM", 0, 0)
 				else
-					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, element._config.gap)
+					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, element._config.gap or 2)
 				end
 			end
 		end
@@ -248,6 +248,237 @@ do
 
     frame.UpdateClassPower = frame_UpdateClassPower
     frame.ClassPower = element
+
+		return element
+	end
+end
+
+-- Runes
+do
+	local ignoredKeys = {
+		prediction = true,
+	}
+
+	local function element_PostUpdate(self)
+		if self.isEnabled then
+			local hasVehicle = UnitHasVehicleUI("player")
+			if hasVehicle and self._active then
+				self:Hide()
+
+				self._active = false
+			elseif not hasVehicle and not self._active then
+				self:Show()
+
+				self._active = true
+			end
+		end
+	end
+
+	local function element_UpdateConfig(self)
+		local unit = self.__owner._unit
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+	end
+
+	local function element_UpdateSize(self)
+    local frame = self.__owner
+    local config = self._config
+    local width = config.width
+    local height = config.height
+
+    self:SetSize(width, height)
+
+    local point = config.point
+    if point and point.p then
+      self:ClearAllPoints()
+      self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+    end
+  end
+
+	local function element_UpdateColors(self)
+		self.colorSpec = self._config.runes.color_by_spec
+		self:ForceUpdate()
+	end
+
+	local function element_UpdateSortOrder(self)
+		self.sortOrder = self._config.runes.sort_order
+		self:ForceUpdate()
+	end
+
+	local function frame_UpdateRunes(self)
+		local element = self.Runes
+		element:UpdateConfig()
+		element:UpdateSize()
+		element:UpdateColors()
+		element:UpdateSortOrder()
+
+		local orientation = element._config.orientation
+		local layout
+
+		if orientation == "HORIZONTAL" then
+			layout = E:CalcSegmentsSizes(element:GetWidth(), element._config.gap or 2, 6)
+		else
+			layout = E:CalcSegmentsSizes(element:GetHeight(), element._config.gap or 2, 6)
+		end
+
+		for i = 1, 6 do
+			local bar = element[i]
+			bar:SetOrientation(orientation)
+			bar:ClearAllPoints()
+
+			if orientation == "HORIZONTAL" then
+				bar:SetWidth(layout[i])
+				bar:SetPoint("TOP", 0, 0)
+				bar:SetPoint("BOTTOM", 0, 0)
+
+				if i == 1 then
+					bar:SetPoint("LEFT", 0, 0)
+				else
+					bar:SetPoint("LEFT", element[i - 1], "RIGHT", element._config.gap or 2, 0)
+				end
+			else
+				bar:SetHeight(layout[i])
+				bar:SetPoint("LEFT", 0, 0)
+				bar:SetPoint("RIGHT", 0, 0)
+
+				if i == 1 then
+					bar:SetPoint("BOTTOM", 0, 0)
+				else
+					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, element._config.gap or 2)
+				end
+			end
+		end
+
+		if element._config.enabled and not self:IsElementEnabled("Runes") then
+			self:EnableElement("Runes")
+		elseif not element._config.enabled and self:IsElementEnabled("Runes") then
+			self:DisableElement("Runes")
+		end
+
+		if self:IsElementEnabled("Runes") then
+			element.isEnabled = true
+
+			element:ForceUpdate()
+		else
+			element.isEnabled = false
+			element._active = nil
+
+			element:Hide()
+		end
+	end
+
+	function UF:CreateRunes(frame)
+		local element = createElement(frame, 6, "Rune")
+		element:Hide()
+
+		element.PostUpdate = element_PostUpdate
+		element.UpdateColors = element_UpdateColors
+		element.UpdateConfig = element_UpdateConfig
+		element.UpdateSize = element_UpdateSize
+		element.UpdateSortOrder = element_UpdateSortOrder
+
+		frame.UpdateRunes = frame_UpdateRunes
+		frame.Runes = element
+
+		return element
+	end
+end
+
+-- .Stagger
+do
+	local ignoredKeys = {
+		runes = true,
+	}
+
+	local function element_PostUpdate(element, cur, max)
+		element.GainLossIndicators:Update(cur, max)
+	end
+
+	local function element_UpdateColor(self, _, unit)
+		if unit and unit ~= self.unit then return end
+		local element = self.Stagger
+
+		element:SetStatusBarColor(E:GetGradientAsRGB((element.cur or 0) / (element.max or 1), C.colors.power.STAGGER))
+	end
+
+	local function element_UpdateConfig(self)
+		local unit = self.__owner._unit
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+	end
+
+	local function element_UpdateSize(self)
+    local frame = self.__owner
+    local config = self._config
+    local width = config.width
+    local height = config.height
+
+    self:SetSize(width, height)
+
+    local point = config.point
+    if point and point.p then
+      self:ClearAllPoints()
+      self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+    end
+  end
+
+	local function element_UpdateColors(self)
+		self:ForceUpdate()
+	end
+
+	local function element_UpdateGainLossPoints(self)
+		self.GainLossIndicators:UpdatePoints(self._config.orientation)
+	end
+
+	local function element_UpdateGainLossThreshold(self)
+		self.GainLossIndicators:UpdateThreshold(self._config.change_threshold)
+	end
+
+	local function element_UpdateGainLossColors(self)
+		self.GainLossIndicators:UpdateColors()
+	end
+
+	local function frame_UpdateStagger(self)
+		local element = self.Stagger
+		element:UpdateConfig()
+		element:UpdateSize()
+		element:SetOrientation(element._config.orientation)
+		element:UpdateGainLossColors()
+		element:UpdateGainLossPoints()
+		element:UpdateGainLossThreshold()
+
+		if element._config.enabled and not self:IsElementEnabled("Stagger") then
+			self:EnableElement("Stagger")
+		elseif not element._config.enabled and self:IsElementEnabled("Stagger") then
+			self:DisableElement("Stagger")
+		end
+
+		if self:IsElementEnabled("Stagger") then
+			element:ForceUpdate()
+		else
+			element:Hide()
+		end
+	end
+
+	function UF:CreateStagger(frame)
+		local element = CreateFrame("StatusBar", nil, frame)
+		element:SetStatusBarTexture(C.global.statusbar.texture)
+		E:SmoothBar(element)
+		E.SetBackdrop(element, 2)
+    E.CreateShadow(element)
+		element:Hide()
+
+		element.GainLossIndicators = E:CreateGainLossIndicators(element)
+
+		element.PostUpdate = element_PostUpdate
+		element.UpdateColor = element_UpdateColor
+		element.UpdateColors = element_UpdateColors
+		element.UpdateConfig = element_UpdateConfig
+		element.UpdateSize = element_UpdateSize
+		element.UpdateGainLossColors = element_UpdateGainLossColors
+		element.UpdateGainLossPoints = element_UpdateGainLossPoints
+		element.UpdateGainLossThreshold = element_UpdateGainLossThreshold
+
+		frame.UpdateStagger = frame_UpdateStagger
+		frame.Stagger = element
 
 		return element
 	end
