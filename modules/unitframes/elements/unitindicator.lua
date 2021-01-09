@@ -30,7 +30,7 @@ local function update(self)
   end
 
   if config then
-    if config.unitIndicator.hideOutOfCombat then
+    if config.unitIndicator.hide_out_of_combat then
       if inCombat then
         element:Show()
       else

@@ -61,7 +61,7 @@ local function element_PostUpdate(self)
     self:SetTexCoord(0.1, 0.9, 0.1, 0.9)
   else -- 3D
     self:SetDesaturation(config.desaturation)
-    self:SetModelAlpha(config.modelAlpha)
+    self:SetModelAlpha(config.model_alpha)
     self:SetCamDistanceScale(0.8)
     self:SetPortraitZoom(1)
   end

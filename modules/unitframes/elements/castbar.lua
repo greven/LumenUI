@@ -31,7 +31,7 @@ local function element_PostCastStart(self)
 		end
 	else
 		if self.casting then
-			if self._config.colorClass then
+			if self._config.class_colored then
 				self:SetStatusBarColor(E:GetRGB(C.colors.castbar.class[E.PLAYER_CLASS]))
 			else
 				self:SetStatusBarColor(E:GetRGB(C.colors.castbar.casting))
@@ -79,7 +79,7 @@ local function element_UpdateIcon(self)
 	if config.icon.position == "LEFT" then
 		self.Icon = self.LeftIcon
 
-		self.IconParent:SetPoint("TOPLEFT", self.Holder)
+		self.IconParent:SetPoint("TOPLEFT", self.Holder, 1, 0)
 		self.IconParent:SetPoint("BOTTOMRIGHT", self.Holder, "BOTTOMLEFT", height * 1.5, 0)
 		self.LeftIcon:SetAllPoints(self.IconParent)
 		self.RightIcon:SetSize(0.0001, height)
@@ -87,12 +87,12 @@ local function element_UpdateIcon(self)
 		self:SetPoint("TOPLEFT", config.icon.gap + height * 1.5, 0)
 		self:SetPoint("BOTTOMRIGHT", 0, 0)
 
-		E.SetBackdrop(self.Icon, 2)
+		E.SetBackdrop(self.Icon, 1.5)
 		E.CreateShadow(self.Icon)
 	elseif config.icon.position == "RIGHT" then
 		self.Icon = self.RightIcon
 
-		self.IconParent:SetPoint("TOPRIGHT", self.Holder)
+		self.IconParent:SetPoint("TOPRIGHT", self.Holder, -1, 0)
 		self.IconParent:SetPoint("BOTTOMLEFT", self.Holder, "BOTTOMRIGHT", -height * 1.5, 0)
 		self.RightIcon:SetAllPoints(self.IconParent)
 		self.LeftIcon:SetSize(0.0001, height)
@@ -100,7 +100,7 @@ local function element_UpdateIcon(self)
 		self:SetPoint("TOPLEFT", 0, 0)
 		self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
 
-		E.SetBackdrop(self.Icon, 2)
+		E.SetBackdrop(self.Icon, 1.5)
 		E.CreateShadow(self.Icon)
 	else
 		self.Icon = nil
@@ -114,7 +114,7 @@ local function element_UpdateIcon(self)
 end
 
 local function element_UpdateColors(self)
-	if self._config.colorClass then
+	if self._config.class_colored then
 		self:SetStatusBarColor(E:GetRGB(C.colors.castbar.class[E.PLAYER_CLASS]))
 	end
 end
@@ -163,6 +163,18 @@ local function element_CustomTimeText(self, duration)
 	end
 end
 
+local function element_CustomDelayText(self, duration)
+	if self.casting then
+		duration = self.max - duration
+	end
+
+	if self.casting then
+		self.Time:SetFormattedText("%.1f|cffdc4436+%.1f|r ", duration, m_abs(self.delay))
+	elseif self.channeling then
+		self.Time:SetFormattedText("%.1f|cffdc4436-%.1f|r ", duration, m_abs(self.delay))
+	end
+end
+
 local function frame_UpdateCastbar(self)
 	local element = self.Castbar
 	element:UpdateConfig()
@@ -172,20 +184,20 @@ local function frame_UpdateCastbar(self)
 	element:UpdateIcon()
 	element:UpdateLatency()
 
-	-- if element._config.enabled and not self:IsElementEnabled("Castbar") then
-	-- 	self:EnableElement("Castbar")
-	-- elseif not element._config.enabled and self:IsElementEnabled("Castbar") then
-	-- 	self:DisableElement("Castbar")
+	if element._config.enabled and not self:IsElementEnabled("Castbar") then
+		self:EnableElement("Castbar")
+	elseif not element._config.enabled and self:IsElementEnabled("Castbar") then
+		self:DisableElement("Castbar")
 
-	-- 	if self._unit == "player" then
-	-- 		CastingBarFrame_SetUnit(CastingBarFrame, nil)
-	-- 		CastingBarFrame_SetUnit(PetCastingBarFrame, nil)
-	-- 	end
-	-- end
+		if self._unit == "player" then
+			CastingBarFrame_SetUnit(CastingBarFrame, nil)
+			CastingBarFrame_SetUnit(PetCastingBarFrame, nil)
+		end
+	end
 
-	-- if self:IsElementEnabled("Castbar") then
-	-- 	element:ForceUpdate()
-	-- end
+	if self:IsElementEnabled("Castbar") then
+		element:ForceUpdate()
+	end
 end
 
 function UF:CreateCastbar(frame)
@@ -198,7 +210,8 @@ function UF:CreateCastbar(frame)
 	element:SetStatusBarTexture(M.textures.mint)
 	element:SetStatusBarColor(E:GetRGB(config.color))
 	element:SetFrameLevel(holder:GetFrameLevel())
-	E.SetBackdrop(element, 2)
+	element:SetFrameStrata("HIGH")
+	E.SetBackdrop(element, 1.5)
 	E.CreateShadow(element)
 
   local bg = element:CreateTexture(nil, "BACKGROUND", nil)
@@ -254,8 +267,8 @@ function UF:CreateCastbar(frame)
 	end
 
 	element.Holder = holder
-	-- element.CustomDelayText = element_CustomDelayText
 	element.CustomTimeText = element_CustomTimeText
+	element.CustomDelayText = element_CustomDelayText
 	element.PostCastFail = element_PostCastFail
 	element.PostCastStart = element_PostCastStart
 	element.timeToHold = 0.4

@@ -31,6 +31,7 @@ local function frame_Update(self)
     self:UpdateHealth()
     self:UpdatePower()
     self:UpdateName()
+    self:UpdateCastbar()
     self:UpdatePortrait()
     self:UpdateUnitIndicator()
   else
@@ -62,6 +63,7 @@ function UF:CreateTargetFrame(frame)
   self:CreatePowerBar(frame, textParent)
   self:CreateName(frame, textParent)
   self:CreatePortrait(frame, portraitParent)
+  self:CreateCastbar(frame)
   self:CreateUnitIndicator(frame, portraitParent)
 
   frame.Update = frame_Update

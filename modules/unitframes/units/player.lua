@@ -24,7 +24,7 @@ local function frame_Update(self)
     self:UpdateSize()
     self:UpdateHealth()
     self:UpdatePower()
-    -- self:UpdateName()
+    self:UpdateClassPower()
     self:UpdateCastbar()
     self:UpdateUnitIndicator()
   else
@@ -48,6 +48,7 @@ function UF:CreatePlayerFrame(frame)
 
   self:CreateHealthBar(frame, textParent)
   self:CreatePowerBar(frame, textParent)
+  self:CreateClassPower(frame)
   self:CreateCastbar(frame)
   self:CreateUnitIndicator(frame)
 

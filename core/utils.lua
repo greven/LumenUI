@@ -318,6 +318,38 @@ function E:SetPosition(frame, point, relative)
 	frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
 end
 
+function E:CalcSegmentsSizes(totalSize, spacing, numSegs)
+	local totalSizeWoGaps = totalSize - spacing * (numSegs - 1)
+	local segSize = totalSizeWoGaps / numSegs
+	local result = {}
+
+	if segSize % 1 == 0 then
+		for i = 1, numSegs do
+			result[i] = segSize
+		end
+	else
+		local numOddSegs = numSegs % 2 == 0 and 2 or 1
+		local numNormalSegs = numSegs - numOddSegs
+		segSize = round(segSize)
+
+		for i = 1, numNormalSegs / 2 do
+			result[i] = segSize
+		end
+
+		for i = numSegs - numNormalSegs / 2 + 1, numSegs do
+			result[i] = segSize
+		end
+
+		segSize = (totalSizeWoGaps - segSize * numNormalSegs) / numOddSegs
+
+		for i = 1, numOddSegs do
+			result[numNormalSegs / 2 + i] = segSize
+		end
+	end
+
+	return result
+end
+
 -- ---------------
 -- > Units
 -- ---------------

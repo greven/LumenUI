@@ -4,6 +4,7 @@ local E, D, C, M = ns.E, ns.D, ns.C, ns.M
 local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
 local playerHeight = 18
+local playerWidth = 180
 
 local function rgb(r, g, b)
 	return E:SetRGB({}, r, g, b)
@@ -71,7 +72,7 @@ D.modules = {
     units = {
       player = {
         enabled = true,
-        width = 180,
+        width = playerWidth,
         height = playerHeight,
         point = {
           p = "CENTER",
@@ -82,8 +83,7 @@ D.modules = {
         },
         health = {
           enabled = true,
-          hideTextWhenMax = true,
-          killRange = false,
+          kill_range = false,
           change_threshold = 0.001,
           color = {
             reverse = true,
@@ -101,6 +101,7 @@ D.modules = {
             shadow = false,
             h_alignment = "RIGHT",
             v_alignment = "MIDDLE",
+            hide_when_max = true,
             point = {
               p = "RIGHT",
               anchor = "",
@@ -137,12 +138,34 @@ D.modules = {
             },
           },
         },
+        class_power = {
+          enabled = true,
+          width = playerWidth,
+          height = 2,
+          gap = 6,
+					change_threshold = 0.01,
+					orientation = "HORIZONTAL",
+					prediction = {
+						enabled = true,
+					},
+					runes = {
+						color_by_spec = true,
+						sort_order = "none",
+          },
+          point = {
+            p = "TOPLEFT",
+            anchor = "",
+            ap = "BOTTOMLEFT",
+            x = 0,
+            y = -8
+          },
+				},
         castbar = {
           enabled = true,
           width = 300,
           height = 22,
           color = D.colors.dark_blue,
-          colorClass = true,
+          class_colored = true,
           max = true,
           latency = false,
           icon = {
@@ -196,7 +219,7 @@ D.modules = {
           enabled = true,
           width = 1.5,
           height = playerHeight,
-          hideOutOfCombat = true,
+          hide_out_of_combat = true,
           point = {
             p = "RIGHT",
             anchor = "",
@@ -219,8 +242,7 @@ D.modules = {
         },
         health = {
           enabled = true,
-          hideTextWhenMax = false,
-          killRange = false,
+          kill_range = false,
           color = {
             reverse = false,
             smooth = false,
@@ -237,6 +259,7 @@ D.modules = {
             shadow = false,
             h_alignment = "RIGHT",
             v_alignment = "MIDDLE",
+            hide_when_max = false,
             point = {
               p = "RIGHT",
               anchor = "",
@@ -287,6 +310,31 @@ D.modules = {
             },
           },
         },
+        castbar = {
+          enabled = true,
+          width = 280 + 58,
+          height = 18,
+          color = D.colors.dark_blue,
+          class_colored = false,
+          max = false,
+          latency = false,
+          icon = {
+            position = "RIGHT", -- "RIGHT", "NONE"
+            gap = 5
+          },
+          text = {
+            size = 11,
+            outline = true,
+            shadow = false,
+          },
+          point = {
+            p = "TOPLEFT",
+            anchor = "Health",
+            ap = "BOTTOMLEFT",
+            x = -57,
+            y = -8
+          },
+        },
         name = {
           tag = "[lum:color_difficulty][lum:level]|r [lum:name]",
           size = 17,
@@ -322,7 +370,7 @@ D.modules = {
           style = "3D",
           width = 50,
           height = 28,
-          modelAlpha = 1.0,
+          model_alpha = 1.0,
           desaturation = 0.0,
           point = {
             p = "RIGHT",
@@ -351,7 +399,7 @@ D.modules = {
           enabled = true,
           width = 2,
           height = 28,
-          hideOutOfCombat = false,
+          hide_out_of_combat = false,
           point = {
             p = "RIGHT",
             anchor = "",

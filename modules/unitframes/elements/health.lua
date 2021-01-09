@@ -61,18 +61,18 @@ do
       self.bg:SetVertexColor(E:GetRGB(color))
     end
 
-    if config.hideTextWhenMax and cur == max then
+    if config.text.hide_when_max and cur == max then
 			self.Text:Hide()
 		else
 			self.Text:Show()
     end
 
     -- Kill Range texture
-    if config.killRange and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
+    if config.kill_range and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
       self.KillRange:Hide()
       self.KillRange.spark:Hide()
     else
-      if config.killRange then
+      if config.kill_range then
         self.KillRange:Show()
         self.KillRange.spark:Show()
       end
@@ -116,7 +116,7 @@ do
   end
 
   local function element_UpdateKillZone(self)
-    if self._config.killRange then
+    if self._config.kill_range then
       self.KillRange:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
       self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT", self:GetWidth() * 0.2, 0)
       self.KillRange.spark:SetSize(1, self:GetHeight())
