@@ -30,6 +30,20 @@ M.textures = {
   vertstatus = Media.."textures\\vertstatus",
   line = Media.."textures\\line",
   border = Media.."textures\\border",
+	aura_icons = {
+		-- line #1
+		["Buff"] = {1 / 128, 33 / 128, 1 / 128, 33 / 128},
+		["Debuff"] = {34 / 128, 66 / 128, 1 / 128, 33 / 128},
+		["Curse"] = {67 / 128, 99 / 128, 1 / 128, 33 / 128},
+		-- line #2
+		["Disease"] = {1 / 128, 33 / 128, 34 / 128, 66 / 128},
+		["Magic"] = {34 / 128, 66 / 128, 34 / 128, 66 / 128},
+		["Poison"] = {67 / 128, 99 / 128, 34 / 128, 66 / 128},
+		-- line #3
+		[""] = {1 / 128, 33 / 128, 67 / 128, 99 / 128}, -- Enrage
+		-- ["TEMP"] = {34 / 128, 66 / 128, 67 / 128, 99 / 128},
+		-- ["TEMP"] = {67 / 128, 99 / 128, 67 / 128, 99 / 128},
+	},
 }
 
 -- ---------------
@@ -43,7 +57,12 @@ D.global = {
       },
       outline = false,
 			shadow = true,
-    }
+    },
+		cooldown = {
+			font = M.fonts.normal,
+			outline = true,
+			shadow = false,
+		},
   },
   backdrop = {
     color = rgb(0, 0, 0),
@@ -55,7 +74,15 @@ D.global = {
   },
   shadows = {
     alpha = 0.4
-  }
+  },
+  aura_filters = {
+		["Blacklist"] = {
+			is_init = false,
+		},
+		["M+ Affixes"] = {
+			is_init = false,
+		},
+	},
 }
 
 D.modules = {
@@ -70,6 +97,10 @@ D.modules = {
       enabled = true,
       alpha = D.global.shadows.alpha
     },
+    cooldown = {
+			exp_threshold = 5, -- [1; 10]
+			m_ss_threshold = 600, -- [91; 3599]
+		},
     units = {
       player = {
         enabled = true,
@@ -333,7 +364,7 @@ D.modules = {
             anchor = "Health",
             ap = "BOTTOMLEFT",
             x = -57,
-            y = -42
+            y = -41
           },
         },
         name = {
@@ -411,11 +442,11 @@ D.modules = {
         },
         auras = {
           enabled = true,
-          rows = 4,
-          per_row = 8,
+          rows = 2,
+          per_row = 12,
           size_override = 0,
           x_growth = "RIGHT",
-          y_growth = "UP",
+          y_growth = "BOTTOM",
           disable_mouse = false,
           count = {
             size = 10,
@@ -424,12 +455,78 @@ D.modules = {
             h_alignment = "RIGHT",
             v_alignment = "TOP",
           },
+          cooldown = {
+            text = {
+              enabled = true,
+              size = 10,
+              v_alignment = "BOTTOM",
+            },
+          },
+          type = {
+            size = 12,
+            position = "TOPLEFT",
+            debuff_type = false,
+          },
+          filter = {
+            custom = {
+              ["Blacklist"] = true,
+              ["M+ Affixes"] = true,
+            },
+            friendly = {
+              buff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                mount = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                misc = false,
+              },
+              debuff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                dispellable = true,
+                misc = false,
+              },
+            },
+            enemy = {
+              buff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                mount = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                dispellable = true,
+                misc = false,
+              },
+              debuff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                misc = false,
+              },
+            },
+          },
           point = {
             p = "TOPLEFT",
             anchor = "Health",
             ap = "BOTTOMLEFT",
             x = -57,
-            y = -16
+            y = -80
           },
         }
       },

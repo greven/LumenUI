@@ -9,25 +9,191 @@ local next = _G.next
 local select = _G.select
 local unpack = _G.unpack
 
+local UnitIsFriend = _G.UnitIsFriend
+
 -- ---------------
 
 local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
-local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
-	-- if aura.isDebuff then
-	-- 	aura.Border:SetVertexColor(E:GetRGB(C.db.global.colors.debuff[debuffType] or C.db.global.colors.debuff.None))
+local MOUNTS = {}
 
-	-- 	if self._config.type.debuff_type then
-	-- 		aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons[debuffType] or M.textures.aura_icons["Debuff"]))
-	-- 	else
-	-- 		aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Debuff"]))
-	-- 	end
-	-- else
-	-- 	aura.Border:SetVertexColor(1, 1, 1)
-	-- 	aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Buff"]))
-	-- end
+for _, id in next, C_MountJournal.GetMountIDs() do
+	MOUNTS[select(2, C_MountJournal.GetMountInfoByID(id))] = true
+end
+
+local filterFunctions = {
+	default = function(self, unit, aura, _, _, _, debuffType, duration, _, caster, isStealable, _, spellID, _, isBossAura)
+		local config = self._config and self._config.filter or nil
+		if not config then return end
+
+		-- black- and whitelists
+		for filter, enabled in next, config.custom do
+			if enabled then
+				filter = C.global.aura_filters[filter]
+				if filter and filter[spellID] then
+					return filter.state
+				end
+			end
+		end
+
+		local isFriend = UnitIsFriend("player", unit)
+
+		config = isFriend and config.friendly or config.enemy
+		if not config then return end
+
+		config = aura.isDebuff and config.debuff or config.buff
+		if not config then return end
+
+		-- boss
+		isBossAura = isBossAura or E:IsUnitBoss(caster)
+		if isBossAura then
+			return config.boss
+		end
+
+		-- applied by tank
+		if caster and E:IsUnitTank(caster) then
+			return config.tank
+		end
+
+		-- applied by healer
+		if caster and E:IsUnitTank(caster) then
+			return config.healer
+		end
+
+		-- mounts
+		if MOUNTS[spellID] then
+			return config.mount
+		end
+
+		-- self-cast
+		if caster and UnitIsUnit(unit, caster) then
+			if duration and duration ~= 0 then
+				return config.selfcast
+			else
+				return config.selfcast and config.selfcast_permanent
+			end
+		end
+
+		-- applied by player
+		if aura.isPlayer or (caster and UnitIsUnit(caster, "pet")) then
+			if duration and duration ~= 0 then
+				return config.player
+			else
+				return config.player and config.player_permanent
+			end
+		end
+
+		if isFriend then
+			if aura.isDebuff then
+				-- dispellable
+				if debuffType and E:IsDispellable(debuffType) then
+					return config.dispellable
+				end
+			end
+		else
+			-- stealable
+			if isStealable then
+				return config.dispellable
+			end
+		end
+
+		return config.misc
+	end,
+	boss = function(self, unit, aura, _, _, _, debuffType, duration, _, caster, isStealable, _, spellID, _, isBossAura)
+		local config = self._config and self._config.filter or nil
+		if not config then return end
+
+		-- black- and whitelists
+		for filter, enabled in next, config.custom do
+			if enabled then
+				filter = C.global.aura_filters[filter]
+				if filter and filter[spellID] then
+					return filter.state
+				end
+			end
+		end
+
+		local isFriend = UnitIsFriend("player", unit)
+
+		config = isFriend and config.friendly or config.enemy
+		if not config then return end
+
+		config = aura.isDebuff and config.debuff or config.buff
+		if not config then return end
+
+		-- boss
+		isBossAura = isBossAura or E:IsUnitBoss(caster)
+		if isBossAura then
+			return config.boss
+		end
+
+		-- applied by tank
+		if caster and E:IsUnitTank(caster) then
+			return config.tank
+		end
+
+		-- applied by healer
+		if caster and E:IsUnitTank(caster) then
+			return config.healer
+		end
+
+		-- applied by player
+		if aura.isPlayer or (caster and UnitIsUnit(caster, "pet")) then
+			if duration and duration ~= 0 then
+				return config.player
+			else
+				return config.player and config.player_permanent
+			end
+		end
+
+		if isFriend then
+			if aura.isDebuff then
+				-- dispellable
+				if debuffType and E:IsDispellable(debuffType) then
+					return config.dispellable
+				end
+			end
+		else
+			-- stealable
+			if isStealable then
+				return config.dispellable
+			end
+		end
+
+		return config.misc
+	end,
+}
+
+local function button_UpdateTooltip(self)
+	GameTooltip:SetUnitAura(self:GetParent().__owner.unit, self:GetID(), self.filter)
+end
+
+local function button_OnEnter(self)
+	if not self:IsVisible() then return end
+
+	GameTooltip:SetOwner(self, self:GetParent().tooltipAnchor)
+	self:UpdateTooltip()
+end
+
+local function button_OnLeave()
+	GameTooltip:Hide()
+end
+
+local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
+	if aura.isDebuff then
+		aura.Border:SetVertexColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
+
+		if self._config.type.debuff_type then
+			aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons[debuffType] or M.textures.aura_icons["Debuff"]))
+		else
+			aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Debuff"]))
+		end
+	else
+		aura.Border:SetVertexColor(1, 1, 1)
+		aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Buff"]))
+	end
 end
 
 local function element_CreateAuraIcon(self, index)
@@ -61,31 +227,31 @@ local function element_CreateAuraIcon(self, index)
 	button.cd = button.CD
 	button.CD = nil
 
-	-- if button.cd.UpdateConfig then
-	-- 	button.cd:UpdateConfig(self.cooldownConfig or {})
-	-- 	button.cd:UpdateFont()
-	-- end
+	if button.cd.UpdateConfig then
+		button.cd:UpdateConfig(self.cooldownConfig or {})
+		button.cd:UpdateFont()
+	end
 
-	-- button:SetPushedTexture("")
-	-- button:SetHighlightTexture("")
+	button:SetPushedTexture("")
+	button:SetHighlightTexture("")
 
-	-- local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
-	-- stealable:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
-	-- stealable:SetTexCoord(2 / 32, 30 / 32, 2 / 32, 30 / 32)
-	-- stealable:SetPoint("TOPLEFT", -1, 1)
-	-- stealable:SetPoint("BOTTOMRIGHT", 1, -1)
-	-- stealable:SetBlendMode("ADD")
-	-- button.stealable = stealable
+	local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
+	stealable:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
+	stealable:SetTexCoord(2 / 32, 30 / 32, 2 / 32, 30 / 32)
+	stealable:SetPoint("TOPLEFT", -1, 1)
+	stealable:SetPoint("BOTTOMRIGHT", 1, -1)
+	stealable:SetBlendMode("ADD")
+	button.stealable = stealable
 
-	-- local auraType = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 3)
-	-- auraType:SetTexture("Interface\\AddOns\\ls_UI\\assets\\unit-frame-aura-icons")
-	-- auraType:SetPoint(config.type.position, 0, 0)
-	-- auraType:SetSize(config.type.size, config.type.size)
-	-- button.AuraType = auraType
+	local auraType = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 3)
+	auraType:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
+	auraType:SetPoint(config.type.position, 0, 0)
+	auraType:SetSize(config.type.size, config.type.size)
+	button.AuraType = auraType
 
-	-- button.UpdateTooltip = button_UpdateTooltip
-	-- button:SetScript("OnEnter", button_OnEnter)
-	-- button:SetScript("OnLeave", button_OnLeave)
+	button.UpdateTooltip = button_UpdateTooltip
+	button:SetScript("OnEnter", button_OnEnter)
+	button:SetScript("OnLeave", button_OnLeave)
 
 	return button
 end
@@ -139,6 +305,27 @@ local function element_UpdatePoints(self)
   end
 end
 
+local function element_UpdateCooldownConfig(self)
+	if not self.cooldownConfig then
+		self.cooldownConfig = {
+			text = {},
+		}
+	end
+
+	self.cooldownConfig.exp_threshold = C.modules.unitframes.cooldown.exp_threshold
+	self.cooldownConfig.m_ss_threshold = C.modules.unitframes.cooldown.m_ss_threshold
+	self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
+
+	for i = 1, self.createdIcons do
+		if not self[i].cd.UpdateConfig then
+			break
+		end
+
+		self[i].cd:UpdateConfig(self.cooldownConfig)
+		self[i].cd:UpdateFont()
+	end
+end
+
 local function element_UpdateGrowthDirection(self)
 	local config = self._config
 
@@ -183,7 +370,7 @@ end
 local function frame_UpdateAuras(self)
   local element = self.Auras
   element:UpdateConfig()
-  -- element:UpdateCooldownConfig()
+  element:UpdateCooldownConfig()
 	element:UpdateFont()
   element:UpdateSize()
   element:UpdatePoints()
@@ -204,10 +391,10 @@ end
 
 function UF:CreateAuras(frame, unit)
   local element = CreateFrame("Frame", nil, frame)
-  element:SetSize(48, 48)
+	element:SetSize(48, 48)
 
   element.UpdateConfig = element_UpdateConfig
-  -- element.UpdateCooldownConfig = element_UpdateCooldownConfig
+  element.UpdateCooldownConfig = element_UpdateCooldownConfig
   element.UpdateFont = element_UpdateFont
   element.UpdateSize = element_UpdateSize
   element.UpdatePoints = element_UpdatePoints
@@ -220,7 +407,7 @@ function UF:CreateAuras(frame, unit)
   element.showStealableBuffs = true
   element.CreateIcon = element_CreateAuraIcon
 	element.PostUpdateIcon = element_PostUpdateIcon
-	-- element.CustomFilter = filterFunctions[unit] or filterFunctions.default
+	element.CustomFilter = filterFunctions[unit] or filterFunctions.default
 
   frame.UpdateAuras = frame_UpdateAuras
   frame.Auras = element

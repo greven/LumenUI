@@ -6,6 +6,31 @@ local _G = getfenv(0)
 
 -- ---------------
 
+local function setPushedTexture(button)
+	if not button.SetPushedTexture then return end
+
+	button:SetPushedTexture("Interface\\Buttons\\ButtonHilight-Square")
+	button:GetPushedTexture():SetBlendMode("ADD")
+	button:GetPushedTexture():SetDesaturated(true)
+	button:GetPushedTexture():SetVertexColor(E:GetRGB(C.colors.yellow))
+	button:GetPushedTexture():SetAllPoints()
+end
+
+local function setHighlightTexture(button)
+	if not button.SetHighlightTexture then return end
+
+	button:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
+	button:GetHighlightTexture():SetAllPoints()
+end
+
+local function setCheckedTexture(button)
+	if not button.SetCheckedTexture then return end
+
+	button:SetCheckedTexture("Interface\\Buttons\\CheckButtonHilight")
+	button:GetCheckedTexture():SetBlendMode("ADD")
+	button:GetCheckedTexture():SetAllPoints()
+end
+
 local function setIcon(button, texture, l, r, t, b)
 	local icon
 
@@ -38,8 +63,8 @@ function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecur
 	border:SetOffset(-4)
 	button.Border = border
 
-	-- setHighlightTexture(button)
-	-- setPushedTexture(button)
+	setHighlightTexture(button)
+	setPushedTexture(button)
 
 	if hasCount then
 		local count = button:CreateFontString(nil, "ARTWORK", "NumberFontNormal")
@@ -49,20 +74,20 @@ function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecur
 		button.Count = count
 	end
 
-	-- if hasCooldown then
-	-- 	button.CD = E.Cooldowns.Create(button)
-	-- end
+	if hasCooldown then
+		button.CD = E.Cooldowns.Create(button)
+	end
 
-	-- if isSandwich then
-	-- 	local fgParent = CreateFrame("Frame", nil, button)
-	-- 	fgParent:SetFrameLevel(button:GetFrameLevel() + 2)
-	-- 	fgParent:SetAllPoints()
-	-- 	button.FGParent = fgParent
+	if isSandwich then
+		local fgParent = CreateFrame("Frame", nil, button)
+		fgParent:SetFrameLevel(button:GetFrameLevel() + 2)
+		fgParent:SetAllPoints()
+		button.FGParent = fgParent
 
-	-- 	if hasCount then
-	-- 		button.Count:SetParent(fgParent)
-	-- 	end
-	-- end
+		if hasCount then
+			button.Count:SetParent(fgParent)
+		end
+	end
 
 	return button
 end

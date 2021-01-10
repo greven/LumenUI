@@ -5,11 +5,14 @@ local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
+local assert = _G.assert
 local next = _G.next
 local ipairs = _G.ipairs
 local pairs = _G.pairs
 local select = _G.select
 
+local m_abs = _G.math.abs
+local m_ceil = _G.math.ceil
 local m_floor = _G.math.floor
 local m_min = _G.math.min
 local m_max = _G.math.max
@@ -18,6 +21,8 @@ local m_modf = _G.math.modf
 local s_format = _G.string.format
 local s_utf8sub = _G.string.utf8sub
 local s_split = _G.string.split
+
+local t_wipe = _G.table.wipe
 
 local BreakUpLargeNumbers = _G.BreakUpLargeNumbers
 local UnitClass = _G.UnitClass
@@ -28,6 +33,8 @@ local UnitIsTapDenied = _G.UnitIsTapDenied
 local UnitIsConnected = _G.UnitIsConnected
 local UnitIsGhost = _G.UnitIsGhost
 local UnitIsDead = _G.UnitIsDead
+local UnitGUID = _G.UnitGUID
+local UnitGroupRolesAssigned = _G.UnitGroupRolesAssigned
 
 -- ---------------
 -- > Math
@@ -76,34 +83,100 @@ function E:FormatNumber(val, colorCap)
 	end
 end
 
-
 do
-  local D_D_ABBR = _G.DAY_ONELETTER_ABBR:gsub("[ .]", "")
-  local D_H_ABBR = _G.HOUR_ONELETTER_ABBR:gsub("[ .]", "")
-  local D_M_ABBR = _G.MINUTE_ONELETTER_ABBR:gsub("[ .]", "")
-  local D_S_ABBR = _G.SECOND_ONELETTER_ABBR:gsub("[ .]", "")
-  local D_MS_ABBR = "%d" .. _G.MILLISECONDS_ABBR
-  local F_MS_ABBR = "%.1f" .. _G.MILLISECONDS_ABBR
+	local D_D_ABBR = _G.DAY_ONELETTER_ABBR:gsub("[ .]", "")
+	local D_H_ABBR = _G.HOUR_ONELETTER_ABBR:gsub("[ .]", "")
+	local D_M_ABBR = _G.MINUTE_ONELETTER_ABBR:gsub("[ .]", "")
+	local D_S_ABBR = _G.SECOND_ONELETTER_ABBR:gsub("[ .]", "")
+	local D_MS_ABBR = "%d" .. _G.MILLISECONDS_ABBR
 
-  -- s: value in seconds
-  -- returns: formatted time and color
-  function E:FormatTime(s)
-    local day, hour, minute = 86400, 3600, 60
+	local F_D_ABBR = D_D_ABBR:gsub("%%d", "%%.1f")
+	local F_H_ABBR = D_H_ABBR:gsub("%%d", "%%.1f")
+	local F_M_ABBR = D_M_ABBR:gsub("%%d", "%%.1f")
+	local F_S_ABBR = D_S_ABBR:gsub("%%d", "%%.1f")
+	local F_MS_ABBR = "%.1f" .. _G.MILLISECONDS_ABBR
 
-    if s >= day then
-			return s_format(D_D_ABBR, round(s / day)), "e5e5e5"
-		elseif s >= hour then
-			return s_format(D_H_ABBR, round(s / hour)), "e5e5e5"
-		elseif s >= minute then
-			return s_format(D_M_ABBR, round(s / minute)), "e5e5e5"
-		elseif s >= 5 then
-			return s_format(D_S_ABBR, round(s)), s >= 30 and "e5e5e5" or s >= 10 and "ffbf19" or "e51919"
-		elseif s >= 0 then
-			return s_format("%.1f", s), "e51919"
+	local X_XX_FORMAT = "%d:%02d"
+	local D = "%d"
+	local F = "%.1f"
+
+	function E:TimeFormat(v)
+		if v >= 86400 then
+			return s_format(D_D_ABBR, round(v / 86400)), "e5e5e5"
+		elseif v >= 3600 then
+			return s_format(D_H_ABBR, round(v / 3600)), "e5e5e5"
+		elseif v >= 60 then
+			return s_format(D_M_ABBR, round(v / 60)), "e5e5e5"
+		elseif v >= 5 then
+			return s_format(D_S_ABBR, round(v)), v >= 30 and "e5e5e5" or v >= 10 and "ffbf19" or "e51919"
+		elseif v >= 0 then
+			return s_format("%.1f", v), "e51919"
 		else
 			return 0
 		end
-  end
+	end
+
+	function E:SecondsToTime(v, format)
+		if format == "abbr" then
+			if v >= 86400 then
+				return m_ceil(v / 86400), nil, D_D_ABBR
+			elseif v >= 3600 then
+				return m_ceil(v / 3600), nil, D_H_ABBR
+			elseif v >= 60 then
+				return m_ceil(v / 60), nil, D_M_ABBR
+			elseif v >= 1 then
+				return m_ceil(v / 1), nil, D_S_ABBR
+			else
+				return m_ceil(v / 0.001), nil, D_MS_ABBR
+			end
+		elseif format == "x:xx" then
+			if v >= 86400 then
+				return m_floor(v / 86400), m_floor(v % 86400 / 3600), X_XX_FORMAT
+			elseif v >= 3600 then
+				return m_floor(v / 3600), m_floor(v % 3600 / 60), X_XX_FORMAT
+			elseif v >= 60 then
+				return m_floor(v / 60), m_floor(v % 60 / 1), X_XX_FORMAT
+			elseif v >= 1 then
+				return m_floor(v / 1), m_floor(v % 1 / 0.001), X_XX_FORMAT
+			else
+				return 0, m_floor(v / 0.001), X_XX_FORMAT
+			end
+		elseif format == "frac" then
+			if v >= 86400 then
+				return v / 86400, nil, F
+			elseif v >= 3600 then
+				return v / 3600, nil, F
+			elseif v >= 60 then
+				return v / 60, nil, F
+			else
+				return v, nil, F
+			end
+		elseif format == "frac-abbr" then
+			if v >= 86400 then
+				return v / 86400, nil, F_D_ABBR
+			elseif v >= 3600 then
+				return v / 3600, nil, F_H_ABBR
+			elseif v >= 60 then
+				return v / 60, nil, F_M_ABBR
+			elseif v >= 1 then
+				return v, nil, F_S_ABBR
+			else
+				return v, nil, F_MS_ABBR
+			end
+		else
+			if v >= 86400 then
+				return m_ceil(v / 86400), nil, D
+			elseif v >= 3600 then
+				return m_ceil(v / 3600), nil, D
+			elseif v >= 60 then
+				return m_ceil(v / 60), nil, D
+			elseif v >= 1 then
+				return m_ceil(v), nil, D
+			else
+				return v, nil, F
+			end
+		end
+	end
 end
 
 -- ---------------
@@ -471,5 +544,56 @@ do
 
 	function E:GetCreatureDifficultyColor(level)
 		return self:GetRelativeDifficultyColor(UnitEffectiveLevel("player"), level > 0 and level or 199)
+	end
+
+	do
+		local rosterInfo = {}
+
+		local function updateUnitInfo(unit)
+			rosterInfo[UnitGUID(unit)] = UnitGroupRolesAssigned(unit)
+		end
+
+		E:RegisterEvent("UNIT_NAME_UPDATE", updateUnitInfo)
+
+		E:RegisterEvent("GROUP_ROSTER_UPDATE", function()
+			t_wipe(rosterInfo)
+
+			local prefix, num
+			if IsInRaid() then
+				prefix, num = "raid", GetNumGroupMembers()
+			elseif IsInGroup() then
+				prefix, num = "party", GetNumSubgroupMembers()
+			end
+
+			if prefix then
+				for i = 1, num do
+					updateUnitInfo(prefix .. i)
+				end
+			end
+		end)
+
+		E:RegisterEvent("GROUP_LEFT", function()
+			t_wipe(rosterInfo)
+		end)
+
+		function E:GetRosterInfo()
+			return rosterInfo
+		end
+
+		function E:IsUnitTank(unit)
+			return rosterInfo[UnitGUID(unit)] == "TANK"
+		end
+
+		function E:IsUnitHealer(unit)
+			return rosterInfo[UnitGUID(unit)] == "HEALER"
+		end
+
+		function E:IsUnitDamager(unit)
+			return rosterInfo[UnitGUID(unit)] == "DAMAGER"
+		end
+	end
+
+	function E:IsUnitBoss(unit)
+		return unit and (UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") or UnitIsUnit(unit, "boss3") or UnitIsUnit(unit, "boss4") or UnitIsUnit(unit, "boss5"))
 	end
 end

@@ -7,5 +7,6 @@
   <Script file="api.lua" />
   <Script file="border.lua" />
   <Script file="button.lua" />
+  <Script file="cooldown.lua" />
   <Script file="statusbar.lua" />
 </Ui>
