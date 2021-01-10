@@ -5,7 +5,6 @@ local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
-
 local next = _G.next
 local ipairs = _G.ipairs
 local pairs = _G.pairs

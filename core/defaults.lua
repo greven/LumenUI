@@ -29,6 +29,7 @@ M.textures = {
   glow = Media.."textures\\glow",
   vertstatus = Media.."textures\\vertstatus",
   line = Media.."textures\\line",
+  border = Media.."textures\\border",
 }
 
 -- ---------------
@@ -409,7 +410,27 @@ D.modules = {
           },
         },
         auras = {
-          enabled = true
+          enabled = true,
+          rows = 4,
+          per_row = 8,
+          size_override = 0,
+          x_growth = "RIGHT",
+          y_growth = "UP",
+          disable_mouse = false,
+          count = {
+            size = 10,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "TOP",
+          },
+          point = {
+            p = "TOPLEFT",
+            anchor = "Health",
+            ap = "BOTTOMLEFT",
+            x = -57,
+            y = -16
+          },
         }
       },
     }

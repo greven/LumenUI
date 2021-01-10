@@ -3,7 +3,6 @@ local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
-
 local unpack = _G.unpack
 local next = _G.next
 

@@ -5,5 +5,7 @@
   <Script file="defaults.lua" />
   <Script file="constants.lua" />
   <Script file="api.lua" />
+  <Script file="border.lua" />
+  <Script file="button.lua" />
   <Script file="statusbar.lua" />
 </Ui>

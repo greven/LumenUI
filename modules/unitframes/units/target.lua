@@ -3,7 +3,6 @@ local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
-
 local UnitIsPlayer = _G.UnitIsPlayer
 local UnitReaction = _G.UnitReaction
 
