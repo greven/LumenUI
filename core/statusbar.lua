@@ -1,3 +1,5 @@
+-- Credits: ls_UI
+
 local A, ns = ...
 local E, C = ns.E, ns.C
 
