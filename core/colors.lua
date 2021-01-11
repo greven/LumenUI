@@ -83,8 +83,8 @@ D.colors = {
   },
   castbar = {
     casting = b.amber,
-    channeling = b.dark_green,
-    failed = b.dark_red,
+    channeling = b.green,
+    failed = b.red,
     notinterruptible = b.gray,
     class = {
       HUNTER = b.dark_green,

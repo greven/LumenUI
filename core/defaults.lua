@@ -5,6 +5,8 @@ local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
 local playerHeight = 18
 local playerWidth = 180
+local targetWidth = 280
+local targetHeight = 28
 
 local function rgb(r, g, b)
 	return E:SetRGB({}, r, g, b)
@@ -146,8 +148,8 @@ D.modules = {
         },
         power = {
           enabled = true,
-          height = 1.5,
-          gap = 1.5,
+          height = 2,
+          gap = 2,
           change_threshold = 0.01,
           color = {
             power = true,
@@ -175,7 +177,7 @@ D.modules = {
           enabled = true,
           width = playerWidth,
           height = 2,
-          gap = 6,
+          gap = 5,
 					change_threshold = 0.01,
 					orientation = "HORIZONTAL",
 					prediction = {
@@ -264,8 +266,8 @@ D.modules = {
       },
       target = {
         enabled = true,
-        width = 280,
-        height = 28,
+        width = targetWidth,
+        height = targetHeight,
         point = {
           p = "TOP",
           anchor = "UIParent",
@@ -345,7 +347,7 @@ D.modules = {
         },
         castbar = {
           enabled = true,
-          width = 280 + 58,
+          width = targetWidth,
           height = 18,
           color = D.colors.dark_blue,
           class_colored = false,
@@ -361,11 +363,11 @@ D.modules = {
             shadow = false,
           },
           point = {
-            p = "TOPLEFT",
+            p = "BOTTOMLEFT",
             anchor = "Health",
-            ap = "BOTTOMLEFT",
-            x = -57,
-            y = -41
+            ap = "TOPLEFT",
+            x = 0,
+            y = 7
           },
         },
         name = {
@@ -401,8 +403,8 @@ D.modules = {
         portrait = {
           enabled = true,
           style = "3D",
-          width = 50,
-          height = 28,
+          width = targetHeight * 1.75,
+          height = targetHeight,
           model_alpha = 1.0,
           desaturation = 0.0,
           point = {
@@ -431,7 +433,7 @@ D.modules = {
         unitIndicator = {
           enabled = true,
           width = 2,
-          height = 28,
+          height = targetHeight,
           hide_out_of_combat = false,
           point = {
             p = "RIGHT",
