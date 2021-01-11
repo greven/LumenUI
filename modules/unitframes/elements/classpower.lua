@@ -243,7 +243,7 @@ do
 		local element = createElement(frame, 10, "ClassPower")
 		element:Hide()
 
-		element.PostUpdate = element_PostUpdate
+		-- element.PostUpdate = element_PostUpdate
 		-- element.UpdateColors = element_UpdateColors
 		element.UpdateConfig = element_UpdateConfig
 		element.UpdateSize = element_UpdateSize

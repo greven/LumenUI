@@ -207,7 +207,7 @@ function UF:CreateCastbar(frame)
 	holder._width = 0
 
 	local element = CreateFrame("StatusBar", nil, holder)
-	element:SetStatusBarTexture(M.textures.mint)
+	element:SetStatusBarTexture(C.global.castbar.texture)
 	element:SetStatusBarColor(E:GetRGB(config.color))
 	element:SetFrameLevel(holder:GetFrameLevel())
 	element:SetFrameStrata("HIGH")
@@ -216,7 +216,7 @@ function UF:CreateCastbar(frame)
 
   local bg = element:CreateTexture(nil, "BACKGROUND", nil)
   bg:SetAllPoints(element)
-	bg:SetTexture(M.textures.vertlines)
+	bg:SetTexture(C.global.castbar.bg)
 	bg:SetVertexColor(E:GetRGB(C.colors.dark_gray))
   bg:SetAlpha(0.6)
 	element.bg = bg

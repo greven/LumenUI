@@ -78,6 +78,10 @@ D.global = {
   shadows = {
     alpha = 0.4
   },
+  castbar = {
+    texture = M.textures.statusbar,
+    bg = M.textures.vertlines
+  },
   aura_filters = {
 		["Blacklist"] = {
 			is_init = false,
@@ -202,7 +206,7 @@ D.modules = {
           color = D.colors.dark_blue,
           color_by_class = true,
           max = true,
-          latency = false,
+          latency = true,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
             gap = 6
