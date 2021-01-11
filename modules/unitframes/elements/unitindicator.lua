@@ -59,17 +59,25 @@ local function element_UpdateConfig(self)
 end
 
 local function element_UpdateSize(self)
-  local frame = self:GetParent()
-  local config = self._config
+  self:SetSize(self._config.width, self._config.height)
+end
 
-  self:SetSize(config.width, config.height)
-  E:SetPosition(self, config.point, frame)
+local function element_UpdatePoints(self)
+  local frame = self:GetParent()
+	local config = self._config.point
+
+  self:ClearAllPoints()
+
+  if config and config.p and config.p ~= "" then
+    E:SetPosition(self, config, frame)
+	end
 end
 
 local function frame_UpdateUnitIndicator(self)
   local element = self.UnitIndicator
   element:UpdateConfig()
   element:UpdateSize()
+  element:UpdatePoints()
   update(self)
 end
 
@@ -86,6 +94,7 @@ function UF:CreateUnitIndicator(frame, parent)
   element.__owner = frame
   element.UpdateConfig = element_UpdateConfig
   element.UpdateSize = element_UpdateSize
+  element.UpdatePoints = element_UpdatePoints
 
   frame.UpdateUnitIndicator = frame_UpdateUnitIndicator
   frame.UnitIndicator = element

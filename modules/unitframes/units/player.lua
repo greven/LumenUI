@@ -26,6 +26,7 @@ local function frame_Update(self)
     self:UpdatePower()
     self:UpdateCastbar()
     self:UpdateUnitIndicator()
+    self:UpdatePvPIndicator()
 
     self:UpdateClassPower()
 
@@ -58,7 +59,6 @@ function UF:CreatePlayerFrame(frame)
   self:CreateHealthBar(frame, textParent)
   self:CreatePowerBar(frame, textParent)
   self:CreateCastbar(frame)
-  self:CreateUnitIndicator(frame)
 
   -- Class Power
   if E.PLAYER_CLASS == "MONK" then
@@ -67,6 +67,9 @@ function UF:CreatePlayerFrame(frame)
     self:CreateRunes(frame)
   end
   self:CreateClassPower(frame)
+
+  self:CreateUnitIndicator(frame)
+  self:CreatePvPIndicator(frame)
 
   frame.Update = frame_Update
 

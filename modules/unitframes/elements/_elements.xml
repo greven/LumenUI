@@ -7,4 +7,5 @@
   <Script file="portrait.lua" />
   <Script file="power.lua" />
   <Script file="unitindicator.lua" />
+  <Script file="pvpindicator.lua" />
 </Ui>

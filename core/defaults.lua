@@ -266,6 +266,18 @@ D.modules = {
             x = -5,
             y = 0
           },
+        },
+        pvp = {
+          enabled = true,
+          width = 2.5,
+          height = playerHeight,
+          point = {
+            p = "LEFT",
+            anchor = "",
+            ap = "RIGHT",
+            x = 5,
+            y = 0
+          },
         }
       },
       target = {
