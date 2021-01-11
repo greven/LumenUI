@@ -1,9 +1,9 @@
 api:
-  ☐ gain and loss indicators (statusbar)
+  ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58)
 
 unitframes:
-  ☐ Mouseover Tooltip not showing?
   ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing??
 
 Archive:
+  ✔ Mouseover Tooltip not showing? @done(21-01-11 10:58) @project(unitframes)
   ✔ UnitIndicator: Show Threat when in combat and show threat level @done(21-01-04 13:32) @project(unitframes)

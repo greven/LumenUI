@@ -27,8 +27,9 @@ M.textures = {
   neon = Media.."textures\\neon",
   mint = Media.."textures\\mint",
   glow = Media.."textures\\glow",
-  vertstatus = Media.."textures\\vertstatus",
   line = Media.."textures\\line",
+  border_thin = Media.."textures\\border-thin",
+  border_thick = Media.."textures\\border-thick",
   border = Media.."textures\\border",
 	aura_icons = {
 		-- line #1
@@ -444,9 +445,10 @@ D.modules = {
           enabled = true,
           rows = 2,
           per_row = 12,
+          spacing = 5,
           size_override = 0,
           x_growth = "RIGHT",
-          y_growth = "BOTTOM",
+          y_growth = "DOWN",
           disable_mouse = false,
           count = {
             size = 10,
@@ -523,10 +525,10 @@ D.modules = {
           },
           point = {
             p = "TOPLEFT",
-            anchor = "Health",
+            anchor = "",
             ap = "BOTTOMLEFT",
-            x = -57,
-            y = -80
+            x = 1,
+            y = -8
           },
         }
       },

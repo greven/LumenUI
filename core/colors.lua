@@ -10,7 +10,7 @@ end
 local b = {
   black = rgb(0, 0, 0), white = rgb(255, 255, 255),
   light_gray = rgb(210, 210, 210), gray = rgb(82, 82, 82), dark_gray = rgb(26, 26, 26),
-  light_red = rgb(252, 165, 165), red = rgb(220, 48, 38), dark_red = rgb(185, 28, 28),
+  light_red = rgb(252, 165, 165), red = rgb(232, 48, 48), dark_red = rgb(185, 28, 28),
   light_orange = rgb(253, 186, 116), orange = rgb(249, 115, 22), dark_orange = rgb(194, 65, 12),
   light_amber = rgb(252, 211, 77), amber = rgb(245, 158, 11), dark_amber = rgb(180, 83, 9),
   light_yellow = rgb(253, 224, 71), yellow = rgb(234, 179, 8), dark_yellow = rgb(161, 98, 7),

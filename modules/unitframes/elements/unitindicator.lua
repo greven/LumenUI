@@ -62,7 +62,7 @@ end
 
 function UF:CreateUnitIndicator(frame, parent)
   local element = CreateFrame("StatusBar", nil, (parent or frame))
-  element:SetStatusBarTexture(M.textures.vertstatus)
+  element:SetStatusBarTexture(M.textures.flat)
   element:SetOrientation("VERTICAL")
 
   E.SetBackdrop(element, 2)

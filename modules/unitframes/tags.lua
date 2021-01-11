@@ -51,10 +51,12 @@ local _tags = {
     E:GetUnitColor(unit, true, true)
   end,
 
+  -- Creature difficulty color
   color_difficulty = function(unit)
     return "|c" .. E:ToHex(GetCreatureDifficultyColor(UnitEffectiveLevel(unit)))
   end,
 
+  -- Health current value
   health_cur = function(unit, _, colorCap)
     if not UnitIsConnected(unit) then
       return "Offline"
@@ -65,6 +67,7 @@ local _tags = {
     end
   end,
 
+  -- Health value or value - percentage when not max
   health_cur_perc = function(unit)
     if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
       return ""
@@ -79,6 +82,7 @@ local _tags = {
     end
   end,
 
+  -- Health percentage
   health_perc = function(unit)
     if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
       return ""

@@ -191,7 +191,7 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
 			aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Debuff"]))
 		end
 	else
-		aura.Border:SetVertexColor(1, 1, 1)
+		aura.Border:SetVertexColor(0.2, 0.2, 0.2)
 		aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Buff"]))
 	end
 end
@@ -260,9 +260,8 @@ local function element_UpdateConfig(self)
 	local unit = self.__owner._unit
   self._config = E:CopyTable(C.modules.unitframes.units[unit].auras, self._config)
 
-  local size = self._config.size_override ~= 0 and self._config.size_override
-  or E:Round((C.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) / self._config.per_row)
-self._config.size = m_min(m_max(size, 24), 64)
+  local size = self._config.size_override ~= 0 and self._config.size_override or E:Round((C.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) / self._config.per_row)
+	self._config.size = m_min(m_max(size, 24), 64)
 end
 
 local function element_UpdateFont(self)
@@ -295,7 +294,8 @@ local function element_UpdateSize(self)
 end
 
 local function element_UpdatePoints(self)
-	local config = self._config.point
+	local frame = self.__owner
+	local config = self._config
 
   self:ClearAllPoints()
 
@@ -371,9 +371,9 @@ local function frame_UpdateAuras(self)
   local element = self.Auras
   element:UpdateConfig()
   element:UpdateCooldownConfig()
-	element:UpdateFont()
   element:UpdateSize()
   element:UpdatePoints()
+	element:UpdateFont()
   element:UpdateGrowthDirection()
   element:UpdateAuraTypeIcon()
   element:UpdateMouse()
@@ -390,9 +390,14 @@ local function frame_UpdateAuras(self)
 end
 
 function UF:CreateAuras(frame, unit)
+	local config = C.modules.unitframes.units[frame._unit].auras
+
   local element = CreateFrame("Frame", nil, frame)
 	element:SetSize(48, 48)
 
+  element.showDebuffType = true
+	element.showStealableBuffs = true
+	element.spacing = config.spacing or 4
   element.UpdateConfig = element_UpdateConfig
   element.UpdateCooldownConfig = element_UpdateCooldownConfig
   element.UpdateFont = element_UpdateFont
@@ -401,16 +406,13 @@ function UF:CreateAuras(frame, unit)
   element.UpdateGrowthDirection = element_UpdateGrowthDirection
   element.UpdateAuraTypeIcon = element_UpdateAuraTypeIcon
   element.UpdateColors = element_UpdateColors
-  element.UpdateMouse = element_UpdateMouse
-  element.spacing = 4
-  element.showDebuffType = true
-  element.showStealableBuffs = true
-  element.CreateIcon = element_CreateAuraIcon
+	element.UpdateMouse = element_UpdateMouse
+	element.CreateIcon = element_CreateAuraIcon
 	element.PostUpdateIcon = element_PostUpdateIcon
 	element.CustomFilter = filterFunctions[unit] or filterFunctions.default
 
   frame.UpdateAuras = frame_UpdateAuras
   frame.Auras = element
 
-  return element
+	return element
 end
