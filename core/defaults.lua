@@ -252,7 +252,7 @@ D.modules = {
         },
         unitIndicator = {
           enabled = true,
-          width = 1.5,
+          width = 2.5,
           height = playerHeight,
           hide_out_of_combat = true,
           point = {

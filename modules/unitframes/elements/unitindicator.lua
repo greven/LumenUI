@@ -5,6 +5,7 @@ local E, C, M = ns.E, ns.C, ns.M
 local _G = getfenv(0)
 
 local UnitPlayerControlled = _G.UnitPlayerControlled
+local IsResting = _G.IsResting
 
 -- ---------------
 
@@ -16,38 +17,50 @@ local function update(self)
   if not (self.unit and self:IsShown()) then return end
 
   local element = self.UnitIndicator
-  local inCombat = UnitAffectingCombat(self.unit)
   local config = element._config
 
-  if not inCombat then
-    element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
-  else
-    if not UnitPlayerControlled(self.unit) then
+  local inCombat = UnitAffectingCombat(self.unit)
+  local isResting = IsResting()
+
+  if self.unit == "player" then
+    if inCombat then
+      element:SetStatusBarColor(E:GetRGB(C.colors.red))
+    elseif isResting then
+      element:SetStatusBarColor(E:GetRGB(C.colors.cyan))
+    else
+      element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
+    end
+  elseif UnitPlayerControlled(self.unit) then
+    if inCombat then
+      element:SetStatusBarColor(E:GetRGB(C.colors.red))
+    else
+      element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
+    end
+  else -- NPCs
+    if inCombat then
       element:SetStatusBarColor(E:GetRGB(E:GetUnitReactionColor("target")))
     else
-      element:SetStatusBarColor(E:GetRGB(C.colors.red))
+      element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
     end
   end
 
-  if config then
-    if config.unitIndicator.hide_out_of_combat then
-      if inCombat then
-        element:Show()
-      else
-        element:Hide()
-      end
+  if config and config.hide_out_of_combat then
+    if inCombat or isResting then
+      element:Show()
+    else
+      element:Hide()
     end
   end
 end
 
 local function element_UpdateConfig(self)
   local unit = self.__owner._unit
-  self._config = E:CopyTable(C.modules.unitframes.units[unit], self._config)
+  self._config = E:CopyTable(C.modules.unitframes.units[unit].unitIndicator, self._config)
 end
 
 local function element_UpdateSize(self)
   local frame = self:GetParent()
-  local config = self._config.unitIndicator
+  local config = self._config
 
   self:SetSize(config.width, config.height)
   E:SetPosition(self, config.point, frame)

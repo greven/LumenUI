@@ -112,13 +112,14 @@ do
 						self[i]:SetHeight(layout[i])
 					end
 
-					if i == chargedIdx then
-						self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-						self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
-					else
-						self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
-						self[i].Highlight:SetColorTexture(0, 0, 0, 0)
-					end
+					self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+					-- if i == chargedIdx then
+					-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+					-- 	self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+					-- else
+					-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+					-- 	self[i].Highlight:SetColorTexture(0, 0, 0, 0)
+					-- end
 				end
 			end
 
@@ -127,13 +128,14 @@ do
 			self._powerID = powerType
 		elseif self._active and self._chargedIdx ~= chargedIdx then
 			for i = 1, max do
-				if i == chargedIdx then
-					self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-					self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
-				else
-					self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
-					self[i].Highlight:SetColorTexture(0, 0, 0, 0)
-				end
+				self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+				-- if i == chargedIdx then
+				-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+				-- 	self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+				-- else
+				-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+				-- 	self[i].Highlight:SetColorTexture(0, 0, 0, 0)
+				-- end
 			end
 
 			self._chargedIdx = chargedIdx
@@ -163,7 +165,7 @@ do
 	local function element_UpdateColors(self)
 		if self._powerID then
 			for i = 1, 10 do
-				self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[self._powerID]))
+				self[i]:SetStatusBarColor(E:GetRGB(C.colors.power["CHI"]))
 			end
 		end
   end
@@ -219,7 +221,7 @@ do
 			end
 		end
 
-		element:UpdateColors()
+		-- element:UpdateColors()
 
 		if element._config.enabled and not self:IsElementEnabled("ClassPower") then
 			self:EnableElement("ClassPower")
@@ -242,7 +244,7 @@ do
 		element:Hide()
 
 		element.PostUpdate = element_PostUpdate
-		element.UpdateColors = element_UpdateColors
+		-- element.UpdateColors = element_UpdateColors
 		element.UpdateConfig = element_UpdateConfig
 		element.UpdateSize = element_UpdateSize
 
