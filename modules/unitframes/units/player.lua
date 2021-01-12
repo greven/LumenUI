@@ -69,7 +69,7 @@ function UF:CreatePlayerFrame(frame)
   self:CreateClassPower(frame)
 
   self:CreateUnitIndicator(frame)
-  self:CreatePvPIndicator(frame)
+  -- self:CreatePvPIndicator(frame)
 
   frame.Update = frame_Update
 

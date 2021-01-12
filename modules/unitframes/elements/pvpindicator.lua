@@ -9,9 +9,6 @@ local UnitIsMercenary = _G.UnitIsMercenary
 local UnitIsPVP = _G.UnitIsPVP
 local UnitIsPVPFreeForAll = _G.UnitIsPVPFreeForAll
 
--- TODO: Add Timer Tag?
--- TODO: Change color Alliance, Horde and FFA!
-
 -- ---------------
 
 local UF = E:GetModule("UnitFrames")
@@ -23,8 +20,8 @@ local function element_Override(self, _, unit)
   local element = self.PvPIndicator
   unit = unit or self.unit
 
+  local factionGroup = UnitFactionGroup(unit) or 'Neutral'
   local status
-	local factionGroup = UnitFactionGroup(unit) or 'Neutral'
 
 	if UnitIsPVPFreeForAll(unit) then
 		status = "FFA"
@@ -41,9 +38,17 @@ local function element_Override(self, _, unit)
   end
 
   if status then
+    if status == "Alliance" then
+      element:SetStatusBarColor(E:GetRGB(C.colors.faction[status]))
+    elseif status == "Horde" then
+      element:SetStatusBarColor(E:GetRGB(C.colors.faction[status]))
+    else
+      element:SetStatusBarColor(E:GetRGB(C.colors.amber))
+    end
+
 		element:Show()
 	else
-    element:Hide()
+		element:Hide()
 	end
 end
 
