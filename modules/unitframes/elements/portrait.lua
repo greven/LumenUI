@@ -7,8 +7,18 @@ local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
+local function frame_OnEnter(self)
+  self = self.__owner or self
+	UnitFrame_OnEnter(self)
+end
+
+local function frame_OnLeave(self)
+  self = self.__owner or self
+	UnitFrame_OnLeave(self)
+end
+
 local function element_UpdateConfig(self)
-  local unit = self.__owner._unit
+  local unit = self.__owner._layout or self.__owner._unit
 	self._config = E:CopyTable(C.modules.unitframes.units[unit].portrait, self._config)
 end
 

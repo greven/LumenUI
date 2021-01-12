@@ -27,7 +27,7 @@ local function frame_OnLeave(self)
 end
 
 local function frame_UpdateConfig(self)
-  self._config = E:CopyTable(C.modules.unitframes.units[self._unit], self._config)
+  self._config = E:CopyTable(C.modules.unitframes.units[self._layout or self._unit], self._config)
 end
 
 local function frame_UpdateSize(self)
@@ -93,9 +93,15 @@ end
 function UF:CreateUnitFrame(unit, name)
   if not units[unit] then
     if unit == "boss" then
-      -- TODO: Boss spawning here
+      -- Boss
     else
-      local object = oUF:Spawn(unit, name .. "Frame")
+      local object
+      if unit == "playerplate" then
+        object = oUF:Spawn("player", name .. "Frame")
+      else
+        object = oUF:Spawn(unit, name .. "Frame")
+      end
+
       object:UpdateConfig()
       E:SetPosition(object, object._config.point)
 			objects[unit] = object
@@ -108,7 +114,7 @@ end
 function UF:UpdateUnitFrame(unit, method, ...)
   if units[unit] then
     if unit == "boss" then
-      -- TODO: Update boss frames here
+      -- Boss
     elseif objects[unit] then
       if objects[unit][method] then
 				objects[unit][method](objects[unit], ...)
@@ -155,19 +161,27 @@ function UF:Init()
 
     oUF:Factory(function()
       oUF:RegisterStyle("Lumen", function(frame, unit)
+        local name = frame:GetName()
+
         frame:RegisterForClicks("AnyUp")
         frame:SetScript("OnEnter", frame_OnEnter)
-				frame:SetScript("OnLeave", frame_OnLeave)
+        frame:SetScript("OnLeave", frame_OnLeave)
+
         frame._unit = unit:gsub("%d+", "")
+        frame._layout = name:match("Lumen(%a+)Frame"):lower()
 
         frame.ForElement = frame_ForElement
         frame.UpdateConfig = frame_UpdateConfig
         frame.UpdateSize = frame_UpdateSize
 
         if unit == "player" then
-          UF:CreatePlayerFrame(frame)
+          if frame._layout == "playerplate" then
+            UF:CreatePlayerPlateFrame(frame)
+          else
+            UF:CreatePlayerFrame(frame)
+          end
         elseif unit == "target" then
-					UF:CreateTargetFrame(frame)
+          UF:CreateTargetFrame(frame)
         end
       end)
     end)
@@ -181,6 +195,11 @@ function UF:Init()
     if config.units.target.enabled then
       UF:CreateUnitFrame("target", "LumenTarget")
       UF:UpdateUnitFrame("target", "Update")
+    end
+
+    if config.units.playerplate.enabled then
+      UF:CreateUnitFrame("playerplate", "LumenPlayerPlate")
+      UF:UpdateUnitFrame("playerplate", "Update")
     end
 
     isInit = true

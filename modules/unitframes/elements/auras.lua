@@ -191,7 +191,7 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
 			aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Debuff"]))
 		end
 	else
-		aura.Border:SetVertexColor(0.2, 0.2, 0.2)
+		aura.Border:SetVertexColor(E:GetRGB(C.global.border.color))
 		aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Buff"]))
 	end
 end
@@ -257,7 +257,7 @@ local function element_CreateAuraIcon(self, index)
 end
 
 local function element_UpdateConfig(self)
-	local unit = self.__owner._unit
+	local unit = self.__owner._layout or self.__owner._unit
   self._config = E:CopyTable(C.modules.unitframes.units[unit].auras, self._config)
 
   local size = self._config.size_override ~= 0 and self._config.size_override or E:Round((C.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) / self._config.per_row)

@@ -133,7 +133,7 @@ do
   end
 
   local function element_UpdateConfig(self)
-		local unit = self.__owner._unit
+		local unit = self.__owner._layout or self.__owner._unit
 		self._config = E:CopyTable(C.modules.unitframes.units[unit].health, self._config)
 		self._config.power = E:CopyTable(C.modules.unitframes.units[unit].power, self._config.power)
   end
@@ -152,7 +152,7 @@ do
       self.colorClass = false
       self.colorSmooth = false
       self:SetStatusBarTexture(M.textures.vertlines)
-      self:SetAlpha(0.96)
+      self:SetAlpha(0.98)
       self.bg:SetTexture(C.global.statusbar.texture)
       self.bg:SetAlpha(0.9)
     end
@@ -164,8 +164,19 @@ do
     local frame = self:GetParent()
     local config = self._config
 
+    local gap = 0
+    if config.power then
+      if config.power.height then
+        gap = gap + config.power.height
+      end
+
+      if config.power.gap then
+        gap = gap + config.power.gap
+      end
+    end
+
     self:SetPoint("TOP", frame, 0, 0)
-    self:SetPoint("BOTTOM", frame, 0, config.power.height + config.power.gap)
+    self:SetPoint("BOTTOM", frame, 0, gap)
     self:SetPoint("LEFT", frame, 0, 0)
     self:SetPoint("RIGHT", frame, 0, 0)
     self:ForceUpdate()
@@ -212,7 +223,7 @@ do
 
     if config.perc then
       local perc = element:CreateFontString(nil, "BACKGROUND")
-      perc:SetTextColor(0.4, 0.4, 0.4, 0.8)
+      perc:SetTextColor(0.3, 0.3, 0.3, 0.8)
       element.Text.perc = perc
     end
 
@@ -222,7 +233,7 @@ do
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
     bg:SetTexture(M.textures.vertlines)
-    bg:SetAlpha(0.4)
+    bg:SetAlpha(0.5)
     bg.multiplier = 0.3
     element.bg = bg
 

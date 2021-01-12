@@ -43,12 +43,13 @@ local events = {
   npc_type = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
   npc_type_short = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
   power_cur = "UNIT_POWER_FREQUENT UNIT_MAXPOWER",
+  spec = "PLAYER_LOGIN PLAYER_ENTERING_WORLD PLAYER_TALENT_UPDATE CHARACTER_POINTS_CHANGED PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE GROUP_JOINED",
 }
 
 local _tags = {
   -- Color unit by disconnected, tapped, class or reaction
   color = function(unit)
-    E:GetUnitColor(unit, true, true)
+    return "|c" .. E:ToHex(E:GetUnitColor(unit, true, true))
   end,
 
   -- Creature difficulty color
@@ -153,7 +154,12 @@ local _tags = {
       local cur = UnitPower(unit, type)
       if cur > 0 then return E:FormatNumber(cur) end
     end
-  end
+  end,
+
+  -- Player spec
+  spec = function(unit)
+    return E:GetUnitSpecializationInfo(unit)
+  end,
 }
 
 for tag, func in next, _tags do

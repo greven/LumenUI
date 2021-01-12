@@ -526,7 +526,7 @@ do
 		return "UNKNOWN"
 	end
 
-	-- GetRelativeDifficultyColor function in UIParent.lua
+	-- GetRelativeDifficultyColor
 	function E:GetRelativeDifficultyColor(unitLevel, challengeLevel)
 		local diff = challengeLevel - unitLevel
 		if diff >= 5 then

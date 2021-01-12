@@ -4,6 +4,7 @@ api:
 unitframes:
   ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing??
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
+  ☐ Make right clicking on portraits show the frame menu
 
 Archive:
   ✔ Mouseover Tooltip not showing? @done(21-01-11 10:58) @project(unitframes)

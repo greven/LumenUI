@@ -3,9 +3,11 @@ local E, D, C, M = ns.E, ns.D, ns.C, ns.M
 
 local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
-local playerHeight = 18
-local playerWidth = 180
-local targetWidth = 280
+local playerHeight = 24
+local playerWidth = 228
+local playerPlateHeight = 4
+local playerPlateWidth = 180
+local targetWidth = 287
 local targetHeight = 28
 
 local function rgb(r, g, b)
@@ -29,7 +31,6 @@ M.textures = {
   neon = Media.."textures\\neon",
   mint = Media.."textures\\mint",
   glow = Media.."textures\\glow",
-  line = Media.."textures\\line",
   border_thin = Media.."textures\\border-thin",
   border_thick = Media.."textures\\border-thick",
   border = Media.."textures\\border",
@@ -70,6 +71,9 @@ D.global = {
   backdrop = {
     color = rgb(0, 0, 0),
     alpha = 0.85
+  },
+  border = {
+    color = rgb(30, 30, 30)
   },
   statusbar = {
     texture = M.textures.statusbar,
@@ -114,11 +118,11 @@ D.modules = {
         width = playerWidth,
         height = playerHeight,
         point = {
-          p = "CENTER",
+          p = "BOTTOMLEFT",
           anchor = "UIParent",
-          ap = "CENTER",
-          x = 0,
-          y = -240
+          ap = "BOTTOMLEFT",
+          x = 98 + 53,
+          y = 2 + 68
         },
         health = {
           enabled = true,
@@ -135,7 +139,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:health_cur(true)]",
-            size = 11,
+            size = 13,
             outline = true,
             shadow = false,
             h_alignment = "RIGHT",
@@ -152,8 +156,8 @@ D.modules = {
         },
         power = {
           enabled = true,
-          height = 2,
-          gap = 2,
+          height = 1.5,
+          gap = 1.5,
           change_threshold = 0.01,
           color = {
             power = true,
@@ -218,65 +222,173 @@ D.modules = {
           },
           point = {
             p = "CENTER",
-            anchor = "",
-            ap = "CENTER",
+            anchor = "UIParent",
+            ap = "BOTTOM",
             x = 0,
-            y = -60
+            y = 200
           },
         },
         name = {
-          tag = "[lum:name]",
-          size = 14,
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name]",
+          size = 22,
           outline = true,
           shadow = false,
-          h_alignment = "CENTER",
-          v_alignment = "MIDDLE",
+          h_alignment = "LEFT",
+          v_alignment = "BOTTOM",
           word_wrap = false,
           point = {
-            p = "BOTTOM",
+            p = "BOTTOMLEFT",
             anchor = "Health",
-            ap = "TOP",
+            ap = "TOPLEFT",
             x = 0,
-            y = 6
+            y = 17
           },
-          background = {
-            enabled = true,
-            width = 280,
-            height = 14,
-            texture = M.textures.line,
-            alpha = 0.9,
+        },
+        portrait = {
+          enabled = true,
+          style = "3D",
+          width = 82,
+          height = 82,
+          model_alpha = 1.0,
+          desaturation = 0.0,
+          point = {
+            p = "BOTTOMRIGHT",
+            anchor = "",
+            ap = "BOTTOMLEFT",
+            x = -6,
+            y = 0
+          },
+          text = {
+            tag = "[lum:npc_type(true)]",
+            size = 13,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
             point = {
-              p = "CENTER",
-              anchor = "Name",
-              ap = "CENTER",
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
               x = 0,
-              y = 1
+              y = 4
             },
-          }
+          },
         },
         unitIndicator = {
           enabled = true,
           width = 2.5,
-          height = playerHeight,
-          hide_out_of_combat = true,
+          height = 82,
+          rested = true,
+          hide_out_of_combat = false,
           point = {
             p = "RIGHT",
             anchor = "",
             ap = "LEFT",
-            x = -5,
+            x = -6,
             y = 0
           },
         },
         pvp = {
           enabled = true,
-          width = 2.5,
+          width = 32,
           height = playerHeight,
+          alpha = 0.6,
           point = {
-            p = "LEFT",
+            p = "TOPRIGHT",
             anchor = "",
-            ap = "RIGHT",
-            x = 5,
+            ap = "TOPRIGHT",
+            x = 0,
             y = 0
+          },
+        },
+        auras = {
+          enabled = true,
+          rows = 2,
+          per_row = 8,
+          spacing = 5,
+          size_override = 0,
+          x_growth = "RIGHT",
+          y_growth = "DOWN",
+          disable_mouse = false,
+          count = {
+            size = 10,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "TOP",
+          },
+          cooldown = {
+            text = {
+              enabled = true,
+              size = 10,
+              v_alignment = "BOTTOM",
+            },
+          },
+          type = {
+            size = 12,
+            position = "TOPLEFT",
+            debuff_type = false,
+          },
+          filter = {
+            custom = {
+              ["Blacklist"] = true,
+              ["M+ Affixes"] = true,
+            },
+            friendly = {
+              buff = {
+                boss = false,
+                tank = false,
+                healer = false,
+                mount = false,
+                selfcast = false,
+                selfcast_permanent = false,
+                player = false,
+                player_permanent = false,
+                misc = false,
+              },
+              debuff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                dispellable = true,
+                misc = true,
+              },
+            },
+            enemy = {
+              buff = {
+                boss = false,
+                tank = false,
+                healer = false,
+                mount = false,
+                selfcast = false,
+                selfcast_permanent = false,
+                player = false,
+                player_permanent = false,
+                dispellable = false,
+                misc = false,
+              },
+              debuff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                misc = false,
+              },
+            },
+          },
+          point = {
+            p = "TOPLEFT",
+            anchor = "",
+            ap = "BOTTOMLEFT",
+            x = 1,
+            y = -8
           },
         }
       },
@@ -295,9 +407,9 @@ D.modules = {
           enabled = true,
           kill_range = false,
           color = {
-            reverse = false,
+            reverse = true,
             smooth = false,
-            health = true,
+            health = false,
             tapping = true,
             disconnected = true,
             class = true,
@@ -374,7 +486,7 @@ D.modules = {
             gap = 5
           },
           text = {
-            size = 11,
+            size = 13,
             outline = true,
             shadow = false,
           },
@@ -383,7 +495,7 @@ D.modules = {
             anchor = "Health",
             ap = "TOPLEFT",
             x = 0,
-            y = 7
+            y = 6
           },
         },
         name = {
@@ -399,22 +511,8 @@ D.modules = {
             anchor = "Health",
             ap = "TOP",
             x = 0,
-            y = 4
+            y = 5
           },
-          background = {
-            enabled = true,
-            width = 280,
-            height = 14,
-            texture = M.textures.line,
-            alpha = 0.9,
-            point = {
-              p = "CENTER",
-              anchor = "Name",
-              ap = "CENTER",
-              x = 0,
-              y = 1
-            },
-          }
         },
         portrait = {
           enabled = true,
@@ -461,8 +559,8 @@ D.modules = {
         },
         auras = {
           enabled = true,
-          rows = 2,
-          per_row = 12,
+          rows = 3,
+          per_row = 10,
           spacing = 5,
           size_override = 0,
           x_growth = "RIGHT",
@@ -549,6 +647,65 @@ D.modules = {
             y = -8
           },
         }
+      },
+      playerplate = {
+        enabled = true,
+        width = playerPlateWidth,
+        height = playerPlateHeight,
+        point = {
+          p = "CENTER",
+          anchor = "UIParent",
+          ap = "CENTER",
+          x = 0,
+          y = -243
+        },
+        power = {
+          enabled = true,
+          change_threshold = 0.01,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
+          text = {
+            tag = "[lum:power_cur]",
+            size = 16,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "CENTER",
+              anchor = "Power",
+              ap = "CENTER",
+              x = 0,
+              y = -1
+            },
+          },
+        },
+        class_power = {
+          enabled = true,
+          width = playerWidth,
+          height = 2,
+          gap = 5,
+					change_threshold = 0.01,
+					orientation = "HORIZONTAL",
+					prediction = {
+						enabled = true,
+					},
+					runes = {
+						color_by_spec = true,
+						sort_order = "none",
+          },
+          point = {
+            p = "TOPLEFT",
+            anchor = "",
+            ap = "BOTTOMLEFT",
+            x = 0,
+            y = -8
+          },
+				},
       },
     }
   },

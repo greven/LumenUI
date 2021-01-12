@@ -143,7 +143,7 @@ do
   end
 
   local function element_UpdateConfig(self)
-    local unit = self.__owner._unit
+    local unit = self.__owner._layout or self.__owner._unit
     self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
   end
 

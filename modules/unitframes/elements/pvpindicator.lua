@@ -39,11 +39,11 @@ local function element_Override(self, _, unit)
 
   if status then
     if status == "Alliance" then
-      element:SetStatusBarColor(E:GetRGB(C.colors.faction[status]))
+      element:SetVertexColor(E:GetRGB(C.colors.faction[status]))
     elseif status == "Horde" then
-      element:SetStatusBarColor(E:GetRGB(C.colors.faction[status]))
+      element:SetVertexColor(E:GetRGB(C.colors.faction[status]))
     else
-      element:SetStatusBarColor(E:GetRGB(C.colors.amber))
+      element:SetVertexColor(E:GetRGB(C.colors.amber))
     end
 
 		element:Show()
@@ -53,7 +53,7 @@ local function element_Override(self, _, unit)
 end
 
 local function element_UpdateConfig(self)
-  local unit = self.__owner._unit
+  local unit = self.__owner._layout or self.__owner._unit
   self._config = E:CopyTable(C.modules.unitframes.units[unit].pvp, self._config)
 end
 
@@ -78,6 +78,8 @@ local function frame_UpdatePvPIndicator(self)
   element:UpdateSize()
   element:UpdatePoints()
 
+  element:SetAlpha(element._config.alpha or 1)
+
 	if element._config.enabled and not self:IsElementEnabled("PvPIndicator") then
 		self:EnableElement("PvPIndicator")
 	elseif not element._config.enabled and self:IsElementEnabled("PvPIndicator") then
@@ -90,11 +92,9 @@ local function frame_UpdatePvPIndicator(self)
 end
 
 function UF:CreatePvPIndicator(frame, parent)
-  local element = CreateFrame("StatusBar", nil, (parent or frame))
-  element:SetStatusBarTexture(M.textures.flat)
-  element:SetOrientation("VERTICAL")
-
-  E.SetBackdrop(element, 2)
+  local element = (parent or frame):CreateTexture(nil, "OVERLAY", nil, 0)
+  element:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\pvp")
+  element:SetSize(32, 32)
   E.CreateShadow(element)
 
   element.__owner = frame

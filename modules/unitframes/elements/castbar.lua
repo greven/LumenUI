@@ -55,7 +55,7 @@ local function element_PostCastFail(self)
 end
 
 local function element_UpdateConfig(self)
-  local unit = self.__owner._unit
+  local unit = self.__owner._layout or self.__owner._unit
   self._config = E:CopyTable(C.modules.unitframes.units[unit].castbar, self._config)
 end
 
@@ -246,9 +246,9 @@ function UF:CreateCastbar(frame)
 	text:SetWordWrap(false)
 	text:SetJustifyH("LEFT")
 	text:SetPoint("TOP", element, "TOP", 0, 0)
-	text:SetPoint("BOTTOM", element, "BOTTOM", 0, -2)
-	text:SetPoint("LEFT", element, "LEFT", 4, 0)
-	text:SetPoint("RIGHT", time, "LEFT", -4, 0)
+	text:SetPoint("BOTTOM", element, "BOTTOM", 0, -2.5)
+	text:SetPoint("LEFT", element, "LEFT", 5, 0)
+	text:SetPoint("RIGHT", time, "LEFT", -5, 0)
   element.Text = text
 
   local time = textParent:CreateFontString(nil, "ARTWORK")

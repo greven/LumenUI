@@ -18,6 +18,7 @@ local function update(self)
 
   local element = self.UnitIndicator
   local config = element._config
+  local showRested = config and config.rested
 
   local inCombat = UnitAffectingCombat(self.unit)
   local isResting = IsResting()
@@ -25,8 +26,8 @@ local function update(self)
   if self.unit == "player" then
     if inCombat then
       element:SetStatusBarColor(E:GetRGB(C.colors.red))
-    elseif isResting then
-      element:SetStatusBarColor(E:GetRGB(C.colors.cyan))
+    elseif showRested and isResting then
+      element:SetStatusBarColor(E:GetRGB(C.colors.green))
     else
       element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
     end
@@ -45,7 +46,7 @@ local function update(self)
   end
 
   if config and config.hide_out_of_combat then
-    if inCombat or isResting then
+    if inCombat or (showRested and isResting) then
       element:Show()
     else
       element:Hide()
@@ -54,7 +55,7 @@ local function update(self)
 end
 
 local function element_UpdateConfig(self)
-  local unit = self.__owner._unit
+  local unit = self.__owner._layout or self.__owner._unit
   self._config = E:CopyTable(C.modules.unitframes.units[unit].unitIndicator, self._config)
 end
 
