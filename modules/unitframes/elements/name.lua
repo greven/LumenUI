@@ -7,22 +7,9 @@ local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
-local function update(self)
-  if not (self.unit and self:IsShown()) then return end
-
-  local element = self.Name
-  element.bg:SetVertexColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
-end
-
 local function updateTextPoint(frame, fontString, config)
   if config and config.p and config.p ~= "" then
     E:SetPosition(fontString, config, frame)
-  end
-end
-
-local function updateTexturePoint(frame, bg, config)
-  if bg and config and config.p and config.p ~= "" then
-    E:SetPosition(bg, config, frame)
   end
 end
 
@@ -51,7 +38,6 @@ local function element_UpdatePoints(self)
 
   self:ClearAllPoints()
   updateTextPoint(self.__owner, self, config.point)
-  updateTexturePoint(self.__owner, self.bg, config.background.point)
 end
 
 local function element_UpdateTags(self)
@@ -64,37 +50,22 @@ local function element_UpdateTags(self)
 	end
 end
 
-local function element_UpdateTexture(self)
-  local config = self._config.background
-
-  if config.enabled and config.texture ~= "" then
-    self.bg:SetTexture(config.texture)
-    self.bg:SetSize(config.width, config.height)
-    self.bg:SetAlpha((config.alpha and config.alpha) or 0.1)
-  end
-end
-
 local function frame_UpdateName(self)
 	local element = self.Name
 	element:UpdateConfig()
 	element:UpdateFonts()
-  element:UpdateTexture()
 	element:UpdatePoints()
   element:UpdateTags()
 end
 
 function UF:CreateName(frame, textParent)
   local element = (textParent or frame):CreateFontString(nil, "ARTWORK")
-  element.bg = frame:CreateTexture(nil, "BACKGROUND")
-
-  hooksecurefunc(frame, "Show", update)
 
   element.__owner = frame
   element.UpdateConfig = element_UpdateConfig
   element.UpdateFonts = element_UpdateFonts
   element.UpdatePoints = element_UpdatePoints
   element.UpdateTags = element_UpdateTags
-  element.UpdateTexture = element_UpdateTexture
 
   frame.UpdateName = frame_UpdateName
   frame.Name = element
