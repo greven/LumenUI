@@ -72,11 +72,27 @@ local function element_UpdatePoints(self)
 	end
 end
 
+local function element_UpdateTags(self)
+	if self.Timer then
+		local tag = self._config.enabled and "[lum:pvptimer]" or ""
+		if tag ~= "" then
+			self.Timer.frequentUpdates = 0.1
+			self.__owner:Tag(self.Timer, tag)
+			self.Timer:UpdateTag()
+		else
+			self.Timer.frequentUpdates = nil
+			self.__owner:Untag(self.Timer)
+			self.Timer:SetText("")
+		end
+	end
+end
+
 local function frame_UpdatePvPIndicator(self)
   local element = self.PvPIndicator
   element:UpdateConfig()
   element:UpdateSize()
   element:UpdatePoints()
+  element:UpdateTags()
 
   element:SetAlpha(element._config.alpha or 1)
 
@@ -102,6 +118,7 @@ function UF:CreatePvPIndicator(frame, parent)
   element.UpdateConfig = element_UpdateConfig
   element.UpdateSize = element_UpdateSize
   element.UpdatePoints = element_UpdatePoints
+  element.UpdateTags = element_UpdateTags
 
   frame.UpdatePvPIndicator = frame_UpdatePvPIndicator
   frame.PvPIndicator = element

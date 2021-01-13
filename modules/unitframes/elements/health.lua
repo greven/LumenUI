@@ -61,10 +61,27 @@ do
       self.bg:SetVertexColor(E:GetRGB(color))
     end
 
-    if config.text.hide_when_max and cur == max then
-			self.Text:Hide()
-		else
-			self.Text:Show()
+
+     -- Text
+    if self.Text then
+      -- Hide text when full
+      if config.text.hide_when_max and cur == max then
+        self.Text:Hide()
+      else
+        self.Text:Show()
+      end
+    end
+
+    -- Percent Text
+    if self.Text.perc then
+      -- Hide percent text when full
+      if self.Text.perc and config.perc.hide_when_max and cur == max then
+        self.Text.perc:Hide()
+      else
+        if self.Text.perc then
+          self.Text.perc:Show()
+        end
+      end
     end
 
     -- Kill Range texture
@@ -223,7 +240,7 @@ do
 
     if config.perc then
       local perc = element:CreateFontString(nil, "BACKGROUND")
-      perc:SetTextColor(0.3, 0.3, 0.3, 0.8)
+      perc:SetTextColor(E:GetRGBA(config.perc.color or C.colors.light_gray, config.perc.alpha or 1))
       element.Text.perc = perc
     end
 

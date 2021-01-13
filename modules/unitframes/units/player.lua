@@ -63,13 +63,22 @@ do
     self:CreatePortrait(frame, portraitParent)
     self:CreateAuras(frame, "player")
     self:CreateUnitIndicator(frame, portraitParent)
-    self:CreatePvPIndicator(frame, portraitParent)
 
     -- Level and Spec
     local info = textParent:CreateFontString(nil, "ARTWORK")
     info:SetFont(M.fonts.condensed, 16, "OUTLINE")
     info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 2)
-    frame:Tag(info, "[lum:color][lum:spec] [class]")
+    frame:Tag(info, "[lum:color_unit][lum:spec] [class]")
+
+    -- PvP Indicator and timer
+    frame.PvPIndicator = self:CreatePvPIndicator(frame, portraitParent)
+
+    local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
+    pvpTimer:SetFont(M.fonts.condensed, 16, "OUTLINE")
+		pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 6, -3)
+		pvpTimer:SetTextColor(1, 0.82, 0)
+		pvpTimer:SetJustifyH("RIGHT")
+		frame.PvPIndicator.Timer = pvpTimer
 
     frame.Update = frame_Update
 

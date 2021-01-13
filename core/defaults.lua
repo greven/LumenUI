@@ -182,26 +182,7 @@ D.modules = {
           },
         },
         class_power = {
-          enabled = true,
-          width = playerWidth,
-          height = 2,
-          gap = 5,
-					change_threshold = 0.01,
-					orientation = "HORIZONTAL",
-					prediction = {
-						enabled = true,
-					},
-					runes = {
-						color_by_spec = true,
-						sort_order = "none",
-          },
-          point = {
-            p = "TOPLEFT",
-            anchor = "",
-            ap = "BOTTOMLEFT",
-            x = 0,
-            y = -8
-          },
+          enabled = false
 				},
         castbar = {
           enabled = true,
@@ -407,7 +388,7 @@ D.modules = {
           enabled = true,
           kill_range = false,
           color = {
-            reverse = true,
+            reverse = false,
             smooth = false,
             health = false,
             tapping = true,
@@ -417,7 +398,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:health_cur(true)]",
-            size = 14,
+            size = 15,
             outline = true,
             shadow = false,
             h_alignment = "RIGHT",
@@ -433,17 +414,20 @@ D.modules = {
           },
           perc = {
             tag = "[lum:health_perc]",
-            size = 14,
+            size = 20,
+            color = D.colors.light_gray,
+            alpha = 0.9,
             outline = true,
             shadow = false,
             h_alignment = "RIGHT",
             v_alignment = "MIDDLE",
+            hide_when_max = true,
             point = {
-              p = "RIGHT",
-              anchor = "Health.Text",
-              ap = "LEFT",
-              x = -4,
-              y = 0
+              p = "LEFT",
+              anchor = "Health",
+              ap = "RIGHT",
+              x = 6,
+              y = -2
             },
           },
         },
@@ -483,7 +467,7 @@ D.modules = {
           latency = false,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
-            gap = 5
+            gap = 2
           },
           text = {
             size = 13,
@@ -499,19 +483,19 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:color_difficulty][lum:level]|r [lum:name]",
-          size = 17,
+          tag = "[lum:name]",
+          size = 16,
           outline = true,
           shadow = false,
-          h_alignment = "CENTER",
+          h_alignment = "LEFT",
           v_alignment = "MIDDLE",
           word_wrap = false,
           point = {
-            p = "BOTTOM",
+            p = "LEFT",
             anchor = "Health",
-            ap = "TOP",
-            x = 0,
-            y = 5
+            ap = "LEFT",
+            x = 6,
+            y = -2
           },
         },
         portrait = {
@@ -705,7 +689,7 @@ D.modules = {
             x = 0,
             y = -8
           },
-				},
+        }
       },
     }
   },

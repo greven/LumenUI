@@ -67,6 +67,13 @@ function UF:CreateTargetFrame(frame)
   self:CreateAuras(frame, "target")
   self:CreateUnitIndicator(frame, portraitParent)
 
+  -- Level and Race
+  local info = textParent:CreateFontString(nil, "ARTWORK")
+  info:SetFont(M.fonts.condensed, 14, "OUTLINE")
+  info:SetTextColor(E:GetRGB(C.colors.light_gray))
+  info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 5)
+  frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
+
   frame.Update = frame_Update
 
   isInit = true
