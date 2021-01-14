@@ -66,14 +66,16 @@ end
 local function element_PostUpdate(self)
   local config = self._config
 
-  if config.style == "2D" then
-    self:SetDesaturation(config.desaturation)
-    self:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-  else -- 3D
-    self:SetDesaturation(config.desaturation)
-    self:SetModelAlpha(config.model_alpha)
-    self:SetCamDistanceScale(0.8)
-    self:SetPortraitZoom(1)
+  if config then
+    if config.style == "2D" then
+      self:SetDesaturation(config.desaturation or 0)
+      self:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    else -- 3D
+      self:SetDesaturation(config.desaturation or 0)
+      self:SetModelAlpha(config.model_alpha or 1)
+      self:SetCamDistanceScale(0.8)
+      self:SetPortraitZoom(1)
+    end
   end
 end
 

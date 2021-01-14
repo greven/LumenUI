@@ -24,6 +24,7 @@ do
 
       self:UpdateSize()
       self:UpdateHealth()
+      self:UpdateHealthPrediction()
       self:UpdatePower()
       self:UpdateName()
       self:UpdateCastbar()
@@ -56,7 +57,8 @@ do
     E.SetBackdrop(portraitParent, 2)
     E.CreateShadow(portraitParent)
 
-    self:CreateHealthBar(frame, textParent)
+    local health = self:CreateHealthBar(frame, textParent)
+    self:CreateHealthPrediction(frame, health, textParent)
     self:CreatePowerBar(frame, textParent)
     self:CreateName(frame, textParent)
     self:CreateCastbar(frame)
@@ -93,6 +95,16 @@ do
     self:UpdateSize()
     self:UpdatePower()
 
+    self:UpdateClassPower()
+
+    if self.Runes then
+      self:UpdateRunes()
+    end
+
+    if self.Stagger then
+      self:UpdateStagger()
+    end
+
     if self._config.enabled then
       if not self:IsEnabled() then
         self:Enable()
@@ -119,6 +131,14 @@ do
 
     local power = self:CreatePowerBar(frame, textParent)
     power:SetAllPoints()
+
+    -- Class Power
+    if E.PLAYER_CLASS == "MONK" then
+      self:CreateStagger(frame)
+    elseif E.PLAYER_CLASS == "DEATHKNIGHT" then
+      self:CreateRunes(frame)
+    end
+    self:CreateClassPower(frame)
 
     frame.Update = frame_Update
 

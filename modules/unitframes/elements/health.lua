@@ -17,7 +17,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-  fontString:SetFont(C.global.fonts.units.font.number, config.size, config.outline and "THINOUTLINE" or nil)
+  fontString:SetFont(C.global.fonts.units.font or config.font, config.size, config.outline and "THINOUTLINE" or nil)
   fontString:SetJustifyH(config.h_alignment)
   fontString:SetJustifyV(config.v_alignment)
   fontString:SetWordWrap(false)
@@ -255,13 +255,13 @@ do
     element.bg = bg
 
     kr = element:CreateTexture(nil, "OVERLAY")
-    kr:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+    kr:SetTexture(M.textures.flat)
     kr:SetVertexColor(1, 0, 0)
     kr:SetBlendMode("ADD")
     kr:SetAlpha(0.2)
 
     kr.spark = element:CreateTexture(nil, "OVERLAY")
-    kr.spark:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+    kr.spark:SetTexture(M.textures.flat)
     kr.spark:SetVertexColor(1, 0.25, 0.25)
     kr.spark:SetBlendMode("ADD")
     kr.spark:SetAlpha(0.6)
@@ -282,6 +282,168 @@ do
 
     frame.UpdateHealth = frame_UpdateHealth
     frame.Health = element
+
+    return element
+  end
+end
+
+-- HealthPrediction
+do
+  local function element_UpdateConfig(self)
+		local unit = self.__owner._layout or self.__owner._unit
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].health.prediction, self._config)
+    self._config.absorb_text = E:CopyTable(C.global.fonts.units, self._config.absorb_text)
+    self._config.heal_absorb_text = E:CopyTable(C.global.fonts.units, self._config.heal_absorb_text)
+  end
+
+  local function element_UpdateFonts(self)
+		updateFont(self.absorbBar.Text, self._config.absorb_text)
+		updateFont(self.healAbsorbBar.Text, self._config.heal_absorb_text)
+  end
+
+  local function element_UpdateTextPoints(self)
+		updateTextPoint(self.__owner, self.absorbBar.Text, self._config.absorb_text.point1)
+		updateTextPoint(self.__owner, self.healAbsorbBar.Text, self._config.heal_absorb_text.point1)
+  end
+
+  local function element_UpdateTags(self)
+		updateTag(self.__owner, self.absorbBar.Text, self._config.enabled and self._config.absorb_text.tag or "")
+		updateTag(self.__owner, self.healAbsorbBar.Text, self._config.enabled and self._config.heal_absorb_text.tag or "")
+  end
+
+  local function element_UpdateColors(self)
+		self.myBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.my_heal))
+		self.otherBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.other_heal))
+		self.healAbsorbBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.heal_absorb))
+  end
+
+  local function frame_UpdateHealthPrediction(self)
+    local element = self.HealthPrediction
+    element:UpdateConfig()
+
+    local config = element._config
+		local myBar = element.myBar
+		local otherBar = element.otherBar
+		local absorbBar = element.absorbBar
+    local healAbsorbBar = element.healAbsorbBar
+
+    myBar:SetOrientation("HORIZONTAL")
+		otherBar:SetOrientation("HORIZONTAL")
+		absorbBar:SetOrientation("HORIZONTAL")
+    healAbsorbBar:SetOrientation("HORIZONTAL")
+
+    local width = self.Health:GetWidth()
+    width = width > 0 and width or self:GetWidth()
+
+    myBar:ClearAllPoints()
+    myBar:SetPoint("TOP")
+    myBar:SetPoint("BOTTOM")
+    myBar:SetPoint("LEFT", self.Health:GetStatusBarTexture(), "RIGHT")
+    myBar:SetWidth(width)
+
+    otherBar:ClearAllPoints()
+    otherBar:SetPoint("TOP")
+    otherBar:SetPoint("BOTTOM")
+    otherBar:SetPoint("LEFT", myBar:GetStatusBarTexture(), "RIGHT")
+    otherBar:SetWidth(width)
+
+    absorbBar:ClearAllPoints()
+    absorbBar:SetPoint("TOP")
+    absorbBar:SetPoint("BOTTOM")
+    absorbBar:SetPoint("LEFT", otherBar:GetStatusBarTexture(), "RIGHT")
+    absorbBar:SetWidth(width)
+
+    healAbsorbBar:ClearAllPoints()
+    healAbsorbBar:SetPoint("TOP")
+    healAbsorbBar:SetPoint("BOTTOM")
+    healAbsorbBar:SetPoint("RIGHT", self.Health:GetStatusBarTexture(), "RIGHT")
+    healAbsorbBar:SetWidth(width)
+
+    element:UpdateColors()
+		element:UpdateFonts()
+		element:UpdateTextPoints()
+    element:UpdateTags()
+
+    if config.enabled and not self:IsElementEnabled("HealthPrediction") then
+			self:EnableElement("HealthPrediction")
+		elseif not config.enabled and self:IsElementEnabled("HealthPrediction") then
+			self:DisableElement("HealthPrediction")
+		end
+
+		if self:IsElementEnabled("HealthPrediction") then
+			element:ForceUpdate()
+		end
+  end
+
+  function UF:CreateHealthPrediction(frame, parent, textParent)
+    local level = parent:GetFrameLevel()
+
+    local myBar = CreateFrame("StatusBar", nil, parent)
+		myBar:SetFrameLevel(level)
+		myBar:SetStatusBarTexture(M.textures.flat)
+		myBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
+		E:SmoothBar(myBar)
+		parent.MyHeal = myBar
+
+		myBar._texture = myBar:CreateTexture(nil, "ARTWORK")
+		myBar._texture:SetAllPoints(myBar:GetStatusBarTexture())
+
+		local otherBar = CreateFrame("StatusBar", nil, parent)
+		otherBar:SetFrameLevel(level)
+		otherBar:SetStatusBarTexture(M.textures.flat)
+		otherBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
+		E:SmoothBar(otherBar)
+		parent.OtherHeal = otherBar
+
+		otherBar._texture = otherBar:CreateTexture(nil, "ARTWORK")
+		otherBar._texture:SetAllPoints(otherBar:GetStatusBarTexture())
+
+		local absorbBar = CreateFrame("StatusBar", nil, parent)
+		absorbBar:SetFrameLevel(level + 1)
+		absorbBar:SetStatusBarTexture(M.textures.flat)
+		absorbBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
+		E:SmoothBar(absorbBar)
+		parent.DamageAbsorb = absorbBar
+
+		local overlay = absorbBar:CreateTexture(nil, "ARTWORK", nil, 1)
+    overlay:SetTexture(M.textures.absorb, "REPEAT", "REPEAT")
+    overlay:SetAlpha(0.8)
+		overlay:SetHorizTile(true)
+		overlay:SetVertTile(true)
+		overlay:SetAllPoints(absorbBar:GetStatusBarTexture())
+		absorbBar.Overlay = overlay
+
+		absorbBar.Text = (textParent or parent):CreateFontString(nil, "ARTWORK")
+
+		local healAbsorbBar = CreateFrame("StatusBar", nil, parent)
+		healAbsorbBar:SetReverseFill(true)
+		healAbsorbBar:SetFrameLevel(level + 1)
+		healAbsorbBar:SetStatusBarTexture(M.textures.flat)
+		healAbsorbBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
+		E:SmoothBar(healAbsorbBar)
+		parent.HealAbsorb = healAbsorbBar
+
+		healAbsorbBar._texture = healAbsorbBar:CreateTexture(nil, "ARTWORK")
+		healAbsorbBar._texture:SetAllPoints(healAbsorbBar:GetStatusBarTexture())
+
+		healAbsorbBar.Text = (textParent or parent):CreateFontString(nil, "ARTWORK")
+
+		frame.UpdateHealthPrediction = frame_UpdateHealthPrediction
+
+		local element = {
+			myBar = myBar,
+			otherBar = otherBar,
+			absorbBar = absorbBar,
+			healAbsorbBar = healAbsorbBar,
+			maxOverflow = 1,
+			UpdateColors = element_UpdateColors,
+			UpdateConfig = element_UpdateConfig,
+			UpdateFonts = element_UpdateFonts,
+			UpdateTags = element_UpdateTags,
+			UpdateTextPoints = element_UpdateTextPoints,
+    }
+
+    frame.HealthPrediction = element
 
     return element
   end

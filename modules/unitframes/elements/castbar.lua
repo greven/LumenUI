@@ -12,7 +12,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-  fontString:SetFont(C.global.fonts.units.font.text, config.size, config.outline and "THINOUTLINE" or nil)
+  fontString:SetFont(C.global.fonts.units.font, config.size, config.outline and "THINOUTLINE" or nil)
   fontString:SetWordWrap(false)
 
   if config.shadow then

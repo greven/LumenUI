@@ -1,0 +1,40 @@
+local _, ns = ...
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+
+-- ---------------
+
+local UF = E:GetModule("UnitFrames")
+
+-- ---------------
+
+local isInit = false
+
+function UF:HasTargetTargetFrame()
+	return isInit
+end
+
+local function frame_Update(self)
+  self:UpdateConfig()
+
+  if self._config.enabled then
+    if not self:IsEnabled() then
+      self:Enable()
+    end
+  else
+    if self:IsEnabled() then
+      self:Disable()
+    end
+  end
+end
+
+function UF:CreateTargetTargetFrame(frame)
+  local config = C.modules.unitframes.units[frame._unit]
+  local level = frame:GetFrameLevel()
+
+  E.SetBackdrop(frame, 2)
+  E.CreateShadow(frame)
+
+  frame.Update = frame_Update
+
+  isInit = true
+end

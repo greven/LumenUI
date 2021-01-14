@@ -34,6 +34,7 @@ M.textures = {
   border_thin = Media.."textures\\border-thin",
   border_thick = Media.."textures\\border-thick",
   border = Media.."textures\\border",
+  absorb = Media.."textures\\absorb",
 	aura_icons = {
 		-- line #1
 		["Buff"] = {1 / 128, 33 / 128, 1 / 128, 33 / 128},
@@ -55,10 +56,7 @@ M.textures = {
 D.global = {
   fonts = {
     units = {
-      font = {
-        text = M.fonts.condensed,
-        number = M.fonts.condensed,
-      },
+      font = M.fonts.condensed,
       outline = false,
 			shadow = true,
     },
@@ -153,6 +151,35 @@ D.modules = {
               y = 1
             },
           },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							-- tag = "[lum:color_absorb_damage][lum_absorb_damage]|r",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							-- tag = "[lum:color_absorb_heal][lum:absorb_heal]|r",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+					},
         },
         power = {
           enabled = true,
@@ -231,7 +258,7 @@ D.modules = {
           width = 82,
           height = 82,
           model_alpha = 1.0,
-          desaturation = 0.0,
+          desaturation = 0,
           point = {
             p = "BOTTOMRIGHT",
             anchor = "",
@@ -412,6 +439,35 @@ D.modules = {
               y = 0
             },
           },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+					},
           perc = {
             tag = "[lum:health_perc]",
             size = 20,
@@ -504,7 +560,7 @@ D.modules = {
           width = targetHeight * 1.75,
           height = targetHeight,
           model_alpha = 1.0,
-          desaturation = 0.0,
+          desaturation = 0,
           point = {
             p = "RIGHT",
             anchor = "",
@@ -654,7 +710,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:power_cur]",
-            size = 16,
+            size = 14,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -664,13 +720,13 @@ D.modules = {
               anchor = "Power",
               ap = "CENTER",
               x = 0,
-              y = -1
+              y = 0
             },
           },
         },
         class_power = {
           enabled = true,
-          width = playerWidth,
+          width = playerPlateWidth,
           height = 2,
           gap = 5,
 					change_threshold = 0.01,
@@ -687,7 +743,7 @@ D.modules = {
             anchor = "",
             ap = "BOTTOMLEFT",
             x = 0,
-            y = -8
+            y = -7
           },
         }
       },

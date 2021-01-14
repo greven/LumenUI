@@ -13,7 +13,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-  fontString:SetFont(C.global.fonts.units.font.number, config.size, config.outline and "OUTLINE" or nil)
+  fontString:SetFont(C.global.fonts.units.font, config.size, config.outline and "OUTLINE" or nil)
   fontString:SetJustifyH(config.h_alignment)
   fontString:SetJustifyV(config.v_alignment)
   fontString:SetWordWrap(false)
