@@ -13,6 +13,7 @@ function UF:HasPlayerFrame()
 	return isInit
 end
 
+-- Player Frame
 do
   local function frame_Update(self)
     self:UpdateConfig()
@@ -26,6 +27,8 @@ do
       self:UpdateHealth()
       self:UpdateHealthPrediction()
       self:UpdatePower()
+      self:UpdateAdditionalPower()
+			self:UpdatePowerPrediction()
       self:UpdateName()
       self:UpdateCastbar()
       self:UpdatePortrait()
@@ -57,9 +60,14 @@ do
     E.SetBackdrop(portraitParent, 2)
     E.CreateShadow(portraitParent)
 
-    local health = self:CreateHealthBar(frame, textParent)
-    self:CreateHealthPrediction(frame, health, textParent)
+    self:CreateHealthBar(frame, textParent)
+    self:CreateHealthPrediction(frame, frame.Health, textParent)
+
     self:CreatePowerBar(frame, textParent)
+    local addPower = self:CreateAdditionalPower(frame)
+    addPower:SetFrameLevel(frame:GetFrameLevel() + 3)
+    self:CreatePowerPrediction(frame, frame.Power, addPower)
+
     self:CreateName(frame, textParent)
     self:CreateCastbar(frame)
     self:CreatePortrait(frame, portraitParent)
@@ -88,12 +96,14 @@ do
   end
 end
 
+-- Player Plate Frame
 do
   local function frame_Update(self)
     self:UpdateConfig()
 
     self:UpdateSize()
     self:UpdatePower()
+    -- self:UpdatePowerPrediction()
 
     self:UpdateClassPower()
 
@@ -131,6 +141,7 @@ do
 
     local power = self:CreatePowerBar(frame, textParent)
     power:SetAllPoints()
+    -- self:CreatePowerPrediction(frame, frame.Power)
 
     -- Class Power
     if E.PLAYER_CLASS == "MONK" then

@@ -68,7 +68,7 @@ D.global = {
   },
   backdrop = {
     color = rgb(0, 0, 0),
-    alpha = 0.85
+    alpha = 0.84
   },
   border = {
     color = rgb(30, 30, 30)
@@ -148,7 +148,7 @@ D.modules = {
               anchor = "",
               ap = "RIGHT",
               x = -4,
-              y = 1
+              y = 0
             },
           },
           prediction = {
@@ -207,10 +207,28 @@ D.modules = {
               y = 0
             },
           },
+          prediction = {
+						enabled = true,
+					},
         },
         class_power = {
-          enabled = false
-				},
+          enabled = false,
+          prediction = {
+						enabled = false,
+					},
+        },
+        additional_power = {
+          enabled = true,
+          width = playerWidth,
+          height = 1.5,
+          point = {
+            p = "TOPLEFT",
+            anchor = "Health",
+            ap = "TOPLEFT",
+            x = 0,
+            y = 0
+          },
+        },
         castbar = {
           enabled = true,
           width = 300,
@@ -218,7 +236,7 @@ D.modules = {
           color = D.colors.dark_blue,
           color_by_class = true,
           max = true,
-          latency = true,
+          latency = false,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
             gap = 6
@@ -723,6 +741,9 @@ D.modules = {
               y = 0
             },
           },
+          prediction = {
+						enabled = true,
+					},
         },
         class_power = {
           enabled = true,

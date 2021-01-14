@@ -155,8 +155,9 @@ do
 
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
-    bg:SetTexture(M.textures.flat)
-    bg.multiplier = 0.1
+		bg:SetTexture(M.textures.flat)
+		bg:SetAlpha(0.2)
+    bg.multiplier = 0.4
     element.bg = bg
 
     element.Text = (textParent or element):CreateFontString(nil, "ARTWORK")
@@ -180,4 +181,210 @@ do
 
     return element
   end
+end
+
+-- .AdditionalPower
+do
+	local function element_PostUpdate(self, cur, max)
+		if self:IsShown() and max and max ~= 0 then
+			self.GainLossIndicators:Update(cur, max)
+		end
+
+		-- Hide when full
+		if self.__isEnabled then
+			if cur == max then
+				self:Hide()
+			else
+				self:Show()
+			end
+		end
+
+		if not UnitIsConnected("player") or UnitIsDeadOrGhost("player") then
+			self:SetMinMaxValues(0, 1)
+			self:SetValue(0)
+		end
+	end
+
+	local function element_UpdateConfig(self)
+		local unit = self.__owner._layout or self.__owner._unit
+		self._config = E:CopyTable(C.modules.unitframes.units[unit].additional_power, self._config)
+	end
+
+	local function element_UpdateSize(self)
+		local frame = self:GetParent()
+		local config = self._config
+
+		self:SetSize(config.width or frame:GetWidth(), config.height or 4)
+
+		local point = config.point
+    if point and point.p then
+      self:ClearAllPoints()
+      self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+    end
+	end
+
+	local function element_UpdateColors(self)
+		self:ForceUpdate()
+	end
+
+	local function frame_UpdateAdditionalPower(frame)
+		local element = frame.AdditionalPower
+		element:UpdateConfig()
+		element:SetOrientation("HORIZONTAL")
+		element:UpdateColors()
+		element:UpdateSize()
+		element:UpdateGainLossColors()
+		element:UpdateGainLossPoints()
+		element:UpdateGainLossThreshold()
+
+		if element._config.enabled and not frame:IsElementEnabled("AdditionalPower") then
+			frame:EnableElement("AdditionalPower")
+		elseif not element._config.enabled and frame:IsElementEnabled("AdditionalPower") then
+			frame:DisableElement("AdditionalPower")
+		end
+
+		element:ForceUpdate()
+	end
+
+	function UF:CreateAdditionalPower(frame)
+		local element = CreateFrame("StatusBar", nil, frame)
+		element:SetStatusBarTexture(M.textures.flat)
+		element:SetFrameLevel(frame:GetFrameLevel() + 1)
+		E:SmoothBar(element)
+		element:Hide()
+
+		local bg = element:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints()
+		element:SetFrameLevel(element:GetFrameLevel() + 1)
+		bg:SetTexture(M.textures.flat)
+		bg:SetAlpha(0.2)
+    bg.multiplier = 0.4
+    element.bg = bg
+
+		element.GainLossIndicators = E:CreateGainLossIndicators(element)
+
+		element.colorPower = true
+		element.PostUpdate = element_PostUpdate
+		element.UpdateColors = element_UpdateColors
+		element.UpdateConfig = element_UpdateConfig
+		element.UpdateSize = element_UpdateSize
+		element.UpdateGainLossColors = element_UpdateGainLossColors
+		element.UpdateGainLossPoints = element_UpdateGainLossPoints
+		element.UpdateGainLossThreshold = element_UpdateGainLossThreshold
+
+		frame.UpdateAdditionalPower = frame_UpdateAdditionalPower
+		frame.AdditionalPower = element
+
+		return element
+	end
+end
+
+-- PowerPrediction
+do
+	local function element_UpdateConfig(self)
+		if not self._config then
+			self._config = {
+				power = {},
+				class_power = {},
+			}
+		end
+
+		local unit = self.__owner._layout or self.__owner._unit
+		self._config.power.enabled = C.modules.unitframes.units[unit].power.prediction.enabled
+		self._config.class_power.enabled = C.modules.unitframes.units[unit].class_power.prediction.enabled
+	end
+
+	local function element_UpdateColors(self)
+		self.mainBar_:SetStatusBarColor(E:GetRGB(C.colors.prediction.power_cost))
+		self.altBar_:SetStatusBarColor(E:GetRGB(C.colors.prediction.power_cost))
+	end
+
+	local function frame_UpdatePowerPrediction(frame)
+		local element = frame.PowerPrediction
+		element:UpdateConfig()
+
+		local config1 = element._config.power
+		if config1.enabled then
+			local mainBar_ = element.mainBar_
+			mainBar_:SetOrientation("HORIZONTAL")
+			mainBar_:ClearAllPoints()
+
+      local width = frame.Power:GetWidth()
+      width = width > 0 and width or frame:GetWidth()
+
+      mainBar_:SetPoint("TOP")
+      mainBar_:SetPoint("BOTTOM")
+      mainBar_:SetPoint("RIGHT", frame.Power:GetStatusBarTexture(), "RIGHT")
+      mainBar_:SetWidth(width)
+
+			element.mainBar = mainBar_
+		else
+			element.mainBar = nil
+
+			element.mainBar_:Hide()
+			element.mainBar_:ClearAllPoints()
+		end
+
+		local config2 = element._config.class_power
+		if config2.enabled then
+			local altBar_ = element.altBar_
+			altBar_:SetOrientation("HORIZONTAL")
+			altBar_:ClearAllPoints()
+
+      local width = frame.AdditionalPower:GetWidth()
+      width = width > 0 and width or frame:GetWidth()
+
+      altBar_:SetPoint("TOP")
+      altBar_:SetPoint("BOTTOM")
+      altBar_:SetPoint("RIGHT", frame.AdditionalPower:GetStatusBarTexture(), "RIGHT")
+      altBar_:SetWidth(width)
+
+			element.altBar = altBar_
+		else
+			element.altBar = nil
+
+			element.altBar_:Hide()
+			element.altBar_:ClearAllPoints()
+		end
+
+		element:UpdateColors()
+
+		local isEnabled = config1.enabled or config2.enabled
+		if isEnabled and not frame:IsElementEnabled("PowerPrediction") then
+			frame:EnableElement("PowerPrediction")
+		elseif not isEnabled and frame:IsElementEnabled("PowerPrediction") then
+			frame:DisableElement("PowerPrediction")
+		end
+
+		if frame:IsElementEnabled("PowerPrediction") then
+			element:ForceUpdate()
+		end
+	end
+
+	function UF:CreatePowerPrediction(frame, parent1, parent2)
+		local mainBar = CreateFrame("StatusBar", nil, parent1)
+		mainBar:SetStatusBarTexture(M.textures.flat)
+		mainBar:SetReverseFill(true)
+		E:SmoothBar(mainBar)
+		parent1.CostPrediction = mainBar
+
+		local altBar = CreateFrame("StatusBar", nil, parent2)
+		altBar:SetStatusBarTexture(M.textures.flat)
+		altBar:SetReverseFill(true)
+		E:SmoothBar(altBar)
+		if parent2 then parent2.CostPrediction = altBar end
+
+    frame.UpdatePowerPrediction = frame_UpdatePowerPrediction
+
+		local element = {
+			mainBar_ = mainBar,
+			altBar_ = altBar,
+			UpdateColors = element_UpdateColors,
+			UpdateConfig = element_UpdateConfig,
+    }
+
+    frame.PowerPrediction = element
+
+    return element
+	end
 end

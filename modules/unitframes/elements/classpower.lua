@@ -143,8 +143,8 @@ do
   end
 
   local function element_UpdateConfig(self)
-    local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+		local unit = self.__owner._layout or self.__owner._unit
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config)
   end
 
   local function element_UpdateSize(self)
@@ -221,7 +221,7 @@ do
 			end
 		end
 
-		-- element:UpdateColors()
+		element:UpdateColors()
 
 		if element._config.enabled and not self:IsElementEnabled("ClassPower") then
 			self:EnableElement("ClassPower")
@@ -277,7 +277,7 @@ do
 	end
 
 	local function element_UpdateConfig(self)
-		local unit = self.__owner._unit
+		local unit = self.__owner._layout or self.__owner._unit
     self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
 	end
 
@@ -403,7 +403,7 @@ do
 	end
 
 	local function element_UpdateConfig(self)
-		local unit = self.__owner._unit
+		local unit = self.__owner._layout or self.__owner._unit
     self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
 	end
 
