@@ -5,7 +5,7 @@ local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
 local playerHeight = 24
 local playerWidth = 228
-local playerPlateHeight = 4
+local playerPlateHeight = 11
 local playerPlateWidth = 180
 local targetWidth = 287
 local targetHeight = 28
@@ -221,6 +221,9 @@ D.modules = {
           enabled = true,
           width = playerWidth,
           height = 1.5,
+          prediction = {
+						enabled = true,
+					},
           point = {
             p = "TOPLEFT",
             anchor = "Health",
@@ -715,10 +718,71 @@ D.modules = {
           anchor = "UIParent",
           ap = "CENTER",
           x = 0,
-          y = -243
+          y = -245
+        },
+        health = {
+          enabled = true,
+          height = 4,
+          kill_range = false,
+          change_threshold = 0.001,
+          color = {
+            reverse = true,
+            smooth = true,
+            health = true,
+            tapping = true,
+            disconnected = true,
+            class = true,
+            reaction = true
+          },
+          text = {
+            tag = "",
+            size = 14,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            hide_when_max = true,
+            point = {
+              p = "CENTER",
+              anchor = "",
+              ap = "CENTER",
+              x = 0,
+              y = 0
+            },
+          },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							-- tag = "[lum:color_absorb_damage][lum_absorb_damage]|r",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							-- tag = "[lum:color_absorb_heal][lum:absorb_heal]|r",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+					},
         },
         power = {
           enabled = true,
+          height = 4,
           change_threshold = 0.01,
           color = {
             power = true,
@@ -728,7 +792,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:power_cur]",
-            size = 14,
+            size = 15,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -738,7 +802,7 @@ D.modules = {
               anchor = "Power",
               ap = "CENTER",
               x = 0,
-              y = 0
+              y = -1
             },
           },
           prediction = {
@@ -760,13 +824,28 @@ D.modules = {
 						sort_order = "none",
           },
           point = {
-            p = "TOPLEFT",
+            p = "BOTTOMLEFT",
             anchor = "",
-            ap = "BOTTOMLEFT",
+            ap = "TOPLEFT",
             x = 0,
-            y = -7
+            y = 5
           },
-        }
+        },
+        additional_power = {
+          enabled = false,
+          width = playerPlateWidth,
+          height = 1.5,
+          prediction = {
+						enabled = false,
+					},
+          point = {
+            p = "TOPLEFT",
+            anchor = "Health",
+            ap = "TOPLEFT",
+            x = 0,
+            y = 0
+          },
+        },
       },
     }
   },

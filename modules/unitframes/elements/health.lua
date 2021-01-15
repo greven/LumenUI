@@ -181,21 +181,27 @@ do
     local frame = self:GetParent()
     local config = self._config
 
-    local gap = 0
-    if config.power then
-      if config.power.height then
-        gap = gap + config.power.height
+    if config.width or config.height then
+      self:SetSize(config.width or frame:GetWidth(), config.height or 4)
+      self:SetPoint("TOPLEFT", frame, 0, 0)
+    else
+      local gap = 0
+      if config.power then
+        if config.power.height then
+          gap = gap + config.power.height
+        end
+
+        if config.power.gap then
+          gap = gap + config.power.gap
+        end
       end
 
-      if config.power.gap then
-        gap = gap + config.power.gap
-      end
+      self:SetPoint("TOP", frame, 0, 0)
+      self:SetPoint("BOTTOM", frame, 0, gap)
+      self:SetPoint("LEFT", frame, 0, 0)
+      self:SetPoint("RIGHT", frame, 0, 0)
     end
 
-    self:SetPoint("TOP", frame, 0, 0)
-    self:SetPoint("BOTTOM", frame, 0, gap)
-    self:SetPoint("LEFT", frame, 0, 0)
-    self:SetPoint("RIGHT", frame, 0, 0)
     self:ForceUpdate()
   end
 

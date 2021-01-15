@@ -285,13 +285,13 @@ do
 		if not self._config then
 			self._config = {
 				power = {},
-				class_power = {},
+				additional_power = {},
 			}
 		end
 
 		local unit = self.__owner._layout or self.__owner._unit
 		self._config.power.enabled = C.modules.unitframes.units[unit].power.prediction.enabled
-		self._config.class_power.enabled = C.modules.unitframes.units[unit].class_power.prediction.enabled
+		self._config.additional_power.enabled = C.modules.unitframes.units[unit].additional_power.prediction.enabled
 	end
 
 	local function element_UpdateColors(self)
@@ -325,14 +325,14 @@ do
 			element.mainBar_:ClearAllPoints()
 		end
 
-		local config2 = element._config.class_power
+		local config2 = element._config.additional_power
 		if config2.enabled then
 			local altBar_ = element.altBar_
 			altBar_:SetOrientation("HORIZONTAL")
 			altBar_:ClearAllPoints()
 
       local width = frame.AdditionalPower:GetWidth()
-      width = width > 0 and width or frame:GetWidth()
+      width = width > 0 and width or
 
       altBar_:SetPoint("TOP")
       altBar_:SetPoint("BOTTOM")

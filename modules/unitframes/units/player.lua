@@ -102,18 +102,19 @@ do
     self:UpdateConfig()
 
     self:UpdateSize()
+    self:UpdateHealth()
     self:UpdatePower()
-    -- self:UpdatePowerPrediction()
+    self:UpdatePowerPrediction()
 
-    self:UpdateClassPower()
+    -- self:UpdateClassPower()
 
-    if self.Runes then
-      self:UpdateRunes()
-    end
+    -- if self.Runes then
+    --   self:UpdateRunes()
+    -- end
 
-    if self.Stagger then
-      self:UpdateStagger()
-    end
+    -- if self.Stagger then
+    --   self:UpdateStagger()
+    -- end
 
     if self._config.enabled then
       if not self:IsEnabled() then
@@ -131,25 +132,28 @@ do
     local level = frame:GetFrameLevel()
 
     frame:RegisterForClicks()
-    E.SetBackdrop(frame, 2)
-    E.CreateShadow(frame)
 
     local textParent = CreateFrame("Frame", nil, frame)
     textParent:SetFrameLevel(level + 9)
     textParent:SetAllPoints()
     frame.TextParent = textParent
 
+    local health = self:CreateHealthBar(frame, textParent)
+    E.SetBackdrop(health, 2)
+    E.CreateShadow(health)
+
     local power = self:CreatePowerBar(frame, textParent)
-    power:SetAllPoints()
-    -- self:CreatePowerPrediction(frame, frame.Power)
+    self:CreatePowerPrediction(frame, frame.Power)
+    E.SetBackdrop(power, 2)
+    E.CreateShadow(power)
 
     -- Class Power
-    if E.PLAYER_CLASS == "MONK" then
-      self:CreateStagger(frame)
-    elseif E.PLAYER_CLASS == "DEATHKNIGHT" then
-      self:CreateRunes(frame)
-    end
-    self:CreateClassPower(frame)
+    -- if E.PLAYER_CLASS == "MONK" then
+    --   self:CreateStagger(frame)
+    -- elseif E.PLAYER_CLASS == "DEATHKNIGHT" then
+    --   self:CreateRunes(frame)
+    -- end
+    -- self:CreateClassPower(frame)
 
     frame.Update = frame_Update
 
