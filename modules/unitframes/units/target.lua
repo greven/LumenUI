@@ -73,7 +73,7 @@ function UF:CreateTargetFrame(frame)
   local info = textParent:CreateFontString(nil, "ARTWORK")
   info:SetFont(M.fonts.condensed, 14, "OUTLINE")
   info:SetTextColor(E:GetRGB(C.colors.light_gray))
-  info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 5)
+  info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
   frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
 
   frame.Update = frame_Update

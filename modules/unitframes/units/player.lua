@@ -106,15 +106,15 @@ do
     self:UpdatePower()
     self:UpdatePowerPrediction()
 
-    -- self:UpdateClassPower()
+    self:UpdateClassPower()
 
-    -- if self.Runes then
-    --   self:UpdateRunes()
-    -- end
+    if self.Runes then
+      self:UpdateRunes()
+    end
 
-    -- if self.Stagger then
-    --   self:UpdateStagger()
-    -- end
+    if self.Stagger then
+      self:UpdateStagger()
+    end
 
     if self._config.enabled then
       if not self:IsEnabled() then
@@ -148,12 +148,12 @@ do
     E.CreateShadow(power)
 
     -- Class Power
-    -- if E.PLAYER_CLASS == "MONK" then
-    --   self:CreateStagger(frame)
-    -- elseif E.PLAYER_CLASS == "DEATHKNIGHT" then
-    --   self:CreateRunes(frame)
-    -- end
-    -- self:CreateClassPower(frame)
+    if E.PLAYER_CLASS == "MONK" then
+      self:CreateStagger(frame)
+    elseif E.PLAYER_CLASS == "DEATHKNIGHT" then
+      self:CreateRunes(frame)
+    end
+    self:CreateClassPower(frame)
 
     frame.Update = frame_Update
 

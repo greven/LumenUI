@@ -2,7 +2,8 @@ api:
   ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58)
 
 unitframes:
-  ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing??
+  ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing?
+  ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu
   ☐ Maybe move Target castbar beneath the auras for better visibility!

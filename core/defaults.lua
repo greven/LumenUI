@@ -258,7 +258,7 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:color_difficulty][lum:level]|r [lum:name]",
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(22)]",
           size = 22,
           outline = true,
           shadow = false,
@@ -544,7 +544,7 @@ D.modules = {
           latency = false,
           icon = {
             position = "LEFT", -- "RIGHT", "NONE"
-            gap = 2
+            gap = 5
           },
           text = {
             size = 13,
@@ -552,15 +552,15 @@ D.modules = {
             shadow = false,
           },
           point = {
-            p = "BOTTOMLEFT",
+            p = "TOPLEFT",
             anchor = "Health",
-            ap = "TOPLEFT",
+            ap = "BOTTOMLEFT",
             x = 0,
-            y = 6
+            y = -67
           },
         },
         name = {
-          tag = "[lum:name]",
+          tag = "[lum:name(32)]",
           size = 16,
           outline = true,
           shadow = false,
@@ -569,10 +569,10 @@ D.modules = {
           word_wrap = false,
           point = {
             p = "LEFT",
-            anchor = "Health",
+            anchor = "",
             ap = "LEFT",
             x = 6,
-            y = -2
+            y = -1
           },
         },
         portrait = {
@@ -709,6 +709,131 @@ D.modules = {
           },
         }
       },
+      targettarget = {
+        enabled = true,
+        width = 127,
+        height = 18,
+        point = {
+          p = "LEFT",
+          anchor = "LumenTargetFrame",
+          ap = "RIGHT",
+          x = 40,
+          y = 0
+        },
+        health = {
+          enabled = true,
+          kill_range = false,
+          color = {
+            reverse = false,
+            smooth = false,
+            health = false,
+            tapping = true,
+            disconnected = true,
+            class = true,
+            reaction = true
+          },
+          text = {
+            tag = "[lum:health_perc]",
+            size = 12,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            hide_when_max = false,
+            point = {
+              p = "RIGHT",
+              anchor = "",
+              ap = "RIGHT",
+              x = -4,
+              y = 1
+            },
+          },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+					},
+        },
+        power = {
+          enabled = true,
+          height = 1.5,
+          gap = 1.5,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
+          text = {
+            tag = "",
+            size = 14,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
+          },
+        },
+        name = {
+          tag = "[lum:name(24)]",
+          size = 12,
+          outline = true,
+          shadow = false,
+          h_alignment = "LEFT",
+          v_alignment = "MIDDLE",
+          word_wrap = false,
+          point = {
+            p = "BOTTOMLEFT",
+            anchor = "",
+            ap = "TOPLEFT",
+            x = 4,
+            y = 4
+          },
+        },
+        unitIndicator = {
+          enabled = true,
+          width = 2,
+          height = targetHeight,
+          hide_out_of_combat = false,
+          point = {
+            p = "RIGHT",
+            anchor = "",
+            ap = "LEFT",
+            x = -6,
+            y = 0
+          },
+        },
+      },
       playerplate = {
         enabled = true,
         width = playerPlateWidth,
@@ -824,11 +949,11 @@ D.modules = {
 						sort_order = "none",
           },
           point = {
-            p = "BOTTOMLEFT",
+            p = "TOPLEFT",
             anchor = "",
-            ap = "TOPLEFT",
+            ap = "BOTTOMLEFT",
             x = 0,
-            y = 5
+            y = -8
           },
         },
         additional_power = {

@@ -1,3 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Include file="oUF\oUF.xml" />
+  <Script file="UTF8\utf8data.lua"/>
+	<Script file="UTF8\utf8.lua"/>
 </Ui>

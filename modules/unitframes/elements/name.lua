@@ -30,7 +30,7 @@ local function element_UpdateFonts(self)
 		self:SetShadowOffset(1, -1)
 	else
 		self:SetShadowOffset(0, 0)
-	end
+  end
 end
 
 local function element_UpdatePoints(self)
@@ -47,7 +47,7 @@ local function element_UpdateTags(self)
 	else
 		self.__owner:Untag(self)
 		self:SetText("")
-	end
+  end
 end
 
 local function frame_UpdateName(self)

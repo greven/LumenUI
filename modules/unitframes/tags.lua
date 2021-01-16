@@ -7,6 +7,7 @@ local select = _G.select
 
 local m_floor = _G.math.floor
 local s_format = _G.string.format
+local s_len = _G.string.len
 
 local UnitName = _G.UnitName
 local UnitClass = _G.UnitClass
@@ -124,15 +125,20 @@ local _tags = {
   end,
 
   -- Unit name
-  name = function(unit)
-    return UnitName(unit) or ""
+  name = function(unit, realUnit, truncate)
+    local name = UnitName(realUnit or unit) or ""
+    name = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_"
+    if truncate then
+      return name ~= "" and E:TruncateString(name, tonumber(truncate)) or name
+    end
+    return name
   end,
 
   -- Unit Classification (Rare, Elite, Boss, ...)
-  npc_type = function(unit, _, color)
-    local classification = UnitClassification(unit)
+  npc_type = function(unit, realUnit, color)
+    local classification = UnitClassification(realUnit or unit)
 
-    if classification == "worldboss" or UnitLevel(unit) <= 0 then
+    if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
       return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) .. "Boss|r" or "Boss"
     elseif classification == "rare" then
       return color and "|cff008FF7Rare|r" or "Rare"
@@ -146,10 +152,10 @@ local _tags = {
   end,
 
   -- Unit Classification (Rare (R), Elite(+), Boss(B), ...)
-  npc_type_short = function(unit)
-    local classification = UnitClassification(unit)
+  npc_type_short = function(unit, realUnit)
+    local classification = UnitClassification(realUnit or unit)
 
-    if classification == "worldboss" or UnitLevel(unit) <= 0 then
+    if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
       return "B"
     elseif classification == "rare" then
       return  "R"

@@ -252,8 +252,8 @@ end
 -- > Strings
 -- ---------------
 
-function E:TruncateString(str, length)
-	return s_utf8sub(str, 1, length)
+function E:TruncateString(v, length)
+	return s_utf8sub(v, 1, length)
 end
 
 -- ---------------

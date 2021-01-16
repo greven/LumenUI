@@ -182,6 +182,8 @@ function UF:Init()
           end
         elseif unit == "target" then
           UF:CreateTargetFrame(frame)
+        elseif unit == "targettarget" then
+          UF:CreateTargetTargetFrame(frame)
         end
       end)
     end)
@@ -195,6 +197,11 @@ function UF:Init()
     if config.units.target.enabled then
       UF:CreateUnitFrame("target", "LumenTarget")
       UF:UpdateUnitFrame("target", "Update")
+    end
+
+    if config.units.targettarget.enabled then
+      UF:CreateUnitFrame("targettarget", "LumenTargetTarget")
+      UF:UpdateUnitFrame("targettarget", "Update")
     end
 
     if config.units.playerplate.enabled then
