@@ -113,13 +113,13 @@ do
 					end
 
 					self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-					-- if i == chargedIdx then
-					-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-					-- 	self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
-					-- else
-					-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
-					-- 	self[i].Highlight:SetColorTexture(0, 0, 0, 0)
-					-- end
+					if i == chargedIdx then
+						self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+						self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+					else
+						self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+						self[i].Highlight:SetColorTexture(0, 0, 0, 0)
+					end
 				end
 			end
 
@@ -129,13 +129,13 @@ do
 		elseif self._active and self._chargedIdx ~= chargedIdx then
 			for i = 1, max do
 				self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-				-- if i == chargedIdx then
-				-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-				-- 	self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
-				-- else
-				-- 	self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
-				-- 	self[i].Highlight:SetColorTexture(0, 0, 0, 0)
-				-- end
+				if i == chargedIdx then
+					self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+					self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+				else
+					self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+					self[i].Highlight:SetColorTexture(0, 0, 0, 0)
+				end
 			end
 
 			self._chargedIdx = chargedIdx

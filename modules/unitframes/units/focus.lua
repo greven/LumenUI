@@ -9,7 +9,7 @@ local UF = E:GetModule("UnitFrames")
 
 local isInit = false
 
-function UF:HasTargetTargetFrame()
+function UF:HasFocusFrame()
 	return isInit
 end
 
@@ -26,6 +26,8 @@ local function frame_Update(self)
     self:UpdateHealthPrediction()
     self:UpdatePower()
     self:UpdateName()
+    self:UpdateCastbar()
+    self:UpdateAuras()
   else
     if self:IsEnabled() then
       self:Disable()
@@ -33,7 +35,7 @@ local function frame_Update(self)
   end
 end
 
-function UF:CreateTargetTargetFrame(frame)
+function UF:CreateFocusFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
   local level = frame:GetFrameLevel()
 
@@ -50,15 +52,8 @@ function UF:CreateTargetTargetFrame(frame)
 
   self:CreatePowerBar(frame, textParent)
   self:CreateName(frame, textParent)
-
-  -- Arrow indicator
-  local arrow = frame:CreateTexture(nil, "ARTWORK")
-  arrow:SetSize(18, 18)
-  arrow:SetPoint("RIGHT", frame, "LEFT", -10, 0)
-  arrow:SetTexture(M.textures.arrow)
-  arrow:SetVertexColor(E:GetRGB(C.colors.dark_gray))
-  arrow:SetAlpha(0.9)
-  frame.arrow = arrow
+  self:CreateCastbar(frame)
+  self:CreateAuras(frame, "focus")
 
   frame.Update = frame_Update
 

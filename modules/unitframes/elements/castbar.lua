@@ -52,6 +52,7 @@ local function element_PostCastFail(self)
 	self:SetStatusBarColor(E:GetRGB(C.colors.castbar.failed))
 
 	self.Time:SetText("")
+	if self.Time.max then self.Time.max:SetText("") end
 end
 
 local function element_UpdateConfig(self)
@@ -67,7 +68,7 @@ local function element_UpdateFonts(self)
 	self.Time:SetJustifyH("RIGHT")
 
 	if self._config.max then
-		updateFont(self.Time.max, {size = 11, outline = true})
+		updateFont(self.Time.max, {size = self._config.text.size - 3, outline = true})
 		self.Time:SetJustifyH("RIGHT")
 	end
 end
@@ -84,8 +85,13 @@ local function element_UpdateIcon(self)
 		self.LeftIcon:SetAllPoints(self.IconParent)
 		self.RightIcon:SetSize(0.0001, height)
 
-		self:SetPoint("TOPLEFT", config.icon.gap + height * 1.5, 0)
-		self:SetPoint("BOTTOMRIGHT", 0, 0)
+		if config.thin then
+			self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", config.icon.gap + height * 1.5, height / 3)
+			self:SetPoint("BOTTOMRIGHT", 0, 0)
+		else
+			self:SetPoint("TOPLEFT", config.icon.gap + height * 1.5, 0)
+			self:SetPoint("BOTTOMRIGHT", 0, 0)
+		end
 
 		E.SetBackdrop(self.Icon, 1.5)
 		E.CreateShadow(self.Icon)
@@ -97,8 +103,13 @@ local function element_UpdateIcon(self)
 		self.RightIcon:SetAllPoints(self.IconParent)
 		self.LeftIcon:SetSize(0.0001, height)
 
-		self:SetPoint("TOPLEFT", 0, 0)
-		self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
+		if config.thin then
+			self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", 0, height / 3)
+			self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
+		else
+			self:SetPoint("TOPLEFT", 0, 0)
+			self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
+		end
 
 		E.SetBackdrop(self.Icon, 1.5)
 		E.CreateShadow(self.Icon)
@@ -108,8 +119,13 @@ local function element_UpdateIcon(self)
 		self.LeftIcon:SetSize(0.0001, height)
 		self.RightIcon:SetSize(0.0001, height)
 
-		self:SetPoint("TOPLEFT", 0, 0)
-		self:SetPoint("BOTTOMRIGHT", 0, 0)
+		if config.thin then
+			self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", 0, height / 3)
+			self:SetPoint("BOTTOMRIGHT", 0, 0)
+		else
+			self:SetPoint("TOPLEFT", 0, 0)
+			self:SetPoint("BOTTOMRIGHT", 0, 0)
+		end
 	end
 end
 
@@ -132,6 +148,7 @@ end
 local function element_UpdateSize(self)
 	local holder = self.Holder
 	local frame = self.__owner
+
 	local config = self._config
 	local width = config.width
 	local height = config.height
@@ -255,15 +272,28 @@ function UF:CreateCastbar(frame)
 	time:SetWordWrap(false)
 	time:SetPoint("TOP", element, "TOP", 0, 0)
 	time:SetPoint("BOTTOM", element, "BOTTOM", 0, -2)
+	text:SetPoint("LEFT", element, "LEFT", 4, 0)
 	time:SetPoint("RIGHT", element, "RIGHT", -4, 0)
 	element.Time = time
 
 	if config.max then
 		local max = element:CreateFontString(nil, "BACKGROUND")
 		max:SetPoint("RIGHT", element.Time, "LEFT", -1, 0)
-		max:SetTextColor(0.3, 0.3, 0.3)
+		max:SetTextColor(E:GetRGB(C.colors.gray))
 		max:SetWordWrap(false)
 		element.Time.max = max
+	end
+
+	if config.thin then
+		text:SetPoint("TOP", holder, "TOP", 0, 0)
+		text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 9)
+		text:SetPoint("LEFT", element, "LEFT", 0, 0)
+		text:SetPoint("RIGHT", time, "LEFT", 0, 0)
+
+		time:SetPoint("TOP", holder, "TOP", 0, 0)
+		time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 9)
+		text:SetPoint("LEFT", element, "LEFT", 0, 0)
+		time:SetPoint("RIGHT", element, "RIGHT", 0, 0)
 	end
 
 	element.Holder = holder
@@ -271,7 +301,7 @@ function UF:CreateCastbar(frame)
 	element.CustomDelayText = element_CustomDelayText
 	element.PostCastFail = element_PostCastFail
 	element.PostCastStart = element_PostCastStart
-	element.timeToHold = 0.4
+	element.timeToHold = 0.5
 	element.UpdateConfig = element_UpdateConfig
 	element.UpdateFonts = element_UpdateFonts
 	element.UpdateColors = element_UpdateColors

@@ -38,12 +38,17 @@ local function element_Override(self, _, unit)
   end
 
   if status then
+    element:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\pvp")
+
     if status == "Alliance" then
       element:SetVertexColor(E:GetRGB(C.colors.faction[status]))
+      if element.Timer then element.Timer:SetTextColor(E:GetRGB(C.colors.faction[status])) end
     elseif status == "Horde" then
       element:SetVertexColor(E:GetRGB(C.colors.faction[status]))
+      if element.Timer then element.Timer:SetTextColor(E:GetRGB(C.colors.faction[status])) end
     else
       element:SetVertexColor(E:GetRGB(C.colors.amber))
+      if element.Timer then element.Timer:SetTextColor(E:GetRGB(C.colors.amber)) end
     end
 
 		element:Show()
@@ -62,11 +67,11 @@ local function element_UpdateSize(self)
 end
 
 local function element_UpdatePoints(self)
-  local frame = self:GetParent()
-	local config = self._config.point
+  local frame = self.__owner
 
   self:ClearAllPoints()
 
+	local config = self._config.point
   if config and config.p and config.p ~= "" then
     E:SetPosition(self, config, frame)
 	end
@@ -108,10 +113,13 @@ local function frame_UpdatePvPIndicator(self)
 end
 
 function UF:CreatePvPIndicator(frame, parent)
-  local element = (parent or frame):CreateTexture(nil, "OVERLAY", nil, 0)
-  element:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\pvp")
+  local holder = CreateFrame("Frame", nil, parent or frame)
+  holder:SetFrameLevel(frame:GetFrameLevel() + 3)
+  holder:SetSize(50, 50)
+
+  local element = holder:CreateTexture(nil, "ARTWORK", nil, 0)
   element:SetSize(32, 32)
-  E.CreateShadow(element)
+  element.Holder = holder
 
   element.__owner = frame
   element.Override = element_Override

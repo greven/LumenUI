@@ -184,6 +184,8 @@ function UF:Init()
           UF:CreateTargetFrame(frame)
         elseif unit == "targettarget" then
           UF:CreateTargetTargetFrame(frame)
+        elseif unit == "focus" then
+          UF:CreateFocusFrame(frame)
         end
       end)
     end)
@@ -192,6 +194,11 @@ function UF:Init()
     if config.units.player.enabled then
       UF:CreateUnitFrame("player", "LumenPlayer")
       UF:UpdateUnitFrame("player", "Update")
+    end
+
+    if config.units.playerplate.enabled then
+      UF:CreateUnitFrame("playerplate", "LumenPlayerPlate")
+      UF:UpdateUnitFrame("playerplate", "Update")
     end
 
     if config.units.target.enabled then
@@ -204,9 +211,9 @@ function UF:Init()
       UF:UpdateUnitFrame("targettarget", "Update")
     end
 
-    if config.units.playerplate.enabled then
-      UF:CreateUnitFrame("playerplate", "LumenPlayerPlate")
-      UF:UpdateUnitFrame("playerplate", "Update")
+    if config.units.focus.enabled then
+      UF:CreateUnitFrame("focus", "LumenFocus")
+      UF:UpdateUnitFrame("focus", "Update")
     end
 
     isInit = true

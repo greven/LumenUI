@@ -35,6 +35,7 @@ M.textures = {
   border_thick = Media.."textures\\border-thick",
   border = Media.."textures\\border",
   absorb = Media.."textures\\absorb",
+  arrow = Media.."textures\\arrow",
 	aura_icons = {
 		-- line #1
 		["Buff"] = {1 / 128, 33 / 128, 1 / 128, 33 / 128},
@@ -78,7 +79,7 @@ D.global = {
     color = D.colors.dark_gray
   },
   shadows = {
-    alpha = 0.4
+    alpha = 0.25
   },
   castbar = {
     texture = M.textures.statusbar,
@@ -235,17 +236,18 @@ D.modules = {
         castbar = {
           enabled = true,
           width = 300,
-          height = 22,
+          height = 24,
+          thin = true,
           color = D.colors.dark_blue,
           color_by_class = true,
           max = true,
           latency = false,
           icon = {
-            position = "LEFT", -- "RIGHT", "NONE"
+            position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
             gap = 6
           },
           text = {
-            size = 13,
+            size = 15,
             outline = true,
             shadow = false,
           },
@@ -270,7 +272,7 @@ D.modules = {
             anchor = "Health",
             ap = "TOPLEFT",
             x = 0,
-            y = 17
+            y = 4
           },
         },
         portrait = {
@@ -321,13 +323,13 @@ D.modules = {
           enabled = true,
           width = 32,
           height = playerHeight,
-          alpha = 0.6,
+          alpha = 1,
           point = {
             p = "TOPRIGHT",
-            anchor = "",
+            anchor = "Portrait",
             ap = "TOPRIGHT",
-            x = 0,
-            y = 0
+            x = 5,
+            y = 5
           },
         },
         auras = {
@@ -491,7 +493,7 @@ D.modules = {
 					},
           perc = {
             tag = "[lum:health_perc]",
-            size = 20,
+            size = 18,
             color = D.colors.light_gray,
             alpha = 0.9,
             outline = true,
@@ -500,11 +502,11 @@ D.modules = {
             v_alignment = "MIDDLE",
             hide_when_max = true,
             point = {
-              p = "LEFT",
-              anchor = "Health",
-              ap = "RIGHT",
-              x = 6,
-              y = -2
+              p = "BOTTOMRIGHT",
+              anchor = "",
+              ap = "TOPRIGHT",
+              x = 2,
+              y = 4
             },
           },
         },
@@ -537,13 +539,14 @@ D.modules = {
         castbar = {
           enabled = true,
           width = targetWidth,
-          height = 18,
+          height = 20,
+          thin = true,
           color = D.colors.dark_blue,
           class_colored = false,
           max = false,
           latency = false,
           icon = {
-            position = "LEFT", -- "RIGHT", "NONE"
+            position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
             gap = 5
           },
           text = {
@@ -556,7 +559,7 @@ D.modules = {
             anchor = "Health",
             ap = "BOTTOMLEFT",
             x = 0,
-            y = -67
+            y = -66
           },
         },
         name = {
@@ -711,7 +714,7 @@ D.modules = {
       },
       targettarget = {
         enabled = true,
-        width = 127,
+        width = 143,
         height = 18,
         point = {
           p = "LEFT",
@@ -805,8 +808,8 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:name(24)]",
-          size = 12,
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(21)]",
+          size = 13,
           outline = true,
           shadow = false,
           h_alignment = "LEFT",
@@ -834,6 +837,252 @@ D.modules = {
           },
         },
       },
+      focus = {
+        enabled = true,
+        width = 173,
+        height = 18,
+        point = {
+          p = "LEFT",
+          anchor = "LumenPlayerPlateFrame",
+          ap = "RIGHT",
+          x = 31,
+          y = 0
+        },
+        health = {
+          enabled = true,
+          kill_range = false,
+          color = {
+            reverse = false,
+            smooth = false,
+            health = false,
+            tapping = true,
+            disconnected = true,
+            class = true,
+            reaction = true
+          },
+          text = {
+            tag = "[lum:health_cur]",
+            size = 12,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            hide_when_max = false,
+            point = {
+              p = "RIGHT",
+              anchor = "",
+              ap = "RIGHT",
+              x = -4,
+              y = 1
+            },
+          },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+          },
+          perc = {
+            tag = "[lum:health_perc]",
+            size = 15,
+            color = D.colors.light_gray,
+            alpha = 0.9,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            hide_when_max = true,
+            point = {
+              p = "BOTTOMRIGHT",
+              anchor = "",
+              ap = "TOPRIGHT",
+              x = 2,
+              y = 4
+            },
+          },
+        },
+        power = {
+          enabled = true,
+          height = 1.5,
+          gap = 1.5,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
+          text = {
+            tag = "",
+            size = 14,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
+          },
+        },
+        castbar = {
+          enabled = true,
+          width = 173,
+          height = 16,
+          thin = true,
+          color = D.colors.dark_blue,
+          class_colored = false,
+          max = false,
+          latency = false,
+          icon = {
+            position = "NONE", -- "LEFT", "RIGHT" or "NONE"
+            gap = 4
+          },
+          text = {
+            size = 13,
+            outline = true,
+            shadow = false,
+          },
+          point = {
+            p = "BOTTOMLEFT",
+            anchor = "Health",
+            ap = "TOPLEFT",
+            x = 0,
+            y = 28
+          },
+        },
+        name = {
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(21)]",
+          size = 13,
+          outline = true,
+          shadow = false,
+          h_alignment = "LEFT",
+          v_alignment = "MIDDLE",
+          word_wrap = false,
+          point = {
+            p = "BOTTOMLEFT",
+            anchor = "",
+            ap = "TOPLEFT",
+            x = 4,
+            y = 4
+          },
+        },
+        auras = {
+          enabled = true,
+          rows = 2,
+          per_row = 6,
+          spacing = 4,
+          size_override = 25,
+          x_growth = "RIGHT",
+          y_growth = "DOWN",
+          disable_mouse = false,
+          count = {
+            size = 10,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "TOP",
+          },
+          cooldown = {
+            text = {
+              enabled = true,
+              size = 10,
+              v_alignment = "BOTTOM",
+            },
+          },
+          type = {
+            size = 12,
+            position = "TOPLEFT",
+            debuff_type = false,
+          },
+          filter = {
+            custom = {
+              ["Blacklist"] = true,
+              ["M+ Affixes"] = true,
+            },
+            friendly = {
+              buff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                mount = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                misc = false,
+              },
+              debuff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                dispellable = true,
+                misc = false,
+              },
+            },
+            enemy = {
+              buff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                mount = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                dispellable = true,
+                misc = false,
+              },
+              debuff = {
+                boss = true,
+                tank = true,
+                healer = true,
+                selfcast = true,
+                selfcast_permanent = true,
+                player = true,
+                player_permanent = true,
+                misc = false,
+              },
+            },
+          },
+          point = {
+            p = "TOPLEFT",
+            anchor = "",
+            ap = "BOTTOMLEFT",
+            x = 1,
+            y = -8
+          },
+        }
+      },
       playerplate = {
         enabled = true,
         width = playerPlateWidth,
@@ -852,12 +1101,12 @@ D.modules = {
           change_threshold = 0.001,
           color = {
             reverse = true,
-            smooth = true,
+            smooth = false,
             health = true,
-            tapping = true,
-            disconnected = true,
-            class = true,
-            reaction = true
+            tapping = false,
+            disconnected = false,
+            class = false,
+            reaction = false
           },
           text = {
             tag = "",

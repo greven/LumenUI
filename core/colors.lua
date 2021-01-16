@@ -126,8 +126,8 @@ D.colors = {
     trivial = rgb(136, 137, 135),
   },
   faction = {
-    Alliance = rgb(29, 124, 246),
-    Horde = rgb(248, 26, 48),
+    Alliance = rgb(29, 114, 226),
+    Horde = rgb(228, 24, 38),
     Neutral = rgb(233, 232, 231)
   },
   artifact = rgb(217, 202, 146),

@@ -4,9 +4,12 @@ api:
 unitframes:
   ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing?
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
+  ☐ [BUG] ClassPower: When changing specs, points (Rogue) got stuck and colored blue (charged idx bug?)
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu
   ☐ Maybe move Target castbar beneath the auras for better visibility!
+  ☐ Units Missing: Boss, focusTarget, Pet, Party, Raid
+  ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
 
 Archive:
   ✔ Mouseover Tooltip not showing? @done(21-01-11 10:58) @project(unitframes)

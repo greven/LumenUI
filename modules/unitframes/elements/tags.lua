@@ -4,10 +4,13 @@ local E, C, oUF = ns.E, ns.C, ns.oUF
 -- Lua
 local _G = getfenv(0)
 local select = _G.select
+local next = _G.next
+local ipairs = _G.ipairs
 
 local m_floor = _G.math.floor
 local s_format = _G.string.format
 local s_len = _G.string.len
+local tonumber = _G.tonumber
 
 local UnitName = _G.UnitName
 local UnitClass = _G.UnitClass
@@ -38,6 +41,10 @@ local tagMethods = tags.Methods
 local tagEvents = tags.Events
 local tagSharedEvents = tags.SharedEvents
 
+local sharedEvents = {
+  "PLAYER_TALENT_UPDATE",
+}
+
 local events = {
   class = "UNIT_CLASSIFICATION_CHANGED",
   color_difficulty = "UNIT_LEVEL PLAYER_LEVEL_UP",
@@ -51,10 +58,10 @@ local events = {
   npc_type_short = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
   power_cur = "UNIT_POWER_FREQUENT UNIT_POWER_UPDATE UNIT_MAXPOWER UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
   race = "UNIT_CLASSIFICATION_CHANGED",
-  spec = "PLAYER_LOGIN PLAYER_ENTERING_WORLD PLAYER_TALENT_UPDATE CHARACTER_POINTS_CHANGED PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE GROUP_JOINED",
+  spec = "PLAYER_TALENT_UPDATE PLAYER_ROLES_ASSIGNED",
 }
 
-local _tags = {
+local customTags = {
   -- Player Class
   class = function(unit)
     if UnitIsPlayer(unit) then
@@ -127,10 +134,12 @@ local _tags = {
   -- Unit name
   name = function(unit, realUnit, truncate)
     local name = UnitName(realUnit or unit) or ""
-    name = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_"
-    if truncate then
-      return name ~= "" and E:TruncateString(name, tonumber(truncate)) or name
+    local length = truncate and tonumber(truncate)
+    -- name = "ASDASDADADADADADADAFWRBVXCBXCGDSGSGSGSGSD"
+    if length then
+      return name ~= "" and E:TruncateString(name, length) or name
     end
+
     return name
   end,
 
@@ -216,9 +225,20 @@ local _tags = {
   spec = function(unit)
     return E:GetUnitSpecializationInfo(unit)
   end,
+
+  -- New Line
+  nl = function()
+    return "\n"
+  end,
 }
 
-for tag, func in next, _tags do
+-- Register Shared Events
+for _, tag in ipairs(sharedEvents) do
+  tagSharedEvents[tag] = true
+end
+
+-- Register Custom tags and events
+for tag, func in next, customTags do
   tagMethods["lum:" .. tag] = func
   tagEvents["lum:" .. tag] = events[tag]
 end
