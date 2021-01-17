@@ -158,7 +158,7 @@ local customTags = {
     elseif classification == "rare" then
       return color and "|cff008FF7Rare|r" or "Rare"
     elseif classification == "rareelite" then
-      return color and "|cff008FF7Rare|r |c" .. E:ToHex(C.colors.difficulty.difficult) .. "Elite|r" or "Rare Elite"
+      return color and "|cff008FF7Rare|r |c" .. E:ToHex(C.colors.difficulty.very_difficult) .. "Elite|r" or "Rare Elite"
     elseif classification == "elite" then
       return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) .. "Elite|r" or "Elite"
     end

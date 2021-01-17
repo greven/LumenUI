@@ -19,7 +19,10 @@ do
     self:UpdateConfig()
 
     if self._config.enabled then
-      if not self:IsEnabled() then
+      if self._config.visibility then
+        self:Disable()
+        RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
+      elseif not self:IsEnabled() then
         self:Enable()
       end
 
@@ -101,25 +104,27 @@ do
   local function frame_Update(self)
     self:UpdateConfig()
 
-    self:UpdateSize()
-    self:UpdateHealth()
-    self:UpdateHealthPrediction()
-    self:UpdatePower()
-    self:UpdatePowerPrediction()
-
-    self:UpdateClassPower()
-
-    if self.Runes then
-      self:UpdateRunes()
-    end
-
-    if self.Stagger then
-      self:UpdateStagger()
-    end
-
     if self._config.enabled then
-      if not self:IsEnabled() then
+      if self._config.visibility then
+        self:Disable()
+        RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
+      elseif not self:IsEnabled() then
         self:Enable()
+      end
+
+      self:UpdateSize()
+      self:UpdateHealth()
+      self:UpdateHealthPrediction()
+      self:UpdatePower()
+      self:UpdatePowerPrediction()
+      self:UpdateClassPower()
+
+      if self.Runes then
+        self:UpdateRunes()
+      end
+
+      if self.Stagger then
+        self:UpdateStagger()
       end
     else
       if self:IsEnabled() then

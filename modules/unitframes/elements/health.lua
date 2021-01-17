@@ -56,42 +56,43 @@ do
 		self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
 		self.GainLossIndicators._UnitGUID = unitGUID
 
-    if config.reverse and config.color.smooth then
-      local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
-      self.bg:SetVertexColor(E:GetRGB(color))
-    end
-
-
-     -- Text
-    if self.Text then
-      -- Hide text when full
-      if config.text.hide_when_max and cur == max then
-        self.Text:Hide()
-      else
-        self.Text:Show()
+    if config then
+      if config.reverse and config.color.smooth then
+        local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
+        self.bg:SetVertexColor(E:GetRGB(color))
       end
-    end
 
-    -- Percent Text
-    if self.Text.perc then
-      -- Hide percent text when full
-      if self.Text.perc and config.perc.hide_when_max and cur == max then
-        self.Text.perc:Hide()
-      else
-        if self.Text.perc then
-          self.Text.perc:Show()
+       -- Text
+      if self.Text then
+        -- Hide text when full
+        if config.text.hide_when_max and cur == max then
+          self.Text:Hide()
+        else
+          self.Text:Show()
         end
       end
-    end
 
-    -- Kill Range texture
-    if config.kill_range and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
-      self.KillRange:Hide()
-      self.KillRange.spark:Hide()
-    else
-      if config.kill_range then
-        self.KillRange:Show()
-        self.KillRange.spark:Show()
+      -- Percent Text
+      if self.Text.perc then
+        -- Hide percent text when full
+        if self.Text.perc and config.perc.hide_when_max and cur == max then
+          self.Text.perc:Hide()
+        else
+          if self.Text.perc then
+            self.Text.perc:Show()
+          end
+        end
+      end
+
+      -- Kill Range texture
+      if config.kill_range and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
+        self.KillRange:Hide()
+        self.KillRange.spark:Hide()
+      else
+        if config.kill_range then
+          self.KillRange:Show()
+          self.KillRange.spark:Show()
+        end
       end
     end
 
@@ -105,12 +106,14 @@ do
     local unit = self.__owner._unit
     local config = self._config
 
-    if config.reverse then
-      if not config.color.smooth then
-        if config.color.health then
-          self.bg:SetVertexColor(E:GetRGB(C.colors.health))
-        else
-          self.bg:SetVertexColor(E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction)))
+    if config then
+      if config.reverse then
+        if not config.color.smooth then
+          if config.color.health then
+            self.bg:SetVertexColor(E:GetRGB(C.colors.health))
+          else
+            self.bg:SetVertexColor(E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction)))
+          end
         end
       end
     end

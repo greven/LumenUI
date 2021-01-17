@@ -211,8 +211,8 @@ function UF:Init()
           UF:CreateTargetTargetFrame(frame)
         elseif unit == "focus" then
           UF:CreateFocusFrame(frame)
-        -- elseif unit == "focustarget" then
-        --   UF:CreateFocusTargetFrame(frame)
+        elseif unit == "focustarget" then
+          UF:CreateFocusTargetFrame(frame)
         elseif unit == "pet" then
           UF:CreatePetFrame(frame)
         end
@@ -247,10 +247,10 @@ function UF:Init()
       UF:UpdateUnitFrame("focus", "Update")
     end
 
-    -- if config.units.focustarget.enabled then
-    --   UF:CreateUnitFrame("focustarget", "LumenFocusTarget")
-    --   UF:UpdateUnitFrame("focustarget", "Update")
-    -- end
+    if config.units.focustarget.enabled then
+      UF:CreateUnitFrame("focustarget", "LumenFocusTarget")
+      UF:UpdateUnitFrame("focustarget", "Update")
+    end
 
     isInit = true
   end

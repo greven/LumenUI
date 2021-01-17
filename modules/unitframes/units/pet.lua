@@ -17,7 +17,10 @@ local function frame_Update(self)
   self:UpdateConfig()
 
   if self._config.enabled then
-    if not self:IsEnabled() then
+    if self._config.visibility then
+      self:Disable()
+      RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
+    elseif not self:IsEnabled() then
       self:Enable()
     end
 

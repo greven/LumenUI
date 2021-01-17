@@ -3,6 +3,7 @@
 	<Script file='target.lua' />
 	<Script file='targettarget.lua' />
 	<Script file='focus.lua' />
+	<Script file='focustarget.lua' />
 	<Script file='pet.lua' />
 	<!-- <Script file='party.lua' /> -->
 	<!-- <Script file='raid.lua' /> -->

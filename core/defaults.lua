@@ -598,7 +598,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:npc_type(true)]",
-            size = 13,
+            size = 14,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -842,18 +842,20 @@ D.modules = {
             y = 4
           },
         },
-        unitIndicator = {
+        raid_target = {
           enabled = true,
-          width = 2,
-          height = targetHeight,
-          hide_out_of_combat = false,
+          size = 24,
           point = {
-            p = "RIGHT",
+            p = "LEFT",
             anchor = "",
-            ap = "LEFT",
-            x = -6,
-            y = 0
+            ap = "RIGHT",
+            x = 12,
+            y = 0,
           },
+        },
+        threat = {
+          enabled = true,
+          feedback_unit = "player",
         },
       },
       focus = {
@@ -1103,13 +1105,166 @@ D.modules = {
         },
         raid_target = {
           enabled = true,
-          size = 24,
+          size = 20,
           point = {
             p = "LEFT",
             anchor = "",
             ap = "RIGHT",
-            x = 12,
-            y = 0,
+            x = 10,
+            y = 1,
+          },
+        },
+        threat = {
+          enabled = true,
+          feedback_unit = "player",
+        },
+      },
+      focustarget = {
+        enabled = false,
+        width = 143,
+        height = 18,
+        point = {
+          p = "LEFT",
+          anchor = "LumenFocusFrame",
+          ap = "RIGHT",
+          x = 40,
+          y = 0
+        },
+        health = {
+          enabled = true,
+          kill_range = false,
+          reverse = false,
+          color = {
+            smooth = false,
+            health = false,
+            tapping = true,
+            disconnected = true,
+            class = true,
+            reaction = true
+          },
+          text = {
+            tag = "[lum:health_perc]",
+            size = 12,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            hide_when_max = false,
+            point = {
+              p = "RIGHT",
+              anchor = "",
+              ap = "RIGHT",
+              x = -4,
+              y = 1
+            },
+          },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							tag = "",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+					},
+        },
+        power = {
+          enabled = true,
+          height = 1.5,
+          gap = 1.5,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
+          text = {
+            tag = "",
+            size = 14,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "BOTTOM",
+              anchor = "",
+              ap = "TOP",
+              x = 0,
+              y = 6
+            },
+          },
+        },
+        castbar = {
+          enabled = true,
+          width = 143,
+          height = 16,
+          thin = true,
+          color = D.colors.dark_blue,
+          class_colored = false,
+          max = false,
+          latency = false,
+          icon = {
+            position = "NONE", -- "LEFT", "RIGHT" or "NONE"
+            gap = 4
+          },
+          text = {
+            size = 13,
+            outline = true,
+            shadow = false,
+          },
+          point = {
+            p = "BOTTOMLEFT",
+            anchor = "Health",
+            ap = "TOPLEFT",
+            x = 0,
+            y = 28
+          },
+        },
+        name = {
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(21)]",
+          size = 13,
+          outline = true,
+          shadow = false,
+          h_alignment = "LEFT",
+          v_alignment = "MIDDLE",
+          word_wrap = false,
+          point = {
+            p = "BOTTOMLEFT",
+            anchor = "",
+            ap = "TOPLEFT",
+            x = 4,
+            y = 4
+          },
+        },
+        raid_target = {
+          enabled = true,
+          size = 20,
+          point = {
+            p = "LEFT",
+            anchor = "",
+            ap = "RIGHT",
+            x = 10,
+            y = 1,
           },
         },
         threat = {

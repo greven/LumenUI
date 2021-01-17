@@ -9,7 +9,7 @@ local UF = E:GetModule("UnitFrames")
 
 local isInit = false
 
-function UF:HasFocusFrame()
+function UF:HasFocusTargetFrame()
 	return isInit
 end
 
@@ -29,8 +29,6 @@ local function frame_Update(self)
     self:UpdateHealthPrediction()
     self:UpdatePower()
     self:UpdateName()
-    self:UpdateCastbar()
-    self:UpdateAuras()
     self:UpdateRaidTargetIndicator()
     self:UpdateThreatIndicator()
   else
@@ -40,7 +38,7 @@ local function frame_Update(self)
   end
 end
 
-function UF:CreateFocusFrame(frame)
+function UF:CreateFocusTargetFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
   local level = frame:GetFrameLevel()
 
@@ -53,13 +51,19 @@ function UF:CreateFocusFrame(frame)
 
   local health = self:CreateHealthBar(frame, textParent)
   self:CreateHealthPrediction(frame, health, textParent)
-
   self:CreatePowerBar(frame, textParent)
   self:CreateName(frame, textParent)
-  self:CreateCastbar(frame)
-  self:CreateAuras(frame, "focus")
   self:CreateRaidTargetIndicator(frame)
   self:CreateThreatIndicator(frame)
+
+    -- Arrow indicator
+    local arrow = frame:CreateTexture(nil, "ARTWORK")
+    arrow:SetSize(18, 18)
+    arrow:SetPoint("RIGHT", frame, "LEFT", -10, 0)
+    arrow:SetTexture(M.textures.arrow)
+    arrow:SetVertexColor(0, 0, 0)
+    arrow:SetAlpha(0.8)
+    frame.arrow = arrow
 
   frame.Update = frame_Update
 

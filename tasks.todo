@@ -1,5 +1,9 @@
 api:
   ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58)
+  ✔ Glow @done(21-01-17 21:18)
+  ✔ Button @done(21-01-17 21:18)
+  ✔ Border @done(21-01-17 21:18)
+  ✔ Backdrop @done(21-01-17 21:18)
 
 unitframes:
   ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing?
@@ -8,9 +12,14 @@ unitframes:
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu
   ☐ Maybe move Target castbar beneath the auras for better visibility!
-  ☐ Units Missing: Boss, focusTarget, Pet, Party, Raid
+  ☐ Units Missing:
+    ✔ Pet @done(21-01-17 21:17)
+    ☐ FocusTarget,
+    ☐ Boss
+    ☐ Party
+    ☐ Raid
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
-  ☐ Frames: Add visibility option and RegisterStateDriver
+  ✔ Frames: Add visibility option and RegisterStateDriver @done(21-01-17 21:16)
 
 Archive:
   ✔ Mouseover Tooltip not showing? @done(21-01-11 10:58) @project(unitframes)

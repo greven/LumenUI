@@ -17,13 +17,16 @@ local function frame_Update(self)
   self:UpdateConfig()
 
   if self._config.enabled then
-    if not self:IsEnabled() then
+    if self._config.visibility then
+      -- self:Disable()
+      -- RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
+    elseif not self:IsEnabled() then
       self:Enable()
     end
 
     self:UpdateSize()
     self:UpdateHealth()
-    self:UpdateHealthPrediction()
+    -- self:UpdateHealthPrediction()
     self:UpdatePower()
     self:UpdateName()
   else
@@ -45,7 +48,7 @@ function UF:CreateTargetTargetFrame(frame)
   frame.TextParent = textParent
 
   local health = self:CreateHealthBar(frame, textParent)
-  self:CreateHealthPrediction(frame, health, textParent)
+  -- self:CreateHealthPrediction(frame, health, textParent)
 
   self:CreatePowerBar(frame, textParent)
   self:CreateName(frame, textParent)
@@ -55,8 +58,8 @@ function UF:CreateTargetTargetFrame(frame)
   arrow:SetSize(18, 18)
   arrow:SetPoint("RIGHT", frame, "LEFT", -10, 0)
   arrow:SetTexture(M.textures.arrow)
-  arrow:SetVertexColor(0, 0.1, 0.125)
-  arrow:SetAlpha(0.9)
+  arrow:SetVertexColor(0, 0, 0)
+  arrow:SetAlpha(0.8)
   frame.arrow = arrow
 
   frame.Update = frame_Update
