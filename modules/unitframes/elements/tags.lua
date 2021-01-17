@@ -73,6 +73,12 @@ local customTags = {
     return ""
   end,
 
+  -- Util to output an hex color
+  color = function(_, _, color)
+    if not color then return end
+    return "|c" .. E:ToHex(C.colors[color])
+  end,
+
   -- Creature difficulty color
   color_difficulty = function(unit)
     return "|c" .. E:ToHex(GetCreatureDifficultyColor(UnitEffectiveLevel(unit)))
@@ -135,7 +141,7 @@ local customTags = {
   name = function(unit, realUnit, truncate)
     local name = UnitName(realUnit or unit) or ""
     local length = truncate and tonumber(truncate)
-    -- name = "ASDASDADADADADADADAFWRBVXCBXCGDSGSGSGSGSD"
+    -- name = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+"
     if length then
       return name ~= "" and E:TruncateString(name, length) or name
     end

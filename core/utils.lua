@@ -597,3 +597,32 @@ do
 		return unit and (UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") or UnitIsUnit(unit, "boss3") or UnitIsUnit(unit, "boss4") or UnitIsUnit(unit, "boss5"))
 	end
 end
+
+-- -------------------
+-- > Player Specific
+-- -------------------
+
+do
+	local dispelTypes = {}
+
+	E:RegisterEvent("SPELLS_CHANGED", function()
+		-- Soothe (Druid)
+		dispelTypes[""] = IsSpellKnown(2908) -- Enrage
+
+		-- Cleanse Spirit (Shaman), Nature's Cure (Druid), Purify Spirit (Shaman), Remove Corruption (Druid), Remove Curse (Mage)
+		dispelTypes["Curse"] = IsSpellKnown(51886) or IsSpellKnown(88423) or IsSpellKnown(77130) or IsSpellKnown(2782) or IsSpellKnown(475)
+
+		-- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Purify (Priest), Purify Disease (Priest)
+		dispelTypes["Disease"] = IsSpellKnown(4987) or IsSpellKnown(213644) or IsSpellKnown(115450) or IsSpellKnown(218164) or IsSpellKnown(527) or IsSpellKnown(213634)
+
+		-- Cleanse (Paladin), Detox (Monk), Mass Dispel (Priest), Nature's Cure (Druid), Purify (Priest), Purify Spirit (Shaman)
+		dispelTypes["Magic"] = IsSpellKnown(4987) or IsSpellKnown(115450) or IsSpellKnown(32375) or IsSpellKnown(88423) or IsSpellKnown(527) or IsSpellKnown(77130)
+
+		-- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Nature's Cure (Druid), Remove Corruption (Druid)
+		dispelTypes["Poison"] = IsSpellKnown(4987) or IsSpellKnown(213644) or IsSpellKnown(115450) or IsSpellKnown(218164) or IsSpellKnown(88423) or IsSpellKnown(2782)
+	end)
+
+	function E:IsDispellable(debuffType)
+		return dispelTypes[debuffType]
+	end
+end

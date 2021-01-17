@@ -257,8 +257,8 @@ do
 		bg:SetAllPoints()
 		element:SetFrameLevel(element:GetFrameLevel() + 1)
 		bg:SetTexture(M.textures.flat)
-		bg:SetAlpha(0.2)
-    bg.multiplier = 0.4
+		bg:SetAlpha(0.5)
+    bg.multiplier = 0.3
     element.bg = bg
 
 		element.GainLossIndicators = E:CreateGainLossIndicators(element)

@@ -103,6 +103,7 @@ do
 
     self:UpdateSize()
     self:UpdateHealth()
+    self:UpdateHealthPrediction()
     self:UpdatePower()
     self:UpdatePowerPrediction()
 
@@ -139,6 +140,7 @@ do
     frame.TextParent = textParent
 
     local health = self:CreateHealthBar(frame, textParent)
+    self:CreateHealthPrediction(frame, health, textParent)
     E.SetBackdrop(health, 2)
     E.CreateShadow(health)
 

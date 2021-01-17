@@ -56,7 +56,7 @@ do
 		self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
 		self.GainLossIndicators._UnitGUID = unitGUID
 
-    if config.color.reverse and config.color.smooth then
+    if config.reverse and config.color.smooth then
       local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
       self.bg:SetVertexColor(E:GetRGB(color))
     end
@@ -105,7 +105,7 @@ do
     local unit = self.__owner._unit
     local config = self._config
 
-    if config.color.reverse then
+    if config.reverse then
       if not config.color.smooth then
         if config.color.health then
           self.bg:SetVertexColor(E:GetRGB(C.colors.health))
@@ -159,13 +159,13 @@ do
     local config = self._config
 
     self.colorSmooth = config.color.smooth
-    self.colorHealth = not config.color.reverse and config.color.health
-    self.colorTapping = not config.color.reverse and config.color.tapping
-    self.colorDisconnected = not config.color.reverse and config.color.disconnected
+    self.colorHealth = not config.reverse and config.color.health
+    self.colorTapping = not config.reverse and config.color.tapping
+    self.colorDisconnected = not config.reverse and config.color.disconnected
 		self.colorClass = not config.color.smooth and config.color.class
-    self.colorReaction = not config.color.smooth and not config.color.reverse and config.color.reaction
+    self.colorReaction = not config.color.smooth and not config.reverse and config.color.reaction
 
-    if config.color.reverse then
+    if config.reverse then
       self.colorClass = false
       self.colorSmooth = false
       self:SetStatusBarTexture(M.textures.vertlines)

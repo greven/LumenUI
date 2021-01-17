@@ -286,12 +286,12 @@ function UF:CreateCastbar(frame)
 
 	if config.thin then
 		text:SetPoint("TOP", holder, "TOP", 0, 0)
-		text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 9)
+		text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 10)
 		text:SetPoint("LEFT", element, "LEFT", 0, 0)
 		text:SetPoint("RIGHT", time, "LEFT", 0, 0)
 
 		time:SetPoint("TOP", holder, "TOP", 0, 0)
-		time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 9)
+		time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 10)
 		text:SetPoint("LEFT", element, "LEFT", 0, 0)
 		time:SetPoint("RIGHT", element, "RIGHT", 0, 0)
 	end
