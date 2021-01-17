@@ -1367,6 +1367,7 @@ D.modules = {
         enabled = true,
         width = playerPlateWidth,
         height = playerPlateHeight,
+        visibility = "[harm,nodead][combat][group,noflying] show; hide;",
         point = {
           p = "CENTER",
           anchor = "UIParent",

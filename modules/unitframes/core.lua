@@ -110,10 +110,15 @@ end
 
 function UF:CreateUnitFrame(unit, name)
   if not units[unit] then
-    if unit == "boss" then
+    if unit == "party" then
+      -- Party
+    elseif unit == "raid" then
+      -- Raid
+    elseif unit == "boss" then
       -- Boss
     else
       local object
+
       if unit == "playerplate" then
         object = oUF:Spawn("player", name .. "Frame")
       else
@@ -123,6 +128,7 @@ function UF:CreateUnitFrame(unit, name)
       object:UpdateConfig()
       E:SetPosition(object, object._config.point)
       if C.global.shadows.enabled then E:CreateShadow(object) end
+
 			objects[unit] = object
     end
 

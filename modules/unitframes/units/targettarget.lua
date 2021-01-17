@@ -55,7 +55,7 @@ function UF:CreateTargetTargetFrame(frame)
   arrow:SetSize(18, 18)
   arrow:SetPoint("RIGHT", frame, "LEFT", -10, 0)
   arrow:SetTexture(M.textures.arrow)
-  arrow:SetVertexColor(E:GetRGB(C.colors.dark_gray))
+  arrow:SetVertexColor(0, 0.1, 0.125)
   arrow:SetAlpha(0.9)
   frame.arrow = arrow
 
