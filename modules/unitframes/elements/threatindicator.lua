@@ -25,11 +25,6 @@ local function element_PostUpdate(self, _, status)
     return
   end
 
-  if status and status == 0 then
-    self:SetVertexColor(E:GetRGB(C.colors.threat[1]))
-    self:Show()
-  end
-
   if status and status > 0 then
     self.glow:SetVertexColor(self:GetVertexColor())
     self.glow:Show()
