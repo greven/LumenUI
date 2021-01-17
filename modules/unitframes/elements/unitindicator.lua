@@ -64,13 +64,12 @@ local function element_UpdateSize(self)
 end
 
 local function element_UpdatePoints(self)
-  local frame = self:GetParent()
 	local config = self._config.point
 
   self:ClearAllPoints()
 
   if config and config.p and config.p ~= "" then
-    E:SetPosition(self, config, frame)
+    E:SetPosition(self, config, self.__owner)
 	end
 end
 

@@ -9,5 +9,6 @@
   <Script file="unitindicator.lua" />
   <Script file="pvpindicator.lua" />
   <Script file="threatindicator.lua" />
+  <Script file="raidtargetindicator.lua" />
   <Script file="tags.lua" />
 </Ui>

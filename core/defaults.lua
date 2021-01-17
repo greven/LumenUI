@@ -308,15 +308,15 @@ D.modules = {
         },
         unitIndicator = {
           enabled = true,
-          width = 2.5,
+          width = 2,
           height = 82,
           rested = true,
           hide_out_of_combat = false,
           point = {
             p = "RIGHT",
-            anchor = "",
+            anchor = "Portrait",
             ap = "LEFT",
-            x = -6,
+            x = -8,
             y = 0
           },
         },
@@ -619,9 +619,9 @@ D.modules = {
           hide_out_of_combat = false,
           point = {
             p = "RIGHT",
-            anchor = "",
+            anchor = "Portrait",
             ap = "LEFT",
-            x = -6,
+            x = -8,
             y = 0
           },
         },
@@ -713,6 +713,17 @@ D.modules = {
             ap = "BOTTOMLEFT",
             x = 1,
             y = -8
+          },
+        },
+        raid_target = {
+          enabled = true,
+          size = 24,
+          point = {
+            p = "RIGHT",
+            anchor = "Portrait",
+            ap = "LEFT",
+            x = -20,
+            y = 0,
           },
         },
         threat = {
@@ -1089,7 +1100,22 @@ D.modules = {
             x = 1,
             y = -8
           },
-        }
+        },
+        raid_target = {
+          enabled = true,
+          size = 24,
+          point = {
+            p = "LEFT",
+            anchor = "",
+            ap = "RIGHT",
+            x = 12,
+            y = 0,
+          },
+        },
+        threat = {
+          enabled = true,
+          feedback_unit = "player",
+        },
       },
       pet = {
         enabled = true,

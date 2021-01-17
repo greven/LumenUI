@@ -35,6 +35,7 @@ local function frame_Update(self)
     self:UpdatePortrait()
     self:UpdateAuras()
     self:UpdateUnitIndicator()
+    self:UpdateRaidTargetIndicator()
     self:UpdateThreatIndicator()
   else
     if self:IsEnabled() then
@@ -68,6 +69,7 @@ function UF:CreateTargetFrame(frame)
   self:CreateCastbar(frame)
   self:CreateAuras(frame, "target")
   self:CreateUnitIndicator(frame, portraitParent)
+  self:CreateRaidTargetIndicator(frame)
   self:CreateThreatIndicator(frame)
 
   -- Level and Race

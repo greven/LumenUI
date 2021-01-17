@@ -28,6 +28,8 @@ local function frame_Update(self)
     self:UpdateName()
     self:UpdateCastbar()
     self:UpdateAuras()
+    self:UpdateRaidTargetIndicator()
+    self:UpdateThreatIndicator()
   else
     if self:IsEnabled() then
       self:Disable()
@@ -53,6 +55,8 @@ function UF:CreateFocusFrame(frame)
   self:CreateName(frame, textParent)
   self:CreateCastbar(frame)
   self:CreateAuras(frame, "focus")
+  self:CreateRaidTargetIndicator(frame)
+  self:CreateThreatIndicator(frame)
 
   frame.Update = frame_Update
 

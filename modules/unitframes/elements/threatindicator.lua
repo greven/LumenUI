@@ -38,10 +38,6 @@ local function element_PostUpdate(self, _, status)
   end
 end
 
-local function Update(self, event)
-  print(event)
-end
-
 local function frame_UpdateThreatIndicator(self, event)
 	local element = self.ThreatIndicator
 	element:UpdateConfig()
