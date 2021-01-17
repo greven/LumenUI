@@ -1,26 +1,24 @@
-api:
-  ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58)
-  ✔ Glow @done(21-01-17 21:18)
-  ✔ Button @done(21-01-17 21:18)
-  ✔ Border @done(21-01-17 21:18)
-  ✔ Backdrop @done(21-01-17 21:18)
-
 unitframes:
-  ☐ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing?
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
-  ☐ [BUG] ClassPower: When changing specs, points (Rogue) got stuck and colored blue (charged idx bug?)
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu
-  ☐ Maybe move Target castbar beneath the auras for better visibility!
   ☐ Units Missing:
-    ✔ Pet @done(21-01-17 21:17)
-    ☐ FocusTarget,
-    ☐ Boss
     ☐ Party
     ☐ Raid
+    ☐ Boss
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
-  ✔ Frames: Add visibility option and RegisterStateDriver @done(21-01-17 21:16)
 
 Archive:
+  ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58) @project(api)
+  ✔ Glow @done(21-01-17 21:18) @project(api)
+  ✔ Button @done(21-01-17 21:18) @project(api)
+  ✔ Border @done(21-01-17 21:18) @project(api)
+  ✔ Backdrop @done(21-01-17 21:18) @project(api)
+  ✔ [BUG] Power: Loss indicators sometimes don't show up, but they show sometimes when refreshing? @done(21-01-17 21:58) @project(unitframes)
+  ✔ [BUG] ClassPower: When changing specs, points (Rogue) got stuck and colored blue (charged idx bug?) @done(21-01-17 21:58) @project(unitframes)
+  ✔ Maybe move Target castbar beneath the auras for better visibility! @done(21-01-17 21:58) @project(unitframes)
+  ✔ Pet @done(21-01-17 21:17) @project(unitframes)
+  ✔ FocusTarget, @done(21-01-17 21:58) @project(unitframes)
+  ✔ Frames: Add visibility option and RegisterStateDriver @done(21-01-17 21:16) @project(unitframes)
   ✔ Mouseover Tooltip not showing? @done(21-01-11 10:58) @project(unitframes)
   ✔ UnitIndicator: Show Threat when in combat and show threat level @done(21-01-04 13:32) @project(unitframes)
