@@ -37,8 +37,7 @@ function UF:CreateTargetTargetFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
   local level = frame:GetFrameLevel()
 
-  E.SetBackdrop(frame, 2)
-  E.CreateShadow(frame)
+  E:SetBackdrop(frame, 2)
 
   local textParent = CreateFrame("Frame", nil, frame)
 	textParent:SetFrameLevel(level + 9)

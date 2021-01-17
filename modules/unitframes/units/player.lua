@@ -35,7 +35,7 @@ do
       self:UpdateAuras()
       self:UpdateUnitIndicator()
       self:UpdatePvPIndicator()
-      -- self:UpdateThreatIndicator()
+      self:UpdateThreatIndicator()
     else
       if self:IsEnabled() then
         self:Disable()
@@ -47,8 +47,7 @@ do
     local config = C.modules.unitframes.units[frame._unit]
     local level = frame:GetFrameLevel()
 
-    E.SetBackdrop(frame, 2)
-    E.CreateShadow(frame)
+    E:SetBackdrop(frame, 2)
 
     local textParent = CreateFrame("Frame", nil, frame)
     textParent:SetFrameLevel(level + 9)
@@ -58,8 +57,8 @@ do
     local portraitParent = CreateFrame("Frame", nil, frame)
     portraitParent:SetSize(config.portrait.width, config.portrait.height)
     E:SetPosition(portraitParent, config.portrait.point, frame)
-    E.SetBackdrop(portraitParent, 2)
-    E.CreateShadow(portraitParent)
+    E:SetBackdrop(portraitParent, 2)
+    E:CreateShadow(portraitParent)
 
     self:CreateHealthBar(frame, textParent)
     self:CreateHealthPrediction(frame, frame.Health, textParent)
@@ -74,6 +73,7 @@ do
     self:CreatePortrait(frame, portraitParent)
     self:CreateAuras(frame, "player")
     self:CreateUnitIndicator(frame, portraitParent)
+    self:CreateThreatIndicator(frame)
 
     -- Level and Spec
     local info = textParent:CreateFontString(nil, "ARTWORK")
@@ -89,16 +89,6 @@ do
 		pvpTimer:SetTextColor(1, 0.82, 0)
 		pvpTimer:SetJustifyH("RIGHT")
     frame.PvPIndicator.Timer = pvpTimer
-
-    -- self:CreateThreatIndicator(frame)
-
-    -- local border = E:CreateBorder(parent or frame, "OVERLAY", 7)
-    -- border:SetVertexColor(1, 0, 0.3)
-
-    local glow = E:CreateGlow(parent or frame)
-    glow:SetVertexColor(1, 0, 0.3)
-    -- glow:SetOffset(-3)
-    -- glow:SetSize(16)
 
     frame.Update = frame_Update
 
@@ -151,13 +141,11 @@ do
 
     local health = self:CreateHealthBar(frame, textParent)
     self:CreateHealthPrediction(frame, health, textParent)
-    E.SetBackdrop(health, 2)
-    E.CreateShadow(health)
+    E:SetBackdrop(health, 2)
 
     local power = self:CreatePowerBar(frame, textParent)
     self:CreatePowerPrediction(frame, frame.Power)
-    E.SetBackdrop(power, 2)
-    E.CreateShadow(power)
+    E:SetBackdrop(power, 2)
 
     -- Class Power
     if E.PLAYER_CLASS == "MONK" then

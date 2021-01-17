@@ -35,6 +35,7 @@ local function frame_Update(self)
     self:UpdatePortrait()
     self:UpdateAuras()
     self:UpdateUnitIndicator()
+    self:UpdateThreatIndicator()
   else
     if self:IsEnabled() then
       self:Disable()
@@ -46,8 +47,7 @@ function UF:CreateTargetFrame(frame)
   local config = C.modules.unitframes.units[frame._unit]
   local level = frame:GetFrameLevel()
 
-  E.SetBackdrop(frame, 2)
-  E.CreateShadow(frame)
+  E:SetBackdrop(frame, 2)
 
   local textParent = CreateFrame("Frame", nil, frame)
 	textParent:SetFrameLevel(level + 9)
@@ -57,8 +57,8 @@ function UF:CreateTargetFrame(frame)
   local portraitParent = CreateFrame("Frame", nil, frame)
   portraitParent:SetSize(config.portrait.width, config.portrait.height)
   E:SetPosition(portraitParent, config.portrait.point, frame)
-  E.SetBackdrop(portraitParent, 2)
-  E.CreateShadow(portraitParent)
+  E:SetBackdrop(portraitParent, 2)
+  E:CreateShadow(portraitParent)
 
   local health = self:CreateHealthBar(frame, textParent)
   self:CreateHealthPrediction(frame, health, textParent)
@@ -68,6 +68,7 @@ function UF:CreateTargetFrame(frame)
   self:CreateCastbar(frame)
   self:CreateAuras(frame, "target")
   self:CreateUnitIndicator(frame, portraitParent)
+  self:CreateThreatIndicator(frame)
 
   -- Level and Race
   local info = textParent:CreateFontString(nil, "ARTWORK")

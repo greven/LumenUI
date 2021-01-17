@@ -93,8 +93,8 @@ local function element_UpdateIcon(self)
 			self:SetPoint("BOTTOMRIGHT", 0, 0)
 		end
 
-		E.SetBackdrop(self.Icon, 1.5)
-		E.CreateShadow(self.Icon)
+		E:SetBackdrop(self.Icon, 1.5)
+		E:CreateShadow(self.Icon)
 	elseif config.icon.position == "RIGHT" then
 		self.Icon = self.RightIcon
 
@@ -111,8 +111,8 @@ local function element_UpdateIcon(self)
 			self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
 		end
 
-		E.SetBackdrop(self.Icon, 1.5)
-		E.CreateShadow(self.Icon)
+		E:SetBackdrop(self.Icon, 1.5)
+		E:CreateShadow(self.Icon)
 	else
 		self.Icon = nil
 
@@ -228,8 +228,8 @@ function UF:CreateCastbar(frame)
 	element:SetStatusBarColor(E:GetRGB(config.color))
 	element:SetFrameLevel(holder:GetFrameLevel())
 	element:SetFrameStrata("HIGH")
-	E.SetBackdrop(element, 1.5)
-	E.CreateShadow(element)
+	E:SetBackdrop(element, 1.5)
+	E:CreateShadow(element)
 
   local bg = element:CreateTexture(nil, "BACKGROUND", nil)
   bg:SetAllPoints(element)

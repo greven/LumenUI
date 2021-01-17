@@ -46,8 +46,8 @@ local function createElement(parent, num, name)
 		bar:SetFrameLevel(level)
 		bar:SetStatusBarTexture("Interface\\BUTTONS\\WHITE8X8")
     bar:SetScript("OnValueChanged", bar_OnValueChanged)
-    E.SetBackdrop(bar, 2)
-    E.CreateShadow(bar)
+    E:SetBackdrop(bar, 2)
+    E:CreateShadow(bar)
 		element[i] = bar
 
 		local hl = element:CreateTexture(nil, "BACKGROUND", nil, -8)
@@ -464,8 +464,8 @@ do
 		local element = CreateFrame("StatusBar", nil, frame)
 		element:SetStatusBarTexture(C.global.statusbar.texture)
 		E:SmoothBar(element)
-		E.SetBackdrop(element, 2)
-    E.CreateShadow(element)
+		E:SetBackdrop(element, 2)
+    E:CreateShadow(element)
 		element:Hide()
 
 		element.GainLossIndicators = E:CreateGainLossIndicators(element)

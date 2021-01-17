@@ -87,8 +87,8 @@ function UF:CreateUnitIndicator(frame, parent)
   element:SetStatusBarTexture(M.textures.flat)
   element:SetOrientation("VERTICAL")
 
-  E.SetBackdrop(element, 2)
-  E.CreateShadow(element)
+  E:SetBackdrop(element, 2)
+  E:CreateShadow(element)
 
   hooksecurefunc(frame, "Show", update)
 

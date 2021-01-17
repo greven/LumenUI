@@ -6,65 +6,62 @@ local _G = getfenv(0)
 
 -- ---------------
 
-function E:CreateBackdrop(parent, offset, alpha)
-  local frame = self
-  if self:GetObjectType() == "Texture" then frame = self:GetParent() end
+function E:CreateBackdrop(frame, offset, alpha)
+  if frame._backdrop then return end
 
-  if not frame._backdrop then
-    local level = frame:GetFrameLevel()
-    local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-    backdrop:SetFrameLevel(level == 0 and 0 or level - 1)
-    backdrop:SetOutside(frame, offset, offset)
-    backdrop:SetBackdrop({bgFile = M.textures.flat, tile = false})
-    if alpha then
-      backdrop:SetBackdropColor(0, 0, 0, alpha)
-    else
-      backdrop:SetBackdropColor(E:GetRGBA(C.global.backdrop.color, C.global.backdrop.alpha))
-    end
+  if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
 
-    frame._backdrop = backdrop
-    return backdrop
+  local level = frame:GetFrameLevel()
+  local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+  backdrop:SetFrameLevel(level == 0 and 0 or level - 1)
+  backdrop:SetOutside(frame, offset, offset)
+  backdrop:SetBackdrop({bgFile = M.textures.flat, tile = false})
+  if alpha then
+    backdrop:SetBackdropColor(0, 0, 0, alpha)
+  else
+    backdrop:SetBackdropColor(E:GetRGBA(C.global.backdrop.color, C.global.backdrop.alpha))
   end
+
+  frame._backdrop = backdrop
+  return backdrop
 end
 
-function E:SetBackdrop(offset, alpha, x1, y1, x2, y2)
-  local bg = E.CreateBackdrop(self, offset, alpha)
+function E:SetBackdrop(frame, offset, alpha, x1, y1, x2, y2)
+  local bg = E:CreateBackdrop(frame, offset, alpha)
+
   if x1 then
-    bg:SetPoint("TOPLEFT", self, x1, y1)
-		bg:SetPoint("BOTTOMRIGHT", self, x2, y2)
+    bg:SetPoint("TOPLEFT", frame, x1, y1)
+		bg:SetPoint("BOTTOMRIGHT", frame, x2, y2)
   end
   return bg
 end
 
--- Backdrop shadow
-function E:CreateShadow(size, alpha)
-  if self._shadow then return end
+function E:CreateShadow(frame, size, alpha)
+  if frame._shadow then return end
 
-  local frame = self
-  if self:GetObjectType() == "Texture" then frame = self:GetParent() end
+  if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
 
   local shadowBackdrop = {edgeFile = M.textures.glow}
-  shadowBackdrop.edgeSize = size or 5
-  self._shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-  self._shadow:SetOutside(self, size or 5, size or 5)
-  self._shadow:SetBackdrop(shadowBackdrop)
-  self._shadow:SetBackdropBorderColor(0, 0, 0, C.global.shadows.alpha)
-  self._shadow:SetFrameLevel(1)
+  shadowBackdrop.edgeSize = size or 6
 
-	return self._shadow
+  local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+  shadow:SetOutside(frame, size or 6, size or 6)
+  shadow:SetBackdrop(shadowBackdrop)
+  shadow:SetBackdropBorderColor(0, 0, 0, alpha or C.global.shadows.alpha)
+  shadow:SetFrameLevel(1)
+
+  frame._shadow = shadow
+	return shadow
 end
 
--- Glow parent
-function E:CreateGlow(parent, size, drawLayer, drawSubLevel)
-  local glow = E:CreateBorder(parent, drawLayer or "BACKGROUND", drawSubLevel or -7)
-  glow:SetTexture(M.textures.border_glow)
-  -- glow:SetOffset(-6)
-  -- glow:SetSize(size or 16)
+function E:CreateGlow(frame, size, drawLayer, drawSubLevel, offset)
+  if frame._glow then return end
 
+  local glow = E:CreateBorder(frame._backdrop or frame, drawLayer or "BACKGROUND", drawSubLevel or -7)
+  glow:SetTexture(M.textures.glow)
+  glow:SetOffset(offset or -4)
+  glow:SetSize(size or 12)
 
-  -- local frame = CreateFrame("Frame", nil, self)
-  -- frame:SetPoint("CENTER")
-  -- frame:SetSize(size+8, size+8)
-
+  frame._glow = glow
   return glow
 end

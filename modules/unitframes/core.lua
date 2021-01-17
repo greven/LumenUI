@@ -16,6 +16,24 @@ local isInit = false
 local objects = {}
 local units = {}
 
+local configIgnoredKeys = {
+	alt_power = true,
+	auras = true,
+	border = true,
+	castbar = true,
+	class = true,
+	class_power = true,
+	combat_feedback = true,
+	debuff = true,
+	health = true,
+	name = true,
+	portrait = true,
+	power = true,
+	pvp = true,
+	raid_target = true,
+	threat = true,
+}
+
 local function frame_OnEnter(self)
   self = self.__owner or self
 	UnitFrame_OnEnter(self)
@@ -27,7 +45,7 @@ local function frame_OnLeave(self)
 end
 
 local function frame_UpdateConfig(self)
-  self._config = E:CopyTable(C.modules.unitframes.units[self._layout or self._unit], self._config)
+  self._config = E:CopyTable(C.modules.unitframes.units[self._layout or self._unit], self._config, configIgnoredKeys)
 end
 
 local function frame_UpdateSize(self)
@@ -104,6 +122,7 @@ function UF:CreateUnitFrame(unit, name)
 
       object:UpdateConfig()
       E:SetPosition(object, object._config.point)
+      if C.global.shadows.enabled then E:CreateShadow(object) end
 			objects[unit] = object
     end
 

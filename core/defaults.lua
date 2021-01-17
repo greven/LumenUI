@@ -30,9 +30,9 @@ M.textures = {
   vertlines = Media.."textures\\vertlines",
   neon = Media.."textures\\neon",
   mint = Media.."textures\\mint",
+  glow = Media.."textures\\glow",
   border = Media.."textures\\border",
   border_thick = Media.."textures\\border-thick",
-  border_glow = Media.."textures\\border-glow",
   border = Media.."textures\\border",
   absorb = Media.."textures\\absorb",
   arrow = Media.."textures\\arrow",
@@ -79,7 +79,8 @@ D.global = {
     color = D.colors.dark_gray
   },
   shadows = {
-    alpha = 0.25
+    enabled = true,
+    alpha = 0.3
   },
   castbar = {
     texture = M.textures.statusbar,
@@ -562,7 +563,7 @@ D.modules = {
             anchor = "Health",
             ap = "BOTTOMLEFT",
             x = 0,
-            y = -66
+            y = -76
           },
         },
         name = {
@@ -713,7 +714,11 @@ D.modules = {
             x = 1,
             y = -8
           },
-        }
+        },
+        threat = {
+          enabled = true,
+          feedback_unit = "player",
+        },
       },
       targettarget = {
         enabled = true,
