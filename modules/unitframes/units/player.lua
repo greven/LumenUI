@@ -35,6 +35,7 @@ do
       self:UpdateAuras()
       self:UpdateUnitIndicator()
       self:UpdatePvPIndicator()
+      self:UpdateThreatIndicator()
     else
       if self:IsEnabled() then
         self:Disable()
@@ -82,13 +83,14 @@ do
 
     -- PvP Indicator and timer
     frame.PvPIndicator = self:CreatePvPIndicator(frame, portraitParent)
-
     local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
     pvpTimer:SetFont(M.fonts.condensed, 16, "OUTLINE")
 		pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 6, -1)
 		pvpTimer:SetTextColor(1, 0.82, 0)
 		pvpTimer:SetJustifyH("RIGHT")
-		frame.PvPIndicator.Timer = pvpTimer
+    frame.PvPIndicator.Timer = pvpTimer
+
+    self:CreateThreatIndicator(frame)
 
     frame.Update = frame_Update
 

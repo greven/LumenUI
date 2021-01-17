@@ -8,5 +8,6 @@
   <Script file="power.lua" />
   <Script file="unitindicator.lua" />
   <Script file="pvpindicator.lua" />
+  <Script file="threatindicator.lua" />
   <Script file="tags.lua" />
 </Ui>

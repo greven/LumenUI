@@ -10,6 +10,7 @@ unitframes:
   ☐ Maybe move Target castbar beneath the auras for better visibility!
   ☐ Units Missing: Boss, focusTarget, Pet, Party, Raid
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
+  ☐ Frames: Add visibility option and RegisterStateDriver
 
 Archive:
   ✔ Mouseover Tooltip not showing? @done(21-01-11 10:58) @project(unitframes)

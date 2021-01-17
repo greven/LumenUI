@@ -31,7 +31,7 @@ local function update(self)
     else
       element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
     end
-  elseif UnitPlayerControlled(self.unit) then
+  elseif UnitPlayerControlled(self.unit) then -- Player controlled units
     if inCombat then
       element:SetStatusBarColor(E:GetRGB(C.colors.red))
     else

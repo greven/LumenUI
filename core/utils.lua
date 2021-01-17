@@ -1,7 +1,7 @@
 -- Credits: ls_UI
 
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, M = ns.E, ns.C, ns.M
 
 -- Lua
 local _G = getfenv(0)
@@ -252,6 +252,27 @@ end
 -- > Strings
 -- ---------------
 
+function E:CreateString(size, color, font, anchor, x, y)
+	local fs = self:CreateFontString(nil, "OVERLAY")
+	fs:SetFont(font or M.fonts.normal, size or 12, "OUTLINE")
+	fs:SetJustifyH("CENTER")
+	fs:SetWordWrap(false)
+
+	if color and type(color) == "boolean" then
+		fs:SetTextColor(E:GetRGB(E.CLASS_COLOR))
+	else
+		fs:SetTextColor(E:GetRGB(C.colors.text))
+	end
+
+	if anchor and x and y then
+		fs:SetPoint(anchor, x, y)
+	else
+		fs:SetPoint("CENTER", 1, 0)
+	end
+
+	return fs
+end
+
 function E:TruncateString(v, length)
 	return s_utf8sub(v, 1, length)
 end
@@ -352,74 +373,76 @@ end
 -- > Points & Anchors
 -- -------------------
 
-function E:ResolveAnchorPoint(frame, children)
-	if not frame then
-		children = {s_split(".", children)}
-
-		local anchor = _G[children[1]]
-
-		assert(anchor, "Invalid anchor: "..children[1]..".")
-
-		for i = 2, #children do
-			anchor = anchor[children[i]]
-		end
-
-		return anchor
-	else
-		if not children or children == "" then
-			return frame
-		else
-			local anchor = frame
-
+do
+	function E:ResolveAnchorPoint(frame, children)
+		if not frame then
 			children = {s_split(".", children)}
 
-			for i = 1, #children do
+			local anchor = _G[children[1]]
+
+			assert(anchor, "Invalid anchor: "..children[1]..".")
+
+			for i = 2, #children do
 				anchor = anchor[children[i]]
 			end
 
 			return anchor
-		end
-	end
-end
+		else
+			if not children or children == "" then
+				return frame
+			else
+				local anchor = frame
 
-function E:SetPosition(frame, point, relative)
-	local anchor = point.anchor
-	if relative then
-		anchor = E:ResolveAnchorPoint(relative, anchor)
-	end
-	frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
-end
+				children = {s_split(".", children)}
 
-function E:CalcSegmentsSizes(totalSize, spacing, numSegs)
-	local totalSizeWoGaps = totalSize - spacing * (numSegs - 1)
-	local segSize = totalSizeWoGaps / numSegs
-	local result = {}
+				for i = 1, #children do
+					anchor = anchor[children[i]]
+				end
 
-	if segSize % 1 == 0 then
-		for i = 1, numSegs do
-			result[i] = segSize
-		end
-	else
-		local numOddSegs = numSegs % 2 == 0 and 2 or 1
-		local numNormalSegs = numSegs - numOddSegs
-		segSize = round(segSize)
-
-		for i = 1, numNormalSegs / 2 do
-			result[i] = segSize
-		end
-
-		for i = numSegs - numNormalSegs / 2 + 1, numSegs do
-			result[i] = segSize
-		end
-
-		segSize = (totalSizeWoGaps - segSize * numNormalSegs) / numOddSegs
-
-		for i = 1, numOddSegs do
-			result[numNormalSegs / 2 + i] = segSize
+				return anchor
+			end
 		end
 	end
 
-	return result
+	function E:SetPosition(frame, point, relative)
+		local anchor = point.anchor
+		if relative then
+			anchor = E:ResolveAnchorPoint(relative, anchor)
+		end
+		frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
+	end
+
+	function E:CalcSegmentsSizes(totalSize, spacing, numSegs)
+		local totalSizeWoGaps = totalSize - spacing * (numSegs - 1)
+		local segSize = totalSizeWoGaps / numSegs
+		local result = {}
+
+		if segSize % 1 == 0 then
+			for i = 1, numSegs do
+				result[i] = segSize
+			end
+		else
+			local numOddSegs = numSegs % 2 == 0 and 2 or 1
+			local numNormalSegs = numSegs - numOddSegs
+			segSize = round(segSize)
+
+			for i = 1, numNormalSegs / 2 do
+				result[i] = segSize
+			end
+
+			for i = numSegs - numNormalSegs / 2 + 1, numSegs do
+				result[i] = segSize
+			end
+
+			segSize = (totalSizeWoGaps - segSize * numNormalSegs) / numOddSegs
+
+			for i = 1, numOddSegs do
+				result[numNormalSegs / 2 + i] = segSize
+			end
+		end
+
+		return result
+	end
 end
 
 -- ---------------

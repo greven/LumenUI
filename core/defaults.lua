@@ -30,9 +30,9 @@ M.textures = {
   vertlines = Media.."textures\\vertlines",
   neon = Media.."textures\\neon",
   mint = Media.."textures\\mint",
-  glow = Media.."textures\\glow",
-  border_thin = Media.."textures\\border-thin",
+  border = Media.."textures\\border",
   border_thick = Media.."textures\\border-thick",
+  border_glow = Media.."textures\\border-glow",
   border = Media.."textures\\border",
   absorb = Media.."textures\\absorb",
   arrow = Media.."textures\\arrow",
@@ -256,7 +256,7 @@ D.modules = {
             anchor = "UIParent",
             ap = "BOTTOM",
             x = 0,
-            y = 200
+            y = 250
           },
         },
         name = {
@@ -421,7 +421,10 @@ D.modules = {
             x = 1,
             y = -8
           },
-        }
+        },
+        threat = {
+					enabled = true,
+				}
       },
       target = {
         enabled = true,
@@ -1223,19 +1226,19 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:color(gray)][lum:level]|r [lum:name(20)]",
-          size = 13,
+          tag = "[lum:name(20)]",
+          size = 12,
           outline = true,
           shadow = false,
           h_alignment = "LEFT",
           v_alignment = "MIDDLE",
           word_wrap = false,
           point = {
-            p = "BOTTOMLEFT",
+            p = "LEFT",
             anchor = "",
-            ap = "TOPLEFT",
+            ap = "LEFT",
             x = 4,
-            y = 4
+            y = 1
           },
         },
         auras = {

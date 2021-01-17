@@ -55,6 +55,13 @@ function UF:CreatePetFrame(frame)
   self:CreateCastbar(frame)
   self:CreateAuras(frame, "focus")
 
+  -- Level and Race
+  local info = textParent:CreateFontString(nil, "ARTWORK")
+  info:SetFont(M.fonts.condensed, 13, "OUTLINE")
+  info:SetTextColor(E:GetRGB(C.colors.light_gray))
+  info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
+  frame:Tag(info, "[lum:color(gray)][lum:level]|r [lum:color(light_gray)][lum:race]")
+
   frame.Update = frame_Update
 
   isInit = true
