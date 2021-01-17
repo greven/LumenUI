@@ -60,7 +60,6 @@ function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecur
 	button.Icon = setIcon(button)
 
 	local border = E:CreateBorder(button)
-	border:SetTexture(M.textures.border)
 	border:SetSize(16)
 	border:SetOffset(-4)
 	button.Border = border

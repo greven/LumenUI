@@ -35,7 +35,7 @@ do
       self:UpdateAuras()
       self:UpdateUnitIndicator()
       self:UpdatePvPIndicator()
-      self:UpdateThreatIndicator()
+      -- self:UpdateThreatIndicator()
     else
       if self:IsEnabled() then
         self:Disable()
@@ -90,7 +90,15 @@ do
 		pvpTimer:SetJustifyH("RIGHT")
     frame.PvPIndicator.Timer = pvpTimer
 
-    self:CreateThreatIndicator(frame)
+    -- self:CreateThreatIndicator(frame)
+
+    -- local border = E:CreateBorder(parent or frame, "OVERLAY", 7)
+    -- border:SetVertexColor(1, 0, 0.3)
+
+    local glow = E:CreateGlow(parent or frame)
+    glow:SetVertexColor(1, 0, 0.3)
+    -- glow:SetOffset(-3)
+    -- glow:SetSize(16)
 
     frame.Update = frame_Update
 

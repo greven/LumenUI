@@ -1,7 +1,7 @@
 -- Credits: ls_UI
 
 local A, ns = ...
-local E, C, M = ns.E, ns.C, ns.C
+local E, C, M = ns.E, ns.C, ns.M
 
 -- Lua
 local _G = getfenv(0)
@@ -130,6 +130,12 @@ function E:CreateBorder(parent, drawLayer, drawSubLevel)
 	border.SetTexture = border_SetTexture
 	border.SetVertexColor = border_SetVertexColor
 	border.Show = border_Show
+
+	-- Defaults
+	border:SetTexture(M.textures.border)
+	border:SetVertexColor(E:GetRGB(C.global.border.color))
+	border:SetOffset(-3)
+	border:SetSize(16)
 
 	return border
 end

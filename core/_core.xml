@@ -1,9 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="core.lua" />
   <Script file="utils.lua" />
+
   <Script file="colors.lua" />
   <Script file="defaults.lua" />
   <Script file="constants.lua" />
+
   <Script file="api.lua" />
   <Script file="backdrop.lua" />
   <Script file="border.lua" />

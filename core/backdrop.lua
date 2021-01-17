@@ -6,7 +6,7 @@ local _G = getfenv(0)
 
 -- ---------------
 
-function E:CreateBackdrop(offset, alpha)
+function E:CreateBackdrop(parent, offset, alpha)
   local frame = self
   if self:GetObjectType() == "Texture" then frame = self:GetParent() end
 
@@ -55,9 +55,16 @@ function E:CreateShadow(size, alpha)
 end
 
 -- Glow parent
-function E:CreateGlow(size)
-  local frame = CreateFrame("Frame", nil, self)
-  frame:SetPoint("CENTER")
-  frame:SetSize(size+8, size+8)
-  return frame
+function E:CreateGlow(parent, size, drawLayer, drawSubLevel)
+  local glow = E:CreateBorder(parent, drawLayer or "BACKGROUND", drawSubLevel or -7)
+  glow:SetTexture(M.textures.border_glow)
+  -- glow:SetOffset(-6)
+  -- glow:SetSize(size or 16)
+
+
+  -- local frame = CreateFrame("Frame", nil, self)
+  -- frame:SetPoint("CENTER")
+  -- frame:SetSize(size+8, size+8)
+
+  return glow
 end
