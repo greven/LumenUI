@@ -3,17 +3,22 @@ local E, C = ns.E, ns.C
 
 local M = E:GetModule("Misc")
 
+local isInit = false
+
 -- Lua
 local _G = getfenv(0)
 local next = _G.next
 
 local m_rand = _G.math.random
+local t_wipe = _G.table.wipe
+local t_insert = _G.table.insert
 
 local InCombatLockdown = _G.InCombatLockdown
 local PlayerHasToy = _G.PlayerHasToy
 
 -- ---------------
 
+local toys = {}
 local hearthstoneToys = {
   93672, -- Dark Portal
   54452, -- Ethereal Portal
@@ -34,57 +39,6 @@ local hearthstoneToys = {
   180290 -- Night Fae Hearthstone
 }
 
--- Reload UI
-CreateFrame("Button", E.ADDON_NAME .. "ReloadButton"):SetScript("OnClick", ReloadUI)
-
--- Summon Random Mount
-CreateFrame("Button", E.ADDON_NAME .. "SummonRandomMount"):SetScript("OnClick", function()
-  C_MountJournal.SummonByID(0)
-end)
-
--- Summon Grand Expedition Yak
-local YakID = 0 -- Fallback to Random Mounts
-for i, v in pairs(C_MountJournal.GetMountIDs()) do
-	if C_MountJournal.GetMountInfoByID(v) == "Grand Expedition Yak" then
-		YakID = v
-	end
-end
-
-CreateFrame("Button", E.ADDON_NAME .. "SummonYak"):SetScript("OnClick", function()
-  C_MountJournal.SummonByID(YakID)
-end)
-
--- Hearthstone
-local toys = {}
-local function setHearthstoneCustomText()
-  local Button = CreateFrame("Button", E.ADDON_NAME .. "HearthstoneButton", nil, "SecureActionButtonTemplate")
-  Button:SetAttribute("type", "macro")
-  Button:SetScript(
-    "PreClick",
-    function()
-      if (InCombatLockdown()) then
-        return
-      end
-
-      table.wipe(toys)
-      for _, itemID in next, hearthstoneToys do
-        if (PlayerHasToy(itemID)) then
-          table.insert(toys, itemID)
-        end
-      end
-
-      if (#toys > 0) then
-        -- Pick a random toy
-        Button:SetAttribute("macrotext", "/cast item:" .. toys[m_rand(#toys)])
-      else
-        -- Hearthstone
-        Button:SetAttribute("macrotext", "/cast item:" .. 6948)
-      end
-    end
-  )
-end
-
--- Bind keys
 local function setBindings()
   -- Keybinds
 	SetBinding("END", "DISMOUNT") -- Dismount
@@ -100,13 +54,65 @@ local function setBindings()
 	SetBindingSpell("CTRL-SHIFT-X", GetSpellInfo(80451)) -- Survey (Archaelogy)
 end
 
+local function setHearthstoneCustomText()
+  local Button = CreateFrame("Button", E.ADDON_NAME .. "HearthstoneButton", nil, "SecureActionButtonTemplate")
+
+  Button:SetAttribute("type", "macro")
+  Button:SetScript("PreClick", function()
+    if (InCombatLockdown()) then
+      return
+    end
+
+    t_wipe(toys)
+    for _, itemID in next, hearthstoneToys do
+      if (PlayerHasToy(itemID)) then
+        t_insert(toys, itemID)
+      end
+    end
+
+    if (#toys > 0) then
+      -- Pick a random toy
+      Button:SetAttribute("macrotext", "/cast item:" .. toys[m_rand(#toys)])
+    else
+      -- Hearthstone
+      Button:SetAttribute("macrotext", "/cast item:" .. 6948)
+    end
+  end)
+end
+
 local function PLAYER_LOGIN()
   setHearthstoneCustomText()
   setBindings()
 end
 
-function M:Bindings()
-  E:RegisterEvent("PLAYER_LOGIN", PLAYER_LOGIN)
+function M.HasBindings()
+	return isInit
 end
 
-M:RegisterMisc("Bindings", M.Bindings)
+function M.SetUpBindings()
+  if not isInit and C.modules.misc.bindings.enabled then
+    -- Summon Grand Expedition Yak
+    local YakID = 0 -- Fallback to Random Mounts
+    for i, v in pairs(C_MountJournal.GetMountIDs()) do
+      if C_MountJournal.GetMountInfoByID(v) == "Grand Expedition Yak" then
+        YakID = v
+      end
+    end
+
+    -- Reload UI
+    CreateFrame("Button", E.ADDON_NAME .. "ReloadButton"):SetScript("OnClick", ReloadUI)
+
+    -- Summon Random Mount
+    CreateFrame("Button", E.ADDON_NAME .. "SummonRandomMount"):SetScript("OnClick", function()
+      C_MountJournal.SummonByID(0)
+    end)
+
+    CreateFrame("Button", E.ADDON_NAME .. "SummonYak"):SetScript("OnClick", function()
+      C_MountJournal.SummonByID(YakID)
+    end)
+
+    E:RegisterEvent("PLAYER_LOGIN", PLAYER_LOGIN)
+
+		isInit = true
+	end
+end

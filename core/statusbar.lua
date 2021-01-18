@@ -24,7 +24,7 @@ function E:CreateStatusBar(parent, name, orientation)
 	bg:SetAllPoints()
 	bar.Bg = bg
 
-	local text = bar:CreateFontString("$parentText", "ARTWORK", M.fonts.normal)
+	local text = bar:CreateFontString("$parentText", "ARTWORK", C.media.fonts.normal)
 	text:SetWordWrap(false)
 	bar.Text = text
 

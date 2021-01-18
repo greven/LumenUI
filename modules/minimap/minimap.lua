@@ -6,15 +6,30 @@ local E, C = ns.E, ns.C
 local M = E:AddModule("Minimap")
 
 local isInit = false
+local isSquare = false
 
 local cfg = C.modules.minimap
 
 -- Lua
 local _G = getfenv(0)
-local hooksecurefunc = _G.hooksecurefunc
-local select = _G.select
 
+local next = _G.next
+local select = _G.select
+local unpack = _G.unpack
+local hooksecurefunc = _G.hooksecurefunc
+
+local m_atan2 = _G.math.atan2
+local m_cos = _G.math.cos
+local m_deg = _G.math.deg
+local m_floor = _G.math.floor
+local m_max = _G.math.max
+local m_min = _G.math.min
+local m_rad = _G.math.rad
+local m_sin = _G.math.sin
 local s_match = _G.string.match
+local t_insert = _G.table.insert
+local t_sort = _G.table.sort
+local t_wipe = _G.table.wipe
 
 -- Blizz
 local C_Calendar = _G.C_Calendar
@@ -75,7 +90,31 @@ local function isMinimapButton(self)
 	return false
 end
 
+local function updatePosition(button, degrees)
+	local angle = m_rad(degrees)
+	local w = Minimap:GetWidth() / 2 + 5
+	local h = Minimap:GetHeight() / 2 + 5
 
+	if isSquare then
+		button:SetPoint("CENTER", Minimap, "CENTER",
+			m_max(-w, m_min(m_cos(angle) * (1.4142135623731 * w - 10), w)),
+			m_max(-h, m_min(m_sin(angle) * (1.4142135623731 * h - 10), h))
+		)
+	else
+		button:SetPoint("CENTER", Minimap, "CENTER",
+			m_cos(angle) * w,
+			m_sin(angle) * h
+		)
+	end
+end
+
+local function minimap_UpdateConfig(self)
+	self._config = E:CopyTable(C.modules.minimap, self._config)
+	self._config.buttons = E:CopyTable(C.modules.minimap.buttons, self._config.buttons)
+	self._config.collect = E:CopyTable(C.modules.minimap.collect, self._config.collect)
+	self._config.color = E:CopyTable(C.modules.minimap.color, self._config.color)
+	self._config.size = C.modules.minimap.size
+end
 
 local function minimap_UpdateSize(self)
 	Minimap:SetSize(cfg.size, cfg.size)
@@ -91,6 +130,8 @@ function M:Init()
 		if not IsAddOnLoaded("Blizzard_TimeManager") then
 			LoadAddOn("Blizzard_TimeManager")
 		end
+
+		isSquare = C.modules.minimap.square
 
 		local level = Minimap:GetFrameLevel()
 		local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
@@ -116,6 +157,33 @@ function M:Init()
 
 		RegisterStateDriver(Minimap, "visibility", "[petbattle] hide; show")
 
+		local textureParent = CreateFrame("Frame", nil, Minimap)
+		textureParent:SetFrameLevel(level + 1)
+		textureParent:SetPoint("BOTTOMRIGHT", 0, 0)
+		Minimap.TextureParent = textureParent
+
+		if isSquare then
+			Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
+			Minimap:SetPoint("BOTTOM", 0, 0)
+
+			textureParent:SetPoint("TOPLEFT", 0, 0)
+
+			local border = E:CreateBorder(textureParent)
+			border:SetTexture(C.media.textures.border)
+			border:SetVertexColor(E:GetRGB(C.global.border.color))
+			border:SetOffset(-5)
+			Minimap.Border = border
+
+			E:SetBackdrop(textureParent, 2)
+			E:CreateShadow(Minimap)
+		else
+			Minimap:SetMaskTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
+			Minimap:SetPoint("BOTTOM", 0, 10)
+
+			textureParent:SetPoint("TOPLEFT", 0, 0)
+		end
+
+		Minimap.UpdateConfig = minimap_UpdateConfig
 		Minimap.UpdateSize = minimap_UpdateSize
 
 		isInit = true
@@ -126,6 +194,7 @@ end
 
 function M:Update()
 	if isInit then
+		Minimap:UpdateConfig()
 		Minimap:UpdateSize()
 	end
 end

@@ -1,11 +1,13 @@
 local _, ns = ...
-local E, C, M = ns.E, ns.C, ns.M
+local E, C = ns.E, ns.C
 
 --Lua
 local _G = getfenv(0)
 
 local UnitHealthMax = _G.UnitHealthMax
 local UnitStagger = _G.UnitStagger
+
+local gap = 6
 
 -- ---------------
 
@@ -100,9 +102,9 @@ do
 				local layout
 
 				if orientation == "HORIZONTAL" then
-					layout = E:CalcSegmentsSizes(self:GetWidth(), self._config.gap or 2, max)
+					layout = E:CalcSegmentsSizes(self:GetWidth(), gap, max)
 				else
-					layout = E:CalcSegmentsSizes(self:GetHeight(), self._config.gap or 2, max)
+					layout = E:CalcSegmentsSizes(self:GetHeight(), gap, max)
 				end
 
 				for i = 1, max do
@@ -144,7 +146,7 @@ do
 
   local function element_UpdateConfig(self)
 		local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
   end
 
   local function element_UpdateSize(self)
@@ -170,7 +172,7 @@ do
 		end
   end
 
-  local function frame_UpdateClassPower(self)
+	local function frame_UpdateClassPower(self)
 		local element = self.ClassPower
     element:UpdateConfig()
     element:UpdateSize()
@@ -181,9 +183,9 @@ do
 
 		if max then
 			if orientation == "HORIZONTAL" then
-				layout = E:CalcSegmentsSizes(element:GetWidth(), element._config.gap or 2, max)
+				layout = E:CalcSegmentsSizes(element:GetWidth(), gap, max)
 			else
-				layout = E:CalcSegmentsSizes(element:GetHeight(), element._config.gap or 2, max)
+				layout = E:CalcSegmentsSizes(element:GetHeight(), gap, max)
 			end
 		end
 
@@ -203,7 +205,7 @@ do
 				if i == 1 then
 					bar:SetPoint("LEFT", 0, 0)
 				else
-					bar:SetPoint("LEFT", element[i - 1], "RIGHT", element._config.gap or 2, 0)
+					bar:SetPoint("LEFT", element[i - 1], "RIGHT", gap, 0)
 				end
 			else
 				if layout and i <= max then
@@ -216,7 +218,7 @@ do
 				if i == 1 then
 					bar:SetPoint("BOTTOM", 0, 0)
 				else
-					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, element._config.gap or 2)
+					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, gap)
 				end
 			end
 		end
@@ -317,9 +319,9 @@ do
 		local layout
 
 		if orientation == "HORIZONTAL" then
-			layout = E:CalcSegmentsSizes(element:GetWidth(), element._config.gap or 2, 6)
+			layout = E:CalcSegmentsSizes(element:GetWidth(), gap, 6)
 		else
-			layout = E:CalcSegmentsSizes(element:GetHeight(), element._config.gap or 2, 6)
+			layout = E:CalcSegmentsSizes(element:GetHeight(), gap, 6)
 		end
 
 		for i = 1, 6 do
@@ -335,7 +337,7 @@ do
 				if i == 1 then
 					bar:SetPoint("LEFT", 0, 0)
 				else
-					bar:SetPoint("LEFT", element[i - 1], "RIGHT", element._config.gap or 2, 0)
+					bar:SetPoint("LEFT", element[i - 1], "RIGHT", gap, 0)
 				end
 			else
 				bar:SetHeight(layout[i])
@@ -345,7 +347,7 @@ do
 				if i == 1 then
 					bar:SetPoint("BOTTOM", 0, 0)
 				else
-					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, element._config.gap or 2)
+					bar:SetPoint("BOTTOM", element[i - 1], "TOP", 0, gap)
 				end
 			end
 		end

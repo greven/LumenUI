@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- ---------------
 

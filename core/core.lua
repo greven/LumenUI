@@ -5,18 +5,16 @@ local A, ns = ...
 local E = {}  -- Engine
 local D = {}  -- Defaults
 local C = {}  -- Config
-local M = {}  -- Media
 local DB = {} -- Database
 
-local E, D, C, M, DB = {}, {}, {}, {}, {} -- Engine, Defaults, Config, Media, Database
-ns.E, ns.D, ns.C, ns.M, ns.DB = E, D, C, M, DB
+local E, D, C, DB = {}, {}, {}, {} -- Engine, Defaults, Config, Database
+ns.E, ns.D, ns.C, ns.DB = E, D, C, DB
 
 _G[A] = {
 	[1] = ns.E,
 	[2] = ns.D,
 	[3] = ns.C,
-	[4] = ns.M,
-	[5] = ns.DB
+	[4] = ns.DB
 }
 
 -- Lua

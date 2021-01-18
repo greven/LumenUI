@@ -1,7 +1,7 @@
 -- Credits: ls_UI
 
 local _, ns = ...
-local E, C, M = ns.E, ns.C, ns.M
+local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
@@ -254,7 +254,7 @@ end
 
 function E:CreateString(size, color, font, anchor, x, y)
 	local fs = self:CreateFontString(nil, "OVERLAY")
-	fs:SetFont(font or M.fonts.normal, size or 12, "OUTLINE")
+	fs:SetFont(font or C.media.fonts.normal, size or 12, "OUTLINE")
 	fs:SetJustifyH("CENTER")
 	fs:SetWordWrap(false)
 

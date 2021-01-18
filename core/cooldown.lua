@@ -1,7 +1,7 @@
 -- Credits: ls_UI
 
 local A, ns = ...
-local E, C, M = ns.E, ns.C, ns.M
+local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
@@ -107,7 +107,7 @@ end
 local function cooldown_UpdateFont(self)
 	local config = self.config.text
 
-	self.Timer:SetFont(config.font or M.fonts.normal, config.size, config.outline and "OUTLINE" or nil)
+	self.Timer:SetFont(config.font or C.media.fonts.normal, config.size, config.outline and "OUTLINE" or nil)
 	self.Timer:SetJustifyH("CENTER")
 	self.Timer:SetJustifyV(config.v_alignment)
 	self.Timer:SetShown(config.enabled)

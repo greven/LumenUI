@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M = ns.E, ns.C, ns.M
+local E, C = ns.E, ns.C
 
 -- Lua
 local _G = getfenv(0)
@@ -83,7 +83,7 @@ end
 
 function UF:CreateUnitIndicator(frame, parent)
   local element = CreateFrame("StatusBar", nil, (parent or frame))
-  element:SetStatusBarTexture(M.textures.flat)
+  element:SetStatusBarTexture(C.media.textures.flat)
   element:SetOrientation("VERTICAL")
 
   E:SetBackdrop(element, 2)

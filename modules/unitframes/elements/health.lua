@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
@@ -171,7 +171,7 @@ do
     if config.reverse then
       self.colorClass = false
       self.colorSmooth = false
-      self:SetStatusBarTexture(M.textures.vertlines)
+      self:SetStatusBarTexture(C.media.textures.vertlines)
       self:SetAlpha(0.98)
       self.bg:SetTexture(C.global.statusbar.texture)
       self.bg:SetAlpha(0.9)
@@ -258,19 +258,19 @@ do
 
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
-    bg:SetTexture(M.textures.vertlines)
+    bg:SetTexture(C.media.textures.vertlines)
     bg:SetAlpha(0.5)
     bg.multiplier = 0.3
     element.bg = bg
 
     kr = element:CreateTexture(nil, "OVERLAY")
-    kr:SetTexture(M.textures.flat)
+    kr:SetTexture(C.media.textures.flat)
     kr:SetVertexColor(1, 0, 0)
     kr:SetBlendMode("ADD")
     kr:SetAlpha(0.2)
 
     kr.spark = element:CreateTexture(nil, "OVERLAY")
-    kr.spark:SetTexture(M.textures.flat)
+    kr.spark:SetTexture(C.media.textures.flat)
     kr.spark:SetVertexColor(1, 0.25, 0.25)
     kr.spark:SetBlendMode("ADD")
     kr.spark:SetAlpha(0.6)
@@ -389,7 +389,7 @@ do
 
     local myBar = CreateFrame("StatusBar", nil, parent)
 		myBar:SetFrameLevel(level)
-		myBar:SetStatusBarTexture(M.textures.flat)
+		myBar:SetStatusBarTexture(C.media.textures.flat)
 		myBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
 		E:SmoothBar(myBar)
 		parent.MyHeal = myBar
@@ -399,7 +399,7 @@ do
 
 		local otherBar = CreateFrame("StatusBar", nil, parent)
 		otherBar:SetFrameLevel(level)
-		otherBar:SetStatusBarTexture(M.textures.flat)
+		otherBar:SetStatusBarTexture(C.media.textures.flat)
 		otherBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
 		E:SmoothBar(otherBar)
 		parent.OtherHeal = otherBar
@@ -409,13 +409,13 @@ do
 
 		local absorbBar = CreateFrame("StatusBar", nil, parent)
 		absorbBar:SetFrameLevel(level + 1)
-		absorbBar:SetStatusBarTexture(M.textures.flat)
+		absorbBar:SetStatusBarTexture(C.media.textures.flat)
 		absorbBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
 		E:SmoothBar(absorbBar)
 		parent.DamageAbsorb = absorbBar
 
 		local overlay = absorbBar:CreateTexture(nil, "ARTWORK", nil, 1)
-    overlay:SetTexture(M.textures.absorb, "REPEAT", "REPEAT")
+    overlay:SetTexture(C.media.textures.absorb, "REPEAT", "REPEAT")
     overlay:SetAlpha(0.8)
 		overlay:SetHorizTile(true)
 		overlay:SetVertTile(true)
@@ -427,7 +427,7 @@ do
 		local healAbsorbBar = CreateFrame("StatusBar", nil, parent)
 		healAbsorbBar:SetReverseFill(true)
 		healAbsorbBar:SetFrameLevel(level + 1)
-		healAbsorbBar:SetStatusBarTexture(M.textures.flat)
+		healAbsorbBar:SetStatusBarTexture(C.media.textures.flat)
 		healAbsorbBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
 		E:SmoothBar(healAbsorbBar)
 		parent.HealAbsorb = healAbsorbBar

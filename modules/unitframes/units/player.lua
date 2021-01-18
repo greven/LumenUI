@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- ---------------
 
@@ -80,14 +80,14 @@ do
 
     -- Level and Spec
     local info = textParent:CreateFontString(nil, "ARTWORK")
-    info:SetFont(M.fonts.condensed, 15, "OUTLINE")
+    info:SetFont(C.media.fonts.condensed, 15, "OUTLINE")
     info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 1, 26)
     frame:Tag(info, "[lum:color_unit][lum:spec]")
 
     -- PvP Indicator and timer
     frame.PvPIndicator = self:CreatePvPIndicator(frame, portraitParent)
     local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
-    pvpTimer:SetFont(M.fonts.condensed, 16, "OUTLINE")
+    pvpTimer:SetFont(C.media.fonts.condensed, 16, "OUTLINE")
 		pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 6, -1)
 		pvpTimer:SetTextColor(1, 0.82, 0)
 		pvpTimer:SetJustifyH("RIGHT")

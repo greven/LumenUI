@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M = ns.E, ns.C, ns.M
+local E, C = ns.E, ns.C
 
 --Lua
 local _G = getfenv(0)
@@ -186,13 +186,13 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
 		aura.Border:SetVertexColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
 
 		if self._config.type.debuff_type then
-			aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons[debuffType] or M.textures.aura_icons["Debuff"]))
+			aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons[debuffType] or C.media.textures.aura_icons["Debuff"]))
 		else
-			aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Debuff"]))
+			aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Debuff"]))
 		end
 	else
 		aura.Border:SetVertexColor(E:GetRGB(C.global.border.color))
-		aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Buff"]))
+		aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Buff"]))
 	end
 end
 
@@ -210,7 +210,7 @@ local function element_CreateAuraIcon(self, index)
 
 	local count = button.Count
 	count:SetAllPoints()
-	count:SetFont(config.count.font or  M.fonts.normal, config.count.size, config.count.outline and "OUTLINE" or "")
+	count:SetFont(config.count.font or  C.media.fonts.normal, config.count.size, config.count.outline and "OUTLINE" or "")
 	count:SetJustifyH(config.count.h_alignment)
 	count:SetJustifyV(config.count.v_alignment)
 	count:SetWordWrap(false)
@@ -266,7 +266,7 @@ end
 
 local function element_UpdateFont(self)
 	local config = self._config.count
-	local font = config.font or M.fonts.normal
+	local font = config.font or C.media.fonts.normal
 	local count
 
 	for i = 1, self.createdIcons do

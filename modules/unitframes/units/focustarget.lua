@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- ---------------
 
@@ -60,7 +60,7 @@ function UF:CreateFocusTargetFrame(frame)
     local arrow = frame:CreateTexture(nil, "ARTWORK")
     arrow:SetSize(18, 18)
     arrow:SetPoint("RIGHT", frame, "LEFT", -10, 0)
-    arrow:SetTexture(M.textures.arrow)
+    arrow:SetTexture(C.media.textures.arrow)
     arrow:SetVertexColor(0, 0, 0)
     arrow:SetAlpha(0.8)
     frame.arrow = arrow

@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- ---------------
 
@@ -59,7 +59,7 @@ function UF:CreatePetFrame(frame)
 
   -- Level and Race
   local info = textParent:CreateFontString(nil, "ARTWORK")
-  info:SetFont(M.fonts.condensed, 13, "OUTLINE")
+  info:SetFont(C.media.fonts.condensed, 13, "OUTLINE")
   info:SetTextColor(E:GetRGB(C.colors.light_gray))
   info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
   frame:Tag(info, "[lum:color(gray)][lum:level]|r [lum:color(light_gray)][lum:race]")

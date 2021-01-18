@@ -1,5 +1,5 @@
 local _, ns = ...
-local C, M = ns.C, ns.M
+local C = ns.C
 
 -- ----------------------------------------------------------
 -- > Your Config here (will override the defaults settings)

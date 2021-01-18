@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M = ns.E, ns.C, ns.M
+local E, C = ns.E, ns.C
 
 -- ---------------
 
@@ -27,7 +27,7 @@ local function element_UpdateFonts(self)
   local config = self._config.text
 
   if element then
-    element:SetFont(config.font or M.fonts.condensed, config.size, config.outline and "OUTLINE" or nil)
+    element:SetFont(config.font or C.media.fonts.condensed, config.size, config.outline and "OUTLINE" or nil)
     element:SetJustifyH(config.h_alignment)
     element:SetJustifyV(config.v_alignment)
     element:SetWordWrap(config.word_wrap)

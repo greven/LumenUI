@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, oUF = ns.E, ns.C, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
@@ -150,12 +150,12 @@ do
     local element = CreateFrame("StatusBar", nil, frame)
     element:SetPoint("BOTTOMLEFT", frame)
     element:SetPoint("BOTTOMRIGHT", frame)
-    element:SetStatusBarTexture(M.textures.neon)
+    element:SetStatusBarTexture(C.media.textures.neon)
     E:SmoothBar(element)
 
     local bg = element:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
-		bg:SetTexture(M.textures.flat)
+		bg:SetTexture(C.media.textures.flat)
 		bg:SetAlpha(0.2)
     bg.multiplier = 0.4
     element.bg = bg
@@ -248,7 +248,7 @@ do
 
 	function UF:CreateAdditionalPower(frame)
 		local element = CreateFrame("StatusBar", nil, frame)
-		element:SetStatusBarTexture(M.textures.flat)
+		element:SetStatusBarTexture(C.media.textures.flat)
 		element:SetFrameLevel(frame:GetFrameLevel() + 1)
 		E:SmoothBar(element)
 		element:Hide()
@@ -256,7 +256,7 @@ do
 		local bg = element:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints()
 		element:SetFrameLevel(element:GetFrameLevel() + 1)
-		bg:SetTexture(M.textures.flat)
+		bg:SetTexture(C.media.textures.flat)
 		bg:SetAlpha(0.5)
     bg.multiplier = 0.3
     element.bg = bg
@@ -363,13 +363,13 @@ do
 
 	function UF:CreatePowerPrediction(frame, parent1, parent2)
 		local mainBar = CreateFrame("StatusBar", nil, parent1)
-		mainBar:SetStatusBarTexture(M.textures.flat)
+		mainBar:SetStatusBarTexture(C.media.textures.flat)
 		mainBar:SetReverseFill(true)
 		E:SmoothBar(mainBar)
 		parent1.CostPrediction = mainBar
 
 		local altBar = CreateFrame("StatusBar", nil, parent2)
-		altBar:SetStatusBarTexture(M.textures.flat)
+		altBar:SetStatusBarTexture(C.media.textures.flat)
 		altBar:SetReverseFill(true)
 		E:SmoothBar(altBar)
 		if parent2 then parent2.CostPrediction = altBar end

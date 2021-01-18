@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, D, C, M = ns.E, ns.D, ns.C, ns.M
+local E, D, C = ns.E, ns.D, ns.C
 
 local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
@@ -16,39 +16,40 @@ end
 
 -- ---------------
 
-M.fonts = {
-  normal = Media.."fonts\\Oswald.ttf",
-  light = Media.."fonts\\Oswald-Light.ttf",
-  medium = Media.."fonts\\Oswald-Medium.ttf",
-  condensed = Media.."fonts\\BigNoodleTitling.ttf",
-}
-
-M.textures = {
-  statusbar = Media.."textures\\statusbar",
-  flat = Media.."textures\\statusbar",
-  vertlines = Media.."textures\\vertlines",
-  neon = Media.."textures\\neon",
-  mint = Media.."textures\\mint",
-  glow = Media.."textures\\glow",
-  border = Media.."textures\\border",
-  border_thick = Media.."textures\\border-thick",
-  border = Media.."textures\\border",
-  absorb = Media.."textures\\absorb",
-  arrow = Media.."textures\\arrow",
-	aura_icons = {
-		-- line #1
-		["Buff"] = {1 / 128, 33 / 128, 1 / 128, 33 / 128},
-		["Debuff"] = {34 / 128, 66 / 128, 1 / 128, 33 / 128},
-		["Curse"] = {67 / 128, 99 / 128, 1 / 128, 33 / 128},
-		-- line #2
-		["Disease"] = {1 / 128, 33 / 128, 34 / 128, 66 / 128},
-		["Magic"] = {34 / 128, 66 / 128, 34 / 128, 66 / 128},
-		["Poison"] = {67 / 128, 99 / 128, 34 / 128, 66 / 128},
-		-- line #3
-		[""] = {1 / 128, 33 / 128, 67 / 128, 99 / 128}, -- Enrage
-		-- ["TEMP"] = {34 / 128, 66 / 128, 67 / 128, 99 / 128},
-		-- ["TEMP"] = {67 / 128, 99 / 128, 67 / 128, 99 / 128},
-	},
+D.media = {
+  fonts = {
+    normal = Media.."fonts\\Oswald.ttf",
+    light = Media.."fonts\\Oswald-Light.ttf",
+    medium = Media.."fonts\\Oswald-Medium.ttf",
+    condensed = Media.."fonts\\BigNoodleTitling.ttf",
+  },
+  textures = {
+    statusbar = Media.."textures\\statusbar",
+    flat = Media.."textures\\statusbar",
+    vertlines = Media.."textures\\vertlines",
+    neon = Media.."textures\\neon",
+    mint = Media.."textures\\mint",
+    glow = Media.."textures\\glow",
+    border = Media.."textures\\border",
+    border_thick = Media.."textures\\border-thick",
+    border = Media.."textures\\border",
+    absorb = Media.."textures\\absorb",
+    arrow = Media.."textures\\arrow",
+    aura_icons = {
+      -- line #1
+      ["Buff"] = {1 / 128, 33 / 128, 1 / 128, 33 / 128},
+      ["Debuff"] = {34 / 128, 66 / 128, 1 / 128, 33 / 128},
+      ["Curse"] = {67 / 128, 99 / 128, 1 / 128, 33 / 128},
+      -- line #2
+      ["Disease"] = {1 / 128, 33 / 128, 34 / 128, 66 / 128},
+      ["Magic"] = {34 / 128, 66 / 128, 34 / 128, 66 / 128},
+      ["Poison"] = {67 / 128, 99 / 128, 34 / 128, 66 / 128},
+      -- line #3
+      [""] = {1 / 128, 33 / 128, 67 / 128, 99 / 128}, -- Enrage
+      -- ["TEMP"] = {34 / 128, 66 / 128, 67 / 128, 99 / 128},
+      -- ["TEMP"] = {67 / 128, 99 / 128, 67 / 128, 99 / 128},
+    }
+  }
 }
 
 -- ---------------
@@ -56,12 +57,12 @@ M.textures = {
 D.global = {
   fonts = {
     units = {
-      font = M.fonts.condensed,
+      font = D.media.fonts.condensed,
       outline = false,
 			shadow = true,
     },
 		cooldown = {
-			font = M.fonts.normal,
+			font = D.media.fonts.normal,
 			outline = true,
 			shadow = false,
 		},
@@ -71,10 +72,10 @@ D.global = {
     alpha = 0.84
   },
   border = {
-    color = rgb(30, 30, 30)
+    color = rgb(20, 20, 20)
   },
   statusbar = {
-    texture = M.textures.statusbar,
+    texture = D.media.textures.statusbar,
     color = D.colors.dark_gray
   },
   shadows = {
@@ -82,8 +83,8 @@ D.global = {
     alpha = 0.3
   },
   castbar = {
-    texture = M.textures.statusbar,
-    bg = M.textures.vertlines
+    texture = D.media.textures.statusbar,
+    bg = D.media.textures.vertlines
   },
   aura_filters = {
 		["Blacklist"] = {
@@ -99,7 +100,20 @@ D.modules = {
   minimap = {
     enabled = true,
     size = 200,
-    point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
+    square = true,
+    collect = {
+			enabled = true,
+			tooltip = true,
+			calendar = false,
+			garrison = false,
+			mail = false,
+			queue = false,
+			tracking = false,
+    },
+    buttons = {},
+    color = {},
+    -- point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
+    point = {"CENTER", "UIParent", "CENTER", 400, -200}
   },
   unitframes = {
     enabled = true,
@@ -195,7 +209,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:power_cur]",
-            size = 12,
+            size = 13,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -1601,7 +1615,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:power_cur]",
-            size = 15,
+            size = 16,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -1611,7 +1625,7 @@ D.modules = {
               anchor = "Power",
               ap = "CENTER",
               x = 0,
-              y = -1
+              y = 0
             },
           },
           prediction = {
@@ -1622,7 +1636,6 @@ D.modules = {
           enabled = true,
           width = playerPlateWidth,
           height = 2,
-          gap = 5,
 					change_threshold = 0.01,
 					orientation = "HORIZONTAL",
 					prediction = {
@@ -1637,7 +1650,7 @@ D.modules = {
             anchor = "",
             ap = "BOTTOMLEFT",
             x = 0,
-            y = -7
+            y = -11
           },
         },
         additional_power = {
@@ -1658,7 +1671,12 @@ D.modules = {
       },
     }
   },
-  misc = {}
+  misc = {
+    enabled = true,
+    bindings = {
+      enabled = true
+    }
+  }
 }
 
 -- Copy defaults to the config table
