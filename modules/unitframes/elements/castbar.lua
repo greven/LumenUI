@@ -23,10 +23,12 @@ local function updateFont(fontString, config)
 end
 
 local function element_PostCastStart(self)
+	local unit = self.__owner.unit
+
 	if self.notInterruptible then
 		self:SetStatusBarColor(E:GetRGB(C.colors.castbar.notinterruptible))
 
-		if self.Icon then
+		if self.Icon and unit ~= "player" then
 			self.Icon:SetDesaturated(true)
 		end
 	else
@@ -286,12 +288,12 @@ function UF:CreateCastbar(frame)
 
 	if config.thin then
 		text:SetPoint("TOP", holder, "TOP", 0, 0)
-		text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 10)
+		text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 11)
 		text:SetPoint("LEFT", element, "LEFT", 0, 0)
 		text:SetPoint("RIGHT", time, "LEFT", 0, 0)
 
 		time:SetPoint("TOP", holder, "TOP", 0, 0)
-		time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 10)
+		time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 11)
 		text:SetPoint("LEFT", element, "LEFT", 0, 0)
 		time:SetPoint("RIGHT", element, "RIGHT", 0, 0)
 	end

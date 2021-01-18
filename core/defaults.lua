@@ -5,9 +5,9 @@ local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
 local playerHeight = 24
 local playerWidth = 228
-local playerPlateHeight = 11
+local playerPlateHeight = 10
 local playerPlateWidth = 180
-local targetWidth = 287
+local targetWidth = 288
 local targetHeight = 28
 
 local function rgb(r, g, b)
@@ -20,8 +20,7 @@ M.fonts = {
   normal = Media.."fonts\\Oswald.ttf",
   light = Media.."fonts\\Oswald-Light.ttf",
   medium = Media.."fonts\\Oswald-Medium.ttf",
-  condensed = Media.."fonts\\BebasNeue.ttf",
-  big = Media.."fonts\\BigNoodleTitling.ttf"
+  condensed = Media.."fonts\\BigNoodleTitling.ttf",
 }
 
 M.textures = {
@@ -139,7 +138,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:health_cur(true)]",
-            size = 13,
+            size = 14,
             outline = true,
             shadow = false,
             h_alignment = "RIGHT",
@@ -147,7 +146,7 @@ D.modules = {
             hide_when_max = true,
             point = {
               p = "RIGHT",
-              anchor = "",
+              anchor = "Health",
               ap = "RIGHT",
               x = -4,
               y = 0
@@ -261,7 +260,7 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:color_difficulty][lum:level]|r [lum:name(22)]",
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(24)]",
           size = 22,
           outline = true,
           shadow = false,
@@ -452,7 +451,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:health_cur(true)]",
-            size = 15,
+            size = 17,
             outline = true,
             shadow = false,
             h_alignment = "RIGHT",
@@ -463,7 +462,7 @@ D.modules = {
               anchor = "",
               ap = "RIGHT",
               x = -6,
-              y = 0
+              y = 1
             },
           },
           prediction = {
@@ -568,7 +567,7 @@ D.modules = {
         },
         name = {
           tag = "[lum:name(32)]",
-          size = 16,
+          size = 17,
           outline = true,
           shadow = false,
           h_alignment = "LEFT",
@@ -579,7 +578,7 @@ D.modules = {
             anchor = "",
             ap = "LEFT",
             x = 6,
-            y = -1
+            y = 1
           },
         },
         portrait = {
@@ -621,7 +620,7 @@ D.modules = {
             p = "RIGHT",
             anchor = "Portrait",
             ap = "LEFT",
-            x = -8,
+            x = -6,
             y = 0
           },
         },
@@ -827,7 +826,7 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:color_difficulty][lum:level]|r [lum:name(21)]",
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(23)]",
           size = 13,
           outline = true,
           shadow = false,
@@ -891,10 +890,10 @@ D.modules = {
             hide_when_max = false,
             point = {
               p = "RIGHT",
-              anchor = "",
+              anchor = "Health",
               ap = "RIGHT",
               x = -4,
-              y = 1
+              y = 0
             },
           },
           prediction = {
@@ -998,7 +997,7 @@ D.modules = {
           },
         },
         name = {
-          tag = "[lum:color_difficulty][lum:level]|r [lum:name(21)]",
+          tag = "[lum:color_difficulty][lum:level]|r [lum:name(22)]",
           size = 13,
           outline = true,
           shadow = false,
@@ -1638,7 +1637,7 @@ D.modules = {
             anchor = "",
             ap = "BOTTOMLEFT",
             x = 0,
-            y = -8
+            y = -7
           },
         },
         additional_power = {
