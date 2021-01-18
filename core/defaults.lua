@@ -72,7 +72,7 @@ D.global = {
     alpha = 0.84
   },
   border = {
-    color = rgb(20, 20, 20)
+    color = rgb(10, 10, 10)
   },
   statusbar = {
     texture = D.media.textures.statusbar,
@@ -110,8 +110,18 @@ D.modules = {
 			queue = false,
 			tracking = false,
     },
-    buttons = {},
-    color = {},
+    buttons = {
+      MinimapButtonCollection = 0,
+			MiniMapTrackingButton = 22.5,
+			GameTimeFrame = 45,
+			MiniMapMailFrame = 135,
+			GarrisonLandingPageMinimapButton = 210,
+			QueueStatusMinimapButton = 320,
+    },
+    color = {
+      border = false,
+			zone_text = true,
+    },
     -- point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
     point = {"CENTER", "UIParent", "CENTER", 400, -200}
   },

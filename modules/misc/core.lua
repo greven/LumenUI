@@ -12,25 +12,12 @@ local _G = getfenv(0)
 
 -- ---------------
 
--- local MISC_LIST = {}
--- function M:RegisterMisc(name, func)
--- 	if not MISC_LIST[name] then
--- 		MISC_LIST[name] = func
--- 	end
--- end
-
 function M:IsInit()
 	return isInit
 end
 
 function M:Init()
 	if not isInit and C.modules.misc.enabled then
-	-- 	for name, func in next, MISC_LIST do
-	-- 		if name and type(func) == "function" then
-	-- 			func()
-	-- 		end
-	-- 	end
-
 		self:SetUpBindings()
 
 		isInit = true
