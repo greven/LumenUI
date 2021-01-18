@@ -1,3 +1,8 @@
+Options:
+  ☐ Add GUI after it is stable
+  ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
+  ☐ Add Mask support for buttons?
+
 unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
