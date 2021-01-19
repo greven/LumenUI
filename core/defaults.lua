@@ -5,7 +5,7 @@ local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
 local playerHeight = 24
 local playerWidth = 228
-local playerPlateHeight = 10
+local playerPlateHeight = 11
 local playerPlateWidth = 180
 local targetWidth = 288
 local targetHeight = 28
@@ -208,8 +208,8 @@ D.modules = {
         },
         power = {
           enabled = true,
-          height = 1.5,
-          gap = 1.5,
+          height = 2,
+          gap = 1,
           change_threshold = 0.01,
           color = {
             power = true,
@@ -539,8 +539,8 @@ D.modules = {
         },
         power = {
           enabled = true,
-          height = 1.5,
-          gap = 1.5,
+          height = 2,
+          gap = 1,
           color = {
             power = true,
             tapping = true,
@@ -1555,7 +1555,7 @@ D.modules = {
         },
         health = {
           enabled = true,
-          height = 4,
+          height = 6,
           kill_range = false,
           change_threshold = 0.001,
           reverse = true,
@@ -1615,7 +1615,7 @@ D.modules = {
         },
         power = {
           enabled = true,
-          height = 4,
+          height = 3,
           change_threshold = 0.01,
           color = {
             power = true,
