@@ -121,6 +121,8 @@ function UF:CreateUnitFrame(unit, name)
 
       if unit == "playerplate" then
         object = oUF:Spawn("player", name .. "Frame")
+      elseif unit == "targetplate" then
+        object = oUF:Spawn("target", name .. "Frame")
       else
         object = oUF:Spawn(unit, name .. "Frame")
       end
@@ -206,7 +208,12 @@ function UF:Init()
             UF:CreatePlayerFrame(frame)
           end
         elseif unit == "target" then
-          UF:CreateTargetFrame(frame)
+          -- UF:CreateTargetFrame(frame)
+          if frame._layout == "targetplate" then
+            UF:CreateTargetPlateFrame(frame)
+          else
+            UF:CreateTargetFrame(frame)
+          end
         elseif unit == "targettarget" then
           UF:CreateTargetTargetFrame(frame)
         elseif unit == "focus" then
@@ -235,6 +242,11 @@ function UF:Init()
     if config.units.target.enabled then
       UF:CreateUnitFrame("target", "LumenTarget")
       UF:UpdateUnitFrame("target", "Update")
+    end
+
+    if config.units.targetplate.enabled then
+      UF:CreateUnitFrame("targetplate", "LumenTargetPlate")
+      UF:UpdateUnitFrame("targetplate", "Update")
     end
 
     if config.units.targettarget.enabled then

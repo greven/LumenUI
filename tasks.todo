@@ -5,6 +5,7 @@ Options:
 
 unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
+  ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health.
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu
   ☐ Units Missing:

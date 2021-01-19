@@ -75,12 +75,10 @@ do
       -- Percent Text
       if self.Text.perc then
         -- Hide percent text when full
-        if self.Text.perc and config.perc.hide_when_max and cur == max then
+        if config.perc.hide_when_max and cur == max then
           self.Text.perc:Hide()
         else
-          if self.Text.perc then
-            self.Text.perc:Show()
-          end
+          self.Text.perc:Show()
         end
       end
 
@@ -265,12 +263,12 @@ do
 
     kr = element:CreateTexture(nil, "OVERLAY")
     kr:SetTexture(C.media.textures.flat)
-    kr:SetVertexColor(1, 0, 0)
+    kr:SetVertexColor(1, 1, 1)
     kr:SetBlendMode("ADD")
-    kr:SetAlpha(0.2)
+    kr:SetAlpha(0.5)
 
     kr.spark = element:CreateTexture(nil, "OVERLAY")
-    kr.spark:SetTexture(C.media.textures.flat)
+    kr.spark:SetTexture(C.media.textures.vertlines)
     kr.spark:SetVertexColor(1, 0.25, 0.25)
     kr.spark:SetBlendMode("ADD")
     kr.spark:SetAlpha(0.6)

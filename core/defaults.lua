@@ -123,7 +123,7 @@ D.modules = {
 			zone_text = true,
     },
     -- point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
-    point = {"CENTER", "UIParent", "CENTER", 400, -200}
+    point = {"CENTER", "UIParent", "CENTER", 600, -200}
   },
   unitframes = {
     enabled = true,
@@ -621,7 +621,7 @@ D.modules = {
           },
           text = {
             tag = "[lum:npc_type(true)]",
-            size = 14,
+            size = 15,
             outline = true,
             shadow = false,
             h_alignment = "CENTER",
@@ -890,7 +890,7 @@ D.modules = {
           anchor = "LumenPlayerPlateFrame",
           ap = "RIGHT",
           x = 31,
-          y = 0
+          y = 100
         },
         health = {
           enabled = true,
@@ -1032,7 +1032,7 @@ D.modules = {
             p = "BOTTOMLEFT",
             anchor = "",
             ap = "TOPLEFT",
-            x = 4,
+            x = 0,
             y = 4
           },
         },
@@ -1681,16 +1681,140 @@ D.modules = {
       },
       targetplate = {
         enabled = true,
-        width = 150,
-        height = 10,
+        width = 133,
+        height = playerPlateHeight,
+        visibility = "[harm,nodead][combat] show; hide;",
         point = {
-          p = "CENTER",
-          anchor = "UIParent",
-          ap = "CENTER",
-          x = 0,
+          p = "LEFT",
+          anchor = "LumenPlayerPlateFrame",
+          ap = "RIGHT",
+          x = 31,
           y = 0
         },
-      }
+        health = {
+          enabled = true,
+          height = 6,
+          kill_range = false,
+          change_threshold = 0.001,
+          reverse = false,
+          color = {
+            smooth = false,
+            health = true,
+            tapping = true,
+            disconnected = true,
+            class = true,
+            reaction = true
+          },
+          text = {
+            tag = "",
+            size = 14,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            hide_when_max = true,
+            point = {
+              p = "CENTER",
+              anchor = "",
+              ap = "CENTER",
+              x = 0,
+              y = 0
+            },
+          },
+          prediction = {
+						enabled = true,
+						absorb_text = {
+							-- tag = "[lum:color_absorb_damage][lum_absorb_damage]|r",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 2,
+							},
+						},
+						heal_absorb_text = {
+							-- tag = "[lum:color_absorb_heal][lum:absorb_heal]|r",
+							size = 12,
+							h_alignment = "CENTER",
+							v_alignment = "MIDDLE",
+							point1 = {
+								p = "BOTTOM",
+								anchor = "Health.Text",
+								rP = "TOP",
+								x = 0,
+								y = 16,
+							},
+						},
+          },
+          perc = {
+            tag = "[lum:health_perc]",
+            size = 15,
+            color = D.colors.light_gray,
+            alpha = 0.9,
+            outline = true,
+            shadow = false,
+            h_alignment = "RIGHT",
+            v_alignment = "MIDDLE",
+            hide_when_max = true,
+            point = {
+              p = "BOTTOMRIGHT",
+              anchor = "",
+              ap = "TOPRIGHT",
+              x = 2,
+              y = 4
+            },
+          },
+        },
+        power = {
+          enabled = true,
+          height = 3,
+          change_threshold = 0.01,
+          color = {
+            power = true,
+            tapping = true,
+            disconnected = false,
+            class = false
+          },
+          text = {
+            tag = "",
+            size = 16,
+            outline = true,
+            shadow = false,
+            h_alignment = "CENTER",
+            v_alignment = "MIDDLE",
+            point = {
+              p = "CENTER",
+              anchor = "Power",
+              ap = "CENTER",
+              x = 0,
+              y = 0
+            },
+          },
+          prediction = {
+						enabled = true,
+					},
+        },
+        name = {
+          tag = "[lum:npc_type(true)]",
+          size = 13,
+          outline = true,
+          shadow = false,
+          h_alignment = "LEFT",
+          v_alignment = "MIDDLE",
+          word_wrap = false,
+          point = {
+            p = "BOTTOMLEFT",
+            anchor = "",
+            ap = "TOPLEFT",
+            x = 0,
+            y = 4
+          },
+        },
+      },
     }
   },
   misc = {
