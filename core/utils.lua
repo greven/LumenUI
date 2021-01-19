@@ -443,6 +443,90 @@ do
 
 		return result
 	end
+
+	function E:ForceShow(object)
+		if not object then return end
+
+		object:Show()
+
+		object.Hide = object.Show
+	end
+
+	function E:ForceHide(object, skipEvents)
+		if not object then return end
+
+		if object.UnregisterAllEvents then
+			if not skipEvents then
+				object:UnregisterAllEvents()
+			end
+
+			if object:GetName() then
+				object.ignoreFramePositionManager = true
+				object:SetAttribute("ignoreFramePositionManager", true)
+				UIPARENT_MANAGED_FRAME_POSITIONS[object:GetName()] = nil
+			end
+		end
+
+		object:Hide()
+		object:SetParent(self.HIDDEN_PARENT)
+	end
+
+	function E:GetCoords(object)
+		local p, anchor, rP, x, y = object:GetPoint()
+
+		if not x then
+			return p, anchor, rP, x, y
+		else
+			return p, anchor and anchor:GetName() or "UIParent", rP, round(x), round(y)
+		end
+	end
+
+	function E:GetScreenQuadrant(frame)
+		local x, y
+
+		if frame == "cursor" then
+			x, y = GetCursorPosition()
+			x = x / UIParent:GetEffectiveScale()
+			y = y / UIParent:GetEffectiveScale()
+		else
+			x, y = frame:GetCenter()
+		end
+
+		if not (x and y) then
+			return "UNKNOWN"
+		end
+
+		local screenWidth = UIParent:GetRight()
+		local screenHeight = UIParent:GetTop()
+		local screenLeft = screenWidth / 3
+		local screenRight = screenWidth * 2 / 3
+
+		if y >= screenHeight * 2 / 3 then
+			if x <= screenLeft then
+				return "TOPLEFT"
+			elseif x >= screenRight then
+				return "TOPRIGHT"
+			else
+				return "TOP"
+			end
+		elseif y <= screenHeight / 3 then
+			if x <= screenLeft then
+				return "BOTTOMLEFT"
+			elseif x >= screenRight then
+				return "BOTTOMRIGHT"
+			else
+				return "BOTTOM"
+			end
+		else
+			if x <= screenLeft then
+				return "LEFT"
+			elseif x >= screenRight then
+				return "RIGHT"
+			else
+				return "CENTER"
+			end
+		end
+	end
 end
 
 -- ---------------

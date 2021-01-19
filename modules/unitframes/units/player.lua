@@ -88,7 +88,7 @@ do
     frame.PvPIndicator = self:CreatePvPIndicator(frame, portraitParent)
     local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
     pvpTimer:SetFont(C.media.fonts.condensed, 16, "OUTLINE")
-		pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 6, -1)
+		pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 8, 1)
 		pvpTimer:SetTextColor(1, 0.82, 0)
 		pvpTimer:SetJustifyH("RIGHT")
     frame.PvPIndicator.Timer = pvpTimer

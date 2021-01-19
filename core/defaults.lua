@@ -310,7 +310,7 @@ D.modules = {
             p = "BOTTOMRIGHT",
             anchor = "",
             ap = "BOTTOMLEFT",
-            x = -6,
+            x = -8,
             y = 0
           },
           text = {
@@ -339,7 +339,7 @@ D.modules = {
             p = "RIGHT",
             anchor = "Portrait",
             ap = "LEFT",
-            x = -8,
+            x = -7,
             y = 0
           },
         },
@@ -540,7 +540,7 @@ D.modules = {
         power = {
           enabled = true,
           height = 2,
-          gap = 1,
+          gap = 2,
           color = {
             power = true,
             tapping = true,
@@ -1679,6 +1679,18 @@ D.modules = {
           },
         },
       },
+      targetplate = {
+        enabled = true,
+        width = 150,
+        height = 10,
+        point = {
+          p = "CENTER",
+          anchor = "UIParent",
+          ap = "CENTER",
+          x = 0,
+          y = 0
+        },
+      }
     }
   },
   misc = {

@@ -436,7 +436,7 @@ local function collectButton(button)
 end
 
 local function releaseButton(button)
-	if not collectedButtons[button] or button == LSMinimapButtonCollection then
+	if not collectedButtons[button] or button == MinimapButtonCollection then
 		return
 	end
 
@@ -454,8 +454,8 @@ local function releaseButton(button)
 		button.SetPoint = button.SetPoint_
 	end
 
-	button.AlphaIn:SetParent(LSMinimapButtonCollection.AGDisabled)
-	button.AlphaOut:SetParent(LSMinimapButtonCollection.AGDisabled)
+	button.AlphaIn:SetParent(MinimapButtonCollection.AGDisabled)
+	button.AlphaOut:SetParent(MinimapButtonCollection.AGDisabled)
 
 	if not hiddenButtons[button] then
 		button:Show_()
@@ -505,6 +505,21 @@ local function button_OnDragStop(self)
 	self.OnUpdate = nil
 end
 
+local function getTooltipPoint(self)
+	local quadrant = E:GetScreenQuadrant(self)
+	local p, rP, x, y = "TOPLEFT", "BOTTOMRIGHT", -4, 4
+
+	if quadrant == "BOTTOMLEFT" or quadrant == "BOTTOM" then
+		p, rP, x, y = "BOTTOMLEFT", "TOPRIGHT", -4, -4
+	elseif quadrant == "TOPRIGHT" or quadrant == "RIGHT" then
+		p, rP, x, y = "TOPRIGHT", "BOTTOMLEFT", 4, 4
+	elseif quadrant == "BOTTOMRIGHT" then
+		p, rP, x, y = "BOTTOMRIGHT", "TOPLEFT", 4, -4
+	end
+
+	return p, rP, x, y
+end
+
 local function minimap_UpdateConfig(self)
 	self._config = E:CopyTable(C.modules.minimap, self._config)
 	self._config.buttons = E:CopyTable(C.modules.minimap.buttons, self._config.buttons)
@@ -516,6 +531,69 @@ end
 local function minimap_UpdateSize(self)
 	Minimap:SetSize(cfg.size, cfg.size)
 	LumMinimapHolder:SetSize(cfg.size, cfg.size + 20)
+end
+
+local function minimap_UpdateButtons(self)
+	local config = self._config
+
+	if config.collect.enabled then
+		MinimapButtonCollection:Show()
+		updatePosition(MinimapButtonCollection, config.buttons["MinimapButtonCollection"])
+	else
+		MinimapButtonCollection.isShown = false
+		MinimapButtonCollection:Hide()
+		MinimapButtonCollection.Shadow:SetScale(0.001)
+	end
+
+	if config.collect.enabled and config.collect.calendar then
+		collectButton(GameTimeFrame)
+	else
+		releaseButton(GameTimeFrame)
+		updatePosition(GameTimeFrame, config.buttons["GameTimeFrame"])
+	end
+
+	if config.collect.enabled and config.collect.garrison then
+		collectButton(GarrisonLandingPageMinimapButton)
+	else
+		releaseButton(GarrisonLandingPageMinimapButton)
+		updatePosition(GarrisonLandingPageMinimapButton, config.buttons["GarrisonLandingPageMinimapButton"])
+	end
+
+	if config.collect.enabled and config.collect.mail then
+		collectButton(MiniMapMailFrame)
+	else
+		releaseButton(MiniMapMailFrame)
+		updatePosition(MiniMapMailFrame, config.buttons["MiniMapMailFrame"])
+	end
+
+	if config.collect.enabled and config.collect.queue then
+		collectButton(QueueStatusMinimapButton)
+	else
+		releaseButton(QueueStatusMinimapButton)
+		updatePosition(QueueStatusMinimapButton, config.buttons["QueueStatusMinimapButton"])
+	end
+
+	if config.collect.enabled and config.collect.tracking then
+		collectButton(MiniMapTrackingButton)
+	else
+		releaseButton(MiniMapTrackingButton)
+		updatePosition(MiniMapTrackingButton, config.buttons["MiniMapTrackingButton"])
+	end
+
+	if config.collect.enabled then
+		for button in next, watchedButtons do
+			if not collectedButtons[button] then
+				collectButton(button)
+			end
+		end
+	else
+		for button in next, watchedButtons do
+			if collectedButtons[button] then
+				releaseButton(button)
+				updatePosition(button, buttonData[button].position)
+			end
+		end
+	end
 end
 
 function M:IsInit()
@@ -592,13 +670,15 @@ function M:Init()
 					Minimap.Collection = button
 
 					button:SetScript("OnEnter", function(self)
-						if C.db.profile.minimap.collect.tooltip then
+						if C.modules.minimap.collect.tooltip then
 							local p, rP, x, y = getTooltipPoint(self)
 
 							GameTooltip:SetOwner(self, "ANCHOR_NONE")
 							GameTooltip:SetPoint(p, self, rP, x, y)
-							GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1)
-							GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"])
+							-- GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1) -- TODO: i18n
+							-- GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"]) -- TODO: i18n
+							GameTooltip:AddLine("Minimap Buttons", 1, 1, 1)
+							GameTooltip:AddLine("Minimap Butons Tooltip")
 							GameTooltip:Show()
 						end
 					end)
@@ -742,6 +822,7 @@ function M:Init()
 
 		Minimap.UpdateConfig = minimap_UpdateConfig
 		Minimap.UpdateSize = minimap_UpdateSize
+		Minimap.UpdateButtons = minimap_UpdateButtons
 
 		isInit = true
 
@@ -753,5 +834,6 @@ function M:Update()
 	if isInit then
 		Minimap:UpdateConfig()
 		Minimap:UpdateSize()
+		Minimap:UpdateButtons()
 	end
 end
