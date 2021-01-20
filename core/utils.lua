@@ -235,6 +235,68 @@ function E:ReplaceTable(src, dest)
 	return dest
 end
 
+function E:DiffTable(src , dest)
+	if type(dest) ~= "table" then
+		return {}
+	end
+
+	if type(src) ~= "table" then
+		return dest
+	end
+
+	for k, v in next, dest do
+		if type(v) == "table" then
+			if not next(self:DiffTable(src[k], v)) then
+				dest[k] = nil
+			end
+		elseif v == src[k] then
+			dest[k] = nil
+		end
+	end
+
+	return dest
+end
+
+local function isEqualTable(a, b)
+	for k, v in next, a do
+		if type(v) == "table" and type(b[k]) == "table" then
+			if not isEqualTable(v, b[k]) then
+				return false
+			end
+		else
+			if v ~= b[k] then
+				return false
+			end
+		end
+	end
+
+	for k, v in next, b do
+		if type(v) == "table" and type(a[k]) == "table" then
+			if not isEqualTable(v, a[k]) then
+				return false
+			end
+		else
+			if v ~= a[k] then
+				return false
+			end
+		end
+	end
+
+	return true
+end
+
+function E:IsEqualTable(a, b)
+	if type(a) ~= type(b) then
+		return false
+	end
+
+	if type(a) == "table" then
+		return isEqualTable(a, b)
+	else
+		return a == b
+	end
+end
+
 -- Count the number of elements
 function E:TableCount(elements)
   local count = 0

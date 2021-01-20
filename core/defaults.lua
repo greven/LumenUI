@@ -56,6 +56,11 @@ D.media = {
 
 D.global = {
   fonts = {
+    bars = {
+			font = D.media.fonts.normal,
+			outline = true,
+			shadow = false,
+		},
     units = {
       font = D.media.fonts.condensed,
       outline = false,
@@ -97,6 +102,543 @@ D.global = {
 }
 
 D.modules = {
+	bars = {
+    enabled = true,
+		restricted = true,
+		mana_indicator = "button", -- hotkey
+		range_indicator = "button", -- hotkey
+		lock = true, -- watch: LOCK_ACTIONBAR
+		rightclick_selfcast = false,
+		click_on_down = false,
+		blizz_vehicle = false,
+		cooldown = {
+			exp_threshold = 5,
+			m_ss_threshold = 120, -- [91; 3599]
+		},
+		desaturation = {
+			unusable = true,
+			mana = true,
+			range = true,
+		},
+		bar1 = { -- MainMenuBar
+			flyout_dir = "UP",
+			grid = false,
+			num = 12,
+			per_row = 12,
+			size = 32,
+			spacing = 4,
+			visibility = "[petbattle] hide; show",
+			visible = true,
+			x_growth = "RIGHT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 12,
+			},
+			macro = {
+				enabled = true,
+				size = 12,
+			},
+			count = {
+				enabled = true,
+				size = 12,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 12,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 20},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 20},
+			},
+		},
+		bar2 = { -- MultiBarBottomLeft
+			flyout_dir = "UP",
+			grid = false,
+			num = 12,
+			per_row = 12,
+			size = 32,
+			spacing = 4,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			x_growth = "RIGHT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 12,
+			},
+			macro = {
+				enabled = true,
+				size = 12,
+			},
+			count = {
+				enabled = true,
+				size = 12,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 12,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 56},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 56},
+			},
+		},
+		bar3 = { -- MultiBarBottomRight
+			flyout_dir = "UP",
+			grid = false,
+			num = 12,
+			per_row = 12,
+			size = 32,
+			spacing = 4,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			x_growth = "RIGHT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 12,
+			},
+			macro = {
+				enabled = true,
+				size = 12,
+			},
+			count = {
+				enabled = true,
+				size = 12,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 12,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 92},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 92},
+			},
+		},
+		bar4 = { -- MultiBarLeft
+			flyout_dir = "LEFT",
+			grid = false,
+			num = 12,
+			per_row = 1,
+			size = 32,
+			spacing = 4,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			x_growth = "LEFT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 12,
+			},
+			macro = {
+				enabled = true,
+				size = 12,
+			},
+			count = {
+				enabled = true,
+				size = 12,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 12,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "RIGHT", anchor = "UIParent", rP = "RIGHT", x = -40, y = 0},
+				traditional = {p = "RIGHT", anchor = "UIParent", rP = "RIGHT", x = -40, y = 0},
+			},
+		},
+		bar5 = { -- MultiBarRight
+			flyout_dir = "LEFT",
+			grid = false,
+			num = 12,
+			per_row = 1,
+			size = 32,
+			spacing = 4,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			x_growth = "LEFT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 12,
+			},
+			macro = {
+				enabled = true,
+				size = 12,
+			},
+			count = {
+				enabled = true,
+				size = 12,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 12,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "RIGHT", anchor = "UIParent", rP = "RIGHT", x = -4, y = 0},
+				traditional = {p = "RIGHT", anchor = "UIParent", rP = "RIGHT", x = -4, y = 0},
+			},
+		},
+		bar6 = { --PetAction
+			flyout_dir = "UP",
+			grid = false,
+			num = 10,
+			per_row = 10,
+			size = 24,
+			spacing = 4,
+			visibility = "[pet,nopetbattle,novehicleui,nooverridebar,nopossessbar] show; hide",
+			visible = true,
+			x_growth = "RIGHT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 10,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 10,
+					v_alignment = "MIDDLE",
+				},
+			},
+		},
+		bar7 = { -- Stance
+			flyout_dir = "UP",
+			num = 10,
+			per_row = 10,
+			size = 24,
+			spacing = 4,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			x_growth = "RIGHT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 10,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 10,
+					v_alignment = "MIDDLE",
+				},
+			},
+		},
+		pet_battle = {
+      enabled = false,
+			num = 6,
+			per_row = 6,
+			size = 32,
+			spacing = 4,
+			visibility = "[petbattle] show; hide",
+			visible = true,
+			x_growth = "RIGHT",
+			y_growth = "DOWN",
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 12,
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 20},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 20},
+			},
+		},
+		extra = { -- ExtraAction
+			size = 40,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			hotkey = {
+				enabled = true,
+				size = 14,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 14,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = -94, y = 250},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = -94, y = 250},
+			},
+		},
+		zone = { -- ZoneAbility
+			size = 40,
+			visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+			visible = true,
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			cooldown = {
+				text = {
+					enabled = true,
+					size = 14,
+					v_alignment = "MIDDLE",
+				},
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 94, y = 250},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 94, y = 250},
+			},
+		},
+		vehicle = { -- LeaveVehicle
+			size = 40,
+			visible = true,
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 168, y = 134},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 168, y = 134},
+			},
+		},
+		micromenu = {
+			visible = true,
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+			bars = {
+				micromenu1 = {
+					enabled = true,
+					num = 13,
+					per_row = 13,
+					width = 18,
+					height = 24,
+					spacing = 4,
+					x_growth = "RIGHT",
+					y_growth = "DOWN",
+					point = {
+						ls = {p = "BOTTOMRIGHT", anchor = "UIParent", rP = "BOTTOMRIGHT", x = -4, y = 4},
+						traditional = {p = "BOTTOMRIGHT", anchor = "UIParent", rP = "BOTTOMRIGHT", x = -4, y = 4},
+					},
+				},
+				micromenu2 = {
+					enabled = true,
+					num = 13,
+					per_row = 13,
+					width = 18,
+					height = 24,
+					spacing = 4,
+					x_growth = "RIGHT",
+					y_growth = "DOWN",
+				},
+				bags = {
+					enabled = true,
+					num = 4,
+					per_row = 4,
+					x_growth = "RIGHT",
+					y_growth = "DOWN",
+					size = 32,
+					spacing = 4,
+					point = {
+						ls = {p = "BOTTOMRIGHT", anchor = "UIParent", rP = "BOTTOMRIGHT", x = -4, y = 32},
+						traditional = {p = "BOTTOMRIGHT", anchor = "UIParent", rP = "BOTTOMRIGHT", x = -4, y = 32},
+					},
+				},
+			},
+			buttons = {
+				character = {
+					enabled = true,
+					parent = "micromenu1",
+					tooltip = false,
+				},
+				inventory = {
+					enabled = true,
+					parent = "micromenu1",
+					tooltip = true,
+					currency = {},
+				},
+				spellbook = {
+					enabled = true,
+					parent = "micromenu1",
+				},
+				talent = {
+					enabled = true,
+					parent = "micromenu1",
+				},
+				achievement = {
+					enabled = true,
+					parent = "micromenu1",
+				},
+				quest = {
+					enabled = true,
+					parent = "micromenu1",
+					tooltip = true,
+				},
+				guild = {
+					enabled = true,
+					parent = "micromenu1",
+				},
+				lfd = {
+					enabled = true,
+					parent = "micromenu1",
+					tooltip = true,
+				},
+				collection = {
+					enabled = true,
+					parent = "micromenu1",
+				},
+				ej = {
+					enabled = true,
+					parent = "micromenu1",
+					tooltip = true,
+				},
+				store = {
+					enabled = false,
+					parent = "micromenu1",
+				},
+				main = {
+					enabled = true,
+					parent = "micromenu1",
+					tooltip = true,
+				},
+				help = {
+					enabled = false,
+					parent = "micromenu1",
+				},
+			},
+		},
+		xpbar = {
+      enabled = true,
+			visible = true,
+			width = 594,
+			height = 12,
+			text = {
+				size = 10,
+				format = "NUM", -- "NUM_PERC"
+				visibility = 2, -- 1 - always, 2 - mouseover
+			},
+			point = {
+				ls = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 4},
+				traditional = {p = "BOTTOM", anchor = "UIParent", rP = "BOTTOM", x = 0, y = 4},
+			},
+			fade = {
+				enabled = false,
+				out_delay = 0.75,
+				out_duration = 0.15,
+				in_delay = 0,
+				in_duration = 0.15,
+				min_alpha = 0,
+				max_alpha = 1,
+			},
+		},
+	},
   minimap = {
     enabled = true,
     size = 200,
@@ -122,8 +664,7 @@ D.modules = {
       border = false,
 			zone_text = true,
     },
-    -- point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
-    point = {"CENTER", "UIParent", "CENTER", 600, -200}
+    point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
   },
   unitframes = {
     enabled = true,
@@ -1751,7 +2292,7 @@ D.modules = {
 						},
           },
           perc = {
-            tag = "[lum:health_perc]",
+            tag = "[lum:health_cur_perc]",
             size = 15,
             color = D.colors.light_gray,
             alpha = 0.9,
@@ -1759,7 +2300,7 @@ D.modules = {
             shadow = false,
             h_alignment = "RIGHT",
             v_alignment = "MIDDLE",
-            hide_when_max = true,
+            hide_when_max = false,
             point = {
               p = "BOTTOMRIGHT",
               anchor = "",

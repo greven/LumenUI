@@ -8,6 +8,12 @@ local _G = getfenv(0)
 
 -- ---------------
 
+local function setNormalTextureHook(self, texture)
+	if texture then
+		self:SetNormalTexture(nil)
+	end
+end
+
 local function setPushedTexture(button)
 	if not button.SetPushedTexture then return end
 
@@ -51,6 +57,169 @@ local function setIcon(button, texture, l, r, t, b)
 	end
 
 	return icon
+end
+
+local function skinButton(button)
+	local bIcon = button.icon or button.Icon
+	local bFlash = button.Flash
+	local bFOArrow = button.FlyoutArrow
+	local bHotKey = button.HotKey
+	local bCount = button.Count
+	local bName = button.Name
+	local bBorder = button.Border
+	local bNewActionTexture = button.NewActionTexture
+	local bCD = button.cooldown or button.Cooldown
+	local bNormalTexture = button.GetNormalTexture and button:GetNormalTexture()
+	local bPushedTexture = button.GetPushedTexture and button:GetPushedTexture()
+	local bHighlightTexture = button.GetHighlightTexture and button:GetHighlightTexture()
+	local bCheckedTexture = button.GetCheckedTexture and button:GetCheckedTexture()
+
+	local fgParent = CreateFrame("Frame", nil, button)
+	fgParent:SetFrameLevel((bCD and bCD.GetFrameLevel) and bCD:GetFrameLevel() + 1 or button:GetFrameLevel() + 2)
+	fgParent:SetAllPoints()
+	button.FGParent = fgParent
+
+	setIcon(bIcon)
+
+	if bFlash then
+		bFlash:SetColorTexture(E:GetRGBA(C.colors.red, 0.65))
+		bFlash:SetAllPoints()
+	end
+
+	if bFOArrow then
+		bFOArrow:SetDrawLayer("OVERLAY", 2)
+	end
+
+	if bHotKey then
+		bHotKey:ClearAllPoints()
+		bHotKey:SetDrawLayer("OVERLAY")
+		bHotKey:SetJustifyH("RIGHT")
+		bHotKey:SetPoint("TOPRIGHT", 2, 0)
+		bHotKey:SetSize(0, 0)
+		bHotKey:SetVertexColor(1, 1, 1, 1)
+		bHotKey:Show()
+
+		if not button.GetHotkey then
+			button.GetHotkey = button_GetHotkey
+		end
+
+		if not button.SetKey then
+			button.SetKey = button_SetKey
+		end
+
+		if not button.GetBindings then
+			button.GetBindings = button_GetBindings
+		end
+
+		if not button.ClearBindings then
+			button.ClearBindings = button_ClearBindings
+		end
+
+		updateHotKey(bHotKey)
+		hooksecurefunc(bHotKey, "SetText", updateHotKey)
+	end
+
+	if bCount then
+		bCount:ClearAllPoints()
+		bCount:SetParent(fgParent)
+		bCount:SetDrawLayer("OVERLAY")
+		bCount:SetJustifyH("RIGHT")
+		bCount:SetPoint("BOTTOMRIGHT", 2, 0)
+		bCount:SetSize(0, 0)
+		bCount:SetVertexColor(1, 1, 1, 1)
+	end
+
+	if bName then
+		bName:ClearAllPoints()
+		bName:SetDrawLayer("OVERLAY")
+		bName:SetJustifyH("CENTER")
+		bName:SetPoint("BOTTOM", 0, 0)
+		bName:SetSize(0, 0)
+		bName:SetVertexColor(1, 1, 1, 1)
+
+		updateMacroText(bName)
+		hooksecurefunc(bName, "SetText", updateMacroText)
+	end
+
+	if bBorder then
+		bBorder:SetTexture(nil)
+	end
+
+	if bNewActionTexture then
+		bNewActionTexture:SetTexture(nil)
+	end
+
+	if bCD then
+		bCD:ClearAllPoints()
+		bCD:SetPoint("TOPLEFT", 1, -1)
+		bCD:SetPoint("BOTTOMRIGHT", -1, 1)
+
+		if bCD:IsObjectType("Frame") then
+			E.Cooldowns.Handle(bCD)
+		end
+	end
+
+	if bNormalTexture then
+		bNormalTexture:SetTexture(nil)
+		hooksecurefunc(button, "SetNormalTexture", setNormalTextureHook)
+
+		local border = E:CreateBorder(button)
+		border:SetTexture(C.media.textures.border)
+		border:SetSize(16)
+		border:SetOffset(-4)
+		button.Border_ = border
+	end
+
+	if bPushedTexture then
+		setPushedTexture(button)
+	end
+
+	if bHighlightTexture then
+		setHighlightTexture(button)
+	end
+
+	if bCheckedTexture then
+		setCheckedTexture(button)
+	end
+end
+
+-- E:SkinActionButton
+do
+	local function updateBorderColor(self)
+		local button = self:GetParent()
+
+		if button:IsEquipped() then
+			button.Border_:SetVertexColor(E:GetRGB(C.colors.green))
+		else
+			button.Border_:SetVertexColor(1, 1, 1)
+		end
+	end
+
+	function E:SkinActionButton(button)
+		if not button or button.__styled then return end
+
+		skinButton(button)
+
+		local bBorder = button.Border
+		local bFloatingBG = _G[button:GetName().."FloatingBG"]
+
+		if bBorder then
+			hooksecurefunc(bBorder, "Show", updateBorderColor)
+			hooksecurefunc(bBorder, "Hide", updateBorderColor)
+		end
+
+		if bFloatingBG then
+			bFloatingBG:SetAlpha(1)
+			bFloatingBG:SetAllPoints()
+			bFloatingBG:SetColorTexture(0, 0, 0, 0.25)
+		else
+			bFloatingBG = button:CreateTexture("$parentFloatingBG", "BACKGROUND", nil, -1)
+			bFloatingBG:SetAllPoints()
+			bFloatingBG:SetColorTexture(0, 0, 0, 0.25)
+		end
+
+		button.__styled = true
+	end
 end
 
 function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecure)

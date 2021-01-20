@@ -25,6 +25,7 @@ local next = _G.next
 local pairs = _G.pairs
 local geterrorhandler = _G.geterrorhandler
 local xpcall = _G.xpcall
+local t_insert = _G.table.insert
 
 local s_format = _G.string.format
 
@@ -112,5 +113,30 @@ do
 				dispatcher:UnregisterEvent(event)
 			end
 		end
+	end
+end
+
+-- ------------------
+-- > Addon Specific
+-- ------------------
+
+do
+	local onLoadTasks = {}
+
+	hooksecurefunc("LoadAddOn", function(name)
+		local tasks = onLoadTasks[name]
+
+		if tasks then
+			if not IsAddOnLoaded(name) then return end
+
+			for i = 1, #tasks do
+				tasks[i]()
+			end
+		end
+	end)
+
+	function E:AddOnLoadTask(name, func)
+		onLoadTasks[name] = onLoadTasks[name] or {}
+		t_insert(onLoadTasks[name], func)
 	end
 end

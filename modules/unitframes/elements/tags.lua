@@ -108,7 +108,7 @@ local customTags = {
     end
   end,
 
-  -- Health value or value - percentage when not max
+  -- Health value or percentage when not max
   health_cur_perc = function(unit)
     if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
       return ""
@@ -118,7 +118,7 @@ local customTags = {
       if cur == max then
         return E:FormatNumber(cur)
       else
-        return s_format("%s - %.1f%%", E:FormatNumber(cur), E:NumberToPerc(cur, max))
+        return s_format("%d%%", E:NumberToPerc(cur, max))
       end
     end
   end,
