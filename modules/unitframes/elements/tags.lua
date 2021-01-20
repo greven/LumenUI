@@ -90,11 +90,19 @@ local customTags = {
   end,
 
   -- Health current value
-  health_cur = function(unit, _, colorCap)
+  health_cur = function(unit, _, colorCap, colorStatus)
+    local offline = "Offline"
+    local dead = "Dead"
+
+    if colorStatus then
+      offline = "|c" .. E:ToHex(C.colors.light_gray) .. offline .. "|r"
+      dead = "|c" .. E:ToHex(C.colors.light_red) .. dead .. "|r"
+    end
+
     if not UnitIsConnected(unit) then
-      return "Offline"
+      return offline
     elseif UnitIsDeadOrGhost(unit) then
-      return "Dead"
+      return dead
     else
       return E:FormatNumber(UnitHealth(unit), colorCap) or ""
     end

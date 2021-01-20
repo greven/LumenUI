@@ -474,7 +474,7 @@ D.modules = {
             reaction = true
           },
           text = {
-            tag = "[lum:health_cur(true)]",
+            tag = "[lum:health_cur(true,true)]",
             size = 17,
             outline = true,
             shadow = false,
@@ -1660,7 +1660,7 @@ D.modules = {
             anchor = "",
             ap = "BOTTOMLEFT",
             x = 0,
-            y = -11
+            y = -10
           },
         },
         additional_power = {

@@ -7,7 +7,7 @@ local _G = getfenv(0)
 local UnitHealthMax = _G.UnitHealthMax
 local UnitStagger = _G.UnitStagger
 
-local gap = 6
+local gap = 5
 
 -- ---------------
 
@@ -48,7 +48,7 @@ local function createElement(parent, num, name)
 		bar:SetFrameLevel(level)
 		bar:SetStatusBarTexture("Interface\\BUTTONS\\WHITE8X8")
     bar:SetScript("OnValueChanged", bar_OnValueChanged)
-    E:SetBackdrop(bar, 2)
+    E:SetBackdrop(bar, 1.5)
     E:CreateShadow(bar)
 		element[i] = bar
 
@@ -466,7 +466,7 @@ do
 		local element = CreateFrame("StatusBar", nil, frame)
 		element:SetStatusBarTexture(C.global.statusbar.texture)
 		E:SmoothBar(element)
-		E:SetBackdrop(element, 2)
+		E:SetBackdrop(element, 1.5)
     E:CreateShadow(element)
 		element:Hide()
 
