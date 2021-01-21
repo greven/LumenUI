@@ -130,7 +130,7 @@ function UF:CreatePortrait(frame, parent)
   frame.Portrait3D.UpdateTextPoints = element_UpdateTextPoints
   frame.Portrait3D.UpdateTags = element_UpdateTags
 
-  local text = E.CreateString((parent or frame))
+  local text = (parent or frame):CreateFontString(nil, "ARTWORK")
   frame.Portrait2D.Text = text
   frame.Portrait3D.Text = text
 

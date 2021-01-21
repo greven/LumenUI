@@ -13,20 +13,20 @@ local _G = getfenv(0)
 -- ---------------
 
 function M:IsInit()
-	return isInit
+    return isInit
 end
 
 function M:Init()
-	if not isInit and C.modules.misc.enabled then
-		self:SetUpBindings()
+    if not isInit and C.modules.misc.enabled then
+        self:SetUpBindings()
 
-		isInit = true
-	end
+        isInit = true
+    end
 end
 
 function M:Update()
-	if isInit then
-		-- Update
-	end
+    if isInit then
+        -- Update
+    end
 end
 

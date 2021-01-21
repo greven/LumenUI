@@ -26,6 +26,10 @@ if (IsAddOnLoaded("!ClassColors") and CUSTOM_CLASS_COLORS) then
   E.CLASS_COLOR = CUSTOM_CLASS_COLORS[E.PLAYER_CLASS]
 end
 
+local hidden = _G.CreateFrame("Frame", nil, UIParent)
+hidden:Hide()
+E.HIDDEN_PARENT = hidden
+
 -- Screen Size and UI Scale
 do
   local function GetBestScale()
