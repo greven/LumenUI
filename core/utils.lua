@@ -39,33 +39,25 @@ local UnitGroupRolesAssigned = _G.UnitGroupRolesAssigned
 -- > Math
 -- ---------------
 
-local function round(val)
-    return m_floor(val + 0.5)
-end
+local function round(val) return m_floor(val + 0.5) end
 
-local function clamp(val, min, max)
-    return m_min(max or 1, m_max(min or 0, val))
-end
+local function clamp(val, min, max) return m_min(max or 1, m_max(min or 0, val)) end
 
-function E:Round(val)
-    return val and round(val) or nil
-end
+function E:Round(val) return val and round(val) or nil end
 
-function E:Clamp(val, ...)
-    return val and clamp(val, ...) or nil
-end
+function E:Clamp(val, ...) return val and clamp(val, ...) or nil end
 
-function E:NumberToPerc(v1, v2)
-    return (v1 and v2) and (v1 / v2 * 100) or nil
-end
+function E:NumberToPerc(v1, v2) return (v1 and v2) and (v1 / v2 * 100) or nil end
 
 function E:FormatNumber(val, colorCap)
     local FIRST_NUMBER_CAP = "%s.%d" .. _G.FIRST_NUMBER_CAP_NO_SPACE
     local SECOND_NUMBER_CAP = "%s.%d" .. _G.SECOND_NUMBER_CAP_NO_SPACE
 
     if colorCap then
-        FIRST_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.FIRST_NUMBER_CAP_NO_SPACE .. "|r"
-        SECOND_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
+        FIRST_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.FIRST_NUMBER_CAP_NO_SPACE ..
+                               "|r"
+        SECOND_NUMBER_CAP =
+            "%s.%d|cffBBBBBB" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
     end
 
     if val >= 1E6 then
@@ -106,7 +98,8 @@ do
         elseif v >= 60 then
             return s_format(D_M_ABBR, round(v / 60)), "e5e5e5"
         elseif v >= 5 then
-            return s_format(D_S_ABBR, round(v)), v >= 30 and "e5e5e5" or v >= 10 and "ffbf19" or "e51919"
+            return s_format(D_S_ABBR, round(v)),
+                   v >= 30 and "e5e5e5" or v >= 10 and "ffbf19" or "e51919"
         elseif v >= 0 then
             return s_format("%.1f", v), "e51919"
         else
@@ -129,7 +122,8 @@ do
             end
         elseif format == "x:xx" then
             if v >= 86400 then
-                return m_floor(v / 86400), m_floor(v % 86400 / 3600), X_XX_FORMAT
+                return m_floor(v / 86400), m_floor(v % 86400 / 3600),
+                       X_XX_FORMAT
             elseif v >= 3600 then
                 return m_floor(v / 3600), m_floor(v % 3600 / 60), X_XX_FORMAT
             elseif v >= 60 then
@@ -182,9 +176,7 @@ end
 -- ---------------
 
 function E:CopyTable(src, dest, ignore)
-    if type(dest) ~= "table" then
-        dest = {}
-    end
+    if type(dest) ~= "table" then dest = {} end
 
     for k, v in next, src do
         if not ignore or not ignore[k] then
@@ -200,17 +192,13 @@ function E:CopyTable(src, dest, ignore)
 end
 
 function E:UpdateTable(src, dest)
-    if type(dest) ~= "table" then
-        dest = {}
-    end
+    if type(dest) ~= "table" then dest = {} end
 
     for k, v in next, src do
         if type(v) == "table" then
             dest[k] = self:UpdateTable(v, dest[k])
         else
-            if dest[k] == nil then
-                dest[k] = v
-            end
+            if dest[k] == nil then dest[k] = v end
         end
     end
 
@@ -218,9 +206,7 @@ function E:UpdateTable(src, dest)
 end
 
 function E:ReplaceTable(src, dest)
-    if type(dest) ~= "table" then
-        dest = {}
-    end
+    if type(dest) ~= "table" then dest = {} end
 
     for k, v in next, dest do
         if type(src[k]) == "table" then
@@ -234,19 +220,13 @@ function E:ReplaceTable(src, dest)
 end
 
 function E:DiffTable(src, dest)
-    if type(dest) ~= "table" then
-        return {}
-    end
+    if type(dest) ~= "table" then return {} end
 
-    if type(src) ~= "table" then
-        return dest
-    end
+    if type(src) ~= "table" then return dest end
 
     for k, v in next, dest do
         if type(v) == "table" then
-            if not next(self:DiffTable(src[k], v)) then
-                dest[k] = nil
-            end
+            if not next(self:DiffTable(src[k], v)) then dest[k] = nil end
         elseif v == src[k] then
             dest[k] = nil
         end
@@ -258,25 +238,17 @@ end
 local function isEqualTable(a, b)
     for k, v in next, a do
         if type(v) == "table" and type(b[k]) == "table" then
-            if not isEqualTable(v, b[k]) then
-                return false
-            end
+            if not isEqualTable(v, b[k]) then return false end
         else
-            if v ~= b[k] then
-                return false
-            end
+            if v ~= b[k] then return false end
         end
     end
 
     for k, v in next, b do
         if type(v) == "table" and type(a[k]) == "table" then
-            if not isEqualTable(v, a[k]) then
-                return false
-            end
+            if not isEqualTable(v, a[k]) then return false end
         else
-            if v ~= a[k] then
-                return false
-            end
+            if v ~= a[k] then return false end
         end
     end
 
@@ -284,9 +256,7 @@ local function isEqualTable(a, b)
 end
 
 function E:IsEqualTable(a, b)
-    if type(a) ~= type(b) then
-        return false
-    end
+    if type(a) ~= type(b) then return false end
 
     if type(a) == "table" then
         return isEqualTable(a, b)
@@ -298,19 +268,13 @@ end
 -- Count the number of elements
 function E:TableCount(elements)
     local count = 0
-    for _ in pairs(elements) do
-        count = count + 1
-    end
+    for _ in pairs(elements) do count = count + 1 end
     return count
 end
 
 -- Check if the table contains a specific value
 function E:TableHasValue(tab, val)
-    for _, v in ipairs(tab) do
-        if v == val then
-            return true
-        end
-    end
+    for _, v in ipairs(tab) do if v == val then return true end end
     return false
 end
 
@@ -339,9 +303,7 @@ function E:CreateString(size, color, font, anchor, x, y)
     return fs
 end
 
-function E:TruncateString(v, length)
-    return s_utf8sub(v, 1, length)
-end
+function E:TruncateString(v, length) return s_utf8sub(v, 1, length) end
 
 -- ---------------
 -- > Color
@@ -361,21 +323,16 @@ do
             end
 
             local key = r .. "-" .. g .. "-" .. b
-            if rgb_hex_cache[key] then
-                return rgb_hex_cache[key]
-            end
-            rgb_hex_cache[key] = s_format("ff%.2x%.2x%.2x", clamp(r) * 255, clamp(g) * 255, clamp(b) * 255)
+            if rgb_hex_cache[key] then return rgb_hex_cache[key] end
+            rgb_hex_cache[key] = s_format("ff%.2x%.2x%.2x", clamp(r) * 255,
+                                          clamp(g) * 255, clamp(b) * 255)
             return rgb_hex_cache[key]
         end
     end
 
-    function E:ToHex(r, g, b)
-        return hex(r, g, b)
-    end
+    function E:ToHex(r, g, b) return hex(r, g, b) end
 
-    function E:GetRGB(color)
-        return color.r, color.g, color.b
-    end
+    function E:GetRGB(color) return color.r, color.g, color.b end
 
     function E:GetRGBA(color, a)
         return color.r, color.g, color.b, a or color.a
@@ -395,9 +352,7 @@ do
         return color
     end
 
-    function E:SetRGB(color, r, g, b)
-        return self:SetRGBA(color, r, g, b, 1)
-    end
+    function E:SetRGB(color, r, g, b) return self:SetRGBA(color, r, g, b, 1) end
 
     function E:TextColor(text, color)
         return "|cff" .. color.hex .. text .. "|r"
@@ -417,17 +372,20 @@ do
         local i, relperc = m_modf(perc * (num / 3 - 1))
         local r1, g1, b1, r2, g2, b2 = select((i * 3) + 1, ...)
 
-        return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc, b1 + (b2 - b1) * relperc
+        return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc,
+               b1 + (b2 - b1) * relperc
     end
 
     function E:GetGradientAsRGB(perc, color)
-        return calcGradient(perc, color[1].r, color[1].g, color[1].b, color[2].r, color[2].g, color[2].b, color[3].r,
-                   color[3].g, color[3].b)
+        return calcGradient(perc, color[1].r, color[1].g, color[1].b,
+                            color[2].r, color[2].g, color[2].b, color[3].r,
+                            color[3].g, color[3].b)
     end
 
     function E:GetGradientAsHex(perc, color)
-        return hex(calcGradient(perc, color[1].r, color[1].g, color[1].b, color[2].r, color[2].g, color[2].b,
-                       color[3].r, color[3].g, color[3].b))
+        return hex(calcGradient(perc, color[1].r, color[1].g, color[1].b,
+                                color[2].r, color[2].g, color[2].b, color[3].r,
+                                color[3].g, color[3].b))
     end
 end
 
@@ -444,9 +402,7 @@ do
 
             assert(anchor, "Invalid anchor: " .. children[1] .. ".")
 
-            for i = 2, #children do
-                anchor = anchor[children[i]]
-            end
+            for i = 2, #children do anchor = anchor[children[i]] end
 
             return anchor
         else
@@ -468,9 +424,7 @@ do
 
     function E:SetPosition(frame, point, relative)
         local anchor = point.anchor
-        if relative then
-            anchor = E:ResolveAnchorPoint(relative, anchor)
-        end
+        if relative then anchor = E:ResolveAnchorPoint(relative, anchor) end
         frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
     end
 
@@ -480,17 +434,13 @@ do
         local result = {}
 
         if segSize % 1 == 0 then
-            for i = 1, numSegs do
-                result[i] = segSize
-            end
+            for i = 1, numSegs do result[i] = segSize end
         else
             local numOddSegs = numSegs % 2 == 0 and 2 or 1
             local numNormalSegs = numSegs - numOddSegs
             segSize = round(segSize)
 
-            for i = 1, numNormalSegs / 2 do
-                result[i] = segSize
-            end
+            for i = 1, numNormalSegs / 2 do result[i] = segSize end
 
             for i = numSegs - numNormalSegs / 2 + 1, numSegs do
                 result[i] = segSize
@@ -507,9 +457,7 @@ do
     end
 
     function E:ForceShow(object)
-        if not object then
-            return
-        end
+        if not object then return end
 
         object:Show()
 
@@ -517,14 +465,10 @@ do
     end
 
     function E:ForceHide(object, skipEvents)
-        if not object then
-            return
-        end
+        if not object then return end
 
         if object.UnregisterAllEvents then
-            if not skipEvents then
-                object:UnregisterAllEvents()
-            end
+            if not skipEvents then object:UnregisterAllEvents() end
 
             if object:GetName() then
                 object.ignoreFramePositionManager = true
@@ -543,7 +487,8 @@ do
         if not x then
             return p, anchor, rP, x, y
         else
-            return p, anchor and anchor:GetName() or "UIParent", rP, round(x), round(y)
+            return p, anchor and anchor:GetName() or "UIParent", rP, round(x),
+                   round(y)
         end
     end
 
@@ -558,9 +503,7 @@ do
             x, y = frame:GetCenter()
         end
 
-        if not (x and y) then
-            return "UNKNOWN"
-        end
+        if not (x and y) then return "UNKNOWN" end
 
         local screenWidth = UIParent:GetRight()
         local screenHeight = UIParent:GetTop()
@@ -633,7 +576,8 @@ do
             return C.colors.reaction[2]
         end
 
-        return C.colors.reaction[UnitReaction(unit, "player")] or C.colors.reaction[4]
+        return C.colors.reaction[UnitReaction(unit, "player")] or
+                   C.colors.reaction[4]
     end
 
     function E:GetUnitClassification(unit)
@@ -680,7 +624,8 @@ do
     function E:GetUnitSpecializationInfo(unit)
         if UnitExists(unit) then
             local isPlayer = UnitIsUnit(unit, "player")
-            local specID = isPlayer and GetSpecialization() or GetInspectSpecialization(unit)
+            local specID = isPlayer and GetSpecialization() or
+                               GetInspectSpecialization(unit)
 
             if specID and specID > 0 then
                 if isPlayer then
@@ -716,7 +661,8 @@ do
     end
 
     function E:GetCreatureDifficultyColor(level)
-        return self:GetRelativeDifficultyColor(UnitEffectiveLevel("player"), level > 0 and level or 199)
+        return self:GetRelativeDifficultyColor(UnitEffectiveLevel("player"),
+                                               level > 0 and level or 199)
     end
 
     do
@@ -739,19 +685,13 @@ do
             end
 
             if prefix then
-                for i = 1, num do
-                    updateUnitInfo(prefix .. i)
-                end
+                for i = 1, num do updateUnitInfo(prefix .. i) end
             end
         end)
 
-        E:RegisterEvent("GROUP_LEFT", function()
-            t_wipe(rosterInfo)
-        end)
+        E:RegisterEvent("GROUP_LEFT", function() t_wipe(rosterInfo) end)
 
-        function E:GetRosterInfo()
-            return rosterInfo
-        end
+        function E:GetRosterInfo() return rosterInfo end
 
         function E:IsUnitTank(unit)
             return rosterInfo[UnitGUID(unit)] == "TANK"
@@ -768,8 +708,9 @@ do
 
     function E:IsUnitBoss(unit)
         return unit and
-                   (UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") or UnitIsUnit(unit, "boss3") or
-                       UnitIsUnit(unit, "boss4") or UnitIsUnit(unit, "boss5"))
+                   (UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") or
+                       UnitIsUnit(unit, "boss3") or UnitIsUnit(unit, "boss4") or
+                       UnitIsUnit(unit, "boss5"))
     end
 end
 
@@ -785,24 +726,26 @@ do
         dispelTypes[""] = IsSpellKnown(2908) -- Enrage
 
         -- Cleanse Spirit (Shaman), Nature's Cure (Druid), Purify Spirit (Shaman), Remove Corruption (Druid), Remove Curse (Mage)
-        dispelTypes["Curse"] =
-            IsSpellKnown(51886) or IsSpellKnown(88423) or IsSpellKnown(77130) or IsSpellKnown(2782) or IsSpellKnown(475)
+        dispelTypes["Curse"] = IsSpellKnown(51886) or IsSpellKnown(88423) or
+                                   IsSpellKnown(77130) or IsSpellKnown(2782) or
+                                   IsSpellKnown(475)
 
         -- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Purify (Priest), Purify Disease (Priest)
-        dispelTypes["Disease"] = IsSpellKnown(4987) or IsSpellKnown(213644) or IsSpellKnown(115450) or
-                                     IsSpellKnown(218164) or IsSpellKnown(527) or IsSpellKnown(213634)
+        dispelTypes["Disease"] = IsSpellKnown(4987) or IsSpellKnown(213644) or
+                                     IsSpellKnown(115450) or
+                                     IsSpellKnown(218164) or IsSpellKnown(527) or
+                                     IsSpellKnown(213634)
 
         -- Cleanse (Paladin), Detox (Monk), Mass Dispel (Priest), Nature's Cure (Druid), Purify (Priest), Purify Spirit (Shaman)
-        dispelTypes["Magic"] =
-            IsSpellKnown(4987) or IsSpellKnown(115450) or IsSpellKnown(32375) or IsSpellKnown(88423) or
-                IsSpellKnown(527) or IsSpellKnown(77130)
+        dispelTypes["Magic"] = IsSpellKnown(4987) or IsSpellKnown(115450) or
+                                   IsSpellKnown(32375) or IsSpellKnown(88423) or
+                                   IsSpellKnown(527) or IsSpellKnown(77130)
 
         -- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Nature's Cure (Druid), Remove Corruption (Druid)
-        dispelTypes["Poison"] = IsSpellKnown(4987) or IsSpellKnown(213644) or IsSpellKnown(115450) or
-                                    IsSpellKnown(218164) or IsSpellKnown(88423) or IsSpellKnown(2782)
+        dispelTypes["Poison"] = IsSpellKnown(4987) or IsSpellKnown(213644) or
+                                    IsSpellKnown(115450) or IsSpellKnown(218164) or
+                                    IsSpellKnown(88423) or IsSpellKnown(2782)
     end)
 
-    function E:IsDispellable(debuffType)
-        return dispelTypes[debuffType]
-    end
+    function E:IsDispellable(debuffType) return dispelTypes[debuffType] end
 end

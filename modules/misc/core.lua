@@ -12,9 +12,7 @@ local _G = getfenv(0)
 
 -- ---------------
 
-function M:IsInit()
-    return isInit
-end
+function M:IsInit() return isInit end
 
 function M:Init()
     if not isInit and C.modules.misc.enabled then

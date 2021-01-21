@@ -15,7 +15,8 @@ local UF = E:GetModule("UnitFrames")
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].threat, self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].threat,
+                               self._config)
 end
 
 local function element_PostUpdate(self, _, status)
@@ -45,15 +46,14 @@ local function frame_UpdateThreatIndicator(self, event)
 
     if element._config.enabled and not self:IsElementEnabled("ThreatIndicator") then
         self:EnableElement("ThreatIndicator")
-    elseif not element._config.enabled and self:IsElementEnabled("ThreatIndicator") then
+    elseif not element._config.enabled and
+        self:IsElementEnabled("ThreatIndicator") then
         self:UnregisterEvent('GROUP_JOINED')
         self:UnregisterEvent('GROUP_LEFT')
         self:DisableElement("ThreatIndicator")
     end
 
-    if self:IsElementEnabled("ThreatIndicator") then
-        element:ForceUpdate()
-    end
+    if self:IsElementEnabled("ThreatIndicator") then element:ForceUpdate() end
 end
 
 function UF:CreateThreatIndicator(frame, parent)

@@ -25,13 +25,9 @@ local C_PetBattles = _G.C_PetBattles
 local isInit = false
 local bars = {}
 
-function M.GetBars()
-    return bars
-end
+function M.GetBars() return bars end
 
-function M.GetBar(_, barID)
-    return bars[barID]
-end
+function M.GetBar(_, barID) return bars[barID] end
 
 -- Fading
 local function pauseFading()
@@ -57,77 +53,73 @@ end
 -- Updates
 local function bar_UpdateButtons(self, method, ...)
     for _, button in next, self._buttons do
-        if button[method] then
-            button[method](button, ...)
-        end
+        if button[method] then button[method](button, ...) end
     end
 end
 
 local function bar_ForEach(self, method, ...)
     for _, button in next, self._buttons do
-        if button[method] then
-            button[method](button, ...)
-        end
+        if button[method] then button[method](button, ...) end
     end
 end
 
 local function bar_UpdateConfig(self)
     self._config = E:CopyTable(C.modules.bars[self._id], self._config)
     self._config.click_on_down = C.modules.bars.click_on_down
-    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation, self._config.desaturation)
+    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation,
+                                            self._config.desaturation)
     self._config.lock = C.modules.bars.lock
     self._config.mana_indicator = C.modules.bars.mana_indicator
     self._config.range_indicator = C.modules.bars.range_indicator
     self._config.rightclick_selfcast = C.modules.bars.rightclick_selfcast
 
     if C.modules.bars[self._id].cooldown then
-        self._config.cooldown = E:CopyTable(C.modules.bars[self._id].cooldown, self._config.cooldown)
-        self._config.cooldown = E:CopyTable(C.modules.bars.cooldown, self._config.cooldown)
+        self._config.cooldown = E:CopyTable(C.modules.bars[self._id].cooldown,
+                                            self._config.cooldown)
+        self._config.cooldown = E:CopyTable(C.modules.bars.cooldown,
+                                            self._config.cooldown)
     end
 
     if C.modules.bars[self._id].count then
-        self._config.count = E:CopyTable(C.global.fonts.bars, self._config.count)
+        self._config.count =
+            E:CopyTable(C.global.fonts.bars, self._config.count)
     end
 
     if C.modules.bars[self._id].hotkey then
-        self._config.hotkey = E:CopyTable(C.global.fonts.bars, self._config.hotkey)
+        self._config.hotkey = E:CopyTable(C.global.fonts.bars,
+                                          self._config.hotkey)
     end
 
     if C.modules.bars[self._id].macro then
-        self._config.macro = E:CopyTable(C.global.fonts.bars, self._config.macro)
+        self._config.macro =
+            E:CopyTable(C.global.fonts.bars, self._config.macro)
     end
 end
 
 local function bar_UpdateCooldownConfig(self)
-    if not self.cooldownConfig then
-        self.cooldownConfig = {
-            text = {}
-        }
-    end
+    if not self.cooldownConfig then self.cooldownConfig = {text = {}} end
 
     self.cooldownConfig.exp_threshold = self._config.cooldown.exp_threshold
     self.cooldownConfig.m_ss_threshold = self._config.cooldown.m_ss_threshold
-    self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
+    self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text,
+                                           self.cooldownConfig.text)
 
     local cooldown
     for _, button in next, self._buttons do
         cooldown = button.cooldown or button.Cooldown
-        if not cooldown.UpdateConfig then
-            break
-        end
+        if not cooldown.UpdateConfig then break end
 
         cooldown:UpdateConfig(self.cooldownConfig)
         cooldown:UpdateFont()
     end
 end
 
-local function bar_UpdateLayout(self)
-    E:UpdateBarLayout(self)
-end
+local function bar_UpdateLayout(self) E:UpdateBarLayout(self) end
 
 local function bar_UpdateVisibility(self)
     if self._config.visible then
-        RegisterStateDriver(self, "visibility", self._config.visibility or "show")
+        RegisterStateDriver(self, "visibility",
+                            self._config.visibility or "show")
     else
         RegisterStateDriver(self, "visibility", "hide")
     end
@@ -149,25 +141,15 @@ function M.AddBar(_, barID, bar)
 end
 
 function M.UpdateBars(_, method, ...)
-    for _, bar in next, bars do
-        if bar[method] then
-            bar[method](bar, ...)
-        end
-    end
+    for _, bar in next, bars do if bar[method] then bar[method](bar, ...) end end
 end
 
 function M:ForEach(method, ...)
-    for _, bar in next, bars do
-        if bar[method] then
-            bar[method](bar, ...)
-        end
-    end
+    for _, bar in next, bars do if bar[method] then bar[method](bar, ...) end end
 end
 
 function M:ForBar(id, method, ...)
-    if bars[id] and bars[id][method] then
-        bars[id][method](bars[id], ...)
-    end
+    if bars[id] and bars[id][method] then bars[id][method](bars[id], ...) end
 end
 
 -- Bindings
@@ -190,7 +172,8 @@ function M.ReassignBindings()
                 for _, button in next, bar._buttons do
                     for _, key in next, {GetBindingKey(button._command)} do
                         if key and key ~= "" then
-                            SetOverrideBindingClick(bar, false, key, button:GetName())
+                            SetOverrideBindingClick(bar, false, key,
+                                                    button:GetName())
                         end
                     end
                 end
@@ -202,9 +185,7 @@ end
 function M.ClearBindings()
     if not InCombatLockdown() then
         for barID, bar in next, bars do
-            if rebindable[barID] then
-                ClearOverrideBindings(bar)
-            end
+            if rebindable[barID] then ClearOverrideBindings(bar) end
         end
     end
 end
@@ -218,7 +199,8 @@ function M:UpdateBlizzVehicle()
             OverrideActionBar:SetParent(UIParent)
 
             if not vehicleController then
-                vehicleController = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
+                vehicleController = CreateFrame("Frame", nil, UIParent,
+                                                "SecureHandlerStateTemplate")
                 vehicleController:SetFrameRef("bar", OverrideActionBar)
                 vehicleController:SetAttribute("_onstate-vehicle", [[
 					if newstate == "override" then
@@ -243,7 +225,8 @@ function M:UpdateBlizzVehicle()
 				]])
             end
 
-            RegisterStateDriver(vehicleController, "vehicle", "[overridebar] override; [vehicleui] vehicle; novehicle")
+            RegisterStateDriver(vehicleController, "vehicle",
+                                "[overridebar] override; [vehicleui] vehicle; novehicle")
         else
             -- MainMenuBar:SetParent(E.HIDDEN_PARENT)
             OverrideActionBar:SetParent(E.HIDDEN_PARENT)
@@ -277,9 +260,7 @@ end
 
 -----
 
-function M.IsInit()
-    return isInit
-end
+function M.IsInit() return isInit end
 
 function M.Init()
     if not isInit and C.modules.bars.enabled then
@@ -311,7 +292,8 @@ function M.Init()
             M:ReassignBindings()
         end
 
-        SetCVar("ActionButtonUseKeyDown", C.modules.bars.click_on_down and 1 or 0)
+        SetCVar("ActionButtonUseKeyDown",
+                C.modules.bars.click_on_down and 1 or 0)
         SetCVar("lockActionBars", C.modules.bars.lock and 1 or 0)
 
         if NewPlayerExperience then
@@ -324,8 +306,4 @@ function M.Init()
     end
 end
 
-function M.Update()
-    if isInit then
-        M:UpdateBars("Update")
-    end
-end
+function M.Update() if isInit then M:UpdateBars("Update") end end

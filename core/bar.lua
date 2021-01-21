@@ -37,7 +37,8 @@ function E:UpdateBarLayout(bar)
         end
     end
 
-    bar:SetSize(wMult * width + (wMult - 1) * config.spacing + 4, hMult * height + (hMult - 1) * config.spacing + 4)
+    bar:SetSize(wMult * width + (wMult - 1) * config.spacing + 4,
+                hMult * height + (hMult - 1) * config.spacing + 4)
 
     -- TODO: Movers
     -- local mover = E.Movers:Get(bar, true)
@@ -55,8 +56,9 @@ function E:UpdateBarLayout(bar)
             button:SetParent(button._parent)
             button:SetFrameLevel(level)
             button:SetSize(width, height)
-            button:SetPoint(initialAnchor, bar, initialAnchor, xDir * (2 + col * (config.spacing + width)),
-                yDir * (2 + row * (config.spacing + height)))
+            button:SetPoint(initialAnchor, bar, initialAnchor,
+                            xDir * (2 + col * (config.spacing + width)),
+                            yDir * (2 + row * (config.spacing + height)))
         else
             button:SetParent(E.HIDDEN_PARENT)
         end

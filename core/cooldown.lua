@@ -20,11 +20,7 @@ local activeCooldowns = {}
 local defaults = {
     exp_threshold = 5, -- [1; 10]
     m_ss_threshold = 0, -- [91; 3599]
-    text = {
-        enabled = true,
-        size = 12,
-        v_alignment = "MIDDLE"
-    }
+    text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
 }
 
 local updateTime = 0
@@ -51,7 +47,8 @@ E.Cooldowns.Updater:SetScript("OnUpdate", function(_, elapsed)
                     time1, time2, format = E:SecondsToTime(remain, "abbr")
                     color = C.colors.cooldown.hour
                 elseif remain >= 60 then
-                    if cooldown.config.m_ss_threshold == 0 or remain > cooldown.config.m_ss_threshold then
+                    if cooldown.config.m_ss_threshold == 0 or remain >
+                        cooldown.config.m_ss_threshold then
                         time1, time2, format = E:SecondsToTime(remain, "abbr")
                     else
                         time1, time2, format = E:SecondsToTime(remain, "x:xx")
@@ -106,7 +103,8 @@ end
 local function cooldown_UpdateFont(self)
     local config = self.config.text
 
-    self.Timer:SetFont(config.font or C.media.fonts.normal, config.size, config.outline and "OUTLINE" or nil)
+    self.Timer:SetFont(config.font or C.media.fonts.normal, config.size,
+                       config.outline and "OUTLINE" or nil)
     self.Timer:SetJustifyH("CENTER")
     self.Timer:SetJustifyV(config.v_alignment)
     self.Timer:SetShown(config.enabled)
@@ -133,9 +131,7 @@ local function cooldown_UpdateConfig(self, config)
 end
 
 function E.Cooldowns.Handle(cooldown)
-    if E.OMNICC or handledCooldowns[cooldown] then
-        return cooldown
-    end
+    if E.OMNICC or handledCooldowns[cooldown] then return cooldown end
 
     cooldown:SetDrawBling(false)
     cooldown:SetDrawEdge(false)
@@ -170,7 +166,8 @@ function E.Cooldowns.Handle(cooldown)
 end
 
 function E.Cooldowns.Create(parent)
-    local cooldown = CreateFrame("Cooldown", nil, parent, "CooldownFrameTemplate")
+    local cooldown = CreateFrame("Cooldown", nil, parent,
+                                 "CooldownFrameTemplate")
     cooldown:SetPoint("TOPLEFT", 1, -1)
     cooldown:SetPoint("BOTTOMRIGHT", -1, 1)
 
@@ -181,8 +178,6 @@ end
 
 function E.Cooldowns:ForEach(method, ...)
     for cooldown in next, handledCooldowns do
-        if cooldown[method] then
-            cooldown[method](cooldown, ...)
-        end
+        if cooldown[method] then cooldown[method](cooldown, ...) end
     end
 end

@@ -78,8 +78,9 @@ local function hasTrackingBorderRegion(self)
 
         if region:IsObjectType("Texture") then
             local texture = region:GetTexture()
-            if texture and
-                (texture == 136430 or s_match(texture, "[tT][rR][aA][cC][kK][iI][nN][gG][bB][oO][rR][dD][eE][rR]")) then
+            if texture and (texture == 136430 or
+                s_match(texture,
+                        "[tT][rR][aA][cC][kK][iI][nN][gG][bB][oO][rR][dD][eE][rR]")) then
                 return true
             end
         end
@@ -89,13 +90,9 @@ local function hasTrackingBorderRegion(self)
 end
 
 local function isMinimapButton(self)
-    if BLIZZ_BUTTONS[self] then
-        return true
-    end
+    if BLIZZ_BUTTONS[self] then return true end
 
-    if hasTrackingBorderRegion(self) then
-        return true
-    end
+    if hasTrackingBorderRegion(self) then return true end
 
     for i = 1, select("#", self:GetChildren()) do
         if hasTrackingBorderRegion(select(i, self:GetChildren())) then
@@ -107,9 +104,7 @@ local function isMinimapButton(self)
 end
 
 local function handleButton(button, isRecursive)
-    if button == GarrisonLandingPageMinimapButton then
-        return button
-    end
+    if button == GarrisonLandingPageMinimapButton then return button end
 
     -- print("====|cff00ccff", button:GetDebugName(), "|r:====")
     local normal = button.GetNormalTexture and button:GetNormalTexture()
@@ -133,7 +128,8 @@ local function handleButton(button, isRecursive)
                         -- print("|cffffff00", name, "|ris |cff00ff00.Icon|r")
                         icon = region
                         -- ignore all LDBIcons
-                    elseif name and not s_match(name, "^LibDBIcon") and s_match(name, "[iI][cC][oO][nN]") then
+                    elseif name and not s_match(name, "^LibDBIcon") and
+                        s_match(name, "[iI][cC][oO][nN]") then
                         -- print("|cffffff00", name, "|ris |cff00ff00icon|r")
                         icon = region
                     elseif texture and s_match(texture, "[iI][cC][oO][nN]") then
@@ -141,7 +137,9 @@ local function handleButton(button, isRecursive)
                         icon = region
                     elseif texture and texture == 136467 then
                         bg = region
-                    elseif texture and s_match(texture, "[bB][aA][cC][kK][gG][rR][oO][uU][nN][dD]") then
+                    elseif texture and
+                        s_match(texture,
+                                "[bB][aA][cC][kK][gG][rR][oO][uU][nN][dD]") then
                         -- print("|cffffff00", name, "|ris |cff00ff00-background|r")
                         bg = region
                     end
@@ -161,8 +159,9 @@ local function handleButton(button, isRecursive)
                 elseif s_match(name, "[bB][oO][rR][dD][eE][rR]") then
                     -- print("|cffffff00", name, "|ris |cff00ff00border|r")
                     border = region
-                elseif texture and
-                    (texture == 136430 or s_match(texture, "[tT][rR][aA][cC][kK][iI][nN][gG][bB][oO][rR][dD][eE][rR]")) then
+                elseif texture and (texture == 136430 or
+                    s_match(texture,
+                            "[tT][rR][aA][cC][kK][iI][nN][gG][bB][oO][rR][dD][eE][rR]")) then
                     -- print("|cffffff00", name, "|ris |cff00ff00-TrackingBorder|r")
                     border = region
                 end
@@ -181,7 +180,8 @@ local function handleButton(button, isRecursive)
                 icon = child
             end
         elseif oType == "Button" then
-            thl, ticon, tborder, tbg, tnormal, tpushed = handleButton(child, true)
+            thl, ticon, tborder, tbg, tnormal, tpushed =
+                handleButton(child, true)
             button.Button = child
             button.Button:SetAllPoints(button)
         end
@@ -213,8 +213,8 @@ local function handleButton(button, isRecursive)
         button:SetFlattensRenderLayers(true)
 
         local mask = button:CreateMaskTexture()
-        mask:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMaskSmall", "CLAMPTOBLACKADDITIVE",
-            "CLAMPTOBLACKADDITIVE")
+        mask:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMaskSmall",
+                        "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
         mask:SetPoint("TOPLEFT", 6, -6)
         mask:SetPoint("BOTTOMRIGHT", -6, 6)
         button.MaskTexture = mask
@@ -259,9 +259,7 @@ local function handleButton(button, isRecursive)
             button.Icon = icon
         end
 
-        if not border then
-            border = button:CreateTexture()
-        end
+        if not border then border = button:CreateTexture() end
 
         border:SetTexture(C.media.textures.border)
         border:SetTexCoord(90 / 256, 162 / 256, 1 / 256, 73 / 256)
@@ -269,9 +267,7 @@ local function handleButton(button, isRecursive)
         border:SetAllPoints(button)
         button.Border = border
 
-        if not bg then
-            bg = button:CreateTexture()
-        end
+        if not bg then bg = button:CreateTexture() end
 
         bg:SetAlpha(1)
         bg:SetColorTexture(0, 0, 0, 0.6)
@@ -311,7 +307,8 @@ local function consolidateButtons()
 
         local maxRows = m_floor(#consolidatedButtons / 8 + 0.9)
 
-        MinimapButtonCollection.Shadow:SetSize(64 + 64 * maxRows, 64 + 64 * maxRows)
+        MinimapButtonCollection.Shadow:SetSize(64 + 64 * maxRows,
+                                               64 + 64 * maxRows)
 
         for i, button in next, consolidatedButtons do
             local row = m_floor(i / 8 + 0.9)
@@ -321,8 +318,9 @@ local function consolidateButtons()
             button.AlphaOut:SetStartDelay(0.02 * (i - 1))
 
             button:ClearAllPoints_()
-            button:SetPoint_("CENTER", MinimapButtonCollection, "CENTER", m_cos(angle) * (16 + 32 * row),
-                m_sin(angle) * (16 + 32 * row))
+            button:SetPoint_("CENTER", MinimapButtonCollection, "CENTER",
+                             m_cos(angle) * (16 + 32 * row),
+                             m_sin(angle) * (16 + 32 * row))
 
             if not MinimapButtonCollection.isShown then
                 button:Hide_()
@@ -332,9 +330,7 @@ local function consolidateButtons()
 end
 
 local function getPosition(scale, px, py)
-    if not (px or py) then
-        return 225
-    end
+    if not (px or py) then return 225 end
 
     local mx, my = Minimap:GetCenter()
     scale = scale or Minimap:GetEffectiveScale()
@@ -458,9 +454,7 @@ local function releaseButton(button)
     button.AlphaIn:SetParent(MinimapButtonCollection.AGDisabled)
     button.AlphaOut:SetParent(MinimapButtonCollection.AGDisabled)
 
-    if not hiddenButtons[button] then
-        button:Show_()
-    end
+    if not hiddenButtons[button] then button:Show_() end
 
     button.ClearAllPoints_ = nil
     button.SetPoint_ = nil
@@ -476,10 +470,21 @@ local function updatePosition(button, degrees)
     local h = Minimap:GetHeight() / 2 + 5
 
     if isSquare then
-        button:SetPoint("CENTER", Minimap, "CENTER", m_max(-w, m_min(m_cos(angle) * (1.4142135623731 * w - 10), w)),
-            m_max(-h, m_min(m_sin(angle) * (1.4142135623731 * h - 10), h)))
+        button:SetPoint("CENTER", Minimap, "CENTER", m_max(-w, m_min(
+                                                               m_cos(angle) *
+                                                                   (1.4142135623731 *
+                                                                       w - 10),
+                                                               w)), m_max(-h,
+                                                                          m_min(
+                                                                              m_sin(
+                                                                                  angle) *
+                                                                                  (1.4142135623731 *
+                                                                                      h -
+                                                                                      10),
+                                                                              h)))
     else
-        button:SetPoint("CENTER", Minimap, "CENTER", m_cos(angle) * w, m_sin(angle) * h)
+        button:SetPoint("CENTER", Minimap, "CENTER", m_cos(angle) * w,
+                        m_sin(angle) * h)
     end
 end
 
@@ -518,9 +523,12 @@ end
 
 local function minimap_UpdateConfig(self)
     self._config = E:CopyTable(C.modules.minimap, self._config)
-    self._config.buttons = E:CopyTable(C.modules.minimap.buttons, self._config.buttons)
-    self._config.collect = E:CopyTable(C.modules.minimap.collect, self._config.collect)
-    self._config.color = E:CopyTable(C.modules.minimap.color, self._config.color)
+    self._config.buttons = E:CopyTable(C.modules.minimap.buttons,
+                                       self._config.buttons)
+    self._config.collect = E:CopyTable(C.modules.minimap.collect,
+                                       self._config.collect)
+    self._config.color =
+        E:CopyTable(C.modules.minimap.color, self._config.color)
     self._config.size = C.modules.minimap.size
 end
 
@@ -534,7 +542,8 @@ local function minimap_UpdateButtons(self)
 
     if config.collect.enabled then
         MinimapButtonCollection:Show()
-        updatePosition(MinimapButtonCollection, config.buttons["MinimapButtonCollection"])
+        updatePosition(MinimapButtonCollection,
+                       config.buttons["MinimapButtonCollection"])
     else
         MinimapButtonCollection.isShown = false
         MinimapButtonCollection:Hide()
@@ -552,7 +561,8 @@ local function minimap_UpdateButtons(self)
         collectButton(GarrisonLandingPageMinimapButton)
     else
         releaseButton(GarrisonLandingPageMinimapButton)
-        updatePosition(GarrisonLandingPageMinimapButton, config.buttons["GarrisonLandingPageMinimapButton"])
+        updatePosition(GarrisonLandingPageMinimapButton,
+                       config.buttons["GarrisonLandingPageMinimapButton"])
     end
 
     if config.collect.enabled and config.collect.mail then
@@ -566,14 +576,16 @@ local function minimap_UpdateButtons(self)
         collectButton(QueueStatusMinimapButton)
     else
         releaseButton(QueueStatusMinimapButton)
-        updatePosition(QueueStatusMinimapButton, config.buttons["QueueStatusMinimapButton"])
+        updatePosition(QueueStatusMinimapButton,
+                       config.buttons["QueueStatusMinimapButton"])
     end
 
     if config.collect.enabled and config.collect.tracking then
         collectButton(MiniMapTrackingButton)
     else
         releaseButton(MiniMapTrackingButton)
-        updatePosition(MiniMapTrackingButton, config.buttons["MiniMapTrackingButton"])
+        updatePosition(MiniMapTrackingButton,
+                       config.buttons["MiniMapTrackingButton"])
     end
 
     if config.collect.enabled then
@@ -592,9 +604,7 @@ local function minimap_UpdateButtons(self)
     end
 end
 
-function M:IsInit()
-    return isInit
-end
+function M:IsInit() return isInit end
 
 function M:Init()
     if not isInit and cfg.enabled then
@@ -621,7 +631,8 @@ function M:Init()
         Minimap:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
         Minimap:HookScript("OnEvent", function(self, event)
-            if event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
+            if event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or
+                event == "ZONE_CHANGED_NEW_AREA" then
                 -- print(event)
             end
         end)
@@ -649,7 +660,8 @@ function M:Init()
             bg:SetFrameLevel(level - 1)
             E:CreateShadow(textureParent)
         else
-            Minimap:SetMaskTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
+            Minimap:SetMaskTexture(
+                "Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
             Minimap:SetPoint("BOTTOM", 0, 10)
 
             textureParent:SetPoint("TOPLEFT", 0, 0)
@@ -657,10 +669,12 @@ function M:Init()
 
         -- .Collection
         do
-            local button = CreateFrame("Button", "MinimapButtonCollection", Minimap)
+            local button = CreateFrame("Button", "MinimapButtonCollection",
+                                       Minimap)
             button:SetFrameLevel(level + 3)
             button:RegisterForDrag("LeftButton")
-            button:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+            button:SetHighlightTexture(
+                "Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
             button:SetScript("OnDragStart", button_OnDragStart)
             button:SetScript("OnDragStop", button_OnDragStop)
             Minimap.Collection = button
@@ -678,9 +692,7 @@ function M:Init()
                     GameTooltip:Show()
                 end
             end)
-            button:SetScript("OnLeave", function()
-                GameTooltip:Hide()
-            end)
+            button:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
             local border = button:CreateTexture(nil, "OVERLAY")
             border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")

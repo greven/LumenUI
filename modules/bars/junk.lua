@@ -27,7 +27,8 @@ function M.CleanUp()
     MainMenuBar:EnableMouse(false)
     MainMenuBar:SetScript("OnShow", function()
         UpdateMicroButtonsParent(MicroButtonAndBagsBar)
-        MoveMicroButtons("BOTTOMLEFT", MicroButtonAndBagsBar, "BOTTOMLEFT", 6, 3, false)
+        MoveMicroButtons("BOTTOMLEFT", MicroButtonAndBagsBar, "BOTTOMLEFT", 6,
+                         3, false)
     end)
 
     UpdateMicroButtonsParent(MicroButtonAndBagsBar)

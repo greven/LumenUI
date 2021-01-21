@@ -10,9 +10,7 @@ local playerPlateWidth = 180
 local targetWidth = 288
 local targetHeight = 28
 
-local function rgb(r, g, b)
-    return E:SetRGB({}, r, g, b)
-end
+local function rgb(r, g, b) return E:SetRGB({}, r, g, b) end
 
 -- ---------------
 
@@ -56,48 +54,24 @@ D.media = {
 
 D.global = {
     fonts = {
-        bars = {
-            font = D.media.fonts.normal,
-            outline = true,
-            shadow = false
-        },
-        units = {
-            font = D.media.fonts.condensed,
-            outline = false,
-            shadow = true
-        },
-        cooldown = {
-            font = D.media.fonts.normal,
-            outline = true,
-            shadow = false
-        }
+        bars = {font = D.media.fonts.normal, outline = true, shadow = false},
+        units = {font = D.media.fonts.condensed, outline = false, shadow = true},
+        cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
-    backdrop = {
-        color = rgb(0, 0, 0),
-        alpha = 0.84
-    },
-    border = {
-        color = rgb(10, 10, 10)
-    },
+    backdrop = {color = rgb(0, 0, 0), alpha = 0.84},
+    border = {color = rgb(10, 10, 10)},
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
     },
-    shadows = {
-        enabled = true,
-        alpha = 0.3
-    },
+    shadows = {enabled = true, alpha = 0.3},
     castbar = {
         texture = D.media.textures.statusbar,
         bg = D.media.textures.vertlines
     },
     aura_filters = {
-        ["Blacklist"] = {
-            is_init = false
-        },
-        ["M+ Affixes"] = {
-            is_init = false
-        }
+        ["Blacklist"] = {is_init = false},
+        ["M+ Affixes"] = {is_init = false}
     }
 }
 
@@ -115,11 +89,7 @@ D.modules = {
             exp_threshold = 5,
             m_ss_threshold = 120 -- [91; 3599]
         },
-        desaturation = {
-            unusable = true,
-            mana = true,
-            range = true
-        },
+        desaturation = {unusable = true, mana = true, range = true},
         bar1 = { -- MainMenuBar
             flyout_dir = "UP",
             grid = false,
@@ -140,24 +110,11 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 12
-            },
-            macro = {
-                enabled = true,
-                size = 12
-            },
-            count = {
-                enabled = true,
-                size = 12
-            },
+            hotkey = {enabled = true, size = 12},
+            macro = {enabled = true, size = 12},
+            count = {enabled = true, size = 12},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 12,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -196,24 +153,11 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 12
-            },
-            macro = {
-                enabled = true,
-                size = 12
-            },
-            count = {
-                enabled = true,
-                size = 12
-            },
+            hotkey = {enabled = true, size = 12},
+            macro = {enabled = true, size = 12},
+            count = {enabled = true, size = 12},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 12,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -252,24 +196,11 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 12
-            },
-            macro = {
-                enabled = true,
-                size = 12
-            },
-            count = {
-                enabled = true,
-                size = 12
-            },
+            hotkey = {enabled = true, size = 12},
+            macro = {enabled = true, size = 12},
+            count = {enabled = true, size = 12},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 12,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -308,24 +239,11 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 12
-            },
-            macro = {
-                enabled = true,
-                size = 12
-            },
-            count = {
-                enabled = true,
-                size = 12
-            },
+            hotkey = {enabled = true, size = 12},
+            macro = {enabled = true, size = 12},
+            count = {enabled = true, size = 12},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 12,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -364,24 +282,11 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 12
-            },
-            macro = {
-                enabled = true,
-                size = 12
-            },
-            count = {
-                enabled = true,
-                size = 12
-            },
+            hotkey = {enabled = true, size = 12},
+            macro = {enabled = true, size = 12},
+            count = {enabled = true, size = 12},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 12,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -420,16 +325,9 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 10
-            },
+            hotkey = {enabled = true, size = 10},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 10,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 10, v_alignment = "MIDDLE"}
             }
         },
         bar7 = { -- Stance
@@ -451,16 +349,9 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 10
-            },
+            hotkey = {enabled = true, size = 10},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 10,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 10, v_alignment = "MIDDLE"}
             }
         },
         pet_battle = {
@@ -481,10 +372,7 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 12
-            },
+            hotkey = {enabled = true, size = 12},
             point = {
                 ls = {
                     p = "BOTTOM",
@@ -515,16 +403,9 @@ D.modules = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {
-                enabled = true,
-                size = 14
-            },
+            hotkey = {enabled = true, size = 14},
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 14,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 14, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -557,11 +438,7 @@ D.modules = {
                 max_alpha = 1
             },
             cooldown = {
-                text = {
-                    enabled = true,
-                    size = 14,
-                    v_alignment = "MIDDLE"
-                }
+                text = {enabled = true, size = 14, v_alignment = "MIDDLE"}
             },
             point = {
                 ls = {
@@ -695,54 +572,17 @@ D.modules = {
                     tooltip = true,
                     currency = {}
                 },
-                spellbook = {
-                    enabled = true,
-                    parent = "micromenu1"
-                },
-                talent = {
-                    enabled = true,
-                    parent = "micromenu1"
-                },
-                achievement = {
-                    enabled = true,
-                    parent = "micromenu1"
-                },
-                quest = {
-                    enabled = true,
-                    parent = "micromenu1",
-                    tooltip = true
-                },
-                guild = {
-                    enabled = true,
-                    parent = "micromenu1"
-                },
-                lfd = {
-                    enabled = true,
-                    parent = "micromenu1",
-                    tooltip = true
-                },
-                collection = {
-                    enabled = true,
-                    parent = "micromenu1"
-                },
-                ej = {
-                    enabled = true,
-                    parent = "micromenu1",
-                    tooltip = true
-                },
-                store = {
-                    enabled = false,
-                    parent = "micromenu1"
-                },
-                main = {
-                    enabled = true,
-                    parent = "micromenu1",
-                    tooltip = true
-                },
-                help = {
-                    enabled = false,
-                    parent = "micromenu1"
-                }
+                spellbook = {enabled = true, parent = "micromenu1"},
+                talent = {enabled = true, parent = "micromenu1"},
+                achievement = {enabled = true, parent = "micromenu1"},
+                quest = {enabled = true, parent = "micromenu1", tooltip = true},
+                guild = {enabled = true, parent = "micromenu1"},
+                lfd = {enabled = true, parent = "micromenu1", tooltip = true},
+                collection = {enabled = true, parent = "micromenu1"},
+                ej = {enabled = true, parent = "micromenu1", tooltip = true},
+                store = {enabled = false, parent = "micromenu1"},
+                main = {enabled = true, parent = "micromenu1", tooltip = true},
+                help = {enabled = false, parent = "micromenu1"}
             }
         },
         xpbar = {
@@ -802,18 +642,12 @@ D.modules = {
             GarrisonLandingPageMinimapButton = 210,
             QueueStatusMinimapButton = 320
         },
-        color = {
-            border = false,
-            zone_text = true
-        },
+        color = {border = false, zone_text = true},
         point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
     },
     unitframes = {
         enabled = true,
-        shadows = {
-            enabled = true,
-            alpha = D.global.shadows.alpha
-        },
+        shadows = {enabled = true, alpha = D.global.shadows.alpha},
         cooldown = {
             exp_threshold = 5, -- [1; 10]
             m_ss_threshold = 600 -- [91; 3599]
@@ -915,23 +749,14 @@ D.modules = {
                             y = 0
                         }
                     },
-                    prediction = {
-                        enabled = true
-                    }
+                    prediction = {enabled = true}
                 },
-                class_power = {
-                    enabled = false,
-                    prediction = {
-                        enabled = false
-                    }
-                },
+                class_power = {enabled = false, prediction = {enabled = false}},
                 additional_power = {
                     enabled = true,
                     width = playerWidth,
                     height = 1.5,
-                    prediction = {
-                        enabled = true
-                    },
+                    prediction = {enabled = true},
                     point = {
                         p = "TOPLEFT",
                         anchor = "Health",
@@ -953,11 +778,7 @@ D.modules = {
                         position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 6
                     },
-                    text = {
-                        size = 15,
-                        outline = true,
-                        shadow = false
-                    },
+                    text = {size = 15, outline = true, shadow = false},
                     point = {
                         p = "CENTER",
                         anchor = "UIParent",
@@ -1068,10 +889,7 @@ D.modules = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {
-                            ["Blacklist"] = true,
-                            ["M+ Affixes"] = true
-                        },
+                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
                                 boss = false,
@@ -1129,9 +947,7 @@ D.modules = {
                         y = -8
                     }
                 },
-                threat = {
-                    enabled = true
-                }
+                threat = {enabled = true}
             },
             target = {
                 enabled = true,
@@ -1259,11 +1075,7 @@ D.modules = {
                         position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 5
                     },
-                    text = {
-                        size = 13,
-                        outline = true,
-                        shadow = false
-                    },
+                    text = {size = 13, outline = true, shadow = false},
                     point = {
                         p = "TOPLEFT",
                         anchor = "Health",
@@ -1280,13 +1092,7 @@ D.modules = {
                     h_alignment = "LEFT",
                     v_alignment = "MIDDLE",
                     word_wrap = false,
-                    point = {
-                        p = "LEFT",
-                        anchor = "",
-                        ap = "LEFT",
-                        x = 6,
-                        y = 1
-                    }
+                    point = {p = "LEFT", anchor = "", ap = "LEFT", x = 6, y = 1}
                 },
                 portrait = {
                     enabled = true,
@@ -1360,10 +1166,7 @@ D.modules = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {
-                            ["Blacklist"] = true,
-                            ["M+ Affixes"] = true
-                        },
+                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
                                 boss = true,
@@ -1432,10 +1235,7 @@ D.modules = {
                         y = 0
                     }
                 },
-                threat = {
-                    enabled = true,
-                    feedback_unit = "player"
-                }
+                threat = {enabled = true, feedback_unit = "player"}
             },
             targettarget = {
                 enabled = true,
@@ -1559,10 +1359,7 @@ D.modules = {
                         y = 0
                     }
                 },
-                threat = {
-                    enabled = true,
-                    feedback_unit = "player"
-                }
+                threat = {enabled = true, feedback_unit = "player"}
             },
             focus = {
                 enabled = true,
@@ -1690,11 +1487,7 @@ D.modules = {
                         position = "NONE", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {
-                        size = 13,
-                        outline = true,
-                        shadow = false
-                    },
+                    text = {size = 13, outline = true, shadow = false},
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "Health",
@@ -1748,10 +1541,7 @@ D.modules = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {
-                            ["Blacklist"] = true,
-                            ["M+ Affixes"] = true
-                        },
+                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
                                 boss = true,
@@ -1820,10 +1610,7 @@ D.modules = {
                         y = 1
                     }
                 },
-                threat = {
-                    enabled = true,
-                    feedback_unit = "player"
-                }
+                threat = {enabled = true, feedback_unit = "player"}
             },
             focustarget = {
                 enabled = false,
@@ -1933,11 +1720,7 @@ D.modules = {
                         position = "NONE", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {
-                        size = 13,
-                        outline = true,
-                        shadow = false
-                    },
+                    text = {size = 13, outline = true, shadow = false},
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "Health",
@@ -1973,10 +1756,7 @@ D.modules = {
                         y = 1
                     }
                 },
-                threat = {
-                    enabled = true,
-                    feedback_unit = "player"
-                }
+                threat = {enabled = true, feedback_unit = "player"}
             },
             pet = {
                 enabled = true,
@@ -2104,11 +1884,7 @@ D.modules = {
                         position = "NONE", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {
-                        size = 12,
-                        outline = true,
-                        shadow = false
-                    },
+                    text = {size = 12, outline = true, shadow = false},
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "Health",
@@ -2125,13 +1901,7 @@ D.modules = {
                     h_alignment = "LEFT",
                     v_alignment = "MIDDLE",
                     word_wrap = false,
-                    point = {
-                        p = "LEFT",
-                        anchor = "",
-                        ap = "LEFT",
-                        x = 4,
-                        y = 1
-                    }
+                    point = {p = "LEFT", anchor = "", ap = "LEFT", x = 4, y = 1}
                 },
                 auras = {
                     enabled = true,
@@ -2162,10 +1932,7 @@ D.modules = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {
-                            ["Blacklist"] = true,
-                            ["M+ Affixes"] = true
-                        },
+                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
                                 boss = true,
@@ -2321,9 +2088,7 @@ D.modules = {
                             y = 0
                         }
                     },
-                    prediction = {
-                        enabled = true
-                    }
+                    prediction = {enabled = true}
                 },
                 class_power = {
                     enabled = true,
@@ -2331,13 +2096,8 @@ D.modules = {
                     height = 2,
                     change_threshold = 0.01,
                     orientation = "HORIZONTAL",
-                    prediction = {
-                        enabled = true
-                    },
-                    runes = {
-                        color_by_spec = true,
-                        sort_order = "none"
-                    },
+                    prediction = {enabled = true},
+                    runes = {color_by_spec = true, sort_order = "none"},
                     point = {
                         p = "TOPLEFT",
                         anchor = "",
@@ -2350,9 +2110,7 @@ D.modules = {
                     enabled = false,
                     width = playerPlateWidth,
                     height = 1.5,
-                    prediction = {
-                        enabled = false
-                    },
+                    prediction = {enabled = false},
                     point = {
                         p = "TOPLEFT",
                         anchor = "Health",
@@ -2477,9 +2235,7 @@ D.modules = {
                             y = 0
                         }
                     },
-                    prediction = {
-                        enabled = true
-                    }
+                    prediction = {enabled = true}
                 },
                 name = {
                     tag = "[lum:color_difficulty][lum:level]|r[lum:npc_type_short(true)] [lum:name(24)]",
@@ -2500,12 +2256,7 @@ D.modules = {
             }
         }
     },
-    misc = {
-        enabled = true,
-        bindings = {
-            enabled = true
-        }
-    }
+    misc = {enabled = true, bindings = {enabled = true}}
 }
 
 -- Copy defaults to the config table

@@ -12,7 +12,8 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.units.font, config.size,
+                       config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -34,7 +35,8 @@ local function element_PostCastStart(self)
     else
         if self.casting then
             if self._config.color_by_class then
-                self:SetStatusBarColor(E:GetRGB(C.colors.castbar.class[E.PLAYER_CLASS]))
+                self:SetStatusBarColor(E:GetRGB(
+                                           C.colors.castbar.class[E.PLAYER_CLASS]))
             else
                 self:SetStatusBarColor(E:GetRGB(C.colors.castbar.casting))
             end
@@ -42,9 +44,7 @@ local function element_PostCastStart(self)
             self:SetStatusBarColor(E:GetRGB(C.colors.castbar.channeling))
         end
 
-        if self.Icon then
-            self.Icon:SetDesaturated(false)
-        end
+        if self.Icon then self.Icon:SetDesaturated(false) end
     end
 end
 
@@ -54,14 +54,13 @@ local function element_PostCastFail(self)
     self:SetStatusBarColor(E:GetRGB(C.colors.castbar.failed))
 
     self.Time:SetText("")
-    if self.Time.max then
-        self.Time.max:SetText("")
-    end
+    if self.Time.max then self.Time.max:SetText("") end
 end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].castbar, self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].castbar,
+                               self._config)
 end
 
 local function element_UpdateFonts(self)
@@ -72,10 +71,8 @@ local function element_UpdateFonts(self)
     self.Time:SetJustifyH("RIGHT")
 
     if self._config.max then
-        updateFont(self.Time.max, {
-            size = self._config.text.size - 3,
-            outline = true
-        })
+        updateFont(self.Time.max,
+                   {size = self._config.text.size - 3, outline = true})
         self.Time:SetJustifyH("RIGHT")
     end
 end
@@ -88,12 +85,14 @@ local function element_UpdateIcon(self)
         self.Icon = self.LeftIcon
 
         self.IconParent:SetPoint("TOPLEFT", self.Holder, 1, 0)
-        self.IconParent:SetPoint("BOTTOMRIGHT", self.Holder, "BOTTOMLEFT", height * 1.5, 0)
+        self.IconParent:SetPoint("BOTTOMRIGHT", self.Holder, "BOTTOMLEFT",
+                                 height * 1.5, 0)
         self.LeftIcon:SetAllPoints(self.IconParent)
         self.RightIcon:SetSize(0.0001, height)
 
         if config.thin then
-            self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", config.icon.gap + height * 1.5, height / 3)
+            self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT",
+                          config.icon.gap + height * 1.5, height / 3)
             self:SetPoint("BOTTOMRIGHT", 0, 0)
         else
             self:SetPoint("TOPLEFT", config.icon.gap + height * 1.5, 0)
@@ -106,7 +105,8 @@ local function element_UpdateIcon(self)
         self.Icon = self.RightIcon
 
         self.IconParent:SetPoint("TOPRIGHT", self.Holder, -1, 0)
-        self.IconParent:SetPoint("BOTTOMLEFT", self.Holder, "BOTTOMRIGHT", -height * 1.5, 0)
+        self.IconParent:SetPoint("BOTTOMLEFT", self.Holder, "BOTTOMRIGHT",
+                                 -height * 1.5, 0)
         self.RightIcon:SetAllPoints(self.IconParent)
         self.LeftIcon:SetSize(0.0001, height)
 
@@ -166,18 +166,15 @@ local function element_UpdateSize(self)
     local point = config.point
     if point and point.p then
         self:ClearAllPoints()
-        holder:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+        holder:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor),
+                        point.ap, point.x, point.y)
     end
 end
 
 local function element_CustomTimeText(self, duration)
-    if self.max > 600 then
-        return self.Time:SetText("")
-    end
+    if self.max > 600 then return self.Time:SetText("") end
 
-    if self.casting then
-        duration = self.max - duration
-    end
+    if self.casting then duration = self.max - duration end
 
     self.Time:SetFormattedText("%.1f", duration)
 
@@ -188,14 +185,14 @@ local function element_CustomTimeText(self, duration)
 end
 
 local function element_CustomDelayText(self, duration)
-    if self.casting then
-        duration = self.max - duration
-    end
+    if self.casting then duration = self.max - duration end
 
     if self.casting then
-        self.Time:SetFormattedText("%.1f|cffdc4436+%.1f|r ", duration, m_abs(self.delay))
+        self.Time:SetFormattedText("%.1f|cffdc4436+%.1f|r ", duration,
+                                   m_abs(self.delay))
     elseif self.channeling then
-        self.Time:SetFormattedText("%.1f|cffdc4436-%.1f|r ", duration, m_abs(self.delay))
+        self.Time:SetFormattedText("%.1f|cffdc4436-%.1f|r ", duration,
+                                   m_abs(self.delay))
     end
 end
 
@@ -219,9 +216,7 @@ local function frame_UpdateCastbar(self)
         end
     end
 
-    if self:IsElementEnabled("Castbar") then
-        element:ForceUpdate()
-    end
+    if self:IsElementEnabled("Castbar") then element:ForceUpdate() end
 end
 
 function UF:CreateCastbar(frame)

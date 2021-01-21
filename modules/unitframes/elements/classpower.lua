@@ -20,9 +20,7 @@ local function bar_OnValueChanged(self, value)
 
     if value == max then
         if not self._active then
-            if not self.InAnim:IsPlaying() then
-                self.InAnim:Play()
-            end
+            if not self.InAnim:IsPlaying() then self.InAnim:Play() end
 
             self:SetAlpha(1)
 
@@ -86,13 +84,12 @@ end
 
 -- ClassPower
 do
-    local ignoredKeys = {
-        prediction = true,
-        runes = true
-    }
+    local ignoredKeys = {prediction = true, runes = true}
 
-    local function element_PostUpdate(self, _, max, maxChanged, powerType, chargedIdx)
-        if self._active ~= self.__isEnabled or self._powerID ~= powerType or maxChanged then
+    local function element_PostUpdate(self, _, max, maxChanged, powerType,
+                                      chargedIdx)
+        if self._active ~= self.__isEnabled or self._powerID ~= powerType or
+            maxChanged then
             if not self.__isEnabled then
                 self:Hide()
             else
@@ -117,9 +114,11 @@ do
                     self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
                     if i == chargedIdx then
                         self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-                        self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+                        self[i].Highlight:SetColorTexture(
+                            E:GetRGBA(C.colors.power.CHI, 0.4))
                     else
-                        self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+                        self[i]:SetStatusBarColor(
+                            E:GetRGB(C.colors.power[powerType]))
                         self[i].Highlight:SetColorTexture(0, 0, 0, 0)
                     end
                 end
@@ -133,9 +132,11 @@ do
                 self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
                 if i == chargedIdx then
                     self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-                    self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+                    self[i].Highlight:SetColorTexture(
+                        E:GetRGBA(C.colors.power.CHI, 0.4))
                 else
-                    self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+                    self[i]:SetStatusBarColor(
+                        E:GetRGB(C.colors.power[powerType]))
                     self[i].Highlight:SetColorTexture(0, 0, 0, 0)
                 end
             end
@@ -146,7 +147,8 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power,
+                                   self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -160,7 +162,8 @@ do
         local point = config.point
         if point and point.p then
             self:ClearAllPoints()
-            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor),
+                          point.ap, point.x, point.y)
         end
     end
 
@@ -227,7 +230,8 @@ do
 
         if element._config.enabled and not self:IsElementEnabled("ClassPower") then
             self:EnableElement("ClassPower")
-        elseif not element._config.enabled and self:IsElementEnabled("ClassPower") then
+        elseif not element._config.enabled and
+            self:IsElementEnabled("ClassPower") then
             self:DisableElement("ClassPower")
         end
 
@@ -247,7 +251,7 @@ do
 
         element.PostUpdate = element_PostUpdate
         element.UpdateColors = element_UpdateColors -- BUG: Colors not updating
-        
+
         element.UpdateConfig = element_UpdateConfig
         element.UpdateSize = element_UpdateSize
 
@@ -260,9 +264,7 @@ end
 
 -- Runes
 do
-    local ignoredKeys = {
-        prediction = true
-    }
+    local ignoredKeys = {prediction = true}
 
     local function element_PostUpdate(self)
         if self.isEnabled then
@@ -281,7 +283,8 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power,
+                                   self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -295,7 +298,8 @@ do
         local point = config.point
         if point and point.p then
             self:ClearAllPoints()
-            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor),
+                          point.ap, point.x, point.y)
         end
     end
 
@@ -390,26 +394,25 @@ end
 
 -- .Stagger
 do
-    local ignoredKeys = {
-        runes = true
-    }
+    local ignoredKeys = {runes = true}
 
     local function element_PostUpdate(element, cur, max)
         element.GainLossIndicators:Update(cur, max)
     end
 
     local function element_UpdateColor(self, _, unit)
-        if unit and unit ~= self.unit then
-            return
-        end
+        if unit and unit ~= self.unit then return end
         local element = self.Stagger
 
-        element:SetStatusBarColor(E:GetGradientAsRGB((element.cur or 0) / (element.max or 1), C.colors.power.STAGGER))
+        element:SetStatusBarColor(E:GetGradientAsRGB(
+                                      (element.cur or 0) / (element.max or 1),
+                                      C.colors.power.STAGGER))
     end
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power,
+                                   self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -423,13 +426,12 @@ do
         local point = config.point
         if point and point.p then
             self:ClearAllPoints()
-            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
+            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor),
+                          point.ap, point.x, point.y)
         end
     end
 
-    local function element_UpdateColors(self)
-        self:ForceUpdate()
-    end
+    local function element_UpdateColors(self) self:ForceUpdate() end
 
     local function element_UpdateGainLossPoints(self)
         self.GainLossIndicators:UpdatePoints(self._config.orientation)

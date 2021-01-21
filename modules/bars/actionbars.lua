@@ -47,45 +47,62 @@ local ACTION_BARS = {
     bar1 = {
         name = "LumActionBar1",
         type = "ACTIONBUTTON",
-        b_buttons = {ActionButton1, ActionButton2, ActionButton3, ActionButton4, ActionButton5, ActionButton6,
-                     ActionButton7, ActionButton8, ActionButton9, ActionButton10, ActionButton11, ActionButton12},
+        b_buttons = {
+            ActionButton1, ActionButton2, ActionButton3, ActionButton4,
+            ActionButton5, ActionButton6, ActionButton7, ActionButton8,
+            ActionButton9, ActionButton10, ActionButton11, ActionButton12
+        },
         num_buttons = 12
     },
     bar2 = {
         name = "LumActionBar2",
         type = "MULTIACTIONBAR1BUTTON",
-        b_buttons = {MultiBarBottomLeftButton1, MultiBarBottomLeftButton2, MultiBarBottomLeftButton3,
-                     MultiBarBottomLeftButton4, MultiBarBottomLeftButton5, MultiBarBottomLeftButton6,
-                     MultiBarBottomLeftButton7, MultiBarBottomLeftButton8, MultiBarBottomLeftButton9,
-                     MultiBarBottomLeftButton10, MultiBarBottomLeftButton11, MultiBarBottomLeftButton12},
+        b_buttons = {
+            MultiBarBottomLeftButton1, MultiBarBottomLeftButton2,
+            MultiBarBottomLeftButton3, MultiBarBottomLeftButton4,
+            MultiBarBottomLeftButton5, MultiBarBottomLeftButton6,
+            MultiBarBottomLeftButton7, MultiBarBottomLeftButton8,
+            MultiBarBottomLeftButton9, MultiBarBottomLeftButton10,
+            MultiBarBottomLeftButton11, MultiBarBottomLeftButton12
+        },
         num_buttons = 12,
         page = 6
     },
     bar3 = {
         name = "LumActionBar3",
         type = "MULTIACTIONBAR2BUTTON",
-        b_buttons = {MultiBarBottomRightButton1, MultiBarBottomRightButton2, MultiBarBottomRightButton3,
-                     MultiBarBottomRightButton4, MultiBarBottomRightButton5, MultiBarBottomRightButton6,
-                     MultiBarBottomRightButton7, MultiBarBottomRightButton8, MultiBarBottomRightButton9,
-                     MultiBarBottomRightButton10, MultiBarBottomRightButton11, MultiBarBottomRightButton12},
+        b_buttons = {
+            MultiBarBottomRightButton1, MultiBarBottomRightButton2,
+            MultiBarBottomRightButton3, MultiBarBottomRightButton4,
+            MultiBarBottomRightButton5, MultiBarBottomRightButton6,
+            MultiBarBottomRightButton7, MultiBarBottomRightButton8,
+            MultiBarBottomRightButton9, MultiBarBottomRightButton10,
+            MultiBarBottomRightButton11, MultiBarBottomRightButton12
+        },
         num_buttons = 12,
         page = 5
     },
     bar4 = {
         name = "LumActionBar4",
         type = "MULTIACTIONBAR4BUTTON",
-        b_buttons = {MultiBarLeftButton1, MultiBarLeftButton2, MultiBarLeftButton3, MultiBarLeftButton4,
-                     MultiBarLeftButton5, MultiBarLeftButton6, MultiBarLeftButton7, MultiBarLeftButton8,
-                     MultiBarLeftButton9, MultiBarLeftButton10, MultiBarLeftButton11, MultiBarLeftButton12},
+        b_buttons = {
+            MultiBarLeftButton1, MultiBarLeftButton2, MultiBarLeftButton3,
+            MultiBarLeftButton4, MultiBarLeftButton5, MultiBarLeftButton6,
+            MultiBarLeftButton7, MultiBarLeftButton8, MultiBarLeftButton9,
+            MultiBarLeftButton10, MultiBarLeftButton11, MultiBarLeftButton12
+        },
         num_buttons = 12,
         page = 4
     },
     bar5 = {
         name = "LumActionBar5",
         type = "MULTIACTIONBAR3BUTTON",
-        b_buttons = {MultiBarRightButton1, MultiBarRightButton2, MultiBarRightButton3, MultiBarRightButton4,
-                     MultiBarRightButton5, MultiBarRightButton6, MultiBarRightButton7, MultiBarRightButton8,
-                     MultiBarRightButton9, MultiBarRightButton10, MultiBarRightButton11, MultiBarRightButton12},
+        b_buttons = {
+            MultiBarRightButton1, MultiBarRightButton2, MultiBarRightButton3,
+            MultiBarRightButton4, MultiBarRightButton5, MultiBarRightButton6,
+            MultiBarRightButton7, MultiBarRightButton8, MultiBarRightButton9,
+            MultiBarRightButton10, MultiBarRightButton11, MultiBarRightButton12
+        },
         num_buttons = 12,
         page = 3
     }
@@ -103,9 +120,7 @@ local function getBarPage()
     local condition = PAGES["DEFAULT"]
     local page = PAGES[E.PLAYER_CLASS]
 
-    if page then
-        condition = condition .. " " .. page
-    end
+    if page then condition = condition .. " " .. page end
 
     return condition .. " [form] 1; 1"
 end
@@ -123,21 +138,28 @@ local function bar_Update(self)
 end
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(M:IsRestricted() and CFG.bar1 or C.modules.bars.bar1, self._config)
+    self._config = E:CopyTable(M:IsRestricted() and CFG.bar1 or
+                                   C.modules.bars.bar1, self._config)
     self._config.click_on_down = C.modules.bars.click_on_down
-    self._config.cooldown = E:CopyTable(C.modules.bars.bar1.cooldown, self._config.cooldown)
-    self._config.cooldown = E:CopyTable(C.modules.bars.cooldown, self._config.cooldown)
-    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation, self._config.desaturation)
+    self._config.cooldown = E:CopyTable(C.modules.bars.bar1.cooldown,
+                                        self._config.cooldown)
+    self._config.cooldown = E:CopyTable(C.modules.bars.cooldown,
+                                        self._config.cooldown)
+    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation,
+                                            self._config.desaturation)
     self._config.lock = C.modules.bars.lock
     self._config.mana_indicator = C.modules.bars.mana_indicator
     self._config.range_indicator = C.modules.bars.range_indicator
     self._config.rightclick_selfcast = C.modules.bars.rightclick_selfcast
 
     if M:IsRestricted() then
-        self._config.count = E:CopyTable(C.modules.bars.bar1.count, self._config.count)
+        self._config.count = E:CopyTable(C.modules.bars.bar1.count,
+                                         self._config.count)
         self._config.grid = C.modules.bars.bar1.grid
-        self._config.hotkey = E:CopyTable(C.modules.bars.bar1.hotkey, self._config.hotkey)
-        self._config.macro = E:CopyTable(C.modules.bars.bar1.macro, self._config.macro)
+        self._config.hotkey = E:CopyTable(C.modules.bars.bar1.hotkey,
+                                          self._config.hotkey)
+        self._config.macro = E:CopyTable(C.modules.bars.bar1.macro,
+                                         self._config.macro)
     end
 
     self._config.count = E:CopyTable(C.global.fonts.bars, self._config.count)
@@ -149,25 +171,20 @@ local function bar_UpdateButtonConfig(self)
     if not self.buttonConfig then
         self.buttonConfig = {
             tooltip = "enabled",
-            colors = {
-                normal = {},
-                unusable = {},
-                mana = {},
-                range = {}
-            },
+            colors = {normal = {}, unusable = {}, mana = {}, range = {}},
             desaturation = {},
-            hideElements = {
-                equipped = false
-            }
+            hideElements = {equipped = false}
         }
     end
 
     for k, v in next, C.colors.button do
-        self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
+        self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig
+            .colors[k][3] = E:GetRGB(v)
     end
 
     self.buttonConfig.clickOnDown = self._config.click_on_down
-    self.buttonConfig.desaturation = E:CopyTable(self._config.desaturation, self.buttonConfig.desaturation)
+    self.buttonConfig.desaturation = E:CopyTable(self._config.desaturation,
+                                                 self.buttonConfig.desaturation)
     self.buttonConfig.flyoutDirection = self._config.flyout_dir
     self.buttonConfig.hideElements.hotkey = not self._config.hotkey.enabled
     self.buttonConfig.hideElements.macro = not self._config.macro.enabled
@@ -182,13 +199,14 @@ local function bar_UpdateButtonConfig(self)
         button:SetAttribute("buttonlock", self._config.lock)
         button:SetAttribute("checkselfcast", true)
         button:SetAttribute("checkfocuscast", true)
-        button:SetAttribute("*unit2", self._config.rightclick_selfcast and "player" or nil)
+        button:SetAttribute("*unit2", self._config.rightclick_selfcast and
+                                "player" or nil)
     end
 end
 
 local function updateFont(fontString, config)
-    fontString:SetFont(LibStub("LibSharedMedia-3.0"):Fetch("font", config.font), config.size,
-        config.outline and "OUTLINE" or nil)
+    fontString:SetFont(LibStub("LibSharedMedia-3.0"):Fetch("font", config.font),
+                       config.size, config.outline and "OUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -221,7 +239,8 @@ function M.CreateActionBars()
         }
 
         for barID, data in next, ACTION_BARS do
-            local bar = CreateFrame("Frame", data.name, UIParent, "SecureHandlerStateTemplate")
+            local bar = CreateFrame("Frame", data.name, UIParent,
+                                    "SecureHandlerStateTemplate")
             bar._id = barID
             bar._buttons = {}
 
@@ -235,7 +254,9 @@ function M.CreateActionBars()
             end
 
             for i = 1, data.num_buttons do
-                local button = LibActionButton:CreateButton(i, "$parentButton" .. i, bar)
+                local button = LibActionButton:CreateButton(i,
+                                                            "$parentButton" .. i,
+                                                            bar)
                 button:SetState(0, "action", i)
                 button._parent = bar
                 button._command = data.type .. i
@@ -266,7 +287,8 @@ function M.CreateActionBars()
 				control:ChildUpdate("state", newstate)
 			]])
 
-            RegisterStateDriver(bar, "page", barID == "bar1" and getBarPage() or data.page)
+            RegisterStateDriver(bar, "page",
+                                barID == "bar1" and getBarPage() or data.page)
         end
 
         for barID, bar in next, M:GetBars() do

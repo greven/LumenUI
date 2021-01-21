@@ -24,22 +24,16 @@ local function updateMacroText(self, text)
     if bName then
         text = text or bName:GetText()
 
-        if text then
-            bName:SetFormattedText("%s", s_utf8sub(text, 1, 4))
-        end
+        if text then bName:SetFormattedText("%s", s_utf8sub(text, 1, 4)) end
     end
 end
 
 local function setNormalTextureHook(self, texture)
-    if texture then
-        self:SetNormalTexture(nil)
-    end
+    if texture then self:SetNormalTexture(nil) end
 end
 
 local function setPushedTexture(button)
-    if not button.SetPushedTexture then
-        return
-    end
+    if not button.SetPushedTexture then return end
 
     button:SetPushedTexture("Interface\\Buttons\\ButtonHilight-Square")
     button:GetPushedTexture():SetBlendMode("ADD")
@@ -49,18 +43,14 @@ local function setPushedTexture(button)
 end
 
 local function setHighlightTexture(button)
-    if not button.SetHighlightTexture then
-        return
-    end
+    if not button.SetHighlightTexture then return end
 
     button:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
     button:GetHighlightTexture():SetAllPoints()
 end
 
 local function setCheckedTexture(button)
-    if not button.SetCheckedTexture then
-        return
-    end
+    if not button.SetCheckedTexture then return end
 
     button:SetCheckedTexture("Interface\\Buttons\\CheckButtonHilight")
     button:GetCheckedTexture():SetBlendMode("ADD")
@@ -80,9 +70,7 @@ local function setIcon(button, texture, l, r, t, b)
     icon:SetAllPoints()
     icon:SetTexCoord(l or 0.0625, r or 0.9375, t or 0.0625, b or 0.9375)
 
-    if texture then
-        icon:SetTexture(texture)
-    end
+    if texture then icon:SetTexture(texture) end
 
     return icon
 end
@@ -99,11 +87,14 @@ local function skinButton(button)
     local bCD = button.cooldown or button.Cooldown
     local bNormalTexture = button.GetNormalTexture and button:GetNormalTexture()
     local bPushedTexture = button.GetPushedTexture and button:GetPushedTexture()
-    local bHighlightTexture = button.GetHighlightTexture and button:GetHighlightTexture()
-    local bCheckedTexture = button.GetCheckedTexture and button:GetCheckedTexture()
+    local bHighlightTexture = button.GetHighlightTexture and
+                                  button:GetHighlightTexture()
+    local bCheckedTexture = button.GetCheckedTexture and
+                                button:GetCheckedTexture()
 
     local fgParent = CreateFrame("Frame", nil, button)
-    fgParent:SetFrameLevel((bCD and bCD.GetFrameLevel) and bCD:GetFrameLevel() + 1 or button:GetFrameLevel() + 2)
+    fgParent:SetFrameLevel((bCD and bCD.GetFrameLevel) and bCD:GetFrameLevel() +
+                               1 or button:GetFrameLevel() + 2)
     fgParent:SetAllPoints()
     button.FGParent = fgParent
 
@@ -114,9 +105,7 @@ local function skinButton(button)
         bFlash:SetAllPoints()
     end
 
-    if bFOArrow then
-        bFOArrow:SetDrawLayer("OVERLAY", 2)
-    end
+    if bFOArrow then bFOArrow:SetDrawLayer("OVERLAY", 2) end
 
     if bHotKey then
         bHotKey:ClearAllPoints()
@@ -127,13 +116,9 @@ local function skinButton(button)
         bHotKey:SetVertexColor(1, 1, 1, 1)
         bHotKey:Show()
 
-        if not button.GetHotkey then
-            button.GetHotkey = button_GetHotkey
-        end
+        if not button.GetHotkey then button.GetHotkey = button_GetHotkey end
 
-        if not button.SetKey then
-            button.SetKey = button_SetKey
-        end
+        if not button.SetKey then button.SetKey = button_SetKey end
 
         if not button.GetBindings then
             button.GetBindings = button_GetBindings
@@ -169,22 +154,16 @@ local function skinButton(button)
         hooksecurefunc(bName, "SetText", updateMacroText)
     end
 
-    if bBorder then
-        bBorder:SetTexture(nil)
-    end
+    if bBorder then bBorder:SetTexture(nil) end
 
-    if bNewActionTexture then
-        bNewActionTexture:SetTexture(nil)
-    end
+    if bNewActionTexture then bNewActionTexture:SetTexture(nil) end
 
     if bCD then
         bCD:ClearAllPoints()
         bCD:SetPoint("TOPLEFT", 1, -1)
         bCD:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        if bCD:IsObjectType("Frame") then
-            E.Cooldowns.Handle(bCD)
-        end
+        if bCD:IsObjectType("Frame") then E.Cooldowns.Handle(bCD) end
     end
 
     if bNormalTexture then
@@ -198,17 +177,11 @@ local function skinButton(button)
         button.Border_ = border
     end
 
-    if bPushedTexture then
-        setPushedTexture(button)
-    end
+    if bPushedTexture then setPushedTexture(button) end
 
-    if bHighlightTexture then
-        setHighlightTexture(button)
-    end
+    if bHighlightTexture then setHighlightTexture(button) end
 
-    if bCheckedTexture then
-        setCheckedTexture(button)
-    end
+    if bCheckedTexture then setCheckedTexture(button) end
 end
 
 -- E:SkinActionButton
@@ -224,9 +197,7 @@ do
     end
 
     function E:SkinActionButton(button)
-        if not button or button.__styled then
-            return
-        end
+        if not button or button.__styled then return end
 
         skinButton(button)
 
@@ -243,7 +214,8 @@ do
             bFloatingBG:SetAllPoints()
             bFloatingBG:SetColorTexture(0, 0, 0, 0.25)
         else
-            bFloatingBG = button:CreateTexture("$parentFloatingBG", "BACKGROUND", nil, -1)
+            bFloatingBG = button:CreateTexture("$parentFloatingBG",
+                                               "BACKGROUND", nil, -1)
             bFloatingBG:SetAllPoints()
             bFloatingBG:SetColorTexture(0, 0, 0, 0.25)
         end
@@ -252,8 +224,10 @@ do
     end
 end
 
-function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecure)
-    local button = CreateFrame("Button", name, parent, isSecure and "SecureActionButtonTemplate")
+function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich,
+                        isSecure)
+    local button = CreateFrame("Button", name, parent,
+                               isSecure and "SecureActionButtonTemplate")
     button:SetSize(28, 28)
 
     button.Icon = setIcon(button)
@@ -267,16 +241,15 @@ function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecur
     setPushedTexture(button)
 
     if hasCount then
-        local count = button:CreateFontString(nil, "ARTWORK", "NumberFontNormal")
+        local count =
+            button:CreateFontString(nil, "ARTWORK", "NumberFontNormal")
         count:SetJustifyH("RIGHT")
         count:SetPoint("TOPRIGHT", 2, 0)
         count:SetWordWrap(false)
         button.Count = count
     end
 
-    if hasCooldown then
-        button.CD = E.Cooldowns.Create(button)
-    end
+    if hasCooldown then button.CD = E.Cooldowns.Create(button) end
 
     if isSandwich then
         local fgParent = CreateFrame("Frame", nil, button)
@@ -284,9 +257,7 @@ function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich, isSecur
         fgParent:SetAllPoints()
         button.FGParent = fgParent
 
-        if hasCount then
-            button.Count:SetParent(fgParent)
-        end
+        if hasCount then button.Count:SetParent(fgParent) end
     end
 
     return button

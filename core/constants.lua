@@ -23,7 +23,7 @@ E.CLASS_COLOR = C.colors.class[E.PLAYER_CLASS]
 
 -- !ClassColors addon
 if (IsAddOnLoaded("!ClassColors") and CUSTOM_CLASS_COLORS) then
-  E.CLASS_COLOR = CUSTOM_CLASS_COLORS[E.PLAYER_CLASS]
+    E.CLASS_COLOR = CUSTOM_CLASS_COLORS[E.PLAYER_CLASS]
 end
 
 local hidden = _G.CreateFrame("Frame", nil, UIParent)
@@ -32,29 +32,27 @@ E.HIDDEN_PARENT = hidden
 
 -- Screen Size and UI Scale
 do
-  local function GetBestScale()
-    local _, screenHeight = GetPhysicalScreenSize()
-    local scale = m_max(0.4, m_min(1.15, 768 / screenHeight))
-    return E:Round(scale)
-  end
+    local function GetBestScale()
+        local _, screenHeight = GetPhysicalScreenSize()
+        local scale = m_max(0.4, m_min(1.15, 768 / screenHeight))
+        return E:Round(scale)
+    end
 
-  local function UpdateScreenConstants()
-    E.SCREEN_WIDTH, E.SCREEN_HEIGHT = GetPhysicalScreenSize()
+    local function UpdateScreenConstants()
+        E.SCREEN_WIDTH, E.SCREEN_HEIGHT = GetPhysicalScreenSize()
 
-    local pixel = 1
-    local scale = GetBestScale()
-    local ratio = 768 / E.SCREEN_HEIGHT
+        local pixel = 1
+        local scale = GetBestScale()
+        local ratio = 768 / E.SCREEN_HEIGHT
 
-    E.SCREEN_SCALE = (pixel / scale) - ((pixel - ratio) / scale)
-  end
+        E.SCREEN_SCALE = (pixel / scale) - ((pixel - ratio) / scale)
+    end
 
-  UpdateScreenConstants()
+    UpdateScreenConstants()
 
-  E:RegisterEvent("DISPLAY_SIZE_CHANGED", UpdateScreenConstants)
-  E:RegisterEvent("UI_SCALE_CHANGED", UpdateScreenConstants)
+    E:RegisterEvent("DISPLAY_SIZE_CHANGED", UpdateScreenConstants)
+    E:RegisterEvent("UI_SCALE_CHANGED", UpdateScreenConstants)
 end
 
 -- Constants not available at ADDON_LOADED
-function E:UpdateConstants()
-	E.PLAYER_GUID = UnitGUID("player")
-end
+function E:UpdateConstants() E.PLAYER_GUID = UnitGUID("player") end

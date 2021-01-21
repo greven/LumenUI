@@ -20,7 +20,10 @@ local WIDGETS = {
     ACTION_BAR = {
         frame_level_offset = 2,
         point = {"BOTTOM", "LumActionBarControllerBottom", "BOTTOM", 0, 15},
-        children = {"LumActionBar2", "LumActionBar3", "LumActionBar4", "LumActionBar5", "LumPetBar", "LumStanceBar"},
+        children = {
+            "LumActionBar2", "LumActionBar3", "LumActionBar4", "LumActionBar5",
+            "LumPetBar", "LumStanceBar"
+        },
         attributes = {
             ["_childupdate-numbuttons"] = [[
 				self:Hide()
@@ -57,7 +60,8 @@ function M.ActionBarController_AddWidget(_, frame, slot)
         local widget = WIDGETS[slot]
         if widget and not widget.frame then
             frame:SetParent(barController)
-            frame:SetFrameLevel(barController:GetFrameLevel() + widget.frame_level_offset)
+            frame:SetFrameLevel(barController:GetFrameLevel() +
+                                    widget.frame_level_offset)
             frame:ClearAllPoints()
             frame:SetPoint(unpack(widget.point))
 
@@ -69,12 +73,13 @@ function M.ActionBarController_AddWidget(_, frame, slot)
 
             widget.frame = frame
 
-            if not barController.isDriverRegistered and WIDGETS.ACTION_BAR.frame and WIDGETS.PET_BATTLE_BAR.frame and
-                WIDGETS.XP_BAR.frame then
+            if not barController.isDriverRegistered and WIDGETS.ACTION_BAR.frame and
+                WIDGETS.PET_BATTLE_BAR.frame and WIDGETS.XP_BAR.frame then
 
                 -- _"childupdate-numbuttons" is executed in barController's environment
                 for i = 1, 12 do
-                    barController:SetFrameRef("button" .. i, _G["LumActionBar1Button" .. i])
+                    barController:SetFrameRef("button" .. i,
+                                              _G["LumActionBar1Button" .. i])
                 end
 
                 barController:Execute([[
@@ -98,7 +103,8 @@ function M.ActionBarController_AddWidget(_, frame, slot)
 					end
 				]])
 
-                RegisterStateDriver(barController, "mode", "[vehicleui][petbattle][overridebar][possessbar] 6; 12")
+                RegisterStateDriver(barController, "mode",
+                                    "[vehicleui][petbattle][overridebar][possessbar] 6; 12")
 
                 barController.isDriverRegistered = true
             end
@@ -106,13 +112,12 @@ function M.ActionBarController_AddWidget(_, frame, slot)
     end
 end
 
-function M.IsRestricted()
-    return isInit
-end
+function M.IsRestricted() return isInit end
 
 function M.SetupActionBarController()
     if not isInit and C.modules.bars.restricted then
-        barController = CreateFrame("Frame", "LumActionBarController", UIParent, "SecureHandlerStateTemplate")
+        barController = CreateFrame("Frame", "LumActionBarController", UIParent,
+                                    "SecureHandlerStateTemplate")
         barController:SetSize(32, 32)
         barController:SetPoint("BOTTOM", 0, 0)
         barController:SetAttribute("numbuttons", 12)
@@ -125,14 +130,16 @@ function M.SetupActionBarController()
         end
 
         -- These frames are used as anchors/parents for secure/protected frames
-        local top = CreateFrame("Frame", "$parentTop", barController, "SecureHandlerBaseTemplate")
+        local top = CreateFrame("Frame", "$parentTop", barController,
+                                "SecureHandlerBaseTemplate")
         top:SetFrameLevel(barController:GetFrameLevel() + 1)
         top:SetPoint("BOTTOM", 0, 28 / 2)
         top:SetSize(432 / 2, 90 / 2)
         barController.Top = top
         barController:SetFrameRef("top", top)
 
-        local bottom = CreateFrame("Frame", "$parentBottom", barController, "SecureHandlerBaseTemplate")
+        local bottom = CreateFrame("Frame", "$parentBottom", barController,
+                                   "SecureHandlerBaseTemplate")
         bottom:SetFrameLevel(barController:GetFrameLevel() + 7)
         bottom:SetPoint("BOTTOM", 0, 0)
         bottom:SetSize(432 / 2, 46 / 2)
@@ -207,7 +214,8 @@ function M.SetupActionBarController()
 
                     if widget.children then
                         for _, child in next, widget.children do
-                            E:FadeOut(_G[child], nil, nil, nil, _G[child]:GetAlpha())
+                            E:FadeOut(_G[child], nil, nil, nil,
+                                      _G[child]:GetAlpha())
                         end
                     end
                 end
