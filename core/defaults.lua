@@ -120,14 +120,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 20
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 20
                 }
@@ -163,14 +163,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 56
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 56
                 }
@@ -206,14 +206,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 92
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 92
                 }
@@ -249,14 +249,14 @@ D.modules = {
                 ls = {
                     p = "RIGHT",
                     anchor = "UIParent",
-                    rP = "RIGHT",
+                    ap = "RIGHT",
                     x = -40,
                     y = 0
                 },
                 traditional = {
                     p = "RIGHT",
                     anchor = "UIParent",
-                    rP = "RIGHT",
+                    ap = "RIGHT",
                     x = -40,
                     y = 0
                 }
@@ -292,14 +292,14 @@ D.modules = {
                 ls = {
                     p = "RIGHT",
                     anchor = "UIParent",
-                    rP = "RIGHT",
+                    ap = "RIGHT",
                     x = -4,
                     y = 0
                 },
                 traditional = {
                     p = "RIGHT",
                     anchor = "UIParent",
-                    rP = "RIGHT",
+                    ap = "RIGHT",
                     x = -4,
                     y = 0
                 }
@@ -377,14 +377,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 20
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 20
                 }
@@ -411,14 +411,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = -94,
                     y = 250
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = -94,
                     y = 250
                 }
@@ -444,14 +444,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 94,
                     y = 250
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 94,
                     y = 250
                 }
@@ -473,14 +473,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 168,
                     y = 134
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 168,
                     y = 134
                 }
@@ -511,14 +511,14 @@ D.modules = {
                         ls = {
                             p = "BOTTOMRIGHT",
                             anchor = "UIParent",
-                            rP = "BOTTOMRIGHT",
+                            ap = "BOTTOMRIGHT",
                             x = -4,
                             y = 4
                         },
                         traditional = {
                             p = "BOTTOMRIGHT",
                             anchor = "UIParent",
-                            rP = "BOTTOMRIGHT",
+                            ap = "BOTTOMRIGHT",
                             x = -4,
                             y = 4
                         }
@@ -546,14 +546,14 @@ D.modules = {
                         ls = {
                             p = "BOTTOMRIGHT",
                             anchor = "UIParent",
-                            rP = "BOTTOMRIGHT",
+                            ap = "BOTTOMRIGHT",
                             x = -4,
                             y = 32
                         },
                         traditional = {
                             p = "BOTTOMRIGHT",
                             anchor = "UIParent",
-                            rP = "BOTTOMRIGHT",
+                            ap = "BOTTOMRIGHT",
                             x = -4,
                             y = 32
                         }
@@ -598,14 +598,14 @@ D.modules = {
                 ls = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 4
                 },
                 traditional = {
                     p = "BOTTOM",
                     anchor = "UIParent",
-                    rP = "BOTTOM",
+                    ap = "BOTTOM",
                     x = 0,
                     y = 4
                 }
