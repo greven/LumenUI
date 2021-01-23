@@ -11,6 +11,57 @@ local select = _G.select
 
 -- ---------------
 
+local LibKeyBound = LibStub("LibKeyBound-1.0")
+
+local function button_GetHotkey(self)
+    return LibKeyBound:ToShortKey((self._command and
+                                      GetBindingKey(self._command)) or
+                                      (self:GetName() and
+                                          GetBindingKey(
+                                              "CLICK " .. self:GetName() ..
+                                                  ":LeftButton")) or "")
+end
+
+local function button_SetKey(self, key) SetBinding(key, self._command) end
+
+local function button_GetBindings(self)
+    local binding = self._command
+    local keys = ""
+
+    for i = 1, select("#", GetBindingKey(binding)) do
+        if keys ~= "" then keys = keys .. ", " end
+
+        keys = keys .. GetBindingText(select(i, GetBindingKey(binding)), nil)
+    end
+
+    if self:GetName() then
+        binding = "CLICK " .. self:GetName() .. ":LeftButton"
+
+        for i = 1, select("#", GetBindingKey(binding)) do
+            if keys ~= "" then keys = keys .. ", " end
+
+            keys = keys ..
+                       GetBindingText(select(i, GetBindingKey(binding)), nil)
+        end
+    end
+
+    return keys
+end
+
+local function button_ClearBindings(self)
+    local binding = self._command
+
+    while GetBindingKey(binding) do SetBinding(GetBindingKey(binding), nil) end
+
+    if self:GetName() then
+        binding = "CLICK " .. self:GetName() .. ":LeftButton"
+
+        while GetBindingKey(binding) do
+            SetBinding(GetBindingKey(binding), nil)
+        end
+    end
+end
+
 local function updateHotKey(self, text)
     if text ~= RANGE_INDICATOR then
         self:SetFormattedText("%s", self:GetParent():GetHotkey() or "")
@@ -35,26 +86,26 @@ end
 local function setPushedTexture(button)
     if not button.SetPushedTexture then return end
 
-    button:SetPushedTexture("Interface\\Buttons\\ButtonHilight-Square")
+    button:SetPushedTexture(C.media.textures.button_highlight)
     button:GetPushedTexture():SetBlendMode("ADD")
     button:GetPushedTexture():SetDesaturated(true)
     button:GetPushedTexture():SetVertexColor(E:GetRGB(C.colors.yellow))
-    button:GetPushedTexture():SetAllPoints()
+    button:GetPushedTexture():SetOutside(button, 1, 1)
 end
 
 local function setHighlightTexture(button)
     if not button.SetHighlightTexture then return end
 
-    button:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-    button:GetHighlightTexture():SetAllPoints()
+    button:SetHighlightTexture(C.media.textures.button_highlight, "ADD")
+    button:GetHighlightTexture():SetOutside(button, 1, 1)
 end
 
 local function setCheckedTexture(button)
     if not button.SetCheckedTexture then return end
 
-    button:SetCheckedTexture("Interface\\Buttons\\CheckButtonHilight")
+    button:SetCheckedTexture(C.media.textures.button_checked)
     button:GetCheckedTexture():SetBlendMode("ADD")
-    button:GetCheckedTexture():SetAllPoints()
+    button:GetCheckedTexture():SetOutside(button, 1, 1)
 end
 
 local function setIcon(button, texture, l, r, t, b)
@@ -171,7 +222,7 @@ local function skinButton(button)
         hooksecurefunc(button, "SetNormalTexture", setNormalTextureHook)
 
         local border = E:CreateBorder(button)
-        border:SetTexture(C.media.textures.border)
+        border:SetTexture(C.media.textures.border_thick)
         border:SetSize(16)
         border:SetOffset(-4)
         button.Border_ = border
@@ -192,7 +243,7 @@ do
         if button:IsEquipped() then
             button.Border_:SetVertexColor(E:GetRGB(C.colors.green))
         else
-            button.Border_:SetVertexColor(1, 1, 1)
+            button.Border_:SetVertexColor(E:GetRGB(C.global.border.color))
         end
     end
 

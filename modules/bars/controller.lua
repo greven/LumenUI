@@ -1,3 +1,4 @@
+-- Credits: ls_UI
 local _, ns = ...
 local E, C = ns.E, ns.C
 
@@ -157,52 +158,6 @@ function M.SetupActionBarController()
         top:SetPoint("BOTTOM", 0, 28 / 2)
         top:SetSize(432 / 2, 90 / 2)
         animController.Top = top
-
-        -- local texture = top:CreateTexture(nil, "ARTWORK")
-        -- texture:SetTexture("Interface\\AddOns\\ls_UI\\assets\\console")
-        -- texture:SetTexCoord(1 / 2048, 233 / 2048, 1 / 256, 91 / 256)
-        -- texture:SetPoint("BOTTOMRIGHT", top, "BOTTOMLEFT", 0, 0)
-        -- texture:SetSize(232 / 2, 90 / 2)
-        -- top.Left = texture
-
-        -- texture = top:CreateTexture(nil, "ARTWORK")
-        -- texture:SetTexture("Interface\\AddOns\\ls_UI\\assets\\console")
-        -- texture:SetTexCoord(233 / 2048, 665 / 2048, 1 / 256, 91 / 256)
-        -- texture:SetAllPoints()
-        -- top.Mid = texture
-
-        -- texture = top:CreateTexture(nil, "ARTWORK")
-        -- texture:SetTexture("Interface\\AddOns\\ls_UI\\assets\\console")
-        -- texture:SetTexCoord(665 / 2048, 897 / 2048, 1 / 256, 91 / 256)
-        -- texture:SetPoint("BOTTOMLEFT", top, "BOTTOMRIGHT", 0, 0)
-        -- texture:SetSize(232 / 2, 90 / 2)
-        -- top.Right = texture
-
-        -- bottom = CreateFrame("Frame", nil, animController)
-        -- bottom:SetFrameLevel(animController:GetFrameLevel() + 7)
-        -- bottom:SetPoint("BOTTOM", 0, 0)
-        -- bottom:SetSize(432 / 2, 46 / 2)
-        -- animController.Bottom = bottom
-
-        -- texture = bottom:CreateTexture(nil, "ARTWORK")
-        -- texture:SetTexture("Interface\\AddOns\\ls_UI\\assets\\console")
-        -- texture:SetTexCoord(1 / 2048, 569 / 2048, 92 / 256, 138 / 256)
-        -- texture:SetPoint("BOTTOMRIGHT", bottom, "BOTTOMLEFT", 0, 0)
-        -- texture:SetSize(568 / 2, 46 / 2)
-        -- bottom.Left = texture
-
-        -- texture = bottom:CreateTexture(nil, "ARTWORK")
-        -- texture:SetTexture("Interface\\AddOns\\ls_UI\\assets\\console")
-        -- texture:SetTexCoord(569 / 2048, 1001 / 2048, 92 / 256, 138 / 256)
-        -- texture:SetAllPoints()
-        -- bottom.Mid = texture
-
-        -- texture = bottom:CreateTexture(nil, "ARTWORK")
-        -- texture:SetTexture("Interface\\AddOns\\ls_UI\\assets\\console")
-        -- texture:SetTexCoord(1001 / 2048, 1569 / 2048, 92 / 256, 138 / 256)
-        -- texture:SetPoint("BOTTOMLEFT", bottom, "BOTTOMRIGHT", 0, 0)
-        -- texture:SetSize(568 / 2, 46 / 2)
-        -- bottom.Right = texture
 
         local ag = animController:CreateAnimationGroup()
         ag:SetScript("OnPlay", function()

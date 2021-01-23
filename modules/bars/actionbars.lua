@@ -1,3 +1,4 @@
+-- Credits: ls_UI
 local _, ns = ...
 local E, C = ns.E, ns.C
 
@@ -278,6 +279,8 @@ function M.CreateActionBars()
                 data.b_buttons[i]:UnregisterAllEvents()
 
                 E:SkinActionButton(button)
+                E:CreateBackdrop(button, nil, nil,
+                                 C.media.textures.button_backdrop)
 
                 bar._buttons[i] = button
             end

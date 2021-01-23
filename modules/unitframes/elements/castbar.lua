@@ -281,7 +281,7 @@ function UF:CreateCastbar(frame)
     if config.max then
         local max = element:CreateFontString(nil, "BACKGROUND")
         max:SetPoint("RIGHT", element.Time, "LEFT", -1, 0)
-        max:SetTextColor(E:GetRGB(C.colors.gray))
+        max:SetTextColor(0.5, 0.5, 0.5)
         max:SetWordWrap(false)
         element.Time.max = max
     end

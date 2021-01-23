@@ -6,7 +6,7 @@ local Media = "Interface\\AddOns\\LumenUI\\media\\"
 local playerHeight = 24
 local playerWidth = 228
 local playerPlateHeight = 11
-local playerPlateWidth = 180
+local playerPlateWidth = 210
 local targetWidth = 288
 local targetHeight = 28
 
@@ -31,6 +31,9 @@ D.media = {
         border = Media .. "textures\\border",
         border_thick = Media .. "textures\\border-thick",
         border = Media .. "textures\\border",
+        button_backdrop = Media .. "textures\\button-backdrop",
+        button_highlight = Media .. "textures\\button-highlight",
+        button_checked = Media .. "textures\\button-checked",
         absorb = Media .. "textures\\absorb",
         arrow = Media .. "textures\\arrow",
         aura_icons = {
@@ -59,7 +62,7 @@ D.global = {
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
     backdrop = {color = rgb(0, 0, 0), alpha = 0.84},
-    border = {color = rgb(10, 10, 10)},
+    border = {color = rgb(25, 25, 25)},
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
@@ -94,10 +97,10 @@ D.modules = {
             flyout_dir = "UP",
             grid = false,
             num = 12,
-            per_row = 12,
-            size = 32,
-            spacing = 4,
-            visibility = "[petbattle] hide; show",
+            per_row = 6,
+            size = 30,
+            spacing = 6,
+            visibility = "[petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -117,29 +120,20 @@ D.modules = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 20
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 20
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 0,
+                y = 286
             }
         },
         bar2 = { -- MultiBarBottomLeft
             flyout_dir = "UP",
-            grid = false,
+            grid = true,
             num = 12,
             per_row = 12,
-            size = 32,
-            spacing = 4,
+            size = 30,
+            spacing = 6,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "RIGHT",
@@ -160,29 +154,20 @@ D.modules = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 56
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 56
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 0,
+                y = 24 + 36
             }
         },
         bar3 = { -- MultiBarBottomRight
             flyout_dir = "UP",
-            grid = false,
+            grid = true,
             num = 12,
             per_row = 12,
-            size = 32,
-            spacing = 4,
+            size = 30,
+            spacing = 6,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "RIGHT",
@@ -203,20 +188,11 @@ D.modules = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 92
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 92
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 0,
+                y = 24
             }
         },
         bar4 = { -- MultiBarLeft
@@ -224,8 +200,8 @@ D.modules = {
             grid = false,
             num = 12,
             per_row = 1,
-            size = 32,
-            spacing = 4,
+            size = 30,
+            spacing = 6,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "LEFT",
@@ -246,20 +222,11 @@ D.modules = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "RIGHT",
-                    anchor = "UIParent",
-                    ap = "RIGHT",
-                    x = -40,
-                    y = 0
-                },
-                traditional = {
-                    p = "RIGHT",
-                    anchor = "UIParent",
-                    ap = "RIGHT",
-                    x = -40,
-                    y = 0
-                }
+                p = "RIGHT",
+                anchor = "UIParent",
+                ap = "RIGHT",
+                x = -40,
+                y = 0
             }
         },
         bar5 = { -- MultiBarRight
@@ -267,8 +234,8 @@ D.modules = {
             grid = false,
             num = 12,
             per_row = 1,
-            size = 32,
-            spacing = 4,
+            size = 30,
+            spacing = 6,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "LEFT",
@@ -289,20 +256,11 @@ D.modules = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "RIGHT",
-                    anchor = "UIParent",
-                    ap = "RIGHT",
-                    x = -4,
-                    y = 0
-                },
-                traditional = {
-                    p = "RIGHT",
-                    anchor = "UIParent",
-                    ap = "RIGHT",
-                    x = -4,
-                    y = 0
-                }
+                p = "RIGHT",
+                anchor = "UIParent",
+                ap = "RIGHT",
+                x = -4,
+                y = 0
             }
         },
         bar6 = { -- PetAction
@@ -310,8 +268,8 @@ D.modules = {
             grid = false,
             num = 10,
             per_row = 10,
-            size = 24,
-            spacing = 4,
+            size = 30,
+            spacing = 6,
             visibility = "[pet,nopetbattle,novehicleui,nooverridebar,nopossessbar] show; hide",
             visible = true,
             x_growth = "RIGHT",
@@ -357,8 +315,8 @@ D.modules = {
         pet_battle = {
             num = 6,
             per_row = 6,
-            size = 32,
-            spacing = 4,
+            size = 30,
+            spacing = 6,
             visibility = "[petbattle] show; hide",
             visible = true,
             x_growth = "RIGHT",
@@ -374,20 +332,11 @@ D.modules = {
             },
             hotkey = {enabled = true, size = 12},
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 20
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 20
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 0,
+                y = 20
             }
         },
         extra = { -- ExtraAction
@@ -408,20 +357,11 @@ D.modules = {
                 text = {enabled = true, size = 14, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = -94,
-                    y = 250
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = -94,
-                    y = 250
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = -94,
+                y = 250
             }
         },
         zone = { -- ZoneAbility
@@ -441,20 +381,11 @@ D.modules = {
                 text = {enabled = true, size = 14, v_alignment = "MIDDLE"}
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 94,
-                    y = 250
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 94,
-                    y = 250
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 94,
+                y = 250
             }
         },
         vehicle = { -- LeaveVehicle
@@ -470,20 +401,11 @@ D.modules = {
                 max_alpha = 1
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 168,
-                    y = 134
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 168,
-                    y = 134
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 168,
+                y = 134
             }
         },
         micromenu = {
@@ -508,20 +430,11 @@ D.modules = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     point = {
-                        ls = {
-                            p = "BOTTOMRIGHT",
-                            anchor = "UIParent",
-                            ap = "BOTTOMRIGHT",
-                            x = -4,
-                            y = 4
-                        },
-                        traditional = {
-                            p = "BOTTOMRIGHT",
-                            anchor = "UIParent",
-                            ap = "BOTTOMRIGHT",
-                            x = -4,
-                            y = 4
-                        }
+                        p = "BOTTOMRIGHT",
+                        anchor = "UIParent",
+                        ap = "BOTTOMRIGHT",
+                        x = -4,
+                        y = 4
                     }
                 },
                 micromenu2 = {
@@ -543,20 +456,11 @@ D.modules = {
                     size = 32,
                     spacing = 4,
                     point = {
-                        ls = {
-                            p = "BOTTOMRIGHT",
-                            anchor = "UIParent",
-                            ap = "BOTTOMRIGHT",
-                            x = -4,
-                            y = 32
-                        },
-                        traditional = {
-                            p = "BOTTOMRIGHT",
-                            anchor = "UIParent",
-                            ap = "BOTTOMRIGHT",
-                            x = -4,
-                            y = 32
-                        }
+                        p = "BOTTOMRIGHT",
+                        anchor = "UIParent",
+                        ap = "BOTTOMRIGHT",
+                        x = -4,
+                        y = 32
                     }
                 }
             },
@@ -595,20 +499,11 @@ D.modules = {
                 visibility = 2 -- 1 - always, 2 - mouseover
             },
             point = {
-                ls = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 4
-                },
-                traditional = {
-                    p = "BOTTOM",
-                    anchor = "UIParent",
-                    ap = "BOTTOM",
-                    x = 0,
-                    y = 4
-                }
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 0,
+                y = 4
             },
             fade = {
                 enabled = false,
@@ -767,7 +662,7 @@ D.modules = {
                 },
                 castbar = {
                     enabled = true,
-                    width = 300,
+                    width = 426,
                     height = 24,
                     thin = true,
                     color = D.colors.dark_blue,
@@ -780,11 +675,11 @@ D.modules = {
                     },
                     text = {size = 15, outline = true, shadow = false},
                     point = {
-                        p = "CENTER",
+                        p = "BOTTOM",
                         anchor = "UIParent",
                         ap = "BOTTOM",
                         x = 0,
-                        y = 250
+                        y = 24 + 80
                     }
                 },
                 name = {
@@ -2001,7 +1896,7 @@ D.modules = {
                     anchor = "UIParent",
                     ap = "CENTER",
                     x = 0,
-                    y = -245
+                    y = -215
                 },
                 health = {
                     enabled = true,

@@ -5,7 +5,7 @@
 ## Notes: oUF layout by greven (Kreoss @ Quel'Thalas EU)
 ## SavedVariables: LumenDB
 ## X-SavedVariables: LumenDB
-## X-SlashCmdList: /lmf
+## X-SlashCmdList: /lum
 ## X-Category: UnitFrame
 
 ## X-WoWI-ID: 16885

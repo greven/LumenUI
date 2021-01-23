@@ -6,7 +6,7 @@ local _G = getfenv(0)
 
 -- ---------------
 
-function E:CreateBackdrop(frame, offset, alpha)
+function E:CreateBackdrop(frame, offset, color, bgFile)
     if frame._backdrop then return end
 
     if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
@@ -15,20 +15,26 @@ function E:CreateBackdrop(frame, offset, alpha)
     local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     backdrop:SetFrameLevel(level == 0 and 0 or level - 1)
     backdrop:SetOutside(frame, offset, offset)
-    backdrop:SetBackdrop({bgFile = C.media.textures.flat, tile = false})
-    if alpha then
-        backdrop:SetBackdropColor(0, 0, 0, alpha)
-    else
-        backdrop:SetBackdropColor(E:GetRGBA(C.global.backdrop.color,
-                                            C.global.backdrop.alpha))
-    end
+    backdrop:SetBackdrop({
+        bgFile = bgFile or C.media.textures.flat,
+        tile = false
+    })
+
+    if color then backdrop:SetBackdropColor(color) end
 
     frame._backdrop = backdrop
     return backdrop
 end
 
 function E:SetBackdrop(frame, offset, alpha, x1, y1, x2, y2)
-    local bg = E:CreateBackdrop(frame, offset, alpha)
+    local bg = E:CreateBackdrop(frame, offset)
+
+    if alpha then
+        bg:SetBackdropColor(0, 0, 0, alpha)
+    else
+        bg:SetBackdropColor(E:GetRGBA(C.global.backdrop.color,
+                                      C.global.backdrop.alpha))
+    end
 
     if x1 then
         bg:SetPoint("TOPLEFT", frame, x1, y1)
