@@ -18,10 +18,27 @@ unitframes:
 Minimap:
   ☐ WIP
 
+XPBar:
+  ☐ If high level and not tracking anything, hide?
+  ☐ Add segments instead of a continous bar?
+
 Actionbars:
   ☐ Button: Make Pushed Texture (yellow) more noticeable
   ☐ Button: Skin flyout button missing
   ☐ Missing proc button glow
+
+UnitNames:
+  ☐ Color by class?
+  ☐ Style Guild name with different color
+
+Chat:
+  ☐ WIP
+
+Auras:
+  ☐ WIP
+
+AuraWatchers:
+  ☐ WIP
 
 Archive:
   ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58) @project(api)

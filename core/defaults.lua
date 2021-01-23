@@ -6,8 +6,8 @@ local Media = "Interface\\AddOns\\LumenUI\\media\\"
 local playerHeight = 24
 local playerWidth = 228
 local playerPlateHeight = 11
-local playerPlateWidth = 210
-local targetWidth = 288
+local playerPlateWidth = 200
+local targetWidth = 296
 local targetHeight = 28
 
 local function rgb(r, g, b) return E:SetRGB({}, r, g, b) end
@@ -62,7 +62,7 @@ D.global = {
         units = {font = D.media.fonts.condensed, outline = false, shadow = true},
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
-    backdrop = {color = rgb(0, 0, 0), alpha = 0.84},
+    backdrop = {color = rgb(0, 0, 0), alpha = 0.9},
     border = {color = rgb(20, 20, 20)},
     statusbar = {
         texture = D.media.textures.statusbar,
@@ -86,7 +86,7 @@ D.modules = {
         mana_indicator = "button", -- hotkey
         range_indicator = "button", -- hotkey
         lock = true, -- watch: LOCK_ACTIONBAR
-        rightclick_selfcast = false,
+        rightclick_selfcast = true,
         click_on_down = false,
         blizz_vehicle = false,
         cooldown = {
@@ -99,7 +99,7 @@ D.modules = {
             grid = false,
             num = 12,
             per_row = 6,
-            size = 30,
+            size = 28,
             spacing = 6,
             visibility = "[petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
             visible = true,
@@ -135,7 +135,7 @@ D.modules = {
             per_row = 12,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
+            visibility = "[vehicleui][petbattle] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -159,7 +159,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 24 + 36
+                y = 18 + 36
             }
         },
         bar3 = { -- MultiBarBottomRight
@@ -169,7 +169,7 @@ D.modules = {
             per_row = 12,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
+            visibility = "[vehicleui][petbattle] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -193,7 +193,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 24
+                y = 18
             }
         },
         bar4 = { -- MultiBarLeft
@@ -491,12 +491,13 @@ D.modules = {
             }
         },
         xpbar = {
+            enabled = true,
             visible = true,
-            width = 594,
-            height = 12,
+            width = 427,
+            height = 4,
             text = {
                 size = 10,
-                format = "NUM", -- "NUM_PERC"
+                format = "NUM_PERC", -- "NUM or NUM_PERC"
                 visibility = 2 -- 1 - always, 2 - mouseover
             },
             point = {
@@ -504,7 +505,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 4
+                y = 7
             },
             fade = {
                 enabled = false,
@@ -680,7 +681,7 @@ D.modules = {
                         anchor = "UIParent",
                         ap = "BOTTOM",
                         x = 0,
-                        y = 24 + 80
+                        y = 18 + 78
                     }
                 },
                 name = {
@@ -2138,13 +2139,13 @@ D.modules = {
                     size = 13,
                     outline = true,
                     shadow = false,
-                    h_alignment = "CENTER",
+                    h_alignment = "LEFT",
                     v_alignment = "MIDDLE",
                     word_wrap = false,
                     point = {
-                        p = "CENTER",
+                        p = "LEFT",
                         anchor = "",
-                        ap = "TOP",
+                        ap = "TOPLEFT",
                         x = 0,
                         y = 10
                     }

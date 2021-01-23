@@ -156,7 +156,7 @@ do
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
         bg:SetTexture(C.media.textures.flat)
-        bg:SetAlpha(0.2)
+        bg:SetAlpha(0.5)
         bg.multiplier = 0.4
         element.bg = bg
 
