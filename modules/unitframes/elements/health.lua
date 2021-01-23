@@ -187,6 +187,7 @@ do
             self.colorSmooth = false
             self:SetStatusBarTexture(C.media.textures.vertlines)
             self:SetAlpha(0.98)
+
             self.bg:SetTexture(C.global.statusbar.texture)
             self.bg:SetAlpha(0.9)
         end
@@ -256,6 +257,8 @@ do
         element:SetPoint("TOPLEFT", frame)
         element:SetPoint("TOPRIGHT", frame)
         element:SetStatusBarTexture(C.global.statusbar.texture)
+        element:GetStatusBarTexture():SetVertTile(true)
+        element:GetStatusBarTexture():SetHorizTile(true)
         element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
         E:SmoothBar(element)
 
@@ -274,7 +277,7 @@ do
 
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
-        bg:SetTexture(C.media.textures.vertlines)
+        bg:SetTexture(C.media.textures.statusbar_bg)
         bg:SetAlpha(0.5)
         bg.multiplier = 0.3
         element.bg = bg

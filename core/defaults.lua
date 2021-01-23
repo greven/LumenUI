@@ -23,11 +23,12 @@ D.media = {
     },
     textures = {
         statusbar = Media .. "textures\\statusbar",
+        statusbar_bg = Media .. "textures\\statusbar-bg",
         flat = Media .. "textures\\statusbar",
-        vertlines = Media .. "textures\\vertlines",
         neon = Media .. "textures\\neon",
         mint = Media .. "textures\\mint",
         glow = Media .. "textures\\glow",
+        vertlines = Media .. "textures\\vertlines",
         border = Media .. "textures\\border",
         border_thick = Media .. "textures\\border-thick",
         border = Media .. "textures\\border",
@@ -62,7 +63,7 @@ D.global = {
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
     backdrop = {color = rgb(0, 0, 0), alpha = 0.84},
-    border = {color = rgb(25, 25, 25)},
+    border = {color = rgb(20, 20, 20)},
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
@@ -70,7 +71,7 @@ D.global = {
     shadows = {enabled = true, alpha = 0.3},
     castbar = {
         texture = D.media.textures.statusbar,
-        bg = D.media.textures.vertlines
+        bg = D.media.textures.statusbar_bg
     },
     aura_filters = {
         ["Blacklist"] = {is_init = false},
@@ -114,7 +115,7 @@ D.modules = {
                 max_alpha = 1
             },
             hotkey = {enabled = true, size = 12},
-            macro = {enabled = true, size = 12},
+            macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
@@ -124,7 +125,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 286
+                y = 300
             }
         },
         bar2 = { -- MultiBarBottomLeft
@@ -134,7 +135,7 @@ D.modules = {
             per_row = 12,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+            visibility = "[vehicleui][petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -148,7 +149,7 @@ D.modules = {
                 max_alpha = 1
             },
             hotkey = {enabled = true, size = 12},
-            macro = {enabled = true, size = 12},
+            macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
@@ -168,7 +169,7 @@ D.modules = {
             per_row = 12,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+            visibility = "[vehicleui][petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -182,7 +183,7 @@ D.modules = {
                 max_alpha = 1
             },
             hotkey = {enabled = true, size = 12},
-            macro = {enabled = true, size = 12},
+            macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
@@ -202,12 +203,12 @@ D.modules = {
             per_row = 1,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+            visibility = "[vehicleui][petbattle] hide; show;",
             visible = true,
             x_growth = "LEFT",
             y_growth = "DOWN",
             fade = {
-                enabled = false,
+                enabled = true,
                 out_delay = 0.75,
                 out_duration = 0.15,
                 in_delay = 0,
@@ -216,7 +217,7 @@ D.modules = {
                 max_alpha = 1
             },
             hotkey = {enabled = true, size = 12},
-            macro = {enabled = true, size = 12},
+            macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
@@ -236,12 +237,12 @@ D.modules = {
             per_row = 1,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+            visibility = "[vehicleui][petbattle] hide; show;",
             visible = true,
             x_growth = "LEFT",
             y_growth = "DOWN",
             fade = {
-                enabled = false,
+                enabled = true,
                 out_delay = 0.75,
                 out_duration = 0.15,
                 in_delay = 0,
@@ -250,7 +251,7 @@ D.modules = {
                 max_alpha = 1
             },
             hotkey = {enabled = true, size = 12},
-            macro = {enabled = true, size = 12},
+            macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
@@ -662,7 +663,7 @@ D.modules = {
                 },
                 castbar = {
                     enabled = true,
-                    width = 426,
+                    width = 427,
                     height = 24,
                     thin = true,
                     color = D.colors.dark_blue,
@@ -1994,11 +1995,11 @@ D.modules = {
                     prediction = {enabled = true},
                     runes = {color_by_spec = true, sort_order = "none"},
                     point = {
-                        p = "TOPLEFT",
+                        p = "BOTTOM",
                         anchor = "",
-                        ap = "BOTTOMLEFT",
+                        ap = "TOP",
                         x = 0,
-                        y = -10
+                        y = 5
                     }
                 },
                 additional_power = {

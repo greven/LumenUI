@@ -13,13 +13,15 @@ unitframes:
     ☐ Raid
     ☐ Boss
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
+  ☐ Nameplates!
 
 Minimap:
   ☐ WIP
 
 Actionbars:
-  ☐ [BUG] Cooldown spiral is offcenter!
-  ☐ Skin flyout button missing
+  ☐ Button: Make Pushed Texture (yellow) more noticeable
+  ☐ Button: Skin flyout button missing
+  ☐ Missing proc button glow
 
 Archive:
   ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58) @project(api)

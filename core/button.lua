@@ -275,6 +275,14 @@ do
     end
 end
 
+function E:SkinFlyoutButton(button)
+    if not button or button.__styled then return end
+
+    self:SkinActionButton(button)
+
+    button.HotKey:Hide()
+end
+
 function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich,
                         isSecure)
     local button = CreateFrame("Button", name, parent,

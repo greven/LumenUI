@@ -149,6 +149,8 @@ do
         element:SetPoint("BOTTOMLEFT", frame)
         element:SetPoint("BOTTOMRIGHT", frame)
         element:SetStatusBarTexture(C.media.textures.neon)
+        element:GetStatusBarTexture():SetVertTile(true)
+        element:GetStatusBarTexture():SetHorizTile(true)
         E:SmoothBar(element)
 
         local bg = element:CreateTexture(nil, "BACKGROUND")
@@ -249,6 +251,8 @@ do
     function UF:CreateAdditionalPower(frame)
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetStatusBarTexture(C.media.textures.flat)
+        element:GetStatusBarTexture():SetVertTile(true)
+        element:GetStatusBarTexture():SetHorizTile(true)
         element:SetFrameLevel(frame:GetFrameLevel() + 1)
         E:SmoothBar(element)
         element:Hide()
