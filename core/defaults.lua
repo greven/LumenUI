@@ -121,11 +121,11 @@ D.modules = {
                 text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
             },
             point = {
-                p = "BOTTOM",
-                anchor = "UIParent",
+                p = "TOP",
+                anchor = "LumenPlayerPlateFrame",
                 ap = "BOTTOM",
                 x = 0,
-                y = 300
+                y = -8
             }
         },
         bar2 = { -- MultiBarBottomLeft
@@ -159,7 +159,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 18 + 36
+                y = 24
             }
         },
         bar3 = { -- MultiBarBottomRight
@@ -193,7 +193,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 18
+                y = 24 + 36
             }
         },
         bar4 = { -- MultiBarLeft
@@ -505,7 +505,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 7
+                y = 22 - 10
             },
             fade = {
                 enabled = false,
@@ -651,15 +651,15 @@ D.modules = {
                 class_power = {enabled = false, prediction = {enabled = false}},
                 additional_power = {
                     enabled = true,
-                    width = playerWidth,
-                    height = 1.5,
+                    width = 82,
+                    height = 2,
                     prediction = {enabled = true},
                     point = {
-                        p = "TOPLEFT",
-                        anchor = "Health",
-                        ap = "TOPLEFT",
-                        x = 0,
-                        y = 0
+                        p = "BOTTOMRIGHT",
+                        anchor = "",
+                        ap = "BOTTOMLEFT",
+                        x = -8,
+                        y = -7
                     }
                 },
                 castbar = {
@@ -681,7 +681,7 @@ D.modules = {
                         anchor = "UIParent",
                         ap = "BOTTOM",
                         x = 0,
-                        y = 18 + 78
+                        y = 24 + 80
                     }
                 },
                 name = {
@@ -732,7 +732,7 @@ D.modules = {
                 },
                 unitIndicator = {
                     enabled = true,
-                    width = 2,
+                    width = 2.5,
                     height = 82,
                     rested = true,
                     hide_out_of_combat = false,

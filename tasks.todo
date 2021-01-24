@@ -19,8 +19,9 @@ Minimap:
   ☐ WIP
 
 XPBar:
-  ☐ If high level and not tracking anything, hide?
+  ☐ Refactor
   ☐ Add segments instead of a continous bar?
+  ☐ If high level and not tracking anything, hide?
 
 Actionbars:
   ☐ Button: Make Pushed Texture (yellow) more noticeable

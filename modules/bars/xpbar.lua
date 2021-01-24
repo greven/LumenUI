@@ -190,7 +190,7 @@ local function bar_UpdateSegments(self)
                     }
 
                 self[index]:Update(cur, max, 0, C.colors.white,
-                                   "Interface\\AddOns\\ls_UI\\assets\\statusbar-azerite-fill")
+                                   C.media.textures.neon)
             end
         end
 
@@ -239,8 +239,8 @@ local function bar_UpdateSegments(self)
                                  UnitHonorLevel("player"))
             }
 
-            self[index]:Update(cur, max, 0,
-                               C.colors.faction[UnitFactionGroup("player")])
+            -- self[index]:Update(cur, max, 0, C.colors.faction[UnitFactionGroup("player")])
+            self[index]:Update(cur, max, 0, C.colors.difficulty.impossible)
         end
 
         -- Reputation
@@ -485,7 +485,7 @@ function M.CreateXPBar()
         for i = 1, MAX_SEGMENTS do
             local segment = CreateFrame("StatusBar", "$parentSegment" .. i, bar)
             segment:SetFrameLevel(bar:GetFrameLevel() + 1)
-            segment:SetStatusBarTexture(C.global.statusbar.texture)
+            segment:SetStatusBarTexture(C.media.textures.neon)
             segment:SetHitRectInsets(0, 0, -4, -4)
             segment:SetClipsChildren(true)
             segment:SetScript("OnEnter", segment_OnEnter)
@@ -499,7 +499,7 @@ function M.CreateXPBar()
 
             local ext = CreateFrame("StatusBar", nil, segment)
             ext:SetFrameLevel(segment:GetFrameLevel())
-            ext:SetStatusBarTexture(C.global.statusbar.texture)
+            ext:SetStatusBarTexture(C.media.textures.neon)
             ext:SetPoint("TOPLEFT", segment.Texture, "TOPRIGHT")
             ext:SetPoint("BOTTOMLEFT", segment.Texture, "BOTTOMRIGHT")
             E:SmoothBar(ext)
@@ -515,12 +515,13 @@ function M.CreateXPBar()
             segment.Text = text
 
             local bg = bar:CreateTexture(nil, "ARTWORK")
-            bg:SetTexture(C.media.textures.statusbar_bg)
-            bg:SetColorTexture(E:GetRGB(C.colors.black))
-            bg:SetAllPoints()
-            bg:SetAlpha(0.5)
-            E:SetBackdrop(bg, 1.5)
+            bg:SetTexture(C.media.textures.flat)
+            bg:SetVertexColor(C.colors.dark_gray)
+            bg:SetInside()
+            bg:SetAlpha(0.3)
+            E:SetBackdrop(bg, 1.5, 0.4)
             E:CreateShadow(bg, 2)
+            bar.bg = bg
 
             segment.IsTextLocked = segment_IsTextLocked
             segment.LockText = segment_LockText

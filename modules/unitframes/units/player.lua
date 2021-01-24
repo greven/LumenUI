@@ -66,6 +66,8 @@ do
         self:CreatePowerBar(frame, textParent)
         local addPower = self:CreateAdditionalPower(frame)
         addPower:SetFrameLevel(frame:GetFrameLevel() + 3)
+        E:SetBackdrop(addPower, 1.5)
+        E:CreateShadow(addPower)
         self:CreatePowerPrediction(frame, frame.Power, addPower)
 
         self:CreateName(frame, textParent)
@@ -82,13 +84,14 @@ do
         frame:Tag(info, "[lum:color_unit][lum:spec]")
 
         -- PvP Indicator and timer
-        frame.PvPIndicator = self:CreatePvPIndicator(frame, portraitParent)
+        local pvpIndicator = self:CreatePvPIndicator(frame, portraitParent)
         local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
         pvpTimer:SetFont(C.media.fonts.condensed, 16, "OUTLINE")
         pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 8, 1)
         pvpTimer:SetTextColor(1, 0.82, 0)
         pvpTimer:SetJustifyH("RIGHT")
-        frame.PvPIndicator.Timer = pvpTimer
+        pvpIndicator.Timer = pvpTimer
+        frame.PvPIndicator = pvpIndicator
 
         frame.Update = frame_Update
 
@@ -118,7 +121,6 @@ do
             self:UpdateClassPower()
 
             if self.Runes then self:UpdateRunes() end
-
             if self.Stagger then self:UpdateStagger() end
         else
             if self:IsEnabled() then self:Disable() end

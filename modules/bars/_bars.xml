@@ -8,7 +8,7 @@
 	<!-- <Script file="petbar.lua"/> -->
 	<!-- <Script file="petbattle.lua"/> -->
 	<!-- <Script file="stancebar.lua"/> -->
-	<!-- <Script file="vehicle.lua"/> -->
+	<Script file="vehicle.lua"/>
 	<Script file="xpbar.lua"/>
 	<!-- <Script file="zone.lua"/> -->
 </Ui>
