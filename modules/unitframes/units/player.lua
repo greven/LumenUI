@@ -101,6 +101,20 @@ end
 
 -- Player Plate Frame
 do
+    local AttachHolderFrame
+
+    local function onNamePlateUpdate(frame, event, nameplate)
+        -- TODO: Remember why the player plate isn't being caught here, we need to get the event on spawn...
+        print(event, nameplate)
+
+        -- print(frame, event, nameplate)
+        -- if event == "NAME_PLATE_UNIT_ADDED" then
+        --     if UnitIsUnit(nameplate, "player") then
+        --         print(frame, event, nameplate)
+        --     end
+        -- end
+    end
+
     local function frame_Update(self)
         self:UpdateConfig()
 
@@ -123,7 +137,10 @@ do
             if self.Runes then self:UpdateRunes() end
             if self.Stagger then self:UpdateStagger() end
         else
-            if self:IsEnabled() then self:Disable() end
+            if self:IsEnabled() then
+                self:Disable()
+                self:UnregisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate)
+            end
         end
     end
 
@@ -153,6 +170,25 @@ do
             self:CreateRunes(frame)
         end
         self:CreateClassPower(frame)
+
+        -- Attach PlayerPlate to Blizzard's Personal Resource Display
+        if config.attached then
+            SetCVar("nameplateShowSelf", 1)
+            SetCVar("nameplatePersonalShowAlways", 1)
+            SetCVar("nameplateSelfAlpha", 0)
+
+            AttachHolderFrame = CreateFrame("Frame",
+                                            "LumPlayerPlateAttachHolder",
+                                            UIParent)
+            AttachHolderFrame:SetSize(5, 5)
+            E:SetPosition(AttachHolderFrame, config.point)
+
+            frame:RegisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate, true)
+        else
+            SetCVar("nameplateSelfAlpha", 1)
+            SetCVar("nameplatePersonalShowAlways", 0)
+            frame:UnregisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate)
+        end
 
         frame.Update = frame_Update
 

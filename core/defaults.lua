@@ -1893,6 +1893,7 @@ D.modules = {
                 width = playerPlateWidth,
                 height = playerPlateHeight,
                 visibility = "[harm,nodead][combat] show; hide;",
+                attached = true, -- Attach Position to Blizzard's Player nameplate
                 point = {
                     p = "CENTER",
                     anchor = "UIParent",
