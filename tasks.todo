@@ -3,17 +3,19 @@ Options:
   ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
   ☐ Add Mask support for buttons?
 
-unitframes:
+Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
   ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health.
+  ☐ Auras: Cooldown spiral is 1 pixel short of the aura border
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
-  ☐ Make right clicking on portraits show the frame menu
+  ☐ Make right clicking on portraits show the frame menu (maybe, if not too much work to refactor)
   ☐ Units Missing:
     ☐ Party
     ☐ Raid
     ☐ Boss
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
   ☐ Nameplates!
+  ☐ PlayerPlate: Attach to Blizzard Personal resource display! (Right now event doesn't trigger for player plate) @started(21-01-25 19:14)
 
 Minimap:
   ☐ WIP

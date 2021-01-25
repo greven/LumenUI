@@ -79,15 +79,15 @@ do
 
         -- Level and Spec
         local info = textParent:CreateFontString(nil, "ARTWORK")
-        info:SetFont(C.media.fonts.condensed, 15, "OUTLINE")
-        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 1, 26)
+        info:SetFont(C.media.fonts.condensed, 14, "OUTLINE")
+        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 1, 24)
         frame:Tag(info, "[lum:color_unit][lum:spec]")
 
         -- PvP Indicator and timer
         local pvpIndicator = self:CreatePvPIndicator(frame, portraitParent)
         local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
-        pvpTimer:SetFont(C.media.fonts.condensed, 16, "OUTLINE")
-        pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPRIGHT", 8, 1)
+        pvpTimer:SetFont(C.media.fonts.condensed, 15, "OUTLINE")
+        pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPLEFT", 0, 0)
         pvpTimer:SetTextColor(1, 0.82, 0)
         pvpTimer:SetJustifyH("RIGHT")
         pvpIndicator.Timer = pvpTimer
@@ -105,7 +105,7 @@ do
 
     local function onNamePlateUpdate(frame, event, nameplate)
         -- TODO: Remember why the player plate isn't being caught here, we need to get the event on spawn...
-        print(event, nameplate)
+        -- print(event, nameplate)
 
         -- print(frame, event, nameplate)
         -- if event == "NAME_PLATE_UNIT_ADDED" then
@@ -172,7 +172,7 @@ do
         self:CreateClassPower(frame)
 
         -- Attach PlayerPlate to Blizzard's Personal Resource Display
-        if config.attached then
+        if config.attached and not AttachHolderFrame then
             SetCVar("nameplateShowSelf", 1)
             SetCVar("nameplatePersonalShowAlways", 1)
             SetCVar("nameplateSelfAlpha", 0)

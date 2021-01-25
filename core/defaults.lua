@@ -4,7 +4,7 @@ local E, D, C = ns.E, ns.D, ns.C
 local Media = "Interface\\AddOns\\LumenUI\\media\\"
 
 local playerHeight = 24
-local playerWidth = 228
+local playerWidth = 212
 local playerPlateHeight = 11
 local playerPlateWidth = 200
 local targetWidth = 296
@@ -390,7 +390,7 @@ D.modules = {
             }
         },
         vehicle = { -- LeaveVehicle
-            size = 40,
+            size = 32,
             visible = true,
             fade = {
                 enabled = false,
@@ -405,8 +405,8 @@ D.modules = {
                 p = "BOTTOM",
                 anchor = "UIParent",
                 ap = "BOTTOM",
-                x = 168,
-                y = 134
+                x = 248,
+                y = 38
             }
         },
         micromenu = {
@@ -555,11 +555,11 @@ D.modules = {
                 width = playerWidth,
                 height = playerHeight,
                 point = {
-                    p = "BOTTOMLEFT",
+                    p = "TOPLEFT",
                     anchor = "UIParent",
-                    ap = "BOTTOMLEFT",
-                    x = 98 + 53,
-                    y = 2 + 68
+                    ap = "TOPLEFT",
+                    x = 83 + 13,
+                    y = -42 - 13
                 },
                 health = {
                     enabled = true,
@@ -651,14 +651,14 @@ D.modules = {
                 class_power = {enabled = false, prediction = {enabled = false}},
                 additional_power = {
                     enabled = true,
-                    width = 82,
+                    width = playerWidth,
                     height = 2,
                     prediction = {enabled = true},
                     point = {
-                        p = "BOTTOMRIGHT",
+                        p = "BOTTOMLEFT",
                         anchor = "",
                         ap = "BOTTOMLEFT",
-                        x = -8,
+                        x = 0,
                         y = -7
                     }
                 },
@@ -686,7 +686,7 @@ D.modules = {
                 },
                 name = {
                     tag = "[lum:color_difficulty][lum:level]|r [lum:name(24)]",
-                    size = 22,
+                    size = 20,
                     outline = true,
                     shadow = false,
                     h_alignment = "LEFT",
@@ -703,8 +703,8 @@ D.modules = {
                 portrait = {
                     enabled = true,
                     style = "3D",
-                    width = 82,
-                    height = 82,
+                    width = 64,
+                    height = 64,
                     model_alpha = 1.0,
                     desaturation = 0,
                     point = {
@@ -715,8 +715,8 @@ D.modules = {
                         y = 0
                     },
                     text = {
-                        tag = "[lum:npc_type(true)]",
-                        size = 13,
+                        tag = "",
+                        size = 12,
                         outline = true,
                         shadow = false,
                         h_alignment = "CENTER",
@@ -726,14 +726,14 @@ D.modules = {
                             anchor = "",
                             ap = "TOP",
                             x = 0,
-                            y = 4
+                            y = 0
                         }
                     }
                 },
                 unitIndicator = {
                     enabled = true,
                     width = 2.5,
-                    height = 82,
+                    height = 64,
                     rested = true,
                     hide_out_of_combat = false,
                     point = {
@@ -746,23 +746,23 @@ D.modules = {
                 },
                 pvp = {
                     enabled = true,
-                    width = 32,
+                    width = 30,
                     height = playerHeight,
                     alpha = 1,
                     point = {
                         p = "TOPRIGHT",
                         anchor = "Portrait",
                         ap = "TOPRIGHT",
-                        x = 5,
-                        y = 5
+                        x = 4,
+                        y = 4
                     }
                 },
                 auras = {
-                    enabled = true,
+                    enabled = false,
                     rows = 2,
                     per_row = 8,
-                    spacing = 5,
-                    size_override = 0,
+                    spacing = 6,
+                    size_override = 30,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
@@ -789,26 +789,26 @@ D.modules = {
                         custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
-                                boss = false,
-                                tank = false,
-                                healer = false,
-                                mount = false,
-                                selfcast = false,
-                                selfcast_permanent = false,
-                                player = false,
-                                player_permanent = false,
-                                misc = false
-                            },
-                            debuff = {
                                 boss = true,
                                 tank = true,
                                 healer = true,
+                                mount = true,
                                 selfcast = true,
                                 selfcast_permanent = true,
                                 player = true,
                                 player_permanent = true,
-                                dispellable = true,
                                 misc = true
+                            },
+                            debuff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
+                                misc = false
                             }
                         },
                         enemy = {
@@ -825,13 +825,13 @@ D.modules = {
                                 misc = false
                             },
                             debuff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
-                                player = true,
-                                player_permanent = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
                                 misc = false
                             }
                         }
@@ -840,8 +840,8 @@ D.modules = {
                         p = "TOPLEFT",
                         anchor = "",
                         ap = "BOTTOMLEFT",
-                        x = 1,
-                        y = -8
+                        x = -72,
+                        y = -12
                     }
                 },
                 threat = {enabled = true}
@@ -855,7 +855,7 @@ D.modules = {
                     anchor = "UIParent",
                     ap = "TOP",
                     x = -20,
-                    y = -50
+                    y = -51
                 },
                 health = {
                     enabled = true,
@@ -1892,7 +1892,7 @@ D.modules = {
                 enabled = true,
                 width = playerPlateWidth,
                 height = playerPlateHeight,
-                visibility = "[harm,nodead][combat] show; hide;",
+                visibility = "[petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
                 attached = true, -- Attach Position to Blizzard's Player nameplate
                 point = {
                     p = "CENTER",
