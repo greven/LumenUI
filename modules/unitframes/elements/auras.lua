@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
+local UF = E:GetModule("UnitFrames")
+
 -- Lua
 local _G = getfenv(0)
 local m_max = _G.math.max
@@ -10,10 +12,6 @@ local select = _G.select
 local unpack = _G.unpack
 
 local UnitIsFriend = _G.UnitIsFriend
-
--- ---------------
-
-local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 

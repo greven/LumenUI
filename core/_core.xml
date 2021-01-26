@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="templates.xml"/>
+
   <Script file="core.lua" />
   <Script file="utils.lua" />
 

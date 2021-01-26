@@ -80,6 +80,89 @@ D.global = {
 }
 
 D.modules = {
+    auras = {
+        enabled = true,
+        cooldown = {
+            exp_threshold = 5, -- [1; 10]
+            m_ss_threshold = 600 -- [91; 3599]
+        },
+        HELPFUL = {
+            size = 32,
+            spacing = 6,
+            x_growth = "LEFT",
+            y_growth = "DOWN",
+            per_row = 16,
+            num_rows = 2,
+            sep_own = 0,
+            sort_method = "INDEX",
+            sort_dir = "+",
+            count = {
+                enabled = true,
+                size = 12,
+                flag = "_Outline", -- "_Shadow", ""
+                h_alignment = "RIGHT",
+                v_alignment = "TOP"
+            },
+            cooldown = {
+                text = {enabled = true, size = 12, v_alignment = "BOTTOM"}
+            },
+            type = {size = 12, position = "TOPLEFT", debuff_type = false},
+            point = {
+                p = "TOPRIGHT",
+                anchor = "UIParent",
+                ap = "TOPRIGHT",
+                x = -184,
+                y = -6
+            }
+        },
+        HARMFUL = {
+            size = 32,
+            spacing = 6,
+            x_growth = "LEFT",
+            y_growth = "DOWN",
+            per_row = 16,
+            num_rows = 1,
+            sep_own = 0,
+            sort_method = "INDEX",
+            sort_dir = "+",
+            count = {
+                enabled = true,
+                size = 12,
+                flag = "_Outline", -- "_Shadow", ""
+                h_alignment = "RIGHT",
+                v_alignment = "TOP"
+            },
+            cooldown = {
+                text = {enabled = true, size = 12, v_alignment = "BOTTOM"}
+            },
+            type = {size = 12, position = "TOPLEFT", debuff_type = false},
+            point = {
+                p = "TOPRIGHT",
+                anchor = "UIParent",
+                ap = "TOPRIGHT",
+                x = -184,
+                y = -114
+            }
+        },
+        TOTEM = {
+            num = 4,
+            size = 32,
+            spacing = 6,
+            x_growth = "LEFT",
+            y_growth = "DOWN",
+            per_row = 4,
+            cooldown = {
+                text = {enabled = true, size = 12, v_alignment = "BOTTOM"}
+            },
+            point = {
+                p = "TOPRIGHT",
+                anchor = "UIParent",
+                ap = "TOPRIGHT",
+                x = -182,
+                y = -148
+            }
+        }
+    },
     bars = {
         enabled = true,
         restricted = false,
@@ -101,7 +184,7 @@ D.modules = {
             per_row = 6,
             size = 28,
             spacing = 6,
-            visibility = "[petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
+            visibility = "[petbattle] hide; [vehicleui][harm,nodead][combat][mod:alt] show; [] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -135,7 +218,7 @@ D.modules = {
             per_row = 12,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle] hide; show",
+            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -169,7 +252,7 @@ D.modules = {
             per_row = 12,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle] hide; show",
+            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -203,7 +286,7 @@ D.modules = {
             per_row = 1,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle] hide; show;",
+            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "LEFT",
             y_growth = "DOWN",
@@ -237,7 +320,7 @@ D.modules = {
             per_row = 1,
             size = 30,
             spacing = 6,
-            visibility = "[vehicleui][petbattle] hide; show;",
+            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "LEFT",
             y_growth = "DOWN",
@@ -294,7 +377,7 @@ D.modules = {
             num = 10,
             per_row = 10,
             size = 24,
-            spacing = 4,
+            spacing = 6,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             x_growth = "RIGHT",
@@ -311,6 +394,13 @@ D.modules = {
             hotkey = {enabled = true, size = 10},
             cooldown = {
                 text = {enabled = true, size = 10, v_alignment = "MIDDLE"}
+            },
+            point = {
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = -16,
+                y = 24 + 72
             }
         },
         pet_battle = {
@@ -392,6 +482,7 @@ D.modules = {
         vehicle = { -- LeaveVehicle
             size = 32,
             visible = true,
+            blizz_vehicle = true,
             fade = {
                 enabled = false,
                 out_delay = 0.75,
@@ -495,6 +586,8 @@ D.modules = {
             visible = true,
             width = 427,
             height = 4,
+            texture = D.media.textures.neon,
+            visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             text = {
                 size = 10,
                 format = "NUM_PERC", -- "NUM or NUM_PERC"
@@ -542,6 +635,7 @@ D.modules = {
         color = {border = false, zone_text = true},
         point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
     },
+    misc = {enabled = true, bindings = {enabled = true}},
     unitframes = {
         enabled = true,
         shadows = {enabled = true, alpha = D.global.shadows.alpha},
@@ -659,7 +753,7 @@ D.modules = {
                         anchor = "",
                         ap = "BOTTOMLEFT",
                         x = 0,
-                        y = -7
+                        y = -13
                     }
                 },
                 castbar = {
@@ -681,7 +775,7 @@ D.modules = {
                         anchor = "UIParent",
                         ap = "BOTTOM",
                         x = 0,
-                        y = 24 + 80
+                        y = 24 + 115
                     }
                 },
                 name = {
@@ -2153,8 +2247,7 @@ D.modules = {
                 }
             }
         }
-    },
-    misc = {enabled = true, bindings = {enabled = true}}
+    }
 }
 
 -- Copy defaults to the config table

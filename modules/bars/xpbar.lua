@@ -145,7 +145,7 @@ local function bar_UpdateSegments(self)
             self[index]:Update(cur, max, 0, C.colors.xp[2])
         end
     else
-        -- Artefact
+        -- Artifact
         if HasArtifactEquipped() and not C_ArtifactUI.IsEquippedArtifactMaxed() and
             not C_ArtifactUI.IsEquippedArtifactDisabled() then
             index = index + 1
@@ -189,8 +189,7 @@ local function bar_UpdateSegments(self)
                         line1 = s_format("Artifact Level: |cffffffff%s|r", level)
                     }
 
-                self[index]:Update(cur, max, 0, C.colors.white,
-                                   C.media.textures.neon)
+                self[index]:Update(cur, max, 0, C.colors.white)
             end
         end
 
@@ -220,7 +219,8 @@ local function bar_UpdateSegments(self)
             end
 
             self[index]:Update(cur, max, bonus,
-                               bonus > 0 and C.colors.xp[1] or C.colors.xp[2])
+                               bonus > 0 and C.colors.xp[1] or C.colors.xp[2],
+                               C.modules.bars.xpbar.texture)
         end
 
         -- Honour
@@ -408,6 +408,7 @@ local function segment_Update(self, cur, max, bonus, color, texture)
     texture = texture or "Interface\\BUTTONS\\WHITE8X8"
     if not self._texture or self._texture ~= texture then
         self:SetStatusBarTexture(texture)
+        self:GetStatusBarTexture():SetVertTile(true)
         self.Extension:SetStatusBarTexture(texture)
 
         self._texture = texture
@@ -485,7 +486,8 @@ function M.CreateXPBar()
         for i = 1, MAX_SEGMENTS do
             local segment = CreateFrame("StatusBar", "$parentSegment" .. i, bar)
             segment:SetFrameLevel(bar:GetFrameLevel() + 1)
-            segment:SetStatusBarTexture(C.media.textures.neon)
+            segment:SetStatusBarTexture(C.media.textures.flat)
+            segment:GetStatusBarTexture():SetVertTile(true)
             segment:SetHitRectInsets(0, 0, -4, -4)
             segment:SetClipsChildren(true)
             segment:SetScript("OnEnter", segment_OnEnter)
@@ -499,7 +501,8 @@ function M.CreateXPBar()
 
             local ext = CreateFrame("StatusBar", nil, segment)
             ext:SetFrameLevel(segment:GetFrameLevel())
-            ext:SetStatusBarTexture(C.media.textures.neon)
+            ext:SetStatusBarTexture(C.media.textures.flat)
+            ext:GetStatusBarTexture():SetVertTile(true)
             ext:SetPoint("TOPLEFT", segment.Texture, "TOPRIGHT")
             ext:SetPoint("BOTTOMLEFT", segment.Texture, "BOTTOMRIGHT")
             E:SmoothBar(ext)
@@ -568,6 +571,7 @@ function M.CreateXPBar()
         end
 
         bar:Update()
+        bar:UpdateVisibility()
 
         isInit = true
     end

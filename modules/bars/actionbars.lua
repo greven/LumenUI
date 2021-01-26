@@ -206,8 +206,9 @@ local function bar_UpdateButtonConfig(self)
 end
 
 local function updateFont(fontString, config)
-    fontString:SetFont(LibStub("LibSharedMedia-3.0"):Fetch("font", config.font),
-                       config.size, config.outline and "OUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.bars.font, config.size,
+                       config.outline and "THINOUTLINE" or nil)
+
     fontString:SetWordWrap(false)
 
     if config.shadow then

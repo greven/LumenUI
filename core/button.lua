@@ -283,6 +283,110 @@ function E:SkinFlyoutButton(button)
     button.HotKey:Hide()
 end
 
+function E:SkinExtraActionButton(button)
+    if not button or button.__styled then return end
+
+    skinButton(button)
+
+    local CD = button.cooldown or button.Cooldown
+
+    if CD.SetTimerTextHeight then CD:SetTimerTextHeight(14) end
+
+    button.__styled = true
+end
+
+function E:SkinPetActionButton(button)
+    if not button or button.__styled then return end
+
+    skinButton(button)
+
+    local name = button:GetName()
+    local bCD = button.cooldown
+    local bAutoCast = _G[name .. "AutoCastable"]
+    local bShine = _G[name .. "Shine"]
+
+    if bCD and bCD.SetTimerTextHeight then bCD:SetTimerTextHeight(10) end
+
+    if bAutoCast then
+        bAutoCast:SetDrawLayer("OVERLAY", 2)
+        bAutoCast:ClearAllPoints()
+        bAutoCast:SetPoint("TOPLEFT", -12, 12)
+        bAutoCast:SetPoint("BOTTOMRIGHT", 12, -12)
+        button.AutoCastBorder = bAutoCast
+    end
+
+    if bShine then
+        bShine:ClearAllPoints()
+        bShine:SetPoint("TOPLEFT", 1, -1)
+        bShine:SetPoint("BOTTOMRIGHT", -1, 1)
+        button.AutoCastShine = bShine
+    end
+
+    button.__styled = true
+end
+
+function E:SkinPetBattleButton(button)
+    if not button or button.__styled then return end
+
+    skinButton(button)
+
+    local bCDShadow = button.CooldownShadow
+    local bCDFlash = button.CooldownFlash
+    local bCD = button.Cooldown
+    local bSelectedHighlight = button.SelectedHighlight
+    local bLock = button.Lock
+    local bBetterIcon = button.BetterIcon
+
+    if bCDShadow then bCDShadow:SetAllPoints() end
+
+    if bCDFlash then bCDFlash:SetAllPoints() end
+
+    if bCD then
+        bCD:ClearAllPoints()
+        bCD:SetPoint("CENTER", 0, -2)
+    end
+
+    if bSelectedHighlight then
+        bSelectedHighlight:SetDrawLayer("OVERLAY", 2)
+        bSelectedHighlight:ClearAllPoints()
+        bSelectedHighlight:SetPoint("TOPLEFT", -8, 8)
+        bSelectedHighlight:SetPoint("BOTTOMRIGHT", 8, -8)
+    end
+
+    if bLock then
+        bLock:ClearAllPoints()
+        bLock:SetPoint("TOPLEFT", 2, -2)
+        bLock:SetPoint("BOTTOMRIGHT", -2, 2)
+    end
+
+    if bBetterIcon then
+        bBetterIcon:SetDrawLayer("OVERLAY", 3)
+        bBetterIcon:SetSize(18, 18)
+        bBetterIcon:ClearAllPoints()
+        bBetterIcon:SetPoint("BOTTOMRIGHT", 4, -4)
+    end
+
+    button.__styled = true
+end
+
+function E:SkinStanceButton(button)
+    if not button or button.__styled then return end
+
+    skinButton(button)
+
+    local bFloatingBG = _G[button:GetName() .. "FloatingBG"]
+
+    if bFloatingBG then
+        bFloatingBG:SetAlpha(1)
+        bFloatingBG:SetAllPoints()
+        bFloatingBG:SetColorTexture(0, 0, 0, 0.25)
+    end
+
+    button.__styled = true
+end
+
+function E:SetIcon(...) return setIcon(...) end
+
 function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich,
                         isSecure)
     local button = CreateFrame("Button", name, parent,
