@@ -1,8 +1,3 @@
-Options:
-  ☐ Add GUI after it is stable
-  ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
-  ☐ Add Mask support for buttons?
-
 Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
   ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health.
@@ -42,6 +37,15 @@ Auras:
 
 AuraWatchers:
   ☐ WIP
+
+Misc:
+  ✔ Auto sell gray items @done(21-01-27 20:54)
+  ☐ Auto-repair
+
+Options:
+  ☐ Add GUI after it is stable
+  ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
+  ☐ Add Mask support for buttons?
 
 Archive:
   ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58) @project(api)

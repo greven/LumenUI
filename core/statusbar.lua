@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local A, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -13,20 +13,22 @@ local unpack = _G.unpack
 
 -- ---------------
 
-function E:CreateStatusBar(parent, name, orientation)
+function E:CreateStatusBar(parent, name, texture, orientation)
     local bar = CreateFrame("StatusBar", name, parent)
-    bar:SetOrientation(orientation)
-    bar:SetStatusBarTexture("Interface\\BUTTONS\\WHITE8X8")
+    bar:SetStatusBarTexture(texture or C.media.textures.statusbar)
+    bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
+    bar:SetOrientation(orientation or "HORIZONTAL")
 
     local bg = bar:CreateTexture(nil, "BACKGROUND")
-    bg:SetColorTexture(E:GetRGB(C.colors.dark_gray))
+    bg:SetTexture(C.media.textures.statusbar_bg)
+    bg:SetColorTexture(bar:GetStatusBarColor())
     bg:SetAllPoints()
+    bg:SetAlpha(0.25)
     bar.Bg = bg
 
-    local text = bar:CreateFontString("$parentText", "ARTWORK",
-                                      C.media.fonts.normal)
-    text:SetWordWrap(false)
-    bar.Text = text
+    bar.Text = E:CreateString(bar, 12, false, C.media.fonts.normal,
+                              "$parentText")
+    bar.Text:SetPoint("CENTER", 0, -1)
 
     bar.handled = true
 

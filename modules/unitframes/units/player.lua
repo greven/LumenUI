@@ -171,24 +171,25 @@ do
         end
         self:CreateClassPower(frame)
 
+        -- TODO: Attach to Blizzard's Personal Resource Display
         -- Attach PlayerPlate to Blizzard's Personal Resource Display
-        if config.attached and not AttachHolderFrame then
-            SetCVar("nameplateShowSelf", 1)
-            SetCVar("nameplatePersonalShowAlways", 1)
-            SetCVar("nameplateSelfAlpha", 0)
+        -- if config.attached and not AttachHolderFrame then
+        --     SetCVar("nameplateShowSelf", 1)
+        --     SetCVar("nameplatePersonalShowAlways", 1)
+        --     SetCVar("nameplateSelfAlpha", 0)
 
-            AttachHolderFrame = CreateFrame("Frame",
-                                            "LumPlayerPlateAttachHolder",
-                                            UIParent)
-            AttachHolderFrame:SetSize(5, 5)
-            E:SetPosition(AttachHolderFrame, config.point)
+        --     AttachHolderFrame = CreateFrame("Frame",
+        --                                     "LumPlayerPlateAttachHolder",
+        --                                     UIParent)
+        --     AttachHolderFrame:SetSize(5, 5)
+        --     E:SetPosition(AttachHolderFrame, config.point)
 
-            frame:RegisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate, true)
-        else
-            SetCVar("nameplateSelfAlpha", 1)
-            SetCVar("nameplatePersonalShowAlways", 0)
-            frame:UnregisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate)
-        end
+        --     frame:RegisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate, true)
+        -- else
+        --     SetCVar("nameplateSelfAlpha", 1)
+        --     SetCVar("nameplatePersonalShowAlways", 0)
+        --     frame:UnregisterEvent("NAME_PLATE_UNIT_ADDED", onNamePlateUpdate)
+        -- end
 
         frame.Update = frame_Update
 

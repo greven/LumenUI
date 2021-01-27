@@ -1,5 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="core.lua"/>
-	<Script file="bindings.lua"/>
-	<Script file="merchant.lua"/>
+	<Script file="sell.lua"/>
 </Ui>

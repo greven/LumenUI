@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 local M = E:GetModule("Bars")
 

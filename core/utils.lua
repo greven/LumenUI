@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -9,6 +9,7 @@ local next = _G.next
 local ipairs = _G.ipairs
 local pairs = _G.pairs
 local select = _G.select
+local unpack = _G.unpack
 
 local m_abs = _G.math.abs
 local m_ceil = _G.math.ceil
@@ -20,8 +21,11 @@ local m_modf = _G.math.modf
 local s_format = _G.string.format
 local s_utf8sub = _G.string.utf8sub
 local s_split = _G.string.split
+local s_join = _G.string.join
 
 local t_wipe = _G.table.wipe
+local t_insert = _G.tinsert
+local t_remove = _G.tremove
 
 local BreakUpLargeNumbers = _G.BreakUpLargeNumbers
 local UnitClass = _G.UnitClass
@@ -34,6 +38,8 @@ local UnitIsGhost = _G.UnitIsGhost
 local UnitIsDead = _G.UnitIsDead
 local UnitGUID = _G.UnitGUID
 local UnitGroupRolesAssigned = _G.UnitGroupRolesAssigned
+
+local C_Timer_After = C_Timer.After
 
 -- ---------------
 -- > Math
@@ -171,6 +177,42 @@ do
     end
 end
 
+E.WaitTable = {}
+E.WaitFrame = CreateFrame('Frame', 'LumenUI_WaitFrame', _G.UIParent)
+E.WaitFrame:SetScript('OnUpdate', E.WaitFunc)
+
+function E:WaitFunc(elapse)
+    local i = 1
+    while i <= #E.WaitTable do
+        local data = E.WaitTable[i]
+        if data[1] > elapse then
+            data[1], i = data[1] - elapse, i + 1
+        else
+            t_remove(E.WaitTable, i)
+            data[2](unpack(data[3]))
+
+            if #E.WaitTable == 0 then E.WaitFrame:Hide() end
+        end
+    end
+end
+
+-- Add time before calling a function
+function E:Delay(delay, func, ...)
+    if type(delay) ~= 'number' or type(func) ~= 'function' then return false end
+
+    -- Restrict to the lowest time that the C_Timer API allows us
+    if delay < 0.01 then delay = 0.01 end
+
+    if select('#', ...) <= 0 then
+        C_Timer_After(delay, func)
+    else
+        t_insert(E.WaitTable, {delay, func, {...}})
+        E.WaitFrame:Show()
+    end
+
+    return true
+end
+
 -- ---------------
 -- > Tables
 -- ---------------
@@ -282,28 +324,34 @@ end
 -- > Strings
 -- ---------------
 
-function E:CreateString(size, color, font, anchor, x, y)
-    local fs = self:CreateFontString(nil, "OVERLAY")
+function E:CreateString(frame, size, color, font, name, anchor, x, y)
+    local fs = frame:CreateFontString(name, "OVERLAY")
     fs:SetFont(font or C.media.fonts.normal, size or 12, "OUTLINE")
     fs:SetJustifyH("CENTER")
+    fs:SetJustifyV("MIDDLE")
     fs:SetWordWrap(false)
 
     if color and type(color) == "boolean" then
         fs:SetTextColor(E:GetRGB(E.CLASS_COLOR))
     else
-        fs:SetTextColor(E:GetRGB(C.colors.text))
+        fs:SetTextColor(E:GetRGB(C.colors.white))
     end
 
     if anchor and x and y then
         fs:SetPoint(anchor, x, y)
     else
-        fs:SetPoint("CENTER", 1, 0)
+        fs:SetPoint("CENTER", 0, 0)
     end
 
     return fs
 end
 
 function E:TruncateString(v, length) return s_utf8sub(v, 1, length) end
+
+function E:Print(...)
+    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join('', E:WrapText(C.colors.emerald,
+                                                           "LumenUI: "), ...))
+end
 
 -- ---------------
 -- > Color
@@ -354,9 +402,7 @@ do
 
     function E:SetRGB(color, r, g, b) return self:SetRGBA(color, r, g, b, 1) end
 
-    function E:TextColor(text, color)
-        return "|cff" .. color.hex .. text .. "|r"
-    end
+    function E:WrapText(color, text) return "|c" .. color.hex .. text .. "|r" end
 
     -- Gradients
     local function calcGradient(perc, ...)
@@ -713,8 +759,7 @@ do
             end
         end
 
-        -- return L["UNKNOWN"] -- TODO: "LOCALIZE THIS?"
-        return "UNKNOWN"
+        return L["UNKNOWN"]
     end
 
     -- GetRelativeDifficultyColor

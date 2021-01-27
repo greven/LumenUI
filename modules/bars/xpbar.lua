@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 local M = E:GetModule("Bars")
 
@@ -157,13 +157,9 @@ local function bar_UpdateSegments(self)
                                                                  totalXP, tier)
 
             self[index].tooltipInfo = {
-                -- TODO: Localize this
-                -- header = L["ARTIFACT_POWER"],
-                -- line1 = L["UNSPENT_TRAIT_POINTS_TOOLTIP"]:format(points),
-                -- line2 = L["ARTIFACT_LEVEL_TOOLTIP"]:format(pointsSpent)
-                header = "Artifact Power",
-                line1 = s_format("Unspent Trait Points: |cffffffff%s|r", points),
-                line2 = s_format("Artifact Level: |cffffffff%s|r", pointsSpent)
+                header = L["ARTIFACT_POWER"],
+                line1 = s_format(L["UNSPENT_TRAIT_POINTS_TOOLTIP"], points),
+                line2 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], pointsSpent)
             }
 
             self[index]:Update(cur, max, 0, C.colors.artifact)
@@ -182,11 +178,8 @@ local function bar_UpdateSegments(self)
 
                 self[index].tooltipInfo =
                     {
-                        -- TODO: Localize this
-                        -- header = L["ARTIFACT_POWER"],
-                        -- line1 = L["ARTIFACT_LEVEL_TOOLTIP"]:format(level)
-                        header = "Artifact Power",
-                        line1 = s_format("Artifact Level: |cffffffff%s|r", level)
+                        header = L["ARTIFACT_POWER"],
+                        line1 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], level)
                     }
 
                 self[index]:Update(cur, max, 0, C.colors.white)
@@ -201,19 +194,13 @@ local function bar_UpdateSegments(self)
             local bonus = GetXPExhaustion() or 0
 
             self[index].tooltipInfo = {
-                -- TODO: Localize this
-                -- header = L["EXPERIENCE"],
-                -- line1 = L["LEVEL_TOOLTIP"]:format(UnitLevel("player"))
-                header = "Experience",
-                line1 = s_format("Level: |cffffffff%d|r", UnitLevel("player"))
+                header = L["EXPERIENCE"],
+                line1 = s_format(L["LEVEL_TOOLTIP"], UnitLevel("player"))
             }
 
             if bonus > 0 then
-                -- TODO: Localize this
-                -- self[index].tooltipInfo.line2 = L["BONUS_XP_TOOLTIP"]:format(BreakUpLargeNumbers(bonus))
                 self[index].tooltipInfo.line2 =
-                    s_format("Bonus XP: |cffffffff%s|r",
-                             BreakUpLargeNumbers(bonus))
+                    s_format(L["BONUS_XP_TOOLTIP"], BreakUpLargeNumbers(bonus))
             else
                 self[index].tooltipInfo.line2 = nil
             end
@@ -231,11 +218,8 @@ local function bar_UpdateSegments(self)
             local cur, max = UnitHonor("player"), UnitHonorMax("player")
 
             self[index].tooltipInfo = {
-                -- TODO: Localize this
-                -- header = L["HONOR"],
-                -- line1 = L["HONOR_LEVEL_TOOLTIP"]:format(UnitHonorLevel("player"))
-                header = "Honor",
-                line1 = s_format("Honour Level: |cffffffff%d|r",
+                header = L["HONOR"],
+                line1 = s_format(L["HONOR_LEVEL_TOOLTIP"],
                                  UnitHonorLevel("player"))
             }
 
@@ -288,9 +272,7 @@ local function bar_UpdateSegments(self)
             end
 
             self[index].tooltipInfo = {
-                -- TODO: Localize this
-                -- header = L["REPUTATION"],
-                header = "Reputation",
+                header = L["REPUTATION"],
                 line1 = REPUTATION_TEMPLATE:format(name,
                                                    C.colors.reaction[standing]
                                                        .hex, repTextLevel)

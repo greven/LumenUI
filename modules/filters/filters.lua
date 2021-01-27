@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 local M = E:AddModule("Filters")
 
@@ -12,7 +12,7 @@ local t_wipe = _G.table.wipe
 
 local isInit = false
 
-local filters = {
+local aura_filters = {
     ["Blacklist"] = {
         state = false,
         [8326] = true, -- Ghost
@@ -108,28 +108,32 @@ local filters = {
     }
 }
 
+function M.CreateAuraFilters()
+    for filter, v in next, aura_filters do
+        if not C.global.aura_filters[filter].is_init then
+            E:CopyTable(v, C.global.aura_filters[filter])
+
+            C.global.aura_filters[filter].is_init = true
+        end
+    end
+end
+
 function M:IsInit() return isInit end
 
 function M:Init()
     if not isInit then
-        for filter, v in next, filters do
-            if not C.global.aura_filters[filter].is_init then
-                E:CopyTable(v, C.global.aura_filters[filter])
-
-                C.global.aura_filters[filter].is_init = true
-            end
-        end
+        M.CreateAuraFilters()
 
         isInit = true
     end
 end
 
-function M:Reset(filter)
-    if filters[filter] then
+function M:ResetAuraFilter(filter)
+    if aura_filters[filter] then
         t_wipe(C.global.aura_filters[filter])
 
-        E:CopyTable(filters[filter], C.global.aura_filters[filter])
+        E:CopyTable(aura_filters[filter], C.global.aura_filters[filter])
 
-        C.db.global.aura_filters[filter].is_init = true
+        C.global.aura_filters[filter].is_init = true
     end
 end

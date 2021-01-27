@@ -1,15 +1,10 @@
 -- Credits: ls_UI
 local A, ns = ...
 
-local E = {} -- Engine
-local D = {} -- Defaults
-local C = {} -- Config
-local DB = {} -- Database
+local E, D, C, L, DB = {}, {}, {}, {}, {} -- Engine, Defaults, Config, Locale, Database
+ns.E, ns.D, ns.C, ns.L, ns.DB = E, D, C, L, DB
 
-local E, D, C, DB = {}, {}, {}, {} -- Engine, Defaults, Config, Database
-ns.E, ns.D, ns.C, ns.DB = E, D, C, DB
-
-_G[A] = {[1] = ns.E, [2] = ns.D, [3] = ns.C, [4] = ns.DB}
+_G[A] = {[1] = ns.E, [2] = ns.D, [3] = ns.C, [4] = ns.L, [5] = ns.DB}
 
 -- Lua
 local _G = getfenv(0)

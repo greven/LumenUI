@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 local M = E:AddModule("Minimap")
 
@@ -685,10 +685,8 @@ function M:Init()
 
                     GameTooltip:SetOwner(self, "ANCHOR_NONE")
                     GameTooltip:SetPoint(p, self, rP, x, y)
-                    -- GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1) -- TODO: i18n
-                    -- GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"]) -- TODO: i18n
-                    GameTooltip:AddLine("Minimap Buttons", 1, 1, 1)
-                    GameTooltip:AddLine("Minimap Butons Tooltip")
+                    GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1)
+                    GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"])
                     GameTooltip:Show()
                 end
             end)

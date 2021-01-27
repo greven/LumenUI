@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -12,7 +12,7 @@ local activeWidgets = {}
 local miscWidgets = {}
 local widgets = {}
 
-local updater = CreateFrame("Frame", nil, UIParent)
+local updater = CreateFrame("Frame", nil, _G.UIParent)
 local config
 
 updater:SetScript("OnUpdate", function(_, elapsed)

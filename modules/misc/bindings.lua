@@ -1,9 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E, C, L = ns.E, ns.C, ns.L
 
 local M = E:GetModule("Misc")
-
-local isInit = false
 
 -- Lua
 local _G = getfenv(0)
@@ -17,6 +15,8 @@ local InCombatLockdown = _G.InCombatLockdown
 local PlayerHasToy = _G.PlayerHasToy
 
 -- ---------------
+
+local isInit = false
 
 local toys = {}
 

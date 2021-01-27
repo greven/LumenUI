@@ -163,6 +163,7 @@ D.modules = {
             }
         }
     },
+    bags = {enabled = true},
     bars = {
         enabled = true,
         restricted = false,
@@ -635,7 +636,15 @@ D.modules = {
         color = {border = false, zone_text = true},
         point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
     },
-    misc = {enabled = true, bindings = {enabled = true}},
+    misc = {
+        enabled = true,
+        bindings = {enabled = true},
+        merchant = {
+            enabled = true,
+            auto_repair = {enabled = true, use_guild_funds = true},
+            vendor_grays = {enabled = true}
+        }
+    },
     unitframes = {
         enabled = true,
         shadows = {enabled = true, alpha = D.global.shadows.alpha},
