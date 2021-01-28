@@ -15,15 +15,9 @@ Unitframes:
 Minimap:
   ☐ WIP
 
-XPBar:
-  ☐ Refactor
-  ☐ Add segments instead of a continous bar?
-  ☐ If high level and not tracking anything, hide?
-  ☐ Texture for Artifact Power @low
-
 Actionbars:
-  ☐ Missing proc button glow @bug
-  ☐ Button: Make Pushed Texture (yellow) more noticeable
+  ☐ Missing proc button glow @bug @critical @today
+  ☐ Button: Make Pushed Texture (yellow) more noticeable @high @today
   ✔ Button: Skin flyout button missing @done(21-01-28 14:17)
 
 UnitNames:
@@ -37,14 +31,20 @@ Auras:
   ☐ WIP
 
 AuraWatchers:
-  ☐ WIP
+  ☐ WIP: Maybe it should track player auras and target debuffs just like NDUI (Check it's module)
+
+XPBar:
+  ☐ Refactor
+  ☐ Add segments instead of a continous bar?
+  ☐ If high level and not tracking anything, hide?
+  ✔ Texture for Artifact Power @low @done(21-01-28 16:13)
 
 Misc:
   ✔ Auto sell gray items @done(21-01-27 20:54)
   ✔ Auto-repair @done(21-01-28 16:13)
 
-Options:
-  ☐ Add GUI after it is stable
+Roadmap:
+  ☐ Add GUI after first stable release (future plans)
   ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
   ☐ Add Mask support for buttons?
 
