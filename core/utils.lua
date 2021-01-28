@@ -349,8 +349,8 @@ end
 function E:TruncateString(v, length) return s_utf8sub(v, 1, length) end
 
 function E:Print(...)
-    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join('', E:WrapText(C.colors.emerald,
-                                                           "LumenUI: "), ...))
+    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join('', E:WrapText(C.colors.violet,
+                                                           "LumUI: "), ...))
 end
 
 -- ---------------

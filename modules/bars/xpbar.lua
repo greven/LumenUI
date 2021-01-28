@@ -182,7 +182,8 @@ local function bar_UpdateSegments(self)
                         line1 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], level)
                     }
 
-                self[index]:Update(cur, max, 0, C.colors.white)
+                self[index]:Update(cur, max, 0, C.colors.white,
+                                   C.media.textures.statusbar_azerite)
             end
         end
 

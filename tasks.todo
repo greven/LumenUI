@@ -1,6 +1,6 @@
 Unitframes:
-  ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!!
-  ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health.
+  ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!! @bug
+  ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health. @bug @low @today
   ☐ Auras: Cooldown spiral is 1 pixel short of the aura border
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu (maybe, if not too much work to refactor)
@@ -19,11 +19,12 @@ XPBar:
   ☐ Refactor
   ☐ Add segments instead of a continous bar?
   ☐ If high level and not tracking anything, hide?
+  ☐ Texture for Artifact Power @low
 
 Actionbars:
+  ☐ Missing proc button glow @bug
   ☐ Button: Make Pushed Texture (yellow) more noticeable
-  ☐ Button: Skin flyout button missing
-  ☐ Missing proc button glow
+  ✔ Button: Skin flyout button missing @done(21-01-28 14:17)
 
 UnitNames:
   ☐ Color by class?
@@ -40,7 +41,7 @@ AuraWatchers:
 
 Misc:
   ✔ Auto sell gray items @done(21-01-27 20:54)
-  ☐ Auto-repair
+  ✔ Auto-repair @done(21-01-28 16:13)
 
 Options:
   ☐ Add GUI after it is stable

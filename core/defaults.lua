@@ -24,6 +24,7 @@ D.media = {
     textures = {
         statusbar = Media .. "textures\\statusbar",
         statusbar_bg = Media .. "textures\\statusbar-bg",
+        statusbar_azerite = Media .. "textures\\statusbar-azerite",
         flat = Media .. "textures\\statusbar",
         neon = Media .. "textures\\neon",
         mint = Media .. "textures\\mint",
