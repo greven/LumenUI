@@ -8,6 +8,9 @@ local m_abs = _G.math.abs
 local m_max = _G.math.max
 local m_min = _G.math.min
 
+local s_match = _G.string.match
+local s_split = _G.string.split
+
 local next = _G.next
 local unpack = _G.unpack
 
@@ -15,24 +18,117 @@ local unpack = _G.unpack
 
 function E:CreateStatusBar(parent, name, texture, orientation)
     local bar = CreateFrame("StatusBar", name, parent)
+    bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
+    bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Shadow")
+
+    E:SetStatusBarSkin(bar, texture, orientation)
+    bar.handled = true
+
+    return bar
+end
+
+function E:HandleStatusBar(bar, isRecursive)
+    if bar.handled then return end
+
+    local children = {bar:GetChildren()}
+    local regions = {bar:GetRegions()}
+    local sbt = bar.GetStatusBarTexture and bar:GetStatusBarTexture()
+    local bg, text, tbg, ttext, tsbt, rbar
+
+    for _, region in next, regions do
+        if region:IsObjectType("Texture") then
+            local texture = region:GetTexture()
+            local layer = region:GetDrawLayer()
+
+            if layer == "BACKGROUND" then
+                if texture and s_match(texture, "[Cc][Oo][Ll][Oo][Rr]") then
+                    bg = region
+                elseif texture and
+                    s_match(texture, "[Bb][Aa][Cc][Kk][Gg][Rr][Oo][Uu][Nn][Dd]") then
+                    bg = region
+                else
+                    E:ForceHide(region)
+                end
+            else
+                if region ~= sbt then E:ForceHide(region) end
+            end
+        elseif region:IsObjectType("FontString") then
+            text = region
+        end
+    end
+
+    for _, child in next, children do
+        if child:IsObjectType("StatusBar") then
+            tbg, ttext, tsbt = self:HandleStatusBar(child, true)
+        end
+    end
+
+    sbt = tsbt or sbt
+    bg = tbg or bg
+    text = ttext or text
+    rbar = sbt:GetParent()
+
+    if not isRecursive then
+        bar.ignoreFramePositionManager = true
+        bar:SetSize(168, 12)
+
+        if rbar ~= bar then
+            rbar:SetAllPoints()
+            bar.RealBar = rbar
+        end
+
+        if not bg then bg = bar:CreateTexture(nil, "BACKGROUND") end
+
+        bg:SetColorTexture(E:GetRGB(C.colors.dark_gray))
+        bg:SetAllPoints()
+        bar.Bg = bg
+
+        if not text then
+            text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Shadow")
+            text:SetWordWrap(false)
+            text:SetJustifyV("MIDDLE")
+        else
+            text:SetFontObject("LumFont12_Shadow")
+            text:SetWordWrap(false)
+            text:SetJustifyV("MIDDLE")
+        end
+
+        text:SetDrawLayer("ARTWORK")
+        text:ClearAllPoints()
+        text:SetPoint("TOPLEFT", 1, 0)
+        text:SetPoint("BOTTOMRIGHT", -1, -1)
+        bar.Text = text
+
+        sbt:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+        bar.Texture = sbt
+
+        bar.handled = true
+
+        return bar
+    else
+        return bg, text, sbt
+    end
+end
+
+function E:SetStatusBarSkin(bar, texture, orientation)
+    if not bar then return end
+
     bar:SetStatusBarTexture(texture or C.media.textures.statusbar)
     bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
     bar:SetOrientation(orientation or "HORIZONTAL")
 
-    local bg = bar:CreateTexture(nil, "BACKGROUND")
-    bg:SetTexture(C.media.textures.statusbar_bg)
-    bg:SetColorTexture(bar:GetStatusBarColor())
-    bg:SetAllPoints()
-    bg:SetAlpha(0.25)
-    bar.Bg = bg
+    if bar.Bg then
+        bar.Bg:SetTexture(C.media.textures.statusbar_bg)
+        bar.Bg:SetColorTexture(bar:GetStatusBarColor())
+        bar.Bg:SetAlpha(0.25)
+        bar.Bg:SetAllPoints()
+    end
 
-    bar.Text = E:CreateString(bar, 12, false, C.media.fonts.normal,
-                              "$parentText")
-    bar.Text:SetPoint("CENTER", 0, -1)
-
-    bar.handled = true
-
-    return bar
+    if bar.Text then
+        bar.Text:SetWordWrap(false)
+        bar.Text:SetJustifyV("MIDDLE")
+        bar.Text:SetPoint("CENTER", 0, -1)
+    end
 end
 
 do

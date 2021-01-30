@@ -71,7 +71,7 @@ D.global = {
     },
     shadows = {enabled = true, alpha = 0.3},
     castbar = {
-        texture = D.media.textures.statusbar,
+        texture = D.media.textures.neon,
         bg = D.media.textures.statusbar_bg
     },
     aura_filters = {
@@ -385,7 +385,7 @@ D.modules = {
             x_growth = "RIGHT",
             y_growth = "DOWN",
             fade = {
-                enabled = false,
+                enabled = true,
                 out_delay = 0.75,
                 out_duration = 0.15,
                 in_delay = 0,
@@ -644,6 +644,24 @@ D.modules = {
             enabled = true,
             auto_repair = {enabled = true, use_guild_funds = true},
             vendor_grays = {enabled = true}
+        }
+    },
+    tooltips = {
+        enabled = true,
+        scale = 1,
+        alpha = 0.9,
+        id = true,
+        count = true,
+        title = true,
+        target = true,
+        inspect = true,
+        anchor_cursor = false,
+        point = {
+            p = "BOTTOMRIGHT",
+            anchor = "UIParent",
+            ap = "BOTTOMRIGHT",
+            x = -76,
+            y = 126
         }
     },
     unitframes = {
@@ -986,7 +1004,7 @@ D.modules = {
                             anchor = "",
                             ap = "RIGHT",
                             x = -6,
-                            y = 1
+                            y = 1.5
                         }
                     },
                     prediction = {
@@ -1093,7 +1111,13 @@ D.modules = {
                     h_alignment = "LEFT",
                     v_alignment = "MIDDLE",
                     word_wrap = false,
-                    point = {p = "LEFT", anchor = "", ap = "LEFT", x = 6, y = 1}
+                    point = {
+                        p = "LEFT",
+                        anchor = "",
+                        ap = "LEFT",
+                        x = 6,
+                        y = 1.5
+                    }
                 },
                 portrait = {
                     enabled = true,
@@ -1161,11 +1185,7 @@ D.modules = {
                             v_alignment = "BOTTOM"
                         }
                     },
-                    type = {
-                        size = 12,
-                        position = "TOPLEFT",
-                        debuff_type = false
-                    },
+                    type = {size = 12, position = "TOPLEFT", debuff_type = true},
                     filter = {
                         custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
@@ -2095,7 +2115,7 @@ D.modules = {
                 class_power = {
                     enabled = true,
                     width = playerPlateWidth,
-                    height = 2,
+                    height = 3,
                     change_threshold = 0.01,
                     orientation = "HORIZONTAL",
                     prediction = {enabled = true},

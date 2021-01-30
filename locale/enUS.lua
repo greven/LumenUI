@@ -73,6 +73,7 @@ L["UNIT_FRAME"] = _G.UNITFRAME_LABEL
 L["UNKNOWN"] = _G.UNKNOWN
 L["WORLD_BOSS"] = _G.RAID_INFO_WORLD_BOSS
 L["ZONE"] = _G.ZONE
+L["YOU"] = _G.YOU
 
 -- ---------------
 

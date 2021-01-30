@@ -73,7 +73,7 @@ local function border_Hide(self) for _, v in next, sections do self[v]:Hide() en
 
 local function border_Show(self) for _, v in next, sections do self[v]:Show() end end
 
-local function border_GetVertexColor(self) return self.TOPLEFT:GetVertexColor() end
+local function border_GetVertexColor(self) self.TOPLEFT:GetVertexColor() end
 
 local function border_SetVertexColor(self, r, g, b, a)
     for _, v in next, sections do self[v]:SetVertexColor(r, g, b, a) end
@@ -120,6 +120,8 @@ function E:CreateBorder(parent, drawLayer, drawSubLevel)
     border:SetVertexColor(E:GetRGB(C.global.border.color))
     border:SetOffset(-3)
     border:SetSize(16)
+
+    parent._border = border
 
     return border
 end

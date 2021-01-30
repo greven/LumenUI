@@ -280,8 +280,10 @@ function M.CreateActionBars()
                 data.b_buttons[i]:UnregisterAllEvents()
 
                 E:SkinActionButton(button)
-                E:CreateBackdrop(button, nil, nil,
-                                 C.media.textures.button_backdrop)
+                E:SetBackdrop(button, nil, nil, nil, {
+                    bgFile = C.media.textures.button_backdrop,
+                    tile = false
+                })
 
                 bar._buttons[i] = button
             end

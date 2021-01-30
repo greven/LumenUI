@@ -205,9 +205,9 @@ D.colors = {
         }
     },
     runes = {
-        [1] = rgb(240, 70, 75), -- Blood
-        [2] = rgb(50, 140, 250), -- Frost
-        [3] = rgb(100, 225, 120) -- Unholy
+        [1] = b.red, -- Blood
+        [2] = b.blue, -- Frost
+        [3] = b.green -- Unholy
     }
 }
 
