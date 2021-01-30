@@ -84,11 +84,11 @@ function E:HandleStatusBar(bar, isRecursive)
         bar.Bg = bg
 
         if not text then
-            text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Shadow")
+            text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
             text:SetWordWrap(false)
             text:SetJustifyV("MIDDLE")
         else
-            text:SetFontObject("LumFont12_Shadow")
+            text:SetFontObject("LumFont12_Outline")
             text:SetWordWrap(false)
             text:SetJustifyV("MIDDLE")
         end
@@ -128,6 +128,15 @@ function E:SetStatusBarSkin(bar, texture, orientation)
         bar.Text:SetWordWrap(false)
         bar.Text:SetJustifyV("MIDDLE")
         bar.Text:SetPoint("CENTER", 0, -1)
+    else
+        text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
+        text:SetJustifyV("MIDDLE")
+        text:SetDrawLayer("ARTWORK")
+        text:ClearAllPoints()
+        text:SetPoint("TOPLEFT", 1, 0)
+        text:SetPoint("BOTTOMRIGHT", -1, -1)
+        text:SetWordWrap(false)
+        bar.Text = text
     end
 end
 
