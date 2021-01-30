@@ -33,6 +33,7 @@ D.media = {
         border = Media .. "textures\\border",
         border_thick = Media .. "textures\\border-thick",
         border = Media .. "textures\\border",
+        backdrop_border = Media .. "textures\\backdrop-border",
         button_backdrop = Media .. "textures\\button-backdrop",
         button_highlight = Media .. "textures\\button-highlight",
         button_checked = Media .. "textures\\button-checked",
@@ -64,7 +65,7 @@ D.global = {
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
     backdrop = {color = rgb(0, 0, 0), alpha = 0.9},
-    border = {color = rgb(20, 20, 20)},
+    border = {color = rgb(25, 25, 25)},
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
@@ -650,6 +651,7 @@ D.modules = {
         enabled = true,
         scale = 1,
         alpha = 0.9,
+        border_color = true,
         id = true,
         count = true,
         title = true,

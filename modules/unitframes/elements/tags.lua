@@ -77,8 +77,11 @@ local customTags = {
 
     -- Creature difficulty color
     color_difficulty = function(unit)
-        return "|c" ..
-                   E:ToHex(GetCreatureDifficultyColor(UnitEffectiveLevel(unit)))
+        local level = UnitEffectiveLevel(unit)
+        local color = GetCreatureDifficultyColor(level)
+
+        if level > 0 then return "|c" .. E:ToHex(color) end
+        return "|c" .. E:ToHex(C.colors.difficulty.impossible)
     end,
 
     -- Color unit by disconnected, tapped, class or reaction

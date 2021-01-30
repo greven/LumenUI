@@ -6,7 +6,7 @@ local _G = getfenv(0)
 
 -- ---------------
 
-function E:CreateBackdrop(frame, offset, alpha, color, backdrop)
+function E:SetBackdrop(frame, offset, alpha, color, backdrop)
     if frame._backdrop then return end
 
     if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
@@ -15,39 +15,35 @@ function E:CreateBackdrop(frame, offset, alpha, color, backdrop)
     local bg = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     bg:SetFrameLevel(level == 0 and 0 or level - 1)
     bg:SetOutside(frame, offset, offset)
-    bg:SetBackdrop({bgFile = C.media.textures.flat, tile = false})
-    bg:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
-    bg:SetAlpha(alpha or C.global.backdrop.alpha)
 
-    if backdrop then bg:SetBackdrop(backdrop) end
-    if color then bg:SetBackdropColor(E:GetRGB(color)) end
+    if backdrop then
+        bg:SetBackdrop(backdrop)
+        if color then bg:SetBackdropColor(E:GetRGB(color)) end
+    else
+        bg:SetBackdrop({bgFile = C.media.textures.flat, tile = false})
+        if color then
+            bg:SetBackdropColor(E:GetRGB(color))
+        else
+            bg:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
+        end
+    end
+
+    bg:SetAlpha(alpha or C.global.backdrop.alpha)
 
     frame._backdrop = bg
 
     return bg
 end
 
-function E:SetBackdrop(frame, offset, alpha, color, backdrop, x1, y1, x2, y2)
-    local bg = E:CreateBackdrop(frame, offset, alpha, color, backdrop)
-
-    if x1 then
-        bg:SetPoint("TOPLEFT", frame, x1, y1)
-        bg:SetPoint("BOTTOMRIGHT", frame, x2, y2)
-    end
-
-    return bg
-end
-
-function E:HandleBackdrop(self, offset, alpha, color, backdrop, x1, y1, x2, y2)
+function E:HandleBackdrop(self, offset, alpha, color, backdrop)
     if self.handled then return end
 
     if self.SetBackdrop then self:SetBackdrop(nil) end
     self:DisableDrawLayer("BACKGROUND")
 
-    self.bg =
-        E:SetBackdrop(self, offset, alpha, color, backdrop, x1, y1, x2, y2)
-    self.bg:SetInside(self)
+    self.bg = E:SetBackdrop(self, offset, alpha, color, backdrop)
     self.bg:SetFrameLevel(self:GetFrameLevel())
+    self.bg:SetInside(self)
 
     self.handled = true
 
