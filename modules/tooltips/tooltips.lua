@@ -192,7 +192,7 @@ local function tooltip_SetUnit(self)
                                                   UnitIsDND(unit) and DND or "",
                                               nameColor.hex, name)
 
-        -- status
+        -- Status
         local status = ""
 
         -- GameTooltipTextRight1:SetText(C.media.textures.icons_inline["SHEEP"]:format(16, 16))
@@ -226,7 +226,7 @@ local function tooltip_SetUnit(self)
             GameTooltipTextRight1:SetText(nil)
         end
 
-        -- guild info
+        -- Guild info
         local guildName, guildRankName, _, guildRealm = GetGuildInfo(unit)
         if guildName then
             lineOffset = 3
@@ -357,9 +357,38 @@ local function tooltip_SetUnit(self)
         end
     end
 
+    -- Border color
+    if C.modules.tooltips.border.color_class and UnitIsPlayer(unit) then
+        self.bg:SetBackdropBorderColor(E:GetRGB(E:GetUnitClassColor(unit)))
+    end
+
+    -- Statusbar color
+    if C.modules.tooltips.statusbar.color_class and UnitIsPlayer(unit) then
+        self.StatusBar:SetStatusBarColor(E:GetRGB(E:GetUnitClassColor(unit)))
+    end
+
     cleanUp(self)
 
     self:Show()
+end
+
+local function tooltipBar_Hook(self)
+    if self:IsForbidden() or self:GetParent():IsForbidden() then return end
+
+    local _, max = self:GetMinMaxValues()
+    if max == 1 then
+        self.Text:Hide()
+    else
+        local value = self:GetValue()
+
+        self.Text:Show()
+        self.Text:SetFormattedText("%s / %s", E:FormatNumber(value),
+                                   E:FormatNumber(max))
+
+        self:GetParent():SetMinimumWidth(self.Text:GetStringWidth() + 32)
+    end
+
+    self:SetStatusBarColor(E:GetRGB(C.colors.health))
 end
 
 local function tooltip_Hook(self) M:ReskinTooltip(self) end
@@ -438,7 +467,7 @@ function M:ReskinTooltip(self)
     end
 
     self.bg:SetBackdropBorderColor(E:GetRGB(C.global.border.color))
-    if config.border_color and self.GetItem then
+    if config.border.color_quality and self.GetItem then
         local _, item = self:GetItem()
 
         if item then
@@ -480,6 +509,10 @@ function M:Init()
         -- Backdrop
         hooksecurefunc("SharedTooltip_SetBackdropStyle",
                        tooltip_SetSharedBackdropStyle)
+
+        -- Statusbar
+        GameTooltipStatusBar:HookScript("OnShow", tooltipBar_Hook)
+        GameTooltipStatusBar:HookScript("OnValueChanged", tooltipBar_Hook)
 
         -- Units
         GameTooltip:HookScript("OnTooltipSetUnit", tooltip_SetUnit)
