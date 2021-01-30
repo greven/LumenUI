@@ -19,6 +19,14 @@ Actionbars:
   ☐ Missing proc button glow @bug @critical @today
   ☐ Button: Make Pushed Texture (yellow) more noticeable @high @today
   ✔ Button: Skin flyout button missing @done(21-01-28 14:17)
+  ☐ Create PetAction Bar
+  ☐ Create PetBattle Bar
+  ☐ Create Extra Button
+  ☐ Create Zone Button
+  ☐ Create Micro Menu
+
+Tooltip:
+  ☐ Add Bordet Style (check LumUI and other addons...)
 
 UnitNames:
   ☐ Color by class?
