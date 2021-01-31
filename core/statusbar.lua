@@ -19,7 +19,7 @@ local unpack = _G.unpack
 function E:CreateStatusBar(parent, name, texture, orientation)
     local bar = CreateFrame("StatusBar", name, parent)
     bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
-    bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Shadow")
+    bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
 
     E:SetStatusBarSkin(bar, texture, orientation)
     bar.handled = true
@@ -124,20 +124,17 @@ function E:SetStatusBarSkin(bar, texture, orientation)
         bar.Bg:SetAllPoints()
     end
 
-    if bar.Text then
-        bar.Text:SetWordWrap(false)
-        bar.Text:SetJustifyV("MIDDLE")
-        bar.Text:SetPoint("CENTER", 0, -1)
-    else
-        text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
-        text:SetJustifyV("MIDDLE")
-        text:SetDrawLayer("ARTWORK")
-        text:ClearAllPoints()
-        text:SetPoint("TOPLEFT", 1, 0)
-        text:SetPoint("BOTTOMRIGHT", -1, -1)
-        text:SetWordWrap(false)
+    if not bar.Text then
+        bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
         bar.Text = text
     end
+
+    bar.Text:ClearAllPoints()
+    bar.Text:SetDrawLayer("ARTWORK")
+    bar.Text:SetJustifyV("MIDDLE")
+    bar.Text:SetPoint("TOPLEFT", 1, 0)
+    bar.Text:SetPoint("BOTTOMRIGHT", -1, -1)
+    bar.Text:SetWordWrap(false)
 end
 
 do
