@@ -116,8 +116,6 @@ do
     function UF:CreateTargetPlateFrame(frame)
         local level = frame:GetFrameLevel()
 
-        frame:RegisterForClicks()
-
         local textParent = CreateFrame("Frame", nil, frame)
         textParent:SetFrameLevel(level + 9)
         textParent:SetAllPoints()

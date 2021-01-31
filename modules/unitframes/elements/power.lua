@@ -150,6 +150,7 @@ do
         element:SetPoint("BOTTOMRIGHT", frame)
         element:SetStatusBarTexture(C.media.textures.neon)
         element:GetStatusBarTexture():SetVertTile(true)
+        -- element:GetStatusBarTexture():SetHorizTile(true)
         E:SmoothBar(element)
 
         local bg = element:CreateTexture(nil, "BACKGROUND")

@@ -12,8 +12,8 @@ local type = _G.type
 
 -- Blizz
 local C_Timer = _G.C_Timer
-local CanInspect = _G.CanInspect
 local GetTime = _G.GetTime
+local CanInspect = _G.CanInspect
 local NotifyInspect = _G.NotifyInspect
 local UnitExists = _G.UnitExists
 local UnitGUID = _G.UnitGUID

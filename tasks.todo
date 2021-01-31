@@ -1,7 +1,7 @@
 Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!! @bug
   ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health. @bug @low @today
-  ☐ Auras: Cooldown spiral is 1 pixel short of the aura border
+  ☐ Auras: Cooldown spiral is 1 pixel short of the aura border @bug
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu (maybe, if not too much work to refactor)
   ☐ Units Missing:
@@ -10,15 +10,14 @@ Unitframes:
     ☐ Boss
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
   ☐ Nameplates!
-  ☐ PlayerPlate: Attach to Blizzard Personal resource display! (Right now event doesn't trigger for player plate) @started(21-01-25 19:14)
+  ☐ PlayerPlate: Attach to Blizzard Personal resource display! (Right now event doesn't trigger for player plate) @low
 
 Minimap:
   ☐ WIP
 
 Actionbars:
-  ☐ Missing proc button glow @bug @critical @today
   ☐ Button: Make Pushed Texture (yellow) more noticeable @high @today
-  ✔ Button: Skin flyout button missing @done(21-01-28 14:17)
+  ☐ Make the glow for when spell can be cast (available resources) different from the proc glow @low
   ☐ Create PetAction Bar
   ☐ Create PetBattle Bar
   ☐ Create Extra Button
@@ -26,7 +25,10 @@ Actionbars:
   ☐ Create Micro Menu
 
 Tooltip:
-  ☐ Add Bordet Style (check LumUI and other addons...)
+  ☐ Add Azerite border
+  ☐ Check lsUI / NDUi tooltips to see what can we add...
+  ☐ Add missing icons to tooltip (Faction, Phase, etc...) @high
+  ✔ Tooltip missing: Chat @done(21-01-31 20:41)
 
 UnitNames:
   ☐ Color by class?
@@ -36,7 +38,7 @@ Chat:
   ☐ WIP
 
 Auras:
-  ☐ WIP
+  ☐ Cooldown spiral is 1 pixel short of the aura border @bug
 
 AuraWatchers:
   ☐ WIP: Maybe it should track player auras and target debuffs just like NDUI (Check it's module)
@@ -45,11 +47,7 @@ XPBar:
   ☐ Refactor
   ☐ Add segments instead of a continous bar?
   ☐ If high level and not tracking anything, hide?
-  ✔ Texture for Artifact Power @low @done(21-01-28 16:13)
 
-Misc:
-  ✔ Auto sell gray items @done(21-01-27 20:54)
-  ✔ Auto-repair @done(21-01-28 16:13)
 
 Roadmap:
   ☐ Add GUI after first stable release (future plans)
@@ -57,6 +55,12 @@ Roadmap:
   ☐ Add Mask support for buttons?
 
 Archive:
+  ✔ Missing proc button glow @bug @critical @today @done(21-01-31 15:07) @project(Actionbars)
+  ✔ Button: Skin flyout button missing @done(21-01-28 14:17) @project(Actionbars)
+  ✔ Add Bordet Style (check LumUI and other addons...) @done(21-01-30 22:23) @project(Tooltip)
+  ✔ Texture for Artifact Power @low @done(21-01-28 16:13) @project(XPBar)
+  ✔ Auto sell gray items @done(21-01-27 20:54) @project(Misc)
+  ✔ Auto-repair @done(21-01-28 16:13) @project(Misc)
   ✔ gain and loss indicators (statusbar) @done(21-01-11 10:58) @project(api)
   ✔ Glow @done(21-01-17 21:18) @project(api)
   ✔ Button @done(21-01-17 21:18) @project(api)

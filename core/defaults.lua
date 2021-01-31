@@ -64,7 +64,7 @@ D.global = {
         units = {font = D.media.fonts.condensed, outline = false, shadow = true},
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
-    backdrop = {color = rgb(0, 0, 0), alpha = 0.9},
+    backdrop = {color = rgb(5, 8, 12), alpha = 0.9},
     border = {color = rgb(25, 25, 25)},
     statusbar = {
         texture = D.media.textures.statusbar,
@@ -187,7 +187,7 @@ D.modules = {
             per_row = 6,
             size = 28,
             spacing = 6,
-            visibility = "[petbattle] hide; [vehicleui][harm,nodead][combat][mod:alt] show; [] hide; show",
+            visibility = "[petbattle] hide; [vehicleui][harm,nodead][combat][group][mod:alt] show; [] hide; show",
             visible = true,
             x_growth = "RIGHT",
             y_growth = "DOWN",
@@ -650,10 +650,12 @@ D.modules = {
     tooltips = {
         enabled = true,
         scale = 1,
-        alpha = 0.9,
-        border = {color_quality = true, color_class = false},
-        statusbar = {color_class = true},
+        alpha = 0.85,
+        border = {size = 10, color_quality = true, color_class = false},
+        health = {height = 6, color_class = true},
         id = true,
+        spell_id = "SHOW", -- SHOW, HIDE, ON_SHIFT_DOWN
+        aura_id = "ON_SHIFT_DOWN", -- SHOW, HIDE, ON_SHIFT_DOWN
         count = true,
         title = true,
         target = true,
@@ -1188,7 +1190,11 @@ D.modules = {
                             v_alignment = "BOTTOM"
                         }
                     },
-                    type = {size = 12, position = "TOPLEFT", debuff_type = true},
+                    type = {
+                        size = 12,
+                        position = "TOPLEFT",
+                        debuff_type = false
+                    },
                     filter = {
                         custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
@@ -2019,7 +2025,7 @@ D.modules = {
                 enabled = true,
                 width = playerPlateWidth,
                 height = playerPlateHeight,
-                visibility = "[petbattle] hide; [harm,nodead][combat][mod:alt] show; [] hide; show",
+                visibility = "[petbattle] hide; [harm,nodead][combat][group][mod:alt] show; [] hide; show",
                 attached = true, -- Attach Position to Blizzard's Player nameplate
                 point = {
                     p = "CENTER",
