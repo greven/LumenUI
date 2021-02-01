@@ -12,18 +12,17 @@ function M:IsInit() return isInit end
 
 function M:Init()
     if not isInit and C.modules.blizzard.enabled then
-        -- self:SetUpCastBars()
         self:SetUpCharacterFrame()
         -- self:SetUpCommandBar()
         -- self:SetUpDigsiteBar()
-        -- self:SetUpDurabilityFrame()
+        self:SetUpDurabilityFrame()
         -- self:SetUpGMFrame()
         -- self:SetUpMail()
-        -- self:SetUpObjectiveTracker()
-        -- self:SetUpAltPowerBar()
-        -- self:SetUpTalkingHead()
+        self:SetUpObjectiveTracker()
+        self:SetUpAltPowerBar()
+        self:SetUpTalkingHead()
         -- self:SetUpMirrorTimers()
-        -- self:SetUpVehicleSeatFrame()
+        self:SetUpVehicleSeatFrame()
 
         isInit = true
 
@@ -33,6 +32,7 @@ end
 
 function M:Update()
     if isInit then
-        -- self:UpdateObjectiveTracker()
+        self:UpdateObjectiveTracker()
+        self.UpdateVehicleSeatFrame()
     end
 end

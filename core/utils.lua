@@ -20,10 +20,14 @@ local m_modf = _G.math.modf
 
 local s_format = _G.string.format
 local s_utf8sub = _G.string.utf8sub
+local s_utf8lower = _G.string.utf8lower
 local s_split = _G.string.split
 local s_upper = _G.string.upper
 local s_join = _G.string.join
 local s_utf8sub = _G.string.utf8sub
+local s_match = _G.string.match
+local g_match = _G.string.gmatch
+local g_sub = _G.string.gsub
 
 local t_wipe = _G.table.wipe
 local t_insert = _G.tinsert
@@ -353,6 +357,20 @@ function E:CreateString(frame, size, color, font, name, anchor, x, y)
 end
 
 function E:TruncateString(v, length) return s_utf8sub(v, 1, length) end
+
+function E:Abbreviate(v)
+    local letters, lastWord = '', s_match(v, '.+%s(.+)$')
+    if lastWord then
+        for word in g_match(v, '.-%s') do
+            local firstLetter = s_utf8sub(g_sub(word, '^[%s%p]*', ''), 1, 1)
+            if firstLetter ~= s_utf8lower(firstLetter) then
+                letters = format('%s%s. ', letters, firstLetter)
+            end
+            v = s_format('%s%s', letters, lastWord)
+        end
+    end
+    return v
+end
 
 function E:Print(...)
     _G.DEFAULT_CHAT_FRAME:AddMessage(s_join('', E:WrapText(C.colors.violet,

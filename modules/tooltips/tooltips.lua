@@ -153,15 +153,18 @@ end
 
 function M:ReskinStatusBar(self)
     local config = C.modules.tooltips
+    local statusbar = self.StatusBar
 
-    E:HandleStatusBar(self.StatusBar)
-    E:SetStatusBarSkin(self.StatusBar, C.media.textures.statusbar)
-    E:SetBackdrop(self.StatusBar, nil, config.alpha)
-    self.StatusBar:ClearAllPoints()
-    self.StatusBar:SetPoint("BOTTOMLEFT", self.bg, "TOPLEFT", 2, 4)
-    self.StatusBar:SetPoint("BOTTOMRIGHT", self.bg, "TOPRIGHT", -2, 4)
-    self.StatusBar:GetStatusBarTexture():SetVertTile(true)
-    self.StatusBar:SetHeight(config.health.height)
+    E:HandleStatusBar(statusbar)
+    E:SetStatusBarSkin(statusbar, C.media.textures.statusbar)
+    E:SetBackdrop(statusbar, E.SCREEN_SCALE * 1.5, config.alpha)
+    statusbar:ClearAllPoints()
+    statusbar:SetPoint("BOTTOMLEFT", self.bg, "TOPLEFT", 2, 4)
+    statusbar:SetPoint("BOTTOMRIGHT", self.bg, "TOPRIGHT", -2, 4)
+    statusbar:GetStatusBarTexture():SetVertTile(true)
+    statusbar:SetHeight(config.health.height)
+
+    if statusbar.Text then updateFont(statusbar.Text, 14, true, true) end
 end
 
 function M:ReskinTooltip()

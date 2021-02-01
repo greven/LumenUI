@@ -57,7 +57,7 @@ local function updateAura(button, index)
                 button.AuraType:Hide()
             end
         else
-            button.Border:SetVertexColor(C.global.border.color)
+            button.Border:SetVertexColor(E:GetRGB(C.global.border.color))
             button.AuraType:Hide()
         end
     end

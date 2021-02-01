@@ -10,6 +10,7 @@ local ipairs = _G.ipairs
 local m_floor = _G.math.floor
 local s_format = _G.string.format
 local s_len = _G.string.len
+local s_find = _G.string.find
 local tonumber = _G.tonumber
 
 local UnitName = _G.UnitName
@@ -52,6 +53,7 @@ local events = {
     health_perc = "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
     level = "UNIT_LEVEL PLAYER_LEVEL_UP",
     name = "UNIT_NAME_UPDATE",
+    name_abbr = "UNIT_NAME_UPDATE",
     npc_type = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
     npc_type_short = "UNIT_CLASSIFICATION_CHANGED UNIT_NAME_UPDATE",
     power_cur = "UNIT_POWER_FREQUENT UNIT_POWER_UPDATE UNIT_MAXPOWER UNIT_CONNECTION PLAYER_FLAGS_CHANGED",
@@ -153,7 +155,13 @@ local customTags = {
         if length then
             return name ~= "" and E:TruncateString(name, length) or name
         end
+        return name
+    end,
 
+    -- Unit name abbreviated
+    name_abbr = function(unit, realUnit)
+        local name = UnitName(realUnit or unit) or ""
+        if name and s_find(name, '%s') then name = E:Abbreviate(name) end
         return name
     end,
 

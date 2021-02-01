@@ -11,6 +11,7 @@ Unitframes:
   ☐ Raid Frames: Debuff indicators, aura watchers (corner indicators, for healers, etc.)
   ☐ Nameplates!
   ☐ PlayerPlate: Attach to Blizzard Personal resource display! (Right now event doesn't trigger for player plate) @low
+  ☐ Autoswing bar
 
 Minimap:
   ☐ WIP
@@ -50,6 +51,7 @@ XPBar:
 
 Blizzard:
   ☐ CharacterFrame (Gems, items text not showing?) @bug
+  ☐ Object Watcher Frame: Reskin
 
 Roadmap:
   ☐ Add GUI after first stable release (future plans)

@@ -2,4 +2,5 @@
   <Script file="core.lua" />
   <Include file="elements\_elements.xml"/>
 	<Include file="units\_units.xml"/>
+	<Include file="groups\_groups.xml"/>
 </Ui>

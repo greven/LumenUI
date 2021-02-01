@@ -5,6 +5,8 @@ local M = E:GetModule("Bars")
 -- Lua
 local _G = getfenv(0)
 
+-- ---------------
+
 function M.CleanUp()
     E:ForceHide(MainMenuBarArtFrame, true)
     E:ForceHide(MultiBarBottomLeft)

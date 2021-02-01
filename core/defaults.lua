@@ -64,8 +64,8 @@ D.global = {
         units = {font = D.media.fonts.condensed, outline = false, shadow = true},
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
-    backdrop = {color = rgb(5, 8, 12), alpha = 0.9},
-    border = {color = rgb(25, 25, 25)},
+    backdrop = {color = rgb(5, 8, 12), alpha = 0.88},
+    border = {color = rgb(30, 30, 30)},
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
@@ -616,10 +616,19 @@ D.modules = {
     },
     blizzard = {
         enabled = true,
-        character_frame = {enabled = true, ilvl = true, enhancements = true}
+        character_frame = {enabled = true, ilvl = true, enhancements = true},
+        durability = {enabled = true, point = {"TOPRIGHT", -4, -196}},
+        objective_tracker = { -- ObjectiveTrackerFrame
+            enabled = true,
+            height = 600,
+            point = {"TOPRIGHT", -192, -192}
+        },
+        player_alt_power_bar = {enabled = true},
+        talking_head = {enabled = true, hide = false},
+        vehicle = {enabled = true, size = 100, point = {"TOPLEFT", 4, -196}}
     },
     minimap = {
-        enabled = false,
+        enabled = true,
         size = 200,
         square = true,
         collect = {
@@ -640,7 +649,7 @@ D.modules = {
             QueueStatusMinimapButton = 320
         },
         color = {border = false, zone_text = true},
-        point = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -20, 40}
+        point = {"BOTTOMRIGHT", -20, 100}
     },
     misc = {
         enabled = true,
@@ -654,7 +663,7 @@ D.modules = {
     tooltips = {
         enabled = true,
         scale = 1,
-        alpha = 0.85,
+        alpha = 0.88,
         border = {size = 10, color_quality = true, color_class = false},
         health = {height = 6, color_class = true},
         id = true,
@@ -812,7 +821,7 @@ D.modules = {
                         anchor = "UIParent",
                         ap = "BOTTOM",
                         x = 0,
-                        y = 24 + 115
+                        y = 24 + 82
                     }
                 },
                 name = {
@@ -985,7 +994,7 @@ D.modules = {
                     p = "TOP",
                     anchor = "UIParent",
                     ap = "TOP",
-                    x = -20,
+                    x = 0,
                     y = -51
                 },
                 health = {
@@ -1367,7 +1376,7 @@ D.modules = {
                     }
                 },
                 name = {
-                    tag = "[lum:color_difficulty][lum:level]|r [lum:name(23)]",
+                    tag = "[lum:color_difficulty][lum:level]|r [lum:name_abbr]",
                     size = 13,
                     outline = true,
                     shadow = false,
@@ -2029,7 +2038,7 @@ D.modules = {
                 enabled = true,
                 width = playerPlateWidth,
                 height = playerPlateHeight,
-                visibility = "[petbattle] hide; [harm,nodead][combat][group][mod:alt] show; [] hide; show",
+                visibility = "[petbattle,vehicleui,overridebar,possessbar] hide; [harm,nodead][combat][group][mod:alt] show; [] hide; show",
                 attached = true, -- Attach Position to Blizzard's Player nameplate
                 point = {
                     p = "CENTER",
@@ -2159,7 +2168,7 @@ D.modules = {
                 enabled = true,
                 width = 153,
                 height = playerPlateHeight,
-                visibility = "[harm,nodead][combat] show; hide;",
+                visibility = "[petbattle,vehicleui,overridebar,possessbar] hide; [harm,nodead][exists,combat][exists,nocombat,mod:alt] show; [] hide; show",
                 point = {
                     p = "LEFT",
                     anchor = "LumenPlayerPlateFrame",
@@ -2273,7 +2282,7 @@ D.modules = {
                     prediction = {enabled = true}
                 },
                 name = {
-                    tag = "[lum:color_difficulty][lum:level]|r[lum:npc_type_short(true)] [lum:name(24)]",
+                    tag = "[lum:color_difficulty][lum:level]|r[lum:npc_type_short(true)] [lum:name_abbr]",
                     size = 13,
                     outline = true,
                     shadow = false,
@@ -2286,6 +2295,93 @@ D.modules = {
                         ap = "TOPLEFT",
                         x = 0,
                         y = 10
+                    }
+                },
+                auras = {
+                    enabled = true,
+                    rows = 2,
+                    per_row = 5,
+                    spacing = 5,
+                    size_override = 26,
+                    x_growth = "RIGHT",
+                    y_growth = "DOWN",
+                    disable_mouse = false,
+                    count = {
+                        size = 10,
+                        outline = true,
+                        shadow = false,
+                        h_alignment = "RIGHT",
+                        v_alignment = "TOP"
+                    },
+                    cooldown = {
+                        text = {
+                            enabled = true,
+                            size = 10,
+                            v_alignment = "BOTTOM"
+                        }
+                    },
+                    type = {
+                        size = 12,
+                        position = "TOPLEFT",
+                        debuff_type = false
+                    },
+                    filter = {
+                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
+                        friendly = {
+                            buff = {
+                                boss = true,
+                                tank = true,
+                                healer = true,
+                                mount = true,
+                                selfcast = true,
+                                selfcast_permanent = true,
+                                player = true,
+                                player_permanent = true,
+                                misc = false
+                            },
+                            debuff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
+                                misc = false
+                            }
+                        },
+                        enemy = {
+                            buff = {
+                                boss = true,
+                                tank = true,
+                                healer = true,
+                                mount = true,
+                                selfcast = true,
+                                selfcast_permanent = true,
+                                player = true,
+                                player_permanent = true,
+                                dispellable = true,
+                                misc = false
+                            },
+                            debuff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                misc = false
+                            }
+                        }
+                    },
+                    point = {
+                        p = "TOPLEFT",
+                        anchor = "",
+                        ap = "BOTTOMLEFT",
+                        x = 1,
+                        y = -8
                     }
                 }
             }

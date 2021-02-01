@@ -107,7 +107,7 @@ do
             self:UpdateHealthPrediction()
             self:UpdatePower()
             self:UpdateName()
-            -- self:UpdatePowerPrediction()
+            self:UpdateAuras()
         else
             if self:IsEnabled() then self:Disable() end
         end
@@ -126,10 +126,10 @@ do
         E:SetBackdrop(health, 2)
 
         local power = self:CreatePowerBar(frame, textParent)
-        -- self:CreatePowerPrediction(frame, frame.Power)
         E:SetBackdrop(power, 2)
 
         self:CreateName(frame, textParent)
+        self:CreateAuras(frame, "target")
 
         -- Arrow indicator
         local arrow = frame:CreateTexture(nil, "ARTWORK")
