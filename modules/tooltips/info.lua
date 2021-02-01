@@ -10,10 +10,17 @@ local type = _G.type
 
 -- Blizz
 local C_ArtifactUI = _G.C_ArtifactUI
+local C_TradeSkillUI = _G.C_TradeSkillUI
+local C_CurrencyInfo = _G.C_CurrencyInfo
 local IsShiftKeyDown = _G.IsShiftKeyDown
 local UnitName = _G.UnitName
 local UnitAura = _G.UnitAura
 local GetItemCount = _G.GetItemCount
+local GetLootSlotLink = _G.GetLootSlotLink
+local GetLootRollItemLink = _G.GetLootRollItemLink
+local GetMerchantItemLink = _G.GetMerchantItemLink
+local GetLFGDungeonRewardLink = _G.GetLFGDungeonRewardLink
+local GetLFGDungeonShortageRewardLink = _G.GetLFGDungeonShortageRewardLink
 
 -- ---------------
 
@@ -155,6 +162,99 @@ local function tooltip_SetArtifactPowerByID(self, powerID)
     addSpellInfo(self, info.spellID)
 end
 
+local function tooltip_SetLoot(self, index)
+    if self:IsForbidden() then return end
+
+    local link = GetLootSlotLink(index)
+
+    handleLink(self, link, true)
+end
+
+local function tooltip_SetLootRollItem(self, rollID)
+    if self:IsForbidden() then return end
+
+    local link = GetLootRollItemLink(rollID)
+
+    handleLink(self, link, true)
+end
+
+local function tooltip_SetMerchantItem(self, index)
+    if self:IsForbidden() then return end
+
+    local link = GetMerchantItemLink(index)
+
+    handleLink(self, link, true)
+end
+
+local function tooltip_SetRecipeReagentItem(self, recipeID, reagentIndex)
+    if self:IsForbidden() then return end
+
+    local link = C_TradeSkillUI.GetRecipeReagentItemLink(recipeID, reagentIndex)
+
+    handleLink(self, link, true)
+end
+
+local function tooltip_SetBackpackToken(self, index)
+    if self:IsForbidden() then return end
+
+    local info = C_CurrencyInfo.GetBackpackCurrencyInfo(index)
+
+    addGenericInfo(self, info.currencyTypesID)
+end
+
+local function tooltip_SetCurrencyToken(self, index)
+    if self:IsForbidden() then return end
+
+    local link = C_CurrencyInfo.GetCurrencyListLink(index)
+
+    handleLink(self, link)
+end
+
+local function tooltip_SetQuest(self)
+    if self:IsForbidden() then return end
+
+    if not (self.questID and GameTooltip:IsOwned(self)) then return end
+
+    addGenericInfo(GameTooltip, self.questID)
+end
+
+local function tooltip_SetHyperlink(self, link)
+    if self:IsForbidden() then return end
+
+    handleLink(self, link, true)
+end
+
+local function tooltip_SetSpellOrItem(self)
+    if self:IsForbidden() then return end
+
+    local _, linkOrId = self:GetSpell()
+
+    if linkOrId then
+        addSpellInfo(self, linkOrId)
+    else
+        _, linkOrId = self:GetItem()
+
+        handleLink(self, linkOrId, true)
+    end
+end
+
+local function tooltip_SetLFGDungeonReward(self, dungeonID, rewardID)
+    if self:IsForbidden() then return end
+
+    local link = GetLFGDungeonRewardLink(dungeonID, rewardID)
+
+    handleLink(self, link)
+end
+
+local function tooltip_SetLFGDungeonShortageReward(self, dungeonID, rewardArg,
+                                                   rewardID)
+    if self:IsForbidden() then return end
+
+    local link = GetLFGDungeonShortageRewardLink(dungeonID, rewardArg, rewardID)
+
+    handleLink(self, link)
+end
+
 local function tooltip_SetItem(self)
     if self:IsForbidden() then return end
 
@@ -176,27 +276,31 @@ function M:SetupTooltipInfo()
         -- Items
         GameTooltip:HookScript("OnTooltipSetItem", tooltip_SetItem)
         hooksecurefunc(GameTooltip, "SetLootItem", tooltip_SetLoot)
-        -- hooksecurefunc(GameTooltip, "SetLootRollItem", tooltip_SetLootRollItem)
-        -- hooksecurefunc(GameTooltip, "SetMerchantItem", tooltip_SetMerchantItem)
-        -- hooksecurefunc(GameTooltip, "SetRecipeReagentItem", tooltip_SetRecipeReagentItem)
-        -- hooksecurefunc(GameTooltip, "SetToyByItemID", addItemInfo)
+        hooksecurefunc(GameTooltip, "SetLootRollItem", tooltip_SetLootRollItem)
+        hooksecurefunc(GameTooltip, "SetMerchantItem", tooltip_SetMerchantItem)
+        hooksecurefunc(GameTooltip, "SetRecipeReagentItem",
+                       tooltip_SetRecipeReagentItem)
+        hooksecurefunc(GameTooltip, "SetToyByItemID", addItemInfo)
 
         -- Currencies
-        -- hooksecurefunc(GameTooltip, "SetBackpackToken", tooltip_SetBackpackToken)
-        -- hooksecurefunc(GameTooltip, "SetCurrencyToken", tooltip_SetCurrencyToken)
+        hooksecurefunc(GameTooltip, "SetBackpackToken", tooltip_SetBackpackToken)
+        hooksecurefunc(GameTooltip, "SetCurrencyToken", tooltip_SetCurrencyToken)
         hooksecurefunc(GameTooltip, "SetCurrencyByID", addGenericInfo)
         hooksecurefunc(GameTooltip, "SetCurrencyTokenByID", addGenericInfo)
         hooksecurefunc(GameTooltip, "SetLootCurrency", tooltip_SetLoot)
 
         -- Quests
-        -- hooksecurefunc("QuestMapLogTitleButton_OnEnter", tooltip_SetQuest)
+        hooksecurefunc("QuestMapLogTitleButton_OnEnter", tooltip_SetQuest)
 
         -- Other
-        -- hooksecurefunc(GameTooltip, "SetHyperlink", tooltip_SetHyperlink)
-        -- hooksecurefunc(ItemRefTooltip, "SetHyperlink", tooltip_SetHyperlink)
-        -- hooksecurefunc(GameTooltip, "SetAction", tooltip_SetSpellOrItem)
-        -- hooksecurefunc(GameTooltip, "SetRecipeResultItem", tooltip_SetSpellOrItem)
-        -- hooksecurefunc(GameTooltip, "SetLFGDungeonReward", tooltip_SetLFGDungeonReward)
-        -- hooksecurefunc(GameTooltip, "SetLFGDungeonShortageReward", tooltip_SetLFGDungeonShortageReward)
+        hooksecurefunc(GameTooltip, "SetHyperlink", tooltip_SetHyperlink)
+        hooksecurefunc(ItemRefTooltip, "SetHyperlink", tooltip_SetHyperlink)
+        hooksecurefunc(GameTooltip, "SetAction", tooltip_SetSpellOrItem)
+        hooksecurefunc(GameTooltip, "SetRecipeResultItem",
+                       tooltip_SetSpellOrItem)
+        hooksecurefunc(GameTooltip, "SetLFGDungeonReward",
+                       tooltip_SetLFGDungeonReward)
+        hooksecurefunc(GameTooltip, "SetLFGDungeonShortageReward",
+                       tooltip_SetLFGDungeonShortageReward)
     end
 end

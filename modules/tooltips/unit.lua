@@ -301,19 +301,33 @@ local function tooltip_SetUnit(self)
         end
     end
 
-    -- Border color
-    if C.modules.tooltips.border.color_class and UnitIsPlayer(unit) then
-        self.bg:SetBackdropBorderColor(E:GetRGB(E:GetUnitClassColor(unit)))
-    end
-
-    -- Statusbar color
-    if C.modules.tooltips.health.color_class and UnitIsPlayer(unit) then
-        self.StatusBar:SetStatusBarColor(E:GetRGB(E:GetUnitClassColor(unit)))
-    end
-
     cleanUp(self)
 
     self:Show()
+end
+
+function M:UpdateStatusBarColor(self)
+    if not self then return end
+
+    local tooltip = self:GetParent()
+    if not tooltip then return end
+
+    local unit = getTooltipUnit(tooltip)
+    if not unit then return end
+
+    self:SetStatusBarColor(E:GetRGB(C.colors.health))
+
+    if UnitIsPlayer(unit) then
+        -- Border color
+        if C.modules.tooltips.border.color_class and self.bg then
+            self.bg:SetBackdropBorderColor(E:GetRGB(E:GetUnitClassColor(unit)))
+        end
+
+        -- Statusbar color
+        if C.modules.tooltips.health.color_class then
+            self:SetStatusBarColor(E:GetRGB(E:GetUnitClassColor(unit)))
+        end
+    end
 end
 
 function M:SetupUnitInfo()

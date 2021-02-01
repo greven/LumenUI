@@ -73,7 +73,7 @@ local function tooltipBar_Hook(self)
         end
     end
 
-    self:SetStatusBarColor(E:GetRGB(C.colors.health))
+    M:UpdateStatusBarColor(self)
 end
 
 local function tooltip_Hook(self) M.ReskinTooltip(self) end
