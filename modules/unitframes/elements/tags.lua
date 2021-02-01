@@ -184,7 +184,7 @@ local customTags = {
 
         if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
             return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) ..
-                       "B|r" or "B"
+                       "+|r" or "+"
         elseif classification == "rare" then
             return color and "|cff008FF7R|r" or "R"
         elseif classification == "rareelite" then

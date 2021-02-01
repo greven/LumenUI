@@ -48,6 +48,8 @@ XPBar:
   ☐ Add segments instead of a continous bar?
   ☐ If high level and not tracking anything, hide?
 
+Blizzard:
+  ☐ CharacterFrame (Gems, items text not showing?) @bug
 
 Roadmap:
   ☐ Add GUI after first stable release (future plans)

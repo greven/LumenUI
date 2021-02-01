@@ -21,12 +21,15 @@ local m_modf = _G.math.modf
 local s_format = _G.string.format
 local s_utf8sub = _G.string.utf8sub
 local s_split = _G.string.split
+local s_upper = _G.string.upper
 local s_join = _G.string.join
+local s_utf8sub = _G.string.utf8sub
 
 local t_wipe = _G.table.wipe
 local t_insert = _G.tinsert
 local t_remove = _G.tremove
 
+local C_Timer_After = C_Timer.After
 local BreakUpLargeNumbers = _G.BreakUpLargeNumbers
 local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
@@ -43,8 +46,6 @@ local GetDetailedItemLevelInfo = _G.GetDetailedItemLevelInfo
 local GetInventoryItemTexture = _G.GetInventoryItemTexture
 local GetItemInfo = _G.GetItemInfo
 local GetInspectSpecialization = _G.GetInspectSpecialization
-
-local C_Timer_After = C_Timer.After
 
 -- ---------------
 -- > Math
@@ -943,4 +944,112 @@ do
     end)
 
     function E:IsDispellable(debuffType) return dispelTypes[debuffType] end
+end
+
+-----------
+-- ITEMS --
+-----------
+
+do
+    local ENCHANT_PATTERN = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')
+    local GEM_TEMPLATE = "|T%s:0:0:0:0:64:64:4:60:4:60|t "
+
+    local EMPTY_SOCKET_TEXTURES = {
+        ["136256"] = true,
+        ["136257"] = true,
+        ["136258"] = true,
+        ["136259"] = true,
+        ["136260"] = true,
+        ["407324"] = true,
+        ["407325"] = true,
+        ["458977"] = true,
+        ["2958629"] = true,
+        ["2958630"] = true,
+        ["2958631"] = true,
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET"] = true, -- 136260
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-BLUE"] = true, -- 136256
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-COGWHEEL"] = true, -- 407324
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-HYDRAULIC"] = true, -- 407325
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-META"] = true, -- 136257
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-PRISMATIC"] = true, -- 458977
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-PUNCHCARDBLUE"] = true, -- 2958629
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-PUNCHCARDRED"] = true, -- 2958630
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-PUNCHCARDYELLOW"] = true, -- 2958631
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-RED"] = true, -- 136258
+        ["INTERFACE\\ITEMSOCKETINGFRAME\\UI-EMPTYSOCKET-YELLOW"] = true -- 136259
+    }
+
+    local itemCache = {}
+
+    local scanTip = CreateFrame("GameTooltip", "LumScanTip", nil,
+                                "GameTooltipTemplate")
+    scanTip:SetOwner(UIParent, "ANCHOR_NONE")
+
+    local function wipeScanTip()
+        scanTip:ClearLines()
+
+        for i = 1, 10 do _G["LumScanTipTexture" .. i]:SetTexture(nil) end
+    end
+
+    function E:GetItemEnchantGemInfo(itemLink)
+        if itemCache[itemLink] then
+            return itemCache[itemLink].enchant, itemCache[itemLink].gem1,
+                   itemCache[itemLink].gem2, itemCache[itemLink].gem3
+        else
+            itemCache[itemLink] = {}
+        end
+
+        wipeScanTip()
+        scanTip:SetHyperlink(itemLink)
+
+        local enchant, text = ""
+        for i = 2, scanTip:NumLines() do
+            text = _G["LumScanTipTextLeft" .. i]:GetText()
+            if text and text ~= "" then
+                text = text:match(ENCHANT_PATTERN)
+                if text then
+                    enchant = text
+
+                    break
+                end
+            end
+        end
+
+        local gem1, gem2, gem3, texture, gemLink, _ = "", "", ""
+        for i = 1, MAX_NUM_SOCKETS do
+            texture = _G["LumScanTipTexture" .. i]:GetTexture()
+            if texture then
+                if EMPTY_SOCKET_TEXTURES[s_upper(texture)] then
+                    if i == 1 then
+                        gem1 = GEM_TEMPLATE:format(texture)
+                    elseif i == 2 then
+                        gem2 = GEM_TEMPLATE:format(texture)
+                    else
+                        gem3 = GEM_TEMPLATE:format(texture)
+                    end
+                else
+                    _, gemLink = GetItemGem(itemLink, i)
+                    if gemLink then
+                        _, _, _, _, texture = GetItemInfoInstant(gemLink)
+
+                        if i == 1 then
+                            gem1 = GEM_TEMPLATE:format(texture)
+                        elseif i == 2 then
+                            gem2 = GEM_TEMPLATE:format(texture)
+                        else
+                            gem3 = GEM_TEMPLATE:format(texture)
+                        end
+                    end
+                end
+            end
+        end
+
+        itemCache[itemLink].enchant = enchant
+        itemCache[itemLink].gem1 = gem1
+        itemCache[itemLink].gem2 = gem2
+        itemCache[itemLink].gem3 = gem3
+
+        return itemCache[itemLink].enchant, itemCache[itemLink].gem1,
+               itemCache[itemLink].gem2, itemCache[itemLink].gem3
+    end
 end

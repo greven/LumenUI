@@ -614,6 +614,10 @@ D.modules = {
             }
         }
     },
+    blizzard = {
+        enabled = true,
+        character_frame = {enabled = true, ilvl = true, enhancements = true}
+    },
     minimap = {
         enabled = false,
         size = 200,
