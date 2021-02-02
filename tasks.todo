@@ -12,6 +12,9 @@ Unitframes:
   ☐ Nameplates!
   ☐ PlayerPlate: Attach to Blizzard Personal resource display! (Right now event doesn't trigger for player plate) @low
   ☐ Autoswing bar
+  ☐ Add target of target to target plate
+  ☐ Button dispel glow is not squared! Make it fit the square button
+  ☐ Add Player Pet Aura's Buffs Whitelist
 
 Minimap:
   ☐ WIP
@@ -29,6 +32,7 @@ Tooltip:
   ☐ Add Azerite border
   ☐ Check lsUI / NDUi tooltips to see what can we add...
   ☐ Add missing icons to tooltip (Faction, Phase, etc...) @high
+  ☐ Dropdown bugs (at least on BG) @bug
   ✔ Tooltip missing: Chat @done(21-01-31 20:41)
 
 UnitNames:
@@ -52,6 +56,8 @@ XPBar:
 Blizzard:
   ☐ CharacterFrame (Gems, items text not showing?) @bug
   ☐ Object Watcher Frame: Reskin
+  ☐ Reposition PvP Timers and PvP Score frame at the top of the screen
+  ☐ Reposition Text Warning (Out of mana, etc) frame
 
 Roadmap:
   ☐ Add GUI after first stable release (future plans)

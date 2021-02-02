@@ -20,39 +20,6 @@ local BUTTONS = {
     PetActionButton9, PetActionButton10
 }
 
-local TOP_POINT = {
-    p = "BOTTOM",
-    anchor = "UIParent",
-    ap = "BOTTOM",
-    x = 0,
-    y = 156
-}
-
-local BOTTOM_POINT = {
-    p = "BOTTOM",
-    anchor = "UIParent",
-    ap = "BOTTOM",
-    x = 0,
-    y = 128
-}
-
-local LAYOUT = {
-    WARRIOR = TOP_POINT,
-    PALADIN = TOP_POINT,
-    HUNTER = BOTTOM_POINT,
-    ROGUE = BOTTOM_POINT,
-    PRIEST = TOP_POINT,
-    DEATHKNIGHT = BOTTOM_POINT,
-    SHAMAN = BOTTOM_POINT,
-    MAGE = BOTTOM_POINT,
-    WARLOCK = BOTTOM_POINT,
-    MONK = TOP_POINT,
-    DRUID = TOP_POINT,
-    DEMONHUNTER = BOTTOM_POINT
-}
-
-local function getBarPoint() return LAYOUT[E.PLAYER_CLASS] end
-
 local function bar_Update(self)
     self:UpdateConfig()
     self:UpdateVisibility()
@@ -306,7 +273,7 @@ function M.CreatePetActionBar()
         bar:RegisterEvent("UNIT_FLAGS")
         bar:RegisterEvent("UNIT_PET")
 
-        local point = getBarPoint()
+        local point = C.modules.bars.bar6.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

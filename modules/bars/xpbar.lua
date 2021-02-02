@@ -382,7 +382,7 @@ end
 local function segment_Update(self, cur, max, bonus, color, texture)
     if not self._color or not E:AreColorsEqual(self._color, color) then
         self.Texture:SetVertexColor(E:GetRGBA(color, 1))
-        self.Extension.Texture:SetVertexColor(E:GetRGBA(color, 0.4))
+        self.Extension.Texture:SetVertexColor(E:GetRGBA(color, 0.3))
 
         self._color = self._color or {}
         E:SetRGB(self._color, E:GetRGB(color))
@@ -442,6 +442,7 @@ function M.HasXPBar() return isInit end
 
 function M.CreateXPBar()
     if not isInit and (C.modules.bars.xpbar.enabled or M:IsRestricted()) then
+        local config = C.modules.bars.xpbar
         local bar = CreateFrame("Frame", "LUMXPBar", UIParent)
         bar._id = "xpbar"
 
@@ -478,6 +479,16 @@ function M.CreateXPBar()
             segment:Hide()
             E:SmoothBar(segment)
             bar[i] = segment
+
+            if config.spark then
+                local spark = segment:CreateTexture(nil, "OVERLAY")
+                spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
+                spark:SetSize(config.height, config.height + 4)
+                spark:SetBlendMode('ADD')
+                spark:SetPoint('CENTER', segment:GetStatusBarTexture(), 'RIGHT',
+                               0, 0)
+                segment.Spark = spark
+            end
 
             segment.Texture = segment:GetStatusBarTexture()
             E:SmoothColor(segment.Texture)

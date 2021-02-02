@@ -355,7 +355,7 @@ D.modules = {
             grid = false,
             num = 10,
             per_row = 10,
-            size = 30,
+            size = 26,
             spacing = 6,
             visibility = "[pet,nopetbattle,novehicleui,nooverridebar,nopossessbar] show; hide",
             visible = true,
@@ -373,6 +373,13 @@ D.modules = {
             hotkey = {enabled = true, size = 10},
             cooldown = {
                 text = {enabled = true, size = 10, v_alignment = "MIDDLE"}
+            },
+            point = {
+                p = "BOTTOM",
+                anchor = "UIParent",
+                ap = "BOTTOM",
+                x = 0,
+                y = 142
             }
         },
         bar7 = { -- Stance
@@ -591,6 +598,7 @@ D.modules = {
             height = 4,
             texture = D.media.textures.neon,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+            spark = true,
             text = {
                 size = 10,
                 format = "NUM_PERC", -- "NUM or NUM_PERC"
@@ -628,7 +636,7 @@ D.modules = {
         vehicle = {enabled = true, size = 100, point = {"TOPLEFT", 4, -196}}
     },
     minimap = {
-        enabled = true,
+        enabled = false,
         size = 200,
         square = true,
         collect = {
@@ -695,11 +703,11 @@ D.modules = {
                 width = playerWidth,
                 height = playerHeight,
                 point = {
-                    p = "TOPLEFT",
+                    p = "BOTTOMLEFT",
                     anchor = "UIParent",
-                    ap = "TOPLEFT",
-                    x = 83 + 13,
-                    y = -42 - 13
+                    ap = "BOTTOMLEFT",
+                    x = 83 + 33,
+                    y = 0 + 31
                 },
                 health = {
                     enabled = true,
@@ -757,6 +765,24 @@ D.modules = {
                                 x = 0,
                                 y = 16
                             }
+                        }
+                    },
+                    perc = {
+                        tag = "[lum:health_perc]",
+                        size = 18,
+                        color = D.colors.light_gray,
+                        alpha = 0.9,
+                        outline = true,
+                        shadow = false,
+                        h_alignment = "RIGHT",
+                        v_alignment = "MIDDLE",
+                        hide_when_max = true,
+                        point = {
+                            p = "BOTTOMRIGHT",
+                            anchor = "",
+                            ap = "TOPRIGHT",
+                            x = 2,
+                            y = 4
                         }
                     }
                 },
@@ -995,7 +1021,7 @@ D.modules = {
                     anchor = "UIParent",
                     ap = "TOP",
                     x = 0,
-                    y = -51
+                    y = -91
                 },
                 health = {
                     enabled = true,
@@ -1148,7 +1174,7 @@ D.modules = {
                         p = "RIGHT",
                         anchor = "",
                         ap = "LEFT",
-                        x = -6,
+                        x = -7,
                         y = 0
                     },
                     text = {
@@ -1282,13 +1308,13 @@ D.modules = {
             },
             targettarget = {
                 enabled = true,
-                width = 143,
+                width = 144,
                 height = 18,
                 point = {
                     p = "LEFT",
                     anchor = "LumenTargetFrame",
                     ap = "RIGHT",
-                    x = 40,
+                    x = 41,
                     y = 0
                 },
                 health = {
@@ -1809,7 +1835,7 @@ D.modules = {
                     p = "LEFT",
                     anchor = "LumenPlayerFrame",
                     ap = "RIGHT",
-                    x = 16,
+                    x = 17,
                     y = 0
                 },
                 health = {
@@ -1831,13 +1857,13 @@ D.modules = {
                         shadow = false,
                         h_alignment = "RIGHT",
                         v_alignment = "MIDDLE",
-                        hide_when_max = true,
+                        hide_when_max = false,
                         point = {
                             p = "RIGHT",
                             anchor = "",
                             ap = "RIGHT",
-                            x = -4,
-                            y = 1
+                            x = -2,
+                            y = 1.5
                         }
                     },
                     prediction = {
@@ -1870,7 +1896,7 @@ D.modules = {
                         }
                     },
                     perc = {
-                        tag = "[lum:health_perc]",
+                        tag = "",
                         size = 15,
                         color = D.colors.light_gray,
                         alpha = 0.9,
@@ -1880,11 +1906,11 @@ D.modules = {
                         v_alignment = "MIDDLE",
                         hide_when_max = true,
                         point = {
-                            p = "BOTTOMRIGHT",
+                            p = "RIGHT",
                             anchor = "",
-                            ap = "TOPRIGHT",
+                            ap = "RIGHT",
                             x = 2,
-                            y = 4
+                            y = 0
                         }
                     }
                 },
@@ -1917,7 +1943,7 @@ D.modules = {
                 castbar = {
                     enabled = true,
                     width = 135,
-                    height = 12,
+                    height = 6,
                     thin = true,
                     color = D.colors.dark_blue,
                     class_colored = false,
@@ -1929,22 +1955,28 @@ D.modules = {
                     },
                     text = {size = 12, outline = true, shadow = false},
                     point = {
-                        p = "BOTTOMLEFT",
-                        anchor = "Health",
-                        ap = "TOPLEFT",
+                        p = "TOPLEFT",
+                        anchor = "",
+                        ap = "BOTTOMLEFT",
                         x = 0,
-                        y = 28
+                        y = -13
                     }
                 },
                 name = {
-                    tag = "[lum:name(20)]",
+                    tag = "[lum:color(gray)][lum:level]|r [lum:name(17)]",
                     size = 12,
                     outline = true,
                     shadow = false,
                     h_alignment = "LEFT",
                     v_alignment = "MIDDLE",
                     word_wrap = false,
-                    point = {p = "LEFT", anchor = "", ap = "LEFT", x = 4, y = 1}
+                    point = {
+                        p = "LEFT",
+                        anchor = "",
+                        ap = "LEFT",
+                        x = 2,
+                        y = 1.5
+                    }
                 },
                 auras = {
                     enabled = true,
@@ -2026,11 +2058,11 @@ D.modules = {
                         }
                     },
                     point = {
-                        p = "TOPLEFT",
+                        p = "BOTTOMLEFT",
                         anchor = "",
-                        ap = "BOTTOMLEFT",
+                        ap = "TOPLEFT",
                         x = 1,
-                        y = -8
+                        y = 8
                     }
                 }
             },
@@ -2045,7 +2077,7 @@ D.modules = {
                     anchor = "UIParent",
                     ap = "CENTER",
                     x = 0,
-                    y = -215
+                    y = -240
                 },
                 health = {
                     enabled = true,
@@ -2104,6 +2136,24 @@ D.modules = {
                                 x = 0,
                                 y = 16
                             }
+                        }
+                    },
+                    perc = {
+                        tag = "",
+                        size = 14,
+                        color = D.colors.light_gray,
+                        alpha = 0.9,
+                        outline = true,
+                        shadow = false,
+                        h_alignment = "RIGHT",
+                        v_alignment = "MIDDLE",
+                        hide_when_max = true,
+                        point = {
+                            p = "BOTTOMRIGHT",
+                            anchor = "",
+                            ap = "TOPRIGHT",
+                            x = 2,
+                            y = 4
                         }
                     }
                 },
