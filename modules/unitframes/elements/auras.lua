@@ -235,7 +235,7 @@ local function element_CreateAuraIcon(self, index)
     local auraType = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 3)
     auraType:SetTexture(
         "Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
-    auraType:SetPoint(config.type.position, 0, 0)
+    auraType:SetPoint(config.type.position, 2, -2)
     auraType:SetSize(config.type.size, config.type.size)
     button.AuraType = auraType
 
