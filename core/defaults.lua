@@ -9,6 +9,8 @@ local playerPlateHeight = 11
 local playerPlateWidth = 200
 local targetWidth = 296
 local targetHeight = 28
+local targetPlateWidth = 153
+local targetPlateHeight = playerPlateHeight
 
 local function rgb(r, g, b) return E:SetRGB({}, r, g, b) end
 
@@ -86,14 +88,21 @@ D.modules = {
         enabled = true,
         cooldown = {
             exp_threshold = 5, -- [1; 10]
-            m_ss_threshold = 600 -- [91; 3599]
+            m_ss_threshold = 600, -- [91; 3599]
+            text = {
+                enabled = true,
+                size = 12,
+                v_alignment = "BOTTOM"
+                -- point = {p = "BOTTOM", x = 0, y = -18}
+            }
         },
         HELPFUL = {
-            size = 32,
+            size = 28,
             spacing = 6,
+            -- row_gap = 20,
             x_growth = "LEFT",
             y_growth = "DOWN",
-            per_row = 16,
+            per_row = 20,
             num_rows = 2,
             sep_own = 0,
             sort_method = "INDEX",
@@ -113,13 +122,14 @@ D.modules = {
                 p = "TOPRIGHT",
                 anchor = "UIParent",
                 ap = "TOPRIGHT",
-                x = -184,
-                y = -6
+                x = -8,
+                y = -8
             }
         },
         HARMFUL = {
-            size = 32,
+            size = 28,
             spacing = 6,
+            -- row_gap = 20,
             x_growth = "LEFT",
             y_growth = "DOWN",
             per_row = 16,
@@ -142,7 +152,7 @@ D.modules = {
                 p = "TOPRIGHT",
                 anchor = "UIParent",
                 ap = "TOPRIGHT",
-                x = -184,
+                x = -8,
                 y = -114
             }
         },
@@ -706,8 +716,8 @@ D.modules = {
                     p = "BOTTOMLEFT",
                     anchor = "UIParent",
                     ap = "BOTTOMLEFT",
-                    x = 83 + 33,
-                    y = 0 + 31
+                    x = 83 + 51,
+                    y = 0 + 51
                 },
                 health = {
                     enabled = true,
@@ -789,7 +799,7 @@ D.modules = {
                 power = {
                     enabled = true,
                     height = 2,
-                    gap = 1,
+                    gap = 2,
                     change_threshold = 0.01,
                     color = {
                         power = true,
@@ -818,7 +828,7 @@ D.modules = {
                 additional_power = {
                     enabled = true,
                     width = playerWidth,
-                    height = 2,
+                    height = 3,
                     prediction = {enabled = true},
                     point = {
                         p = "BOTTOMLEFT",
@@ -927,7 +937,7 @@ D.modules = {
                     enabled = false,
                     rows = 2,
                     per_row = 8,
-                    spacing = 6,
+                    spacing = 4,
                     size_override = 30,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
@@ -947,7 +957,7 @@ D.modules = {
                         }
                     },
                     type = {
-                        size = 12,
+                        size = 10,
                         position = "TOPLEFT",
                         debuff_type = false
                     },
@@ -1021,7 +1031,7 @@ D.modules = {
                     anchor = "UIParent",
                     ap = "TOP",
                     x = 0,
-                    y = -91
+                    y = -111
                 },
                 health = {
                     enabled = true,
@@ -1206,11 +1216,24 @@ D.modules = {
                         y = 0
                     }
                 },
+                pvp = {
+                    enabled = true,
+                    width = 30,
+                    height = playerHeight,
+                    alpha = 1,
+                    point = {
+                        p = "TOPRIGHT",
+                        anchor = "Portrait",
+                        ap = "TOPRIGHT",
+                        x = 4,
+                        y = 4
+                    }
+                },
                 auras = {
                     enabled = true,
                     rows = 3,
                     per_row = 10,
-                    spacing = 5,
+                    spacing = 4,
                     size_override = 0,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
@@ -1230,7 +1253,7 @@ D.modules = {
                         }
                     },
                     type = {
-                        size = 12,
+                        size = 10,
                         position = "TOPLEFT",
                         debuff_type = false
                     },
@@ -1432,47 +1455,49 @@ D.modules = {
             },
             focus = {
                 enabled = true,
-                width = 173,
-                height = 18,
+                width = targetPlateWidth,
+                height = targetPlateHeight,
                 point = {
-                    p = "LEFT",
+                    p = "RIGHT",
                     anchor = "LumenPlayerPlateFrame",
-                    ap = "RIGHT",
-                    x = 31,
-                    y = 100
+                    ap = "LEFT",
+                    x = -31,
+                    y = 0
                 },
                 health = {
                     enabled = true,
+                    height = 6,
                     kill_range = false,
+                    change_threshold = 0.001,
                     reverse = false,
                     color = {
                         smooth = false,
-                        health = false,
+                        health = true,
                         tapping = true,
                         disconnected = true,
                         class = true,
                         reaction = true
                     },
                     text = {
-                        tag = "[lum:health_cur]",
-                        size = 12,
+                        tag = "",
+                        size = 14,
                         outline = true,
                         shadow = false,
-                        h_alignment = "RIGHT",
+                        h_alignment = "CENTER",
                         v_alignment = "MIDDLE",
-                        hide_when_max = false,
+                        hide_when_max = true,
                         point = {
-                            p = "RIGHT",
-                            anchor = "Health",
-                            ap = "RIGHT",
-                            x = -4,
+                            p = "CENTER",
+                            anchor = "",
+                            ap = "CENTER",
+                            x = 0,
                             y = 0
                         }
                     },
                     prediction = {
                         enabled = true,
                         absorb_text = {
-                            tag = "",
+                            -- tag = "[lum:color_absorb_damage][lum_absorb_damage]|r",
                             size = 12,
                             h_alignment = "CENTER",
                             v_alignment = "MIDDLE",
@@ -1485,7 +1510,7 @@ D.modules = {
                             }
                         },
                         heal_absorb_text = {
-                            tag = "",
+                            -- tag = "[lum:color_absorb_heal][lum:absorb_heal]|r",
                             size = 12,
                             h_alignment = "CENTER",
                             v_alignment = "MIDDLE",
@@ -1499,7 +1524,7 @@ D.modules = {
                         }
                     },
                     perc = {
-                        tag = "[lum:health_perc]",
+                        tag = "[lum:health_cur_perc]",
                         size = 15,
                         color = D.colors.light_gray,
                         alpha = 0.9,
@@ -1507,20 +1532,20 @@ D.modules = {
                         shadow = false,
                         h_alignment = "RIGHT",
                         v_alignment = "MIDDLE",
-                        hide_when_max = true,
+                        hide_when_max = false,
                         point = {
-                            p = "BOTTOMRIGHT",
+                            p = "RIGHT",
                             anchor = "",
-                            ap = "TOPRIGHT",
-                            x = 2,
-                            y = 4
+                            ap = "LEFT",
+                            x = -6,
+                            y = 0
                         }
                     }
                 },
                 power = {
                     enabled = true,
-                    height = 1.5,
-                    gap = 1.5,
+                    height = 3,
+                    change_threshold = 0.01,
                     color = {
                         power = true,
                         tapping = true,
@@ -1529,44 +1554,45 @@ D.modules = {
                     },
                     text = {
                         tag = "",
-                        size = 14,
+                        size = 16,
                         outline = true,
                         shadow = false,
                         h_alignment = "CENTER",
                         v_alignment = "MIDDLE",
                         point = {
-                            p = "BOTTOM",
-                            anchor = "",
-                            ap = "TOP",
+                            p = "CENTER",
+                            anchor = "Power",
+                            ap = "CENTER",
                             x = 0,
-                            y = 6
+                            y = 0
                         }
-                    }
+                    },
+                    prediction = {enabled = true}
                 },
                 castbar = {
                     enabled = true,
-                    width = 173,
-                    height = 16,
+                    width = targetPlateWidth + 22,
+                    height = 18,
                     thin = true,
                     color = D.colors.dark_blue,
                     class_colored = false,
                     max = false,
                     latency = false,
                     icon = {
-                        position = "NONE", -- "LEFT", "RIGHT" or "NONE"
+                        position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {size = 13, outline = true, shadow = false},
+                    text = {size = 12, outline = true, shadow = false},
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "Health",
                         ap = "TOPLEFT",
-                        x = 0,
+                        x = -22,
                         y = 28
                     }
                 },
                 name = {
-                    tag = "[lum:color_difficulty][lum:level]|r [lum:name(22)]",
+                    tag = "[lum:color_difficulty][lum:level]|r[lum:npc_type_short(true)] [lum:name_abbr]",
                     size = 13,
                     outline = true,
                     shadow = false,
@@ -1574,19 +1600,19 @@ D.modules = {
                     v_alignment = "MIDDLE",
                     word_wrap = false,
                     point = {
-                        p = "BOTTOMLEFT",
+                        p = "LEFT",
                         anchor = "",
                         ap = "TOPLEFT",
                         x = 0,
-                        y = 4
+                        y = 10
                     }
                 },
                 auras = {
                     enabled = true,
                     rows = 2,
-                    per_row = 6,
+                    per_row = 5,
                     spacing = 4,
-                    size_override = 25,
+                    size_override = 26,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
@@ -1605,7 +1631,7 @@ D.modules = {
                         }
                     },
                     type = {
-                        size = 12,
+                        size = 10,
                         position = "TOPLEFT",
                         debuff_type = false
                     },
@@ -1613,49 +1639,49 @@ D.modules = {
                         custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                mount = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
-                                player = true,
-                                player_permanent = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                mount = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
                                 misc = false
                             },
                             debuff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
-                                player = true,
-                                player_permanent = true,
-                                dispellable = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
                                 misc = false
                             }
                         },
                         enemy = {
                             buff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                mount = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
-                                player = true,
-                                player_permanent = true,
-                                dispellable = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                mount = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
                                 misc = false
                             },
                             debuff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
                                 player = true,
-                                player_permanent = true,
+                                player_permanent = false,
                                 misc = false
                             }
                         }
@@ -2002,7 +2028,7 @@ D.modules = {
                         }
                     },
                     type = {
-                        size = 12,
+                        size = 10,
                         position = "TOPLEFT",
                         debuff_type = false
                     },
@@ -2216,8 +2242,8 @@ D.modules = {
             },
             targetplate = {
                 enabled = true,
-                width = 153,
-                height = playerPlateHeight,
+                width = targetPlateWidth,
+                height = targetPlateHeight,
                 visibility = "[petbattle,vehicleui,overridebar,possessbar] hide; [harm,nodead][exists,combat][exists,nocombat,mod:alt] show; [] hide; show",
                 point = {
                     p = "LEFT",
@@ -2331,6 +2357,28 @@ D.modules = {
                     },
                     prediction = {enabled = true}
                 },
+                castbar = {
+                    enabled = true,
+                    width = 153,
+                    height = 16,
+                    thin = true,
+                    color = D.colors.dark_blue,
+                    class_colored = false,
+                    max = false,
+                    latency = false,
+                    icon = {
+                        position = "NONE", -- "LEFT", "RIGHT" or "NONE"
+                        gap = 4
+                    },
+                    text = {size = 13, outline = true, shadow = false},
+                    point = {
+                        p = "BOTTOMLEFT",
+                        anchor = "Health",
+                        ap = "TOPLEFT",
+                        x = 0,
+                        y = 28
+                    }
+                },
                 name = {
                     tag = "[lum:color_difficulty][lum:level]|r[lum:npc_type_short(true)] [lum:name_abbr]",
                     size = 13,
@@ -2351,7 +2399,7 @@ D.modules = {
                     enabled = true,
                     rows = 2,
                     per_row = 5,
-                    spacing = 5,
+                    spacing = 4,
                     size_override = 26,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
@@ -2370,23 +2418,18 @@ D.modules = {
                             v_alignment = "BOTTOM"
                         }
                     },
-                    type = {
-                        size = 12,
-                        position = "TOPLEFT",
-                        debuff_type = false
-                    },
                     filter = {
                         custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
                         friendly = {
                             buff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                mount = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
-                                player = true,
-                                player_permanent = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                mount = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
                                 misc = false
                             },
                             debuff = {
@@ -2403,15 +2446,15 @@ D.modules = {
                         },
                         enemy = {
                             buff = {
-                                boss = true,
-                                tank = true,
-                                healer = true,
-                                mount = true,
-                                selfcast = true,
-                                selfcast_permanent = true,
-                                player = true,
-                                player_permanent = true,
-                                dispellable = true,
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                mount = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
                                 misc = false
                             },
                             debuff = {
@@ -2420,7 +2463,7 @@ D.modules = {
                                 healer = false,
                                 selfcast = false,
                                 selfcast_permanent = false,
-                                player = false,
+                                player = true,
                                 player_permanent = false,
                                 misc = false
                             }

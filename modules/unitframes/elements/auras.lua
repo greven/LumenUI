@@ -168,17 +168,22 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
                                        C.colors.debuff[debuffType] or
                                            C.colors.debuff.None))
 
-        if self._config.type.debuff_type then
-            aura.AuraType:SetTexCoord(unpack(
-                                          C.media.textures.aura_icons[debuffType] or
-                                              C.media.textures.aura_icons["Debuff"]))
-        else
-            aura.AuraType:SetTexCoord(unpack(
-                                          C.media.textures.aura_icons["Debuff"]))
+        if self._config.type then
+            if self._config.type.debuff_type then
+                aura.AuraType:SetTexCoord(
+                    unpack(C.media.textures.aura_icons[debuffType] or
+                               C.media.textures.aura_icons["Debuff"]))
+            else
+                aura.AuraType:SetTexCoord(
+                    unpack(C.media.textures.aura_icons["Debuff"]))
+            end
         end
     else
         aura.Border:SetVertexColor(E:GetRGB(C.global.border.color))
-        aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Buff"]))
+        if self._config.type then
+            aura.AuraType:SetTexCoord(
+                unpack(C.media.textures.aura_icons["Buff"]))
+        end
     end
 end
 
@@ -232,12 +237,14 @@ local function element_CreateAuraIcon(self, index)
     stealable:SetBlendMode("ADD")
     button.stealable = stealable
 
-    local auraType = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 3)
-    auraType:SetTexture(
-        "Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
-    auraType:SetPoint(config.type.position, 2, -2)
-    auraType:SetSize(config.type.size, config.type.size)
-    button.AuraType = auraType
+    if config.type then
+        local auraType = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 3)
+        auraType:SetTexture(
+            "Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
+        auraType:SetPoint(config.type.position, 2, -2)
+        auraType:SetSize(config.type.size, config.type.size)
+        button.AuraType = auraType
+    end
 
     button.UpdateTooltip = button_UpdateTooltip
     button:SetScript("OnEnter", button_OnEnter)
