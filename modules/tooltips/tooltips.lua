@@ -164,7 +164,7 @@ function M:ReskinStatusBar(self)
     statusbar:GetStatusBarTexture():SetVertTile(true)
     statusbar:SetHeight(config.health.height)
 
-    if statusbar.Text then updateFont(statusbar.Text, 14, true, true) end
+    if statusbar.Text then updateFont(statusbar.Text, 13, true, true) end
 end
 
 function M:ReskinTooltip()

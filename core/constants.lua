@@ -3,7 +3,6 @@ local E, C, L = ns.E, ns.C, ns.L
 
 -- Lua
 local _G = getfenv(0)
-
 local select = _G.select
 
 local m_min = _G.math.min
@@ -29,6 +28,9 @@ end
 local hidden = _G.CreateFrame("Frame", nil, UIParent)
 hidden:Hide()
 E.HIDDEN_PARENT = hidden
+
+E.NOA = hidden:CreateAnimationGroup()
+E.NOOP = function() end
 
 -- Screen Size and UI Scale
 do

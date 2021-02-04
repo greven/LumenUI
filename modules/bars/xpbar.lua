@@ -386,6 +386,10 @@ local function segment_Update(self, cur, max, bonus, color, texture)
 
         self._color = self._color or {}
         E:SetRGB(self._color, E:GetRGB(color))
+
+        if self.Spark then
+            self.Spark:SetVertexColor(E:GetRGB(self._color))
+        end
     end
 
     texture = texture or "Interface\\BUTTONS\\WHITE8X8"
@@ -483,7 +487,7 @@ function M.CreateXPBar()
             if config.spark then
                 local spark = segment:CreateTexture(nil, "OVERLAY")
                 spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
-                spark:SetSize(config.height, config.height + 4)
+                spark:SetSize(20, config.height + 6)
                 spark:SetBlendMode('ADD')
                 spark:SetPoint('CENTER', segment:GetStatusBarTexture(), 'RIGHT',
                                0, 0)

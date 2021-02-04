@@ -568,7 +568,12 @@ do
     function E:SetPosition(frame, point, relative)
         local anchor = point.anchor
         if relative then anchor = E:ResolveAnchorPoint(relative, anchor) end
-        frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
+
+        if point.anchor and point.ap then
+            frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
+        else
+            frame:SetPoint(point.p, point.x, point.y)
+        end
     end
 
     function E:CalcSegmentsSizes(totalSize, spacing, numSegs)

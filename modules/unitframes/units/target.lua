@@ -39,6 +39,7 @@ do
             self:UpdatePortrait()
             self:UpdateAuras()
             self:UpdateUnitIndicator()
+            self:UpdatePvPIndicator()
             self:UpdateRaidTargetIndicator()
             self:UpdateThreatIndicator()
         else
@@ -73,6 +74,7 @@ do
         self:CreateUnitIndicator(frame, portraitParent)
         self:CreateRaidTargetIndicator(frame)
         self:CreateThreatIndicator(frame)
+        self:CreatePvPIndicator(frame, portraitParent)
 
         -- Level and Race
         local info = textParent:CreateFontString(nil, "ARTWORK")

@@ -178,6 +178,13 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
                     unpack(C.media.textures.aura_icons["Debuff"]))
             end
         end
+
+        local border_swipe = self._config.cooldown.border_swipe
+        if border_swipe and border_swipe.type then
+            aura.cd:SetSwipeColor(E:GetRGB(
+                                      C.colors.debuff[debuffType] or
+                                          C.colors.debuff.None))
+        end
     else
         aura.Border:SetVertexColor(E:GetRGB(C.global.border.color))
         if self._config.type then
@@ -229,6 +236,7 @@ local function element_CreateAuraIcon(self, index)
     button:SetHighlightTexture("")
 
     local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
+    -- TODO: Update the stealable texture
     stealable:SetTexture(
         "Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
     stealable:SetTexCoord(2 / 32, 30 / 32, 2 / 32, 30 / 32)
@@ -244,6 +252,17 @@ local function element_CreateAuraIcon(self, index)
         auraType:SetPoint(config.type.position, 2, -2)
         auraType:SetSize(config.type.size, config.type.size)
         button.AuraType = auraType
+    end
+
+    if config.cooldown.border_swipe then
+        button:SetSize(button:GetWidth() - 2, button:GetWidth() - 2)
+        button.Border:SetVertexColor(E:GetRGBA(C.colors.black, 0.2))
+        button.cd:SetDrawSwipe(true)
+        button.cd:SetFrameLevel(3)
+        button.cd:SetSwipeTexture("Interface\\BUTTONS\\WHITE8X8")
+        button.cd:SetSwipeColor(1, 1, 1, 1)
+        button.cd:SetPoint("TOPLEFT", -1.5, 1.5)
+        button.cd:SetPoint("BOTTOMRIGHT", 1.5, -1.5)
     end
 
     button.UpdateTooltip = button_UpdateTooltip
@@ -263,7 +282,7 @@ local function element_UpdateConfig(self)
             E:Round((C.modules.unitframes.units[unit].width -
                         (self.spacing * (self._config.per_row - 1)) + 2) /
                         self._config.per_row)
-    self._config.size = m_min(m_max(size, 24), 64)
+    self._config.size = m_min(m_max(size, 20), 64)
 end
 
 local function element_UpdateFont(self)
@@ -388,7 +407,8 @@ local function frame_UpdateAuras(self)
 end
 
 function UF:CreateAuras(frame, unit)
-    local config = C.modules.unitframes.units[frame._unit].auras
+    local config = C.modules.unitframes.units[frame._layout or frame._unit]
+                       .auras
 
     local element = CreateFrame("Frame", nil, frame)
     element:SetSize(48, 48)

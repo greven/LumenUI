@@ -260,7 +260,7 @@ local function header_Update(self)
         self:SetAttribute("wrapAfter", config.per_row)
         self:SetAttribute("wrapXOffset", 0)
         self:SetAttribute("wrapYOffset", (config.y_growth == "UP" and 1 or -1) *
-                              (config.size + config.spacing))
+                              (config.size + (config.row_gap or config.spacing)))
         self:SetAttribute("xOffset", (config.x_growth == "RIGHT" and 1 or -1) *
                               (config.size + config.spacing))
         self:SetAttribute("yOffset", 0)

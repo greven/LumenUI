@@ -9,6 +9,7 @@
 	<!-- <Script file="mail.lua"/> -->
 	<Script file="objectivetracker.lua"/>
 	<Script file="playeraltpowerbar.lua"/>
+	<Script file="uierrorsframe.lua"/>
 	<Script file="talkinghead.lua"/>
 	<!-- <Script file="timer.lua"/> -->
 	<Script file="vehicle.lua"/>

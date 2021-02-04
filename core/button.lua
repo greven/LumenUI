@@ -444,6 +444,8 @@ function E:CreateButton(parent, name, hasCount, hasCooldown, isSandwich,
     border:SetOffset(-4)
     button.Border = border
 
+    E:SetBackdrop(button, 2)
+
     setHighlightTexture(button)
     setPushedTexture(button)
 

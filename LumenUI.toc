@@ -7,6 +7,7 @@
 ## X-SavedVariables: LumenDB
 ## X-SlashCmdList: /lum
 ## X-Category: UnitFrame
+## OptionalDeps: AdiButtonAuras
 
 ## X-WoWI-ID: 16885
 

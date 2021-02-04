@@ -4,6 +4,8 @@ local E, C, L = ns.E, ns.C, ns.L
 -- Lua
 local _G = getfenv(0)
 local m_abs = _G.math.abs
+local m_min = _G.math.min
+local m_max = _G.math.max
 
 -- ---------------
 
@@ -81,21 +83,24 @@ local function element_UpdateIcon(self)
     local config = self._config
     local height = config.height
 
+    local iconHeight = m_max(height * 1.75, 32)
+    local thinBarHeight = E:Clamp(height, height / 6, height / 4)
+
     if config.icon.position == "LEFT" then
         self.Icon = self.LeftIcon
 
         self.IconParent:SetPoint("TOPLEFT", self.Holder, 1, 0)
         self.IconParent:SetPoint("BOTTOMRIGHT", self.Holder, "BOTTOMLEFT",
-                                 height * 1.5, 0)
+                                 iconHeight, 0)
         self.LeftIcon:SetAllPoints(self.IconParent)
         self.RightIcon:SetSize(0.0001, height)
 
         if config.thin then
             self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT",
-                          config.icon.gap + height * 1.5, height / 3)
+                          config.icon.gap + iconHeight, thinBarHeight)
             self:SetPoint("BOTTOMRIGHT", 0, 0)
         else
-            self:SetPoint("TOPLEFT", config.icon.gap + height * 1.5, 0)
+            self:SetPoint("TOPLEFT", config.icon.gap + iconHeight, 0)
             self:SetPoint("BOTTOMRIGHT", 0, 0)
         end
 
@@ -106,16 +111,16 @@ local function element_UpdateIcon(self)
 
         self.IconParent:SetPoint("TOPRIGHT", self.Holder, -1, 0)
         self.IconParent:SetPoint("BOTTOMLEFT", self.Holder, "BOTTOMRIGHT",
-                                 -height * 1.5, 0)
+                                 -iconHeight, 0)
         self.RightIcon:SetAllPoints(self.IconParent)
         self.LeftIcon:SetSize(0.0001, height)
 
         if config.thin then
-            self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", 0, height / 3)
-            self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
+            self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", 0, thinBarHeight)
+            self:SetPoint("BOTTOMRIGHT", -config.icon.gap - iconHeight, 0)
         else
             self:SetPoint("TOPLEFT", 0, 0)
-            self:SetPoint("BOTTOMRIGHT", -config.icon.gap - height * 1.5, 0)
+            self:SetPoint("BOTTOMRIGHT", -config.icon.gap - iconHeight, 0)
         end
 
         E:SetBackdrop(self.Icon, 1.5)
@@ -127,7 +132,7 @@ local function element_UpdateIcon(self)
         self.RightIcon:SetSize(0.0001, height)
 
         if config.thin then
-            self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", 0, height / 3)
+            self:SetPoint("TOPLEFT", self.Holder, "BOTTOMLEFT", 0, thinBarHeight)
             self:SetPoint("BOTTOMRIGHT", 0, 0)
         else
             self:SetPoint("TOPLEFT", 0, 0)
@@ -251,6 +256,13 @@ function UF:CreateCastbar(frame)
     icon:SetTexCoord(8 / 64, 56 / 64, 9 / 64, 41 / 64)
     element.RightIcon = icon
 
+    -- TODO: Add shield texture
+    -- local shield = iconParent:CreateTexture(nil, 'OVERLAY')
+    -- shield:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\shield")
+    -- shield:SetSize(16, 16)
+    -- shield:SetPoint('TOPRIGHT', iconParent, 6, 6)
+    -- shield:SetVertexColor(E:GetRGB(C.colors.gray))
+
     local safeZone = element:CreateTexture(nil, "ARTWORK", nil, 1)
     safeZone:SetTexture("Interface\\BUTTONS\\WHITE8X8")
     safeZone:SetVertexColor(E:GetRGBA(C.colors.red, 0.4))
@@ -267,14 +279,13 @@ function UF:CreateCastbar(frame)
     text:SetPoint("TOP", element, "TOP", 0, 0)
     text:SetPoint("BOTTOM", element, "BOTTOM", 0, -2.5)
     text:SetPoint("LEFT", element, "LEFT", 5, 0)
-    text:SetPoint("RIGHT", time, "LEFT", -5, 0)
+    text:SetPoint("RIGHT", time, "LEFT", -10, 0)
     element.Text = text
 
     local time = textParent:CreateFontString(nil, "ARTWORK")
     time:SetWordWrap(false)
     time:SetPoint("TOP", element, "TOP", 0, 0)
     time:SetPoint("BOTTOM", element, "BOTTOM", 0, -2)
-    text:SetPoint("LEFT", element, "LEFT", 4, 0)
     time:SetPoint("RIGHT", element, "RIGHT", -4, 0)
     element.Time = time
 
@@ -290,11 +301,10 @@ function UF:CreateCastbar(frame)
         text:SetPoint("TOP", holder, "TOP", 0, 0)
         text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 12)
         text:SetPoint("LEFT", element, "LEFT", 0, 0)
-        text:SetPoint("RIGHT", time, "LEFT", 0, 0)
+        text:SetPoint("RIGHT", time, "LEFT", -10, 0)
 
         time:SetPoint("TOP", holder, "TOP", 0, 0)
         time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 12)
-        text:SetPoint("LEFT", element, "LEFT", 0, 0)
         time:SetPoint("RIGHT", element, "RIGHT", 0, 0)
     end
 

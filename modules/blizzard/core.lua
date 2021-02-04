@@ -23,6 +23,7 @@ function M:Init()
         self:SetUpTalkingHead()
         -- self:SetUpMirrorTimers()
         self:SetUpVehicleSeatFrame()
+        self:SetUpErrorsFrame()
 
         isInit = true
 

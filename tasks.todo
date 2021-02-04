@@ -1,7 +1,7 @@
 Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!! @bug
   ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health. @bug @low @today
-  ☐ Auras: Cooldown spiral is 1 pixel short of the aura border @bug
+  ✔ Auras: Cooldown spiral is 1 pixel short of the aura border @bug @done(21-02-04 02:41)
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu (maybe, if not too much work to refactor)
   ☐ Units Missing:
@@ -15,6 +15,11 @@ Unitframes:
   ☐ Add target of target to target plate
   ☐ Button dispel glow is not squared! Make it fit the square button
   ☐ Add Player Pet Aura's Buffs Whitelist
+  ☐ Maybe move focus to the left of the player plate?
+  ☐ Maybe add castbar on top of targetplate?
+  ☐ Castbar: Add shield texture
+  ☐ Auras: Make border show  decreasing cooldown!
+  ✔ Trim castbar text name to be width - xx characters! (for small castbars) @done(21-02-04 00:30)
 
 Minimap:
   ☐ WIP
@@ -33,6 +38,7 @@ Tooltip:
   ☐ Check lsUI / NDUi tooltips to see what can we add...
   ☐ Add missing icons to tooltip (Faction, Phase, etc...) @high
   ☐ Dropdown bugs (at least on BG) @bug
+  ☐ Show total in inventory and bank
   ✔ Tooltip missing: Chat @done(21-01-31 20:41)
 
 UnitNames:
@@ -42,11 +48,9 @@ UnitNames:
 Chat:
   ☐ WIP
 
-Auras:
-  ☐ Cooldown spiral is 1 pixel short of the aura border @bug
-
 AuraWatchers:
   ☐ WIP: Maybe it should track player auras and target debuffs just like NDUI (Check it's module)
+  ☐ Integrate into the actionbar (like AdiButton auras but simplify, border with duration only...)
 
 XPBar:
   ☐ Refactor
@@ -58,6 +62,10 @@ Blizzard:
   ☐ Object Watcher Frame: Reskin
   ☐ Reposition PvP Timers and PvP Score frame at the top of the screen
   ☐ Reposition Text Warning (Out of mana, etc) frame
+  ☐ Move The Maw thingy at the top of the screen.
+
+Bags:
+  ☐ Show total money in server
 
 Roadmap:
   ☐ Add GUI after first stable release (future plans)

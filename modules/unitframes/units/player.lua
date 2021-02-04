@@ -133,6 +133,7 @@ do
             self:UpdatePower()
             self:UpdatePowerPrediction()
             self:UpdateClassPower()
+            self:UpdateThreatIndicator()
 
             if self.Runes then self:UpdateRunes() end
             if self.Stagger then self:UpdateStagger() end
@@ -168,6 +169,8 @@ do
             self:CreateRunes(frame)
         end
         self:CreateClassPower(frame)
+
+        self:CreateThreatIndicator(frame)
 
         -- TODO: Attach to Blizzard's Personal Resource Display
         -- Attach PlayerPlate to Blizzard's Personal Resource Display

@@ -115,6 +115,9 @@ local function cooldown_UpdateFont(self)
     else
         self.Timer:SetShadowOffset(0, 0)
     end
+
+    local point = config.point
+    if point then self.Timer:SetPoint(point.p, point.x, point.y) end
 end
 
 local function cooldown_UpdateConfig(self, config)
@@ -142,8 +145,8 @@ function E.Cooldowns.Handle(cooldown)
     textParent:SetAllPoints()
 
     local timer = textParent:CreateFontString(nil, "ARTWORK")
-    timer:SetPoint("TOPLEFT", -8, 0)
-    timer:SetPoint("BOTTOMRIGHT", 8, 0)
+    timer:SetPoint("TOPLEFT", -8, -1)
+    timer:SetPoint("BOTTOMRIGHT", 8, 1)
     cooldown.Timer = timer
 
     hooksecurefunc(cooldown, "Clear", cooldown_Clear)
@@ -168,8 +171,8 @@ end
 function E.Cooldowns.Create(parent)
     local cooldown = CreateFrame("Cooldown", nil, parent,
                                  "CooldownFrameTemplate")
-    cooldown:SetPoint("TOPLEFT", 1, -1)
-    cooldown:SetPoint("BOTTOMRIGHT", -1, 1)
+    cooldown:SetPoint("TOPLEFT", 0, 0)
+    cooldown:SetPoint("BOTTOMRIGHT", 0, 0)
 
     E.Cooldowns.Handle(cooldown)
 
