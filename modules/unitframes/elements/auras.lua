@@ -27,7 +27,7 @@ local filterFunctions = {
         local config = self._config and self._config.filter or nil
         if not config then return end
 
-        -- black- and whitelists
+        -- black and whitelists
         for filter, enabled in next, config.custom do
             if enabled then
                 filter = C.global.aura_filters[filter]
@@ -193,6 +193,8 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
         end
     end
 end
+
+local function element_PreSetPosition() print("Pre Set Position") end
 
 local function element_CreateAuraIcon(self, index)
     local config = self._config
@@ -427,6 +429,7 @@ function UF:CreateAuras(frame, unit)
     element.UpdateMouse = element_UpdateMouse
     element.CreateIcon = element_CreateAuraIcon
     element.PostUpdateIcon = element_PostUpdateIcon
+    -- element.PreSetPosition = element_PreSetPosition
     element.CustomFilter = filterFunctions[unit] or filterFunctions.default
 
     frame.UpdateAuras = frame_UpdateAuras

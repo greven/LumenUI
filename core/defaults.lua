@@ -79,7 +79,8 @@ D.global = {
     },
     aura_filters = {
         ["Blacklist"] = {is_init = false},
-        ["M+ Affixes"] = {is_init = false}
+        ["M+ Affixes"] = {is_init = false},
+        ["Class Debuffs"] = {is_init = false}
     }
 }
 
@@ -1981,7 +1982,7 @@ D.modules = {
                 castbar = {
                     enabled = true,
                     width = 135,
-                    height = 6,
+                    height = 8,
                     thin = true,
                     color = D.colors.dark_blue,
                     class_colored = false,
@@ -2431,7 +2432,11 @@ D.modules = {
                         }
                     },
                     filter = {
-                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
+                        custom = {
+                            ["Blacklist"] = false,
+                            ["M+ Affixes"] = false,
+                            ["Class Debuffs"] = true
+                        },
                         friendly = {
                             buff = {
                                 boss = false,
@@ -2475,7 +2480,7 @@ D.modules = {
                                 healer = false,
                                 selfcast = false,
                                 selfcast_permanent = false,
-                                player = true,
+                                player = false,
                                 player_permanent = false,
                                 misc = false
                             }

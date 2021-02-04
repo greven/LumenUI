@@ -108,13 +108,96 @@ local aura_filters = {
     }
 }
 
+local class_debuffs = {
+    ["DEATHKNIGHT"] = {
+        state = true,
+        [55078] = true, -- Blood Plague
+        [194310] = true, -- Festering Wound
+        [191587] = true -- Virulent Plague
+    },
+    ["DEMONHUNTER"] = {state = true},
+    ["DRUID"] = {
+        state = true,
+        [203123] = true, -- Maim
+        [164812] = true, -- Moonfire
+        [155722] = true, -- Rake
+        [1079] = true, -- Rip
+        [164815] = true -- Sunfire
+    },
+    ["HUNTER"] = {
+        state = true,
+        [217200] = true, -- Barbed Shot
+        [5116] = true, --- Concussive Shot
+        [3355] = true, -- Freezing Trap
+        [259491] = true -- Serpent Sting
+    },
+    ["MAGE"] = {state = true},
+    ["MONK"] = {state = true},
+    ["PALADIN"] = {
+        state = true,
+        [853] = true, -- Hammer of Justice
+        [197277] = true -- Judgment
+    },
+    ["PRIEST"] = {
+        state = true,
+        [335467] = true, -- Devouring Plague
+        [204213] = true, -- Purge the Wicked
+        [214621] = true, -- Schism
+        [64044] = true, -- Psychic Horror
+        [589] = true, -- Shadow Word: Pain
+        [34914] = true -- Vampiric Touch
+    },
+    ["ROGUE"] = {
+        state = true,
+        [2094] = true, -- Blind
+        [199804] = true, -- Between the Eyes
+        [1833] = true, -- Cheap Shot
+        [703] = true, -- Garrote
+        [1330] = true, -- Garrote - Silence
+        [1776] = true, -- Gouge
+        [408] = true, -- Kidney Shot
+        [195452] = true, -- Knight Blade
+        -- [185763] = true, -- Pistol Shot
+        [1943] = true, -- Rupture
+        [6770] = true, -- Sap
+        [79140] = true -- Vendetta
+    },
+    ["SHAMAN"] = {
+        state = true,
+        [188389] = true, -- Flame Shock
+        [196840] = true -- Frost Shock
+    },
+    ["WARLOCK"] = {
+        state = true,
+        [980] = true, -- Agony
+        [146739] = true, -- Corruption
+        [1714] = true, -- Curse of Tongues
+        [603] = true, -- Doom
+        [1098] = true, -- Enslave Demon
+        [118699] = true, -- Fear
+        [80240] = true, -- Havoc
+        [157736] = true, -- Immolate
+        [205179] = true, -- Phantom Singularity
+        [27243] = true, -- Seed of Corruption
+        [63106] = true, -- Siphon Life
+        [30108] = true -- Unstable Affliction
+    },
+    ["WARRIOR"] = {state = true}
+}
+
 function M.CreateAuraFilters()
     for filter, v in next, aura_filters do
         if not C.global.aura_filters[filter].is_init then
             E:CopyTable(v, C.global.aura_filters[filter])
-
             C.global.aura_filters[filter].is_init = true
         end
+    end
+
+    -- Class Debuffs filters
+    if not C.global.aura_filters["Class Debuffs"].is_init then
+        E:CopyTable(class_debuffs[E.PLAYER_CLASS],
+                    C.global.aura_filters["Class Debuffs"])
+        C.global.aura_filters["Class Debuffs"].is_init = true
     end
 end
 
