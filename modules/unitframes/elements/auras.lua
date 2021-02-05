@@ -238,7 +238,7 @@ end
 local function element_SortAuras(self)
     if self._config and self._config.sort then
         t_sort(self, SortAuras)
-        return 1 -- Needed by oUF :SetPosition
+        return 1, #self -- Prevent things from going crazy!
     end
 end
 
