@@ -13,6 +13,7 @@ local next = _G.next
 local select = _G.select
 local unpack = _G.unpack
 
+local GetTime = _G.GetTime
 local UnitIsFriend = _G.UnitIsFriend
 
 -- ---------------
@@ -47,7 +48,14 @@ local filterFunctions = {
             if enabled then
                 filter = C.global.aura_filters[filter]
                 if filter and filter[spellID] then
-                    return filter.state
+                    if filter.playerOnly then
+                        if aura.isPlayer or
+                            (caster and UnitIsUnit(caster, "pet")) then
+                            return filter.state
+                        end
+                    else
+                        return filter.state
+                    end
                 end
             end
         end
@@ -189,7 +197,8 @@ end
 
 local function button_OnLeave() GameTooltip:Hide() end
 
-local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
+local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
+                                      debuffType)
     if aura.isDebuff then
         aura.Border:SetVertexColor(E:GetRGB(
                                        C.colors.debuff[debuffType] or
@@ -206,6 +215,17 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
             end
         end
 
+        -- Zoom animation
+        if self._config.animate.debuff then
+            if aura.ZoomIn and duration and duration ~= 0 then
+                local remain = expiration - GetTime()
+                if duration - remain < 0.1 then
+                    aura.ZoomIn:Play()
+                end
+            end
+        end
+
+        -- Show cooldown border
         local border_swipe = self._config.cooldown.border_swipe
         if border_swipe and border_swipe.type then
             aura.cd:SetSwipeColor(E:GetRGB(
@@ -217,6 +237,16 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
         if self._config.type then
             aura.AuraType:SetTexCoord(
                 unpack(C.media.textures.aura_icons["Buff"]))
+        end
+
+        -- Zoom animation
+        if self._config.animate.buff then
+            if aura.ZoomIn and duration and duration ~= 0 then
+                local remain = expiration - GetTime()
+                if duration - remain < 0.1 then
+                    aura.ZoomIn:Play()
+                end
+            end
         end
     end
 end
@@ -283,8 +313,8 @@ local function element_CreateAuraIcon(self, index)
     button:SetPushedTexture("")
     button:SetHighlightTexture("")
 
-    local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
     -- TODO: Update the stealable texture
+    local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
     stealable:SetTexture(
         "Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
     stealable:SetTexCoord(2 / 32, 30 / 32, 2 / 32, 30 / 32)
@@ -311,6 +341,24 @@ local function element_CreateAuraIcon(self, index)
         button.cd:SetSwipeColor(1, 1, 1, 1)
         button.cd:SetPoint("TOPLEFT", -1.5, 1.5)
         button.cd:SetPoint("BOTTOMRIGHT", 1.5, -1.5)
+    end
+
+    -- Create animation for new auras
+    if config.animate then
+        local ag = button:CreateAnimationGroup()
+        local a1 = ag:CreateAnimation("alpha")
+        local a2 = ag:CreateAnimation("scale")
+        button.ZoomIn = ag
+
+        a1:SetOrder(1)
+        a1:SetDuration(0.25)
+        a2:SetOrder(1)
+        a2:SetDuration(0.25)
+
+        a1:SetFromAlpha(0.85)
+        a1:SetToAlpha(1.0)
+        a2:SetFromScale(2.5, 2.5)
+        a2:SetToScale(1.0, 1.0)
     end
 
     button.UpdateTooltip = button_UpdateTooltip

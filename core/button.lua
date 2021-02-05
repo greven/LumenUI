@@ -222,9 +222,9 @@ local function skinButton(button)
         hooksecurefunc(button, "SetNormalTexture", setNormalTextureHook)
 
         local border = E:CreateBorder(button)
-        border:SetTexture(C.media.textures.border_thick)
-        border:SetSize(16)
-        border:SetOffset(-4)
+        border:SetTexture(C.global.buttons.border.texture)
+        border:SetSize(C.global.buttons.border.size)
+        border:SetOffset(C.global.buttons.border.offset)
         button.Border_ = border
     end
 

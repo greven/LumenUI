@@ -8,7 +8,6 @@ local hooksecurefunc = _G.hooksecurefunc
 local m_abs = _G.math.abs
 local next = _G.next
 local unpack = _G.unpack
-
 local GetTime = _G.GetTime
 
 -- ---------------

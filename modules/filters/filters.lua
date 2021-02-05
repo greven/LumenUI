@@ -111,13 +111,15 @@ local aura_filters = {
 local class_debuffs = {
     ["DEATHKNIGHT"] = {
         state = true,
+        playerOnly = true,
         [55078] = true, -- Blood Plague
         [194310] = true, -- Festering Wound
         [191587] = true -- Virulent Plague
     },
-    ["DEMONHUNTER"] = {state = true},
+    ["DEMONHUNTER"] = {state = true, playerOnly = true},
     ["DRUID"] = {
         state = true,
+        playerOnly = true,
         [203123] = true, -- Maim
         [164812] = true, -- Moonfire
         [155722] = true, -- Rake
@@ -126,20 +128,30 @@ local class_debuffs = {
     },
     ["HUNTER"] = {
         state = true,
+        playerOnly = true,
         [217200] = true, -- Barbed Shot
         [5116] = true, --- Concussive Shot
         [3355] = true, -- Freezing Trap
         [259491] = true -- Serpent Sting
     },
-    ["MAGE"] = {state = true},
-    ["MONK"] = {state = true},
+    ["MAGE"] = {
+        state = true,
+        playerOnly = true,
+        [12654] = true, -- Ignite
+        [205708] = true, -- Chilled
+        [122] = true, -- Frost Nova
+        [228358] = true -- Winter's Chill
+    },
+    ["MONK"] = {state = true, playerOnly = true},
     ["PALADIN"] = {
         state = true,
+        playerOnly = true,
         [853] = true, -- Hammer of Justice
         [197277] = true -- Judgment
     },
     ["PRIEST"] = {
         state = true,
+        playerOnly = true,
         [335467] = true, -- Devouring Plague
         [204213] = true, -- Purge the Wicked
         [214621] = true, -- Schism
@@ -149,6 +161,7 @@ local class_debuffs = {
     },
     ["ROGUE"] = {
         state = true,
+        playerOnly = true,
         [2094] = true, -- Blind
         [199804] = true, -- Between the Eyes
         [1833] = true, -- Cheap Shot
@@ -164,11 +177,13 @@ local class_debuffs = {
     },
     ["SHAMAN"] = {
         state = true,
+        playerOnly = true,
         [188389] = true, -- Flame Shock
         [196840] = true -- Frost Shock
     },
     ["WARLOCK"] = {
         state = true,
+        playerOnly = true,
         [980] = true, -- Agony
         [146739] = true, -- Corruption
         [1714] = true, -- Curse of Tongues
@@ -182,7 +197,7 @@ local class_debuffs = {
         [63106] = true, -- Siphon Life
         [30108] = true -- Unstable Affliction
     },
-    ["WARRIOR"] = {state = true}
+    ["WARRIOR"] = {state = true, playerOnly = true}
 }
 
 function M.CreateAuraFilters()

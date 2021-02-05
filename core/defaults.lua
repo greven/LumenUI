@@ -14,6 +14,10 @@ local targetPlateHeight = playerPlateHeight
 
 local function rgb(r, g, b) return E:SetRGB({}, r, g, b) end
 
+local function auraWidth(frameWidth, count, spacing)
+    return (frameWidth - (spacing * (count - 1))) / count
+end
+
 -- ---------------
 
 D.media = {
@@ -71,6 +75,13 @@ D.global = {
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
+    },
+    buttons = {
+        border = {
+            texture = D.media.textures.border_thick,
+            size = 16,
+            offset = -4
+        }
     },
     shadows = {enabled = true, alpha = 0.3},
     castbar = {
@@ -644,8 +655,8 @@ D.modules = {
             text = {
                 font = D.media.fonts.normal,
                 size = 14,
-                outline = true,
-                shadow = false
+                outline = false,
+                shadow = true
             },
             point = {p = "TOP", x = 0, y = -250}
         },
@@ -729,8 +740,8 @@ D.modules = {
                     p = "BOTTOMLEFT",
                     anchor = "UIParent",
                     ap = "BOTTOMLEFT",
-                    x = 83 + 51,
-                    y = 0 + 51
+                    x = 83 + 43,
+                    y = 0 + 45
                 },
                 health = {
                     enabled = true,
@@ -951,10 +962,11 @@ D.modules = {
                     rows = 2,
                     per_row = 8,
                     spacing = 5,
-                    size_override = 30,
+                    size_override = auraWidth(playerWidth, 8, 5),
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
+                    animate = {buff = false, debuff = false},
                     count = {
                         size = 10,
                         outline = true,
@@ -1247,10 +1259,11 @@ D.modules = {
                     rows = 3,
                     per_row = 10,
                     spacing = 5,
-                    size_override = 0,
+                    size_override = auraWidth(targetWidth, 10, 5),
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
+                    animate = {buff = false, debuff = false},
                     count = {
                         size = 10,
                         outline = true,
@@ -1625,10 +1638,11 @@ D.modules = {
                     rows = 2,
                     per_row = 5,
                     spacing = 5,
-                    size_override = 26,
+                    size_override = auraWidth(targetPlateWidth, 5, 5),
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
+                    animate = {buff = false, debuff = false},
                     count = {
                         size = 10,
                         outline = true,
@@ -1994,11 +2008,11 @@ D.modules = {
                     },
                     text = {size = 12, outline = true, shadow = false},
                     point = {
-                        p = "TOPLEFT",
+                        p = "BOTTOMLEFT",
                         anchor = "",
-                        ap = "BOTTOMLEFT",
+                        ap = "TOPLEFT",
                         x = 0,
-                        y = -13
+                        y = 10
                     }
                 },
                 name = {
@@ -2026,6 +2040,7 @@ D.modules = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
+                    animate = {buff = false, debuff = false},
                     count = {
                         size = 10,
                         outline = true,
@@ -2097,11 +2112,11 @@ D.modules = {
                         }
                     },
                     point = {
-                        p = "BOTTOMLEFT",
+                        p = "TOPLEFT",
                         anchor = "",
-                        ap = "TOPLEFT",
+                        ap = "BOTTOMLEFT",
                         x = 1,
-                        y = 8
+                        y = -8
                     }
                 }
             },
@@ -2412,11 +2427,12 @@ D.modules = {
                     enabled = true,
                     rows = 2,
                     per_row = 5,
-                    spacing = 6,
-                    size_override = 25,
+                    spacing = 5,
+                    size_override = auraWidth(targetPlateWidth, 5, 5),
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
+                    animate = {buff = false, debuff = false},
                     sort = false, -- Sort by remaining time
                     count = {
                         size = 10,
@@ -2428,7 +2444,7 @@ D.modules = {
                     cooldown = {
                         text = {
                             enabled = true,
-                            size = 10,
+                            size = 12,
                             v_alignment = "BOTTOM"
                         }
                     },
