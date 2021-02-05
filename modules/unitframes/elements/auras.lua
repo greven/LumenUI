@@ -7,6 +7,8 @@ local UF = E:GetModule("UnitFrames")
 local _G = getfenv(0)
 local m_max = _G.math.max
 local m_min = _G.math.min
+local m_huge = _G.math.huge
+local t_sort = _G.table.sort
 local next = _G.next
 local select = _G.select
 local unpack = _G.unpack
@@ -22,10 +24,23 @@ for _, id in next, C_MountJournal.GetMountIDs() do
 end
 
 local filterFunctions = {
-    default = function(self, unit, aura, _, _, _, debuffType, duration, _,
-                       caster, isStealable, _, spellID, _, isBossAura)
+    default = function(self, unit, aura, name, _, count, debuffType, duration,
+                       expiration, caster, isStealable, _, spellID, _,
+                       isBossAura)
         local config = self._config and self._config.filter or nil
         if not config then return end
+
+        aura.name = name
+        aura.spell = name
+        aura.spellID = spellID
+        aura.dtype = debuffType
+        aura.expiration = expiration
+        aura.duration = duration
+        aura.noTime = duration == 0 and expiration == 0
+        aura.isStealable = isStealable
+        aura.canDispell = (not aura.isDebuff and isStealable) or
+                              (aura.isDebuff and debuffType and
+                                  E:IsDispellable(debuffType))
 
         -- black and whitelists
         for filter, enabled in next, config.custom do
@@ -90,12 +105,24 @@ local filterFunctions = {
 
         return config.misc
     end,
-    boss = function(self, unit, aura, _, _, _, debuffType, duration, _, caster,
-                    isStealable, _, spellID, _, isBossAura)
+    boss = function(self, unit, aura, _, _, _, debuffType, duration, expiration,
+                    caster, isStealable, _, spellID, _, isBossAura)
         local config = self._config and self._config.filter or nil
         if not config then return end
 
-        -- black- and whitelists
+        aura.name = name
+        aura.spell = name
+        aura.spellID = spellID
+        aura.dtype = debuffType
+        aura.expiration = expiration
+        aura.duration = duration
+        aura.noTime = duration == 0 and expiration == 0
+        aura.isStealable = isStealable
+        aura.canDispell = (not aura.isDebuff and isStealable) or
+                              (aura.isDebuff and debuffType and
+                                  E:IsDispellable(debuffType))
+
+        -- black and whitelists
         for filter, enabled in next, config.custom do
             if enabled then
                 filter = C.global.aura_filters[filter]
@@ -194,7 +221,26 @@ local function element_PostUpdateIcon(self, _, aura, _, _, _, _, debuffType)
     end
 end
 
-local function element_PreSetPosition() print("Pre Set Position") end
+local function SortAuras(a, b)
+    if a and b and a:GetParent()._config then
+        if a:IsShown() and b:IsShown() then
+            local aTime = a.noTime and m_huge or a.expiration or -1
+            local bTime = b.noTime and m_huge or b.expiration or -1
+
+            if aTime and bTime then return aTime > bTime end
+        elseif a:IsShown() then
+            return true
+        end
+
+    end
+end
+
+local function element_SortAuras(self)
+    if self._config and self._config.sort then
+        t_sort(self, SortAuras)
+        return 1 -- Needed by oUF :SetPosition
+    end
+end
 
 local function element_CreateAuraIcon(self, index)
     local config = self._config
@@ -429,7 +475,7 @@ function UF:CreateAuras(frame, unit)
     element.UpdateMouse = element_UpdateMouse
     element.CreateIcon = element_CreateAuraIcon
     element.PostUpdateIcon = element_PostUpdateIcon
-    -- element.PreSetPosition = element_PreSetPosition
+    element.PreSetPosition = element_SortAuras
     element.CustomFilter = filterFunctions[unit] or filterFunctions.default
 
     frame.UpdateAuras = frame_UpdateAuras
