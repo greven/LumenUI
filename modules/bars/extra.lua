@@ -12,6 +12,18 @@ local hooksecurefunc = _G.hooksecurefunc
 local LibKeyBound = LibStub("LibKeyBound-1.0")
 local isInit = false
 
+local function updateFont(fontString, config)
+    fontString:SetFont(C.global.fonts.bars.font, config.size,
+                       config.outline and "THINOUTLINE" or nil)
+    fontString:SetWordWrap(false)
+
+    if config.shadow then
+        fontString:SetShadowOffset(1, -1)
+    else
+        fontString:SetShadowOffset(0, 0)
+    end
+end
+
 local function button_UpdateHotKey(self, state)
     if state ~= nil then self._parent._config.hotkey.enabled = state end
 
@@ -25,7 +37,7 @@ local function button_UpdateHotKey(self, state)
 end
 
 local function button_UpdateHotKeyFont(self)
-    self.HotKey:UpdateFont(self._parent._config.hotkey.size)
+    updateFont(self.HotKey, self._parent._config.hotkey)
 end
 
 local function button_OnEnter(self) if LibKeyBound then LibKeyBound:Set(self) end end
@@ -78,7 +90,7 @@ function M.CreateExtraButton()
         ExtraActionButton1.UpdateHotKey = button_UpdateHotKey
         ExtraActionButton1.UpdateHotKeyFont = button_UpdateHotKeyFont
 
-        local point = C.db.profile.bars.extra.point[E.UI_LAYOUT]
+        local point = C.modules.bars.extra.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

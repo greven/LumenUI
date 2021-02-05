@@ -452,7 +452,7 @@ D.modules = {
             }
         },
         extra = { -- ExtraAction
-            size = 40,
+            size = 30,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
             fade = {
@@ -472,8 +472,8 @@ D.modules = {
                 p = "BOTTOM",
                 anchor = "UIParent",
                 ap = "BOTTOM",
-                x = -94,
-                y = 250
+                x = 0,
+                y = 180
             }
         },
         zone = { -- ZoneAbility
