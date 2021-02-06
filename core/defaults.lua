@@ -42,6 +42,7 @@ D.media = {
         backdrop_border = Media .. "textures\\backdrop-border",
         button_backdrop = Media .. "textures\\button-backdrop",
         button_highlight = Media .. "textures\\button-highlight",
+        button_pushed = Media .. "textures\\button-pushed",
         button_checked = Media .. "textures\\button-checked",
         absorb = Media .. "textures\\absorb",
         arrow = Media .. "textures\\arrow",
@@ -70,18 +71,14 @@ D.global = {
         units = {font = D.media.fonts.condensed, outline = false, shadow = true},
         cooldown = {font = D.media.fonts.normal, outline = true, shadow = false}
     },
-    backdrop = {color = rgb(5, 8, 12), alpha = 0.88},
-    border = {color = rgb(30, 30, 30)},
+    backdrop = {color = rgb(5, 8, 12), alpha = 0.9},
+    border = {color = rgb(20, 20, 20)},
     statusbar = {
         texture = D.media.textures.statusbar,
         color = D.colors.dark_gray
     },
     buttons = {
-        border = {
-            texture = D.media.textures.border_thick,
-            size = 16,
-            offset = -4
-        }
+        border = {texture = D.media.textures.border, size = 16, offset = -4}
     },
     shadows = {enabled = true, alpha = 0.3},
     castbar = {
@@ -227,7 +224,7 @@ D.modules = {
             macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
+                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
             },
             point = {
                 p = "TOP",
@@ -261,7 +258,7 @@ D.modules = {
             macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
+                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
             },
             point = {
                 p = "BOTTOM",
@@ -295,7 +292,7 @@ D.modules = {
             macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
+                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
             },
             point = {
                 p = "BOTTOM",
@@ -329,7 +326,7 @@ D.modules = {
             macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
+                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
             },
             point = {
                 p = "RIGHT",
@@ -363,7 +360,7 @@ D.modules = {
             macro = {enabled = false, size = 12},
             count = {enabled = true, size = 12},
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
+                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
             },
             point = {
                 p = "RIGHT",
@@ -708,7 +705,7 @@ D.modules = {
         scale = 1,
         alpha = 0.88,
         border = {size = 10, color_quality = true, color_class = false},
-        health = {height = 6, color_class = true},
+        health = {height = 5, color_class = true, text = false},
         id = true,
         spell_id = "SHOW", -- SHOW, HIDE, ON_SHIFT_DOWN
         aura_id = "ON_SHIFT_DOWN", -- SHOW, HIDE, ON_SHIFT_DOWN
@@ -853,14 +850,14 @@ D.modules = {
                 additional_power = {
                     enabled = true,
                     width = playerWidth,
-                    height = 3,
+                    height = 2,
                     prediction = {enabled = true},
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "",
                         ap = "BOTTOMLEFT",
                         x = 0,
-                        y = -13
+                        y = -12
                     }
                 },
                 castbar = {

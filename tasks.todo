@@ -15,30 +15,31 @@ Unitframes:
   ☐ Add target of target to target plate
   ☐ Button dispel glow is not squared! Make it fit the square button
   ☐ Add Player Pet Aura's Buffs Whitelist
-  ☐ Maybe move focus to the left of the player plate?
-  ☐ Maybe add castbar on top of targetplate?
+  ✔ Maybe move focus to the left of the player plate? @done(21-02-06 15:43)
   ☐ Castbar: Add shield texture
+  ☐ Castbar: Fade in / fade out animation
   ☐ Auras: Make border show  decreasing cooldown!
+  ☐ Add fade in / fade out animations when showing and hiding
   ✔ Trim castbar text name to be width - xx characters! (for small castbars) @done(21-02-04 00:30)
 
 Minimap:
   ☐ WIP
 
 Actionbars:
-  ☐ Button: Make Pushed Texture (yellow) more noticeable @high @today
+  ✔ Button: Make Pushed Texture (yellow) more noticeable @high @today @done(21-02-06 15:41)
   ☐ Make the glow for when spell can be cast (available resources) different from the proc glow @low
+  ☐ Extra Button: Not resizing... @bug
   ☐ Create PetAction Bar
   ☐ Create PetBattle Bar
-  ☐ Create Extra Button
   ☐ Create Zone Button
   ☐ Create Micro Menu
 
 Tooltip:
-  ☐ Add Azerite border
   ☐ Check lsUI / NDUi tooltips to see what can we add...
   ☐ Add missing icons to tooltip (Faction, Phase, etc...) @high
   ☐ Dropdown bugs (at least on BG) @bug
   ☐ Show total in inventory and bank
+  ✔ Move health statusbar inside? @done(21-02-06 15:44)
   ✔ Tooltip missing: Chat @done(21-01-31 20:41)
 
 UnitNames:
@@ -46,26 +47,30 @@ UnitNames:
   ☐ Style Guild name with different color
 
 Chat:
-  ☐ WIP
+  ☐ Reposition
+  ☐ Cleanup buttons but maybe allow us to access them as a Popup menu?
+  ☐ Fade out after a certain time
+  ☐ Edit box at the top.
 
 AuraWatchers:
   ☐ WIP: Maybe it should track player auras and target debuffs just like NDUI (Check it's module)
   ☐ Integrate into the actionbar (like AdiButton auras but simplify, border with duration only...)
 
 XPBar:
-  ☐ Refactor
-  ☐ Add segments instead of a continous bar?
-  ☐ If high level and not tracking anything, hide?
+  ☐ Maybe add segments instead of a continous bar?
+  ☐ Tracking Honor is not showing the bar, needs reload, check LS:UI @bug @low
+  ☐ In LS:UI in order to track we shift click (check the honor screen) @low
 
 Blizzard:
-  ☐ CharacterFrame (Gems, items text not showing?) @bug
   ☐ Object Watcher Frame: Reskin
   ☐ Reposition PvP Timers and PvP Score frame at the top of the screen
   ☐ Reposition Text Warning (Out of mana, etc) frame
-  ☐ Move The Maw thingy at the top of the screen.
+  ☐ Move The Maw level at the top of the screen.
 
 Bags:
   ☐ Show total money in server
+  ☐ Make it like bagnon but maybe with categories inside? Like AdiBags?
+  ☐ Check NDUi
 
 Roadmap:
   ☐ Add GUI after first stable release (future plans)

@@ -16,12 +16,12 @@ local unpack = _G.unpack
 
 -- ---------------
 
-function E:CreateStatusBar(parent, name, texture, orientation)
+function E:CreateStatusBar(parent, name, texture, thin, orientation)
     local bar = CreateFrame("StatusBar", name, parent)
     bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
     bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
 
-    E:SetStatusBarSkin(bar, texture, orientation)
+    E:SetStatusBarSkin(bar, texture, thin, orientation)
     bar.handled = true
 
     return bar
@@ -110,8 +110,10 @@ function E:HandleStatusBar(bar, isRecursive)
     end
 end
 
-function E:SetStatusBarSkin(bar, texture, orientation)
+function E:SetStatusBarSkin(bar, texture, thin, orientation)
     if not bar then return end
+
+    -- TODO: Create a thin bar (like we do for castbars and refator castbar etc to use this?)
 
     bar:SetStatusBarTexture(texture or C.media.textures.statusbar)
     bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))

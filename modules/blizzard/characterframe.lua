@@ -221,8 +221,8 @@ function M:SetUpCharacterFrame()
 
             local iLvlText = slot:CreateFontString(nil, "ARTWORK")
             iLvlText:SetFontObject("Game12Font_o1")
-            iLvlText:SetPoint("TOPLEFT", -2, -1)
-            iLvlText:SetPoint("BOTTOMRIGHT", 2, 1)
+            iLvlText:SetPoint("TOPLEFT", 0, 0)
+            iLvlText:SetPoint("BOTTOMRIGHT", 0, 0)
             iLvlText:SetJustifyH("RIGHT")
             iLvlText:SetJustifyV("BOTTOM")
             slot.ItemLevelText = iLvlText

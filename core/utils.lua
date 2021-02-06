@@ -373,8 +373,7 @@ function E:Abbreviate(v)
 end
 
 function E:Print(...)
-    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join('', E:WrapText(C.colors.violet,
-                                                           "LumUI: "), ...))
+    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join("", E.LUMEN, ": ", ...))
 end
 
 -- ---------------

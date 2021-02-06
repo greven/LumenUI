@@ -1,8 +1,8 @@
 ## Interface: 90001
 ## Author: greven
 ## Version: @project-version@
-## Title: |cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|rUI
-## Notes: oUF layout by greven (Kreoss @ Quel'Thalas EU)
+## Title: |cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r |cFFccccccUI|r
+## Notes: WoW UI Kreoss @ Quel'Thalas EU
 ## SavedVariables: LumenDB
 ## X-SavedVariables: LumenDB
 ## X-SlashCmdList: /lum

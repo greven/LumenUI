@@ -57,23 +57,28 @@ end
 
 local function tooltipBar_Hook(self)
     if self:IsForbidden() or self:GetParent():IsForbidden() then return end
+    local config = C.modules.tooltips
 
-    if self.Text then
-        local _, max = self:GetMinMaxValues()
-        if max == 1 then
-            self.Text:Hide()
-        else
-            local value = self:GetValue()
+    if self:IsShown() then
+        if config.health.text and self.Text then
+            local _, max = self:GetMinMaxValues()
+            if max == 1 then
+                self.Text:Hide()
+            else
+                local value = self:GetValue()
 
-            self.Text:Show()
-            self.Text:SetFormattedText("%s / %s", E:FormatNumber(value),
-                                       E:FormatNumber(max))
+                self.Text:Show()
+                self.Text:SetFormattedText("%s / %s", E:FormatNumber(value),
+                                           E:FormatNumber(max))
 
-            self:GetParent():SetMinimumWidth(self.Text:GetStringWidth() + 32)
+                self:GetParent()
+                    :SetMinimumWidth(self.Text:GetStringWidth() + 32)
+            end
         end
-    end
 
-    M:UpdateStatusBarColor(self)
+        M:UpdateStatusBarColor(self)
+        GameTooltip:SetPadding(0, 0, 0, config.health.height + 2)
+    end
 end
 
 local function tooltip_Hook(self) M.ReskinTooltip(self) end
@@ -159,8 +164,9 @@ function M:ReskinStatusBar(self)
     E:SetStatusBarSkin(statusbar, C.media.textures.statusbar)
     E:SetBackdrop(statusbar, E.SCREEN_SCALE * 1.5, config.alpha)
     statusbar:ClearAllPoints()
-    statusbar:SetPoint("BOTTOMLEFT", self.bg, "TOPLEFT", 2, 4)
-    statusbar:SetPoint("BOTTOMRIGHT", self.bg, "TOPRIGHT", -2, 4)
+    statusbar:SetPoint("LEFT", 4, 0)
+    statusbar:SetPoint("RIGHT", -4, 0)
+    statusbar:SetPoint("TOP", 0, -4)
     statusbar:GetStatusBarTexture():SetVertTile(true)
     statusbar:SetHeight(config.health.height)
 

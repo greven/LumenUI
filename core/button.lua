@@ -83,29 +83,29 @@ local function setNormalTextureHook(self, texture)
     if texture then self:SetNormalTexture(nil) end
 end
 
+-- Pushed
 local function setPushedTexture(button)
     if not button.SetPushedTexture then return end
 
     button:SetPushedTexture(C.media.textures.button_highlight)
-    button:GetPushedTexture():SetBlendMode("ADD")
-    button:GetPushedTexture():SetDesaturated(true)
-    button:GetPushedTexture():SetVertexColor(E:GetRGB(C.colors.yellow))
-    button:GetPushedTexture():SetOutside(button, 1, 1)
+    button:GetPushedTexture():SetVertexColor(E:GetRGB(C.colors.cyan))
+    button:GetPushedTexture():SetInside()
 end
 
+-- Hovering
 local function setHighlightTexture(button)
     if not button.SetHighlightTexture then return end
 
     button:SetHighlightTexture(C.media.textures.button_highlight, "ADD")
-    button:GetHighlightTexture():SetOutside(button, 1, 1)
+    button:GetHighlightTexture():SetVertexColor(E:GetRGB(C.colors.blue))
+    button:GetHighlightTexture():SetInside()
 end
 
 local function setCheckedTexture(button)
     if not button.SetCheckedTexture then return end
 
     button:SetCheckedTexture(C.media.textures.button_checked)
-    button:GetCheckedTexture():SetBlendMode("ADD")
-    button:GetCheckedTexture():SetOutside(button, 1, 1)
+    button:GetCheckedTexture():SetInside()
 end
 
 local function setIcon(button, texture, l, r, t, b)
@@ -126,7 +126,7 @@ local function setIcon(button, texture, l, r, t, b)
     return icon
 end
 
-local function skinButton(button)
+local function skinButton(button, borderTexture)
     local bIcon = button.icon or button.Icon
     local bFlash = button.Flash
     local bFOArrow = button.FlyoutArrow
@@ -162,7 +162,7 @@ local function skinButton(button)
         bHotKey:ClearAllPoints()
         bHotKey:SetDrawLayer("OVERLAY")
         bHotKey:SetJustifyH("RIGHT")
-        bHotKey:SetPoint("TOPRIGHT", 2, 0)
+        bHotKey:SetPoint("TOPRIGHT", 1, -1)
         bHotKey:SetSize(0, 0)
         bHotKey:SetVertexColor(1, 1, 1, 1)
         bHotKey:Show()
@@ -211,8 +211,8 @@ local function skinButton(button)
 
     if bCD then
         bCD:ClearAllPoints()
-        bCD:SetPoint("TOPLEFT", 1, -1)
-        bCD:SetPoint("BOTTOMRIGHT", -1, 1)
+        bCD:SetPoint("TOPLEFT", 0, 0)
+        bCD:SetPoint("BOTTOMRIGHT", 0, 0)
 
         if bCD:IsObjectType("Frame") then E.Cooldowns.Handle(bCD) end
     end
@@ -222,7 +222,7 @@ local function skinButton(button)
         hooksecurefunc(button, "SetNormalTexture", setNormalTextureHook)
 
         local border = E:CreateBorder(button)
-        border:SetTexture(C.global.buttons.border.texture)
+        border:SetTexture(borderTexture or C.global.buttons.border.texture)
         border:SetSize(C.global.buttons.border.size)
         border:SetOffset(C.global.buttons.border.offset)
         button.Border_ = border
@@ -296,7 +296,7 @@ do
     function E:SkinInvSlotButton(button)
         if not button or button.__styled then return end
 
-        skinButton(button)
+        skinButton(button, C.media.textures.border)
 
         local azeriteTexture = button.AzeriteTexture
         if azeriteTexture then

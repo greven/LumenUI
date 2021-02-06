@@ -13,6 +13,7 @@ local UnitName = _G.UnitName
 local GetRealmName = _G.GetRealmName
 
 E.ADDON_NAME = A
+E.LUMEN = "|cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r"
 
 -- Player Specific
 E.PLAYER_CLASS = select(2, UnitClass("player"))
