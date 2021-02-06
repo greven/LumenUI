@@ -34,17 +34,17 @@ D.media = {
         flat = Media .. "textures\\statusbar",
         neon = Media .. "textures\\neon",
         mint = Media .. "textures\\mint",
-        glow = Media .. "textures\\glow",
         vertlines = Media .. "textures\\vertlines",
+        glow = Media .. "textures\\glow",
+        spark = Media .. "textures\\spark",
+        absorb = Media .. "textures\\absorb",
         border = Media .. "textures\\border",
         border_thick = Media .. "textures\\border-thick",
         border = Media .. "textures\\border",
         backdrop_border = Media .. "textures\\backdrop-border",
         button_backdrop = Media .. "textures\\button-backdrop",
         button_highlight = Media .. "textures\\button-highlight",
-        button_pushed = Media .. "textures\\button-pushed",
         button_checked = Media .. "textures\\button-checked",
-        absorb = Media .. "textures\\absorb",
         arrow = Media .. "textures\\arrow",
         aura_icons = {
             -- line #1
@@ -228,7 +228,7 @@ D.modules = {
             },
             point = {
                 p = "TOP",
-                anchor = "LumenPlayerPlateFrame",
+                anchor = "LumPlayerPlateFrame",
                 ap = "BOTTOM",
                 x = 0,
                 y = -8
@@ -265,7 +265,7 @@ D.modules = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 24
+                y = 23
             }
         },
         bar3 = { -- MultiBarBottomRight
@@ -615,21 +615,22 @@ D.modules = {
             enabled = true,
             visible = true,
             width = 427,
-            height = 4,
-            texture = D.media.textures.neon,
+            height = 18,
+            texture = D.media.textures.statusbar,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             spark = true,
             text = {
                 size = 10,
                 format = "NUM_PERC", -- "NUM or NUM_PERC"
-                visibility = 2 -- 1 - always, 2 - mouseover
+                visibility = 2, -- 1 - always, 2 - mouseover
+                position = "TOP" -- "TOP", "CENTER"
             },
             point = {
                 p = "BOTTOM",
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 22 - 10
+                y = 0
             },
             fade = {
                 enabled = false,
@@ -668,7 +669,7 @@ D.modules = {
         vehicle = {enabled = true, size = 100, point = {"TOPLEFT", 4, -196}}
     },
     minimap = {
-        enabled = false,
+        enabled = true,
         size = 200,
         square = true,
         collect = {
@@ -698,6 +699,21 @@ D.modules = {
             enabled = true,
             auto_repair = {enabled = true, use_guild_funds = true},
             vendor_grays = {enabled = true}
+        }
+    },
+    panel = {
+        enabled = true,
+        visible = true,
+        width = 420,
+        height = 16,
+        visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
+        text = {size = 10},
+        point = {
+            p = "BOTTOM",
+            anchor = "UIParent",
+            ap = "BOTTOM",
+            x = 0,
+            y = -2
         }
     },
     tooltips = {
@@ -1359,7 +1375,7 @@ D.modules = {
                 height = 18,
                 point = {
                     p = "LEFT",
-                    anchor = "LumenTargetFrame",
+                    anchor = "LumTargetFrame",
                     ap = "RIGHT",
                     x = 41,
                     y = 0
@@ -1483,7 +1499,7 @@ D.modules = {
                 height = targetPlateHeight,
                 point = {
                     p = "RIGHT",
-                    anchor = "LumenPlayerPlateFrame",
+                    anchor = "LumPlayerPlateFrame",
                     ap = "LEFT",
                     x = -31,
                     y = 0
@@ -1723,11 +1739,11 @@ D.modules = {
                     enabled = true,
                     size = 20,
                     point = {
-                        p = "LEFT",
-                        anchor = "",
-                        ap = "RIGHT",
-                        x = 10,
-                        y = 1
+                        p = "RIGHT",
+                        anchor = "Health",
+                        ap = "LEFT",
+                        x = -8,
+                        y = 20
                     }
                 },
                 threat = {enabled = true, feedback_unit = "player"}
@@ -1738,7 +1754,7 @@ D.modules = {
                 height = 18,
                 point = {
                     p = "LEFT",
-                    anchor = "LumenFocusFrame",
+                    anchor = "LumFocusFrame",
                     ap = "RIGHT",
                     x = 40,
                     y = 0
@@ -1884,7 +1900,7 @@ D.modules = {
                 height = 17,
                 point = {
                     p = "LEFT",
-                    anchor = "LumenPlayerFrame",
+                    anchor = "LumPlayerFrame",
                     ap = "RIGHT",
                     x = 17,
                     y = 0
@@ -2338,7 +2354,7 @@ D.modules = {
                 visibility = "[petbattle,vehicleui,overridebar,possessbar] hide; [harm,nodead][exists,combat][exists,nocombat,mod:alt] show; [] hide; show",
                 point = {
                     p = "LEFT",
-                    anchor = "LumenPlayerPlateFrame",
+                    anchor = "LumPlayerPlateFrame",
                     ap = "RIGHT",
                     x = 31,
                     y = 0
@@ -2572,6 +2588,17 @@ D.modules = {
                         ap = "BOTTOMLEFT",
                         x = 1,
                         y = -8
+                    }
+                },
+                raid_target = {
+                    enabled = true,
+                    size = 20,
+                    point = {
+                        p = "LEFT",
+                        anchor = "Health",
+                        ap = "RIGHT",
+                        x = 2,
+                        y = 20
                     }
                 }
             }

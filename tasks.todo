@@ -1,7 +1,6 @@
 Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!! @bug
   ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health. @bug @low @today
-  ✔ Auras: Cooldown spiral is 1 pixel short of the aura border @bug @done(21-02-04 02:41)
   ☐ Class Power: Check why Update color isn't working, maybe colorize last bar??
   ☐ Make right clicking on portraits show the frame menu (maybe, if not too much work to refactor)
   ☐ Units Missing:
@@ -15,18 +14,16 @@ Unitframes:
   ☐ Add target of target to target plate
   ☐ Button dispel glow is not squared! Make it fit the square button
   ☐ Add Player Pet Aura's Buffs Whitelist
-  ✔ Maybe move focus to the left of the player plate? @done(21-02-06 15:43)
   ☐ Castbar: Add shield texture
   ☐ Castbar: Fade in / fade out animation
   ☐ Auras: Make border show  decreasing cooldown!
   ☐ Add fade in / fade out animations when showing and hiding
-  ✔ Trim castbar text name to be width - xx characters! (for small castbars) @done(21-02-04 00:30)
 
 Minimap:
   ☐ WIP
+  ☐ Start from scratch, refactor everything, config, minimap_UpdateConfig -> element_UpdateConfig
 
 Actionbars:
-  ✔ Button: Make Pushed Texture (yellow) more noticeable @high @today @done(21-02-06 15:41)
   ☐ Make the glow for when spell can be cast (available resources) different from the proc glow @low
   ☐ Extra Button: Not resizing... @bug
   ☐ Create PetAction Bar
@@ -39,8 +36,6 @@ Tooltip:
   ☐ Add missing icons to tooltip (Faction, Phase, etc...) @high
   ☐ Dropdown bugs (at least on BG) @bug
   ☐ Show total in inventory and bank
-  ✔ Move health statusbar inside? @done(21-02-06 15:44)
-  ✔ Tooltip missing: Chat @done(21-01-31 20:41)
 
 UnitNames:
   ☐ Color by class?
@@ -54,7 +49,7 @@ Chat:
 
 AuraWatchers:
   ☐ WIP: Maybe it should track player auras and target debuffs just like NDUI (Check it's module)
-  ☐ Integrate into the actionbar (like AdiButton auras but simplify, border with duration only...)
+  ☐ Inline Auras: Integrate into the actionbar (like AdiButton auras but simplify, border with duration only...)
 
 XPBar:
   ☐ Maybe add segments instead of a continous bar?
@@ -72,12 +67,28 @@ Bags:
   ☐ Make it like bagnon but maybe with categories inside? Like AdiBags?
   ☐ Check NDUi
 
+Panel:
+  ☐ Add Main stats here...
+  ☐ Maybe Free Bag space?
+  ☐ Maybe equipment repair?
+  ☐ Friends online?
+  ☐ ...
+
+Loot:
+  ☐ Something in the line of Butsu.
+
 Roadmap:
   ☐ Add GUI after first stable release (future plans)
   ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
   ☐ Add Mask support for buttons?
 
 Archive:
+  ✔ Auras: Cooldown spiral is 1 pixel short of the aura border @bug @done(21-02-04 02:41) @project(Unitframes)
+  ✔ Maybe move focus to the left of the player plate? @done(21-02-06 15:43) @project(Unitframes)
+  ✔ Trim castbar text name to be width - xx characters! (for small castbars) @done(21-02-04 00:30) @project(Unitframes)
+  ✔ Button: Make Pushed Texture (yellow) more noticeable @high @today @done(21-02-06 15:41) @project(Actionbars)
+  ✔ Move health statusbar inside? @done(21-02-06 15:44) @project(Tooltip)
+  ✔ Tooltip missing: Chat @done(21-01-31 20:41) @project(Tooltip)
   ✔ Missing proc button glow @bug @critical @today @done(21-01-31 15:07) @project(Actionbars)
   ✔ Button: Skin flyout button missing @done(21-01-28 14:17) @project(Actionbars)
   ✔ Add Bordet Style (check LumUI and other addons...) @done(21-01-30 22:23) @project(Tooltip)

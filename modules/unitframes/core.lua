@@ -179,7 +179,7 @@ function UF:Init()
         self:UpdateReactionColors()
 
         oUF:Factory(function()
-            oUF:RegisterStyle("Lumen", function(frame, unit)
+            oUF:RegisterStyle("Lum", function(frame, unit)
                 local name = frame:GetName()
 
                 frame:RegisterForClicks("AnyUp")
@@ -187,7 +187,7 @@ function UF:Init()
                 frame:SetScript("OnLeave", frame_OnLeave)
 
                 frame._unit = unit:gsub("%d+", "")
-                frame._layout = name:match("Lumen(%a+)Frame"):lower()
+                frame._layout = name:match("Lum(%a+)Frame"):lower()
 
                 frame.ForElement = frame_ForElement
                 frame.UpdateConfig = frame_UpdateConfig
@@ -217,42 +217,42 @@ function UF:Init()
                 end
             end)
         end)
-        oUF:SetActiveStyle("Lumen")
+        oUF:SetActiveStyle("Lum")
 
         if config.units.player.enabled then
-            UF:CreateUnitFrame("player", "LumenPlayer")
+            UF:CreateUnitFrame("player", "LumPlayer")
             UF:UpdateUnitFrame("player", "Update")
-            UF:CreateUnitFrame("pet", "LumenPet")
+            UF:CreateUnitFrame("pet", "LumPet")
             UF:UpdateUnitFrame("pet", "Update")
         end
 
         if config.units.playerplate.enabled then
-            UF:CreateUnitFrame("playerplate", "LumenPlayerPlate")
+            UF:CreateUnitFrame("playerplate", "LumPlayerPlate")
             UF:UpdateUnitFrame("playerplate", "Update")
         end
 
         if config.units.target.enabled then
-            UF:CreateUnitFrame("target", "LumenTarget")
+            UF:CreateUnitFrame("target", "LumTarget")
             UF:UpdateUnitFrame("target", "Update")
         end
 
         if config.units.targetplate.enabled then
-            UF:CreateUnitFrame("targetplate", "LumenTargetPlate")
+            UF:CreateUnitFrame("targetplate", "LumTargetPlate")
             UF:UpdateUnitFrame("targetplate", "Update")
         end
 
         if config.units.targettarget.enabled then
-            UF:CreateUnitFrame("targettarget", "LumenTargetTarget")
+            UF:CreateUnitFrame("targettarget", "LumTargetTarget")
             UF:UpdateUnitFrame("targettarget", "Update")
         end
 
         if config.units.focus.enabled then
-            UF:CreateUnitFrame("focus", "LumenFocus")
+            UF:CreateUnitFrame("focus", "LumFocus")
             UF:UpdateUnitFrame("focus", "Update")
         end
 
         if config.units.focustarget.enabled then
-            UF:CreateUnitFrame("focustarget", "LumenFocusTarget")
+            UF:CreateUnitFrame("focustarget", "LumFocusTarget")
             UF:UpdateUnitFrame("focustarget", "Update")
         end
 

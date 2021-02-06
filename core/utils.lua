@@ -188,7 +188,7 @@ do
 end
 
 E.WaitTable = {}
-E.WaitFrame = CreateFrame('Frame', 'LumenUI_WaitFrame', _G.UIParent)
+E.WaitFrame = CreateFrame('Frame', 'Lum_WaitFrame', _G.UIParent)
 E.WaitFrame:SetScript('OnUpdate', E.WaitFunc)
 
 function E:WaitFunc(elapse)
@@ -373,7 +373,8 @@ function E:Abbreviate(v)
 end
 
 function E:Print(...)
-    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join("", E.LUMEN, ": ", ...))
+    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join("", E.LUMEN, " |cFFaaaaaa›|r ",
+                                            ...))
 end
 
 -- ---------------

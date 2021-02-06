@@ -16,4 +16,6 @@
   <Script file="cooldown.lua" />
   <Script file="fading.lua" />
   <Script file="statusbar.lua" />
+
+  <Script file="dev.lua" />
 </Ui>

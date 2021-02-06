@@ -10,7 +10,6 @@ local t_wipe = _G.table.wipe
 -- ---------------
 
 local isInit = false
-local config = C.modules.bags
 
 local function frame_OnEvent(self, event)
     if event == "MERCHANT_CLOSED" then
@@ -28,8 +27,8 @@ end
 function M.IsInit() return isInit end
 
 function M:Init()
-    if not isInit and config.enabled then
-        local frame = CreateFrame("Frame", "LumenBags")
+    if not isInit and C.modules.bags.enabled then
+        local frame = CreateFrame("Frame", "LumBags")
 
         self:CreateSellFrame()
 

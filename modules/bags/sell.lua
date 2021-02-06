@@ -67,12 +67,12 @@ function M:GetVendorProgress()
 end
 
 function M:CreateSellFrame()
-    local frame = CreateFrame("Frame", "LumenVendorGraysFrame", _G.UIParent)
+    local frame = CreateFrame("Frame", "LumVendorGraysFrame", _G.UIParent)
     frame:SetSize(200, 16)
     frame:SetPoint("CENTER", _G.UIParent, 0, 200)
     E:SetBackdrop(frame, 2)
 
-    frame.statusbar = E:CreateStatusBar(frame, "LumenVendorGraysFrameStatusBar")
+    frame.statusbar = E:CreateStatusBar(frame, "LumVendorGraysFrameStatusBar")
     frame.statusbar:SetSize(200, 20)
     frame.statusbar:SetAllPoints()
     frame.statusbar:SetStatusBarColor(E:GetRGB(C.colors.dark_red))

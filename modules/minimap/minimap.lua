@@ -7,8 +7,6 @@ local M = E:AddModule("Minimap")
 local isInit = false
 local isSquare = false
 
-local cfg = C.modules.minimap
-
 -- Lua
 local _G = getfenv(0)
 
@@ -533,8 +531,9 @@ local function minimap_UpdateConfig(self)
 end
 
 local function minimap_UpdateSize(self)
-    Minimap:SetSize(cfg.size, cfg.size)
-    LumMinimapHolder:SetSize(cfg.size, cfg.size + 20)
+    local config = self._config
+    Minimap:SetSize(config.size, config.size)
+    LumMinimapHolder:SetSize(config.size, config.size + 20)
 end
 
 local function minimap_UpdateButtons(self)
@@ -607,228 +606,228 @@ end
 function M:IsInit() return isInit end
 
 function M:Init()
-    if not isInit and cfg.enabled then
+    if not isInit and C.modules.bars.enabled then
         if not IsAddOnLoaded("Blizzard_TimeManager") then
             LoadAddOn("Blizzard_TimeManager")
         end
 
         isSquare = C.modules.minimap.square
 
-        local level = Minimap:GetFrameLevel()
-        local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
-        holder:SetSize(1, 1)
-        holder:SetPoint(unpack(cfg.point))
+        -- local level = Minimap:GetFrameLevel()
+        -- local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
+        -- holder:SetSize(1, 1)
+        -- holder:SetPoint(unpack(config.point))
 
-        Minimap:EnableMouseWheel()
-        Minimap:ClearAllPoints()
-        Minimap:SetParent(holder)
+        -- Minimap:EnableMouseWheel()
+        -- Minimap:ClearAllPoints()
+        -- Minimap:SetParent(holder)
 
-        Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
-        Minimap:SetPoint("BOTTOM", 0, 0)
+        -- Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
+        -- Minimap:SetPoint("BOTTOM", 0, 0)
 
-        Minimap:RegisterEvent("ZONE_CHANGED")
-        Minimap:RegisterEvent("ZONE_CHANGED_INDOORS")
-        Minimap:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+        -- Minimap:RegisterEvent("ZONE_CHANGED")
+        -- Minimap:RegisterEvent("ZONE_CHANGED_INDOORS")
+        -- Minimap:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
-        Minimap:HookScript("OnEvent", function(self, event)
-            if event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or
-                event == "ZONE_CHANGED_NEW_AREA" then
-                -- print(event)
-            end
-        end)
+        -- Minimap:HookScript("OnEvent", function(self, event)
+        --     if event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or
+        --         event == "ZONE_CHANGED_NEW_AREA" then
+        --         -- print(event)
+        --     end
+        -- end)
 
-        RegisterStateDriver(Minimap, "visibility", "[petbattle] hide; show")
+        -- RegisterStateDriver(Minimap, "visibility", "[petbattle] hide; show")
 
-        local textureParent = CreateFrame("Frame", nil, Minimap)
-        textureParent:SetFrameLevel(level + 1)
-        textureParent:SetPoint("BOTTOMRIGHT", 0, 0)
-        Minimap.TextureParent = textureParent
+        -- local textureParent = CreateFrame("Frame", nil, Minimap)
+        -- textureParent:SetFrameLevel(level + 1)
+        -- textureParent:SetPoint("BOTTOMRIGHT", 0, 0)
+        -- Minimap.TextureParent = textureParent
 
-        if isSquare then
-            Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
-            Minimap:SetPoint("BOTTOM", 0, 0)
+        -- if isSquare then
+        --     Minimap:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
+        --     Minimap:SetPoint("BOTTOM", 0, 0)
 
-            textureParent:SetPoint("TOPLEFT", 0, 0)
+        --     textureParent:SetPoint("TOPLEFT", 0, 0)
 
-            local border = E:CreateBorder(textureParent)
-            border:SetTexture(C.media.textures.border_thick)
-            border:SetVertexColor(E:GetRGB(C.global.border.color))
-            border:SetOffset(-5)
-            Minimap.Border = border
+        --     local border = E:CreateBorder(textureParent)
+        --     border:SetTexture(C.media.textures.border_thick)
+        --     border:SetVertexColor(E:GetRGB(C.global.border.color))
+        --     border:SetOffset(-5)
+        --     Minimap.Border = border
 
-            local bg = E:SetBackdrop(textureParent, 2)
-            bg:SetFrameLevel(level - 1)
-            E:CreateShadow(textureParent)
-        else
-            Minimap:SetMaskTexture(
-                "Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
-            Minimap:SetPoint("BOTTOM", 0, 10)
+        --     local bg = E:SetBackdrop(textureParent, 2)
+        --     bg:SetFrameLevel(level - 1)
+        --     E:CreateShadow(textureParent)
+        -- else
+        --     Minimap:SetMaskTexture(
+        --         "Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
+        --     Minimap:SetPoint("BOTTOM", 0, 10)
 
-            textureParent:SetPoint("TOPLEFT", 0, 0)
-        end
+        --     textureParent:SetPoint("TOPLEFT", 0, 0)
+        -- end
 
-        -- .Collection
-        do
-            local button = CreateFrame("Button", "MinimapButtonCollection",
-                                       Minimap)
-            button:SetFrameLevel(level + 3)
-            button:RegisterForDrag("LeftButton")
-            button:SetHighlightTexture(
-                "Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
-            button:SetScript("OnDragStart", button_OnDragStart)
-            button:SetScript("OnDragStop", button_OnDragStop)
-            Minimap.Collection = button
+        -- -- .Collection
+        -- do
+        --     local button = CreateFrame("Button", "MinimapButtonCollection",
+        --                                Minimap)
+        --     button:SetFrameLevel(level + 3)
+        --     button:RegisterForDrag("LeftButton")
+        --     button:SetHighlightTexture(
+        --         "Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+        --     button:SetScript("OnDragStart", button_OnDragStart)
+        --     button:SetScript("OnDragStop", button_OnDragStop)
+        --     Minimap.Collection = button
 
-            button:SetScript("OnEnter", function(self)
-                if C.modules.minimap.collect.tooltip then
-                    local p, rP, x, y = getTooltipPoint(self)
+        --     button:SetScript("OnEnter", function(self)
+        --         if C.modules.minimap.collect.tooltip then
+        --             local p, rP, x, y = getTooltipPoint(self)
 
-                    GameTooltip:SetOwner(self, "ANCHOR_NONE")
-                    GameTooltip:SetPoint(p, self, rP, x, y)
-                    GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1)
-                    GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"])
-                    GameTooltip:Show()
-                end
-            end)
-            button:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        --             GameTooltip:SetOwner(self, "ANCHOR_NONE")
+        --             GameTooltip:SetPoint(p, self, rP, x, y)
+        --             GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1)
+        --             GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"])
+        --             GameTooltip:Show()
+        --         end
+        --     end)
+        --     button:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
-            local border = button:CreateTexture(nil, "OVERLAY")
-            border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+        --     local border = button:CreateTexture(nil, "OVERLAY")
+        --     border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
 
-            local background = button:CreateTexture(nil, "BACKGROUND")
-            background:SetTexture("Interface\\Minimap\\UI-Minimap-Background")
+        --     local background = button:CreateTexture(nil, "BACKGROUND")
+        --     background:SetTexture("Interface\\Minimap\\UI-Minimap-Background")
 
-            local icon = button:CreateTexture(nil, "ARTWORK")
-            icon:SetTexture("Interface\\LFGFRAME\\WaitAnim")
-            icon:SetTexCoord(64 / 128, 128 / 128, 64 / 128, 128 / 128)
-            button.Icon = icon
+        --     local icon = button:CreateTexture(nil, "ARTWORK")
+        --     icon:SetTexture("Interface\\LFGFRAME\\WaitAnim")
+        --     icon:SetTexCoord(64 / 128, 128 / 128, 64 / 128, 128 / 128)
+        --     button.Icon = icon
 
-            handleButton(button)
+        --     handleButton(button)
 
-            local shadow = button:CreateTexture(nil, "BACKGROUND")
-            shadow:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
-            shadow:SetVertexColor(0, 0, 0)
-            shadow:SetPoint("CENTER")
-            shadow:SetAlpha(0.6)
-            shadow:SetScale(0.001)
-            button.Shadow = shadow
+        --     local shadow = button:CreateTexture(nil, "BACKGROUND")
+        --     shadow:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
+        --     shadow:SetVertexColor(0, 0, 0)
+        --     shadow:SetPoint("CENTER")
+        --     shadow:SetAlpha(0.6)
+        --     shadow:SetScale(0.001)
+        --     button.Shadow = shadow
 
-            local agIn = button:CreateAnimationGroup()
-            button.AGIn = agIn
+        --     local agIn = button:CreateAnimationGroup()
+        --     button.AGIn = agIn
 
-            agIn:SetScript("OnPlay", function()
-                shadow:SetScale(1)
+        --     agIn:SetScript("OnPlay", function()
+        --         shadow:SetScale(1)
 
-                for i = 1, #consolidatedButtons do
-                    consolidatedButtons[i]:SetAlpha(0)
-                    consolidatedButtons[i]:Show_()
-                end
-            end)
-            agIn:SetScript("OnStop", function()
-                shadow:SetScale(1)
+        --         for i = 1, #consolidatedButtons do
+        --             consolidatedButtons[i]:SetAlpha(0)
+        --             consolidatedButtons[i]:Show_()
+        --         end
+        --     end)
+        --     agIn:SetScript("OnStop", function()
+        --         shadow:SetScale(1)
 
-                for i = 1, #consolidatedButtons do
-                    consolidatedButtons[i]:SetAlpha(1)
-                end
-            end)
-            agIn:SetScript("OnFinished", function()
-                shadow:SetScale(1)
+        --         for i = 1, #consolidatedButtons do
+        --             consolidatedButtons[i]:SetAlpha(1)
+        --         end
+        --     end)
+        --     agIn:SetScript("OnFinished", function()
+        --         shadow:SetScale(1)
 
-                for i = 1, #consolidatedButtons do
-                    consolidatedButtons[i]:SetAlpha(1)
-                end
-            end)
+        --         for i = 1, #consolidatedButtons do
+        --             consolidatedButtons[i]:SetAlpha(1)
+        --         end
+        --     end)
 
-            local agOut = button:CreateAnimationGroup()
-            button.AGOut = agOut
+        --     local agOut = button:CreateAnimationGroup()
+        --     button.AGOut = agOut
 
-            agOut:SetScript("OnPlay", function()
-                shadow:SetScale(1)
+        --     agOut:SetScript("OnPlay", function()
+        --         shadow:SetScale(1)
 
-                for i = 1, #consolidatedButtons do
-                    consolidatedButtons[i]:SetAlpha(1)
-                end
-            end)
-            agOut:SetScript("OnStop", function()
-                shadow:SetScale(0.001)
+        --         for i = 1, #consolidatedButtons do
+        --             consolidatedButtons[i]:SetAlpha(1)
+        --         end
+        --     end)
+        --     agOut:SetScript("OnStop", function()
+        --         shadow:SetScale(0.001)
 
-                for i = 1, #consolidatedButtons do
-                    consolidatedButtons[i]:SetAlpha(0)
-                    consolidatedButtons[i]:Hide_()
-                end
-            end)
-            agOut:SetScript("OnFinished", function()
-                shadow:SetScale(0.001)
+        --         for i = 1, #consolidatedButtons do
+        --             consolidatedButtons[i]:SetAlpha(0)
+        --             consolidatedButtons[i]:Hide_()
+        --         end
+        --     end)
+        --     agOut:SetScript("OnFinished", function()
+        --         shadow:SetScale(0.001)
 
-                for i = 1, #consolidatedButtons do
-                    consolidatedButtons[i]:SetAlpha(0)
-                    consolidatedButtons[i]:Hide_()
-                end
-            end)
+        --         for i = 1, #consolidatedButtons do
+        --             consolidatedButtons[i]:SetAlpha(0)
+        --             consolidatedButtons[i]:Hide_()
+        --         end
+        --     end)
 
-            local anim = agIn:CreateAnimation("Scale")
-            anim:SetTarget(shadow)
-            anim:SetOrder(1)
-            anim:SetFromScale(0.001, 0.001)
-            anim:SetToScale(1, 1)
-            anim:SetDuration(0.08)
-            button.ScaleIn = anim
+        --     local anim = agIn:CreateAnimation("Scale")
+        --     anim:SetTarget(shadow)
+        --     anim:SetOrder(1)
+        --     anim:SetFromScale(0.001, 0.001)
+        --     anim:SetToScale(1, 1)
+        --     anim:SetDuration(0.08)
+        --     button.ScaleIn = anim
 
-            anim = agOut:CreateAnimation("Scale")
-            anim:SetTarget(shadow)
-            anim:SetOrder(2)
-            anim:SetToScale(0.001, 0.001)
-            anim:SetFromScale(1, 1)
-            anim:SetDuration(0.08)
-            button.ScaleOut = anim
+        --     anim = agOut:CreateAnimation("Scale")
+        --     anim:SetTarget(shadow)
+        --     anim:SetOrder(2)
+        --     anim:SetToScale(0.001, 0.001)
+        --     anim:SetFromScale(1, 1)
+        --     anim:SetDuration(0.08)
+        --     button.ScaleOut = anim
 
-            button.AGDisabled = button:CreateAnimationGroup()
+        --     button.AGDisabled = button:CreateAnimationGroup()
 
-            button:SetScript("OnClick", function(self)
-                if not self.isShown then
-                    agOut:Stop()
-                    agIn:Play()
+        --     button:SetScript("OnClick", function(self)
+        --         if not self.isShown then
+        --             agOut:Stop()
+        --             agIn:Play()
 
-                    self.isShown = true
-                else
-                    agIn:Stop()
-                    agOut:Play()
+        --             self.isShown = true
+        --         else
+        --             agIn:Stop()
+        --             agOut:Play()
 
-                    self.isShown = false
-                end
-            end)
+        --             self.isShown = false
+        --         end
+        --     end)
 
-            ignoredChildren[button] = true
-        end
+        --     ignoredChildren[button] = true
+        -- end
 
-        local function handleChildren()
-            local shouldCollect = C.modules.minimap.collect.enabled
+        -- local function handleChildren()
+        --     local shouldCollect = C.modules.minimap.collect.enabled
 
-            for i = 1, select("#", Minimap:GetChildren()) do
-                local child = select(i, Minimap:GetChildren())
-                if not ignoredChildren[child] then
-                    child:SetFrameLevel(level + 2)
+        --     for i = 1, select("#", Minimap:GetChildren()) do
+        --         local child = select(i, Minimap:GetChildren())
+        --         if not ignoredChildren[child] then
+        --             child:SetFrameLevel(level + 2)
 
-                    if not handledChildren[child] and isMinimapButton(child) then
-                        handleButton(child)
+        --             if not handledChildren[child] and isMinimapButton(child) then
+        --                 handleButton(child)
 
-                        watchedButtons[child] = true
+        --                 watchedButtons[child] = true
 
-                        if shouldCollect then
-                            collectButton(child)
-                        end
-                    end
+        --                 if shouldCollect then
+        --                     collectButton(child)
+        --                 end
+        --             end
 
-                    ignoredChildren[child] = true
-                end
-            end
-        end
+        --             ignoredChildren[child] = true
+        --         end
+        --     end
+        -- end
 
-        handleChildren()
+        -- handleChildren()
 
         Minimap.UpdateConfig = minimap_UpdateConfig
-        Minimap.UpdateSize = minimap_UpdateSize
-        Minimap.UpdateButtons = minimap_UpdateButtons
+        -- Minimap.UpdateSize = minimap_UpdateSize
+        -- Minimap.UpdateButtons = minimap_UpdateButtons
 
         isInit = true
 
@@ -839,7 +838,7 @@ end
 function M:Update()
     if isInit then
         Minimap:UpdateConfig()
-        Minimap:UpdateSize()
-        Minimap:UpdateButtons()
+        -- Minimap:UpdateSize()
+        -- Minimap:UpdateButtons()
     end
 end

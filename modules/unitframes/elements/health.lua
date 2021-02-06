@@ -262,10 +262,11 @@ do
         element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
         E:SmoothBar(element)
 
-        element.Text = (textParent or element):CreateFontString(nil, "ARTWORK")
+        element.Text = (textParent or element):CreateFontString("Text",
+                                                                "ARTWORK")
 
         if config.perc then
-            local perc = element:CreateFontString(nil, "BACKGROUND")
+            local perc = element:CreateFontString("Percent", "BACKGROUND")
             perc:SetTextColor(E:GetRGBA(
                                   config.perc.color or C.colors.light_gray,
                                   config.perc.alpha or 1))

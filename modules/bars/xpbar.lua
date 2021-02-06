@@ -447,7 +447,7 @@ function M.HasXPBar() return isInit end
 function M.CreateXPBar()
     if not isInit and (C.modules.bars.xpbar.enabled or M:IsRestricted()) then
         local config = C.modules.bars.xpbar
-        local bar = CreateFrame("Frame", "LUMXPBar", UIParent)
+        local bar = CreateFrame("Frame", "LumXPBar", UIParent)
         bar._id = "xpbar"
 
         M:AddBar(bar._id, bar)
@@ -469,7 +469,7 @@ function M.CreateXPBar()
 
         local textParent = CreateFrame("Frame", nil, bar)
         textParent:SetAllPoints()
-        textParent:SetFrameLevel(bar:GetFrameLevel() + 5)
+        textParent:SetFrameLevel(bar:GetFrameLevel() + 10)
 
         for i = 1, MAX_SEGMENTS do
             local segment = CreateFrame("StatusBar", "$parentSegment" .. i, bar)
@@ -486,8 +486,8 @@ function M.CreateXPBar()
 
             if config.spark then
                 local spark = segment:CreateTexture(nil, "OVERLAY")
-                spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
-                spark:SetSize(12, config.height + 8)
+                spark:SetTexture(C.media.textures.spark)
+                spark:SetSize(10, config.height)
                 spark:SetBlendMode('ADD')
                 spark:SetPoint('CENTER', segment:GetStatusBarTexture(), 'RIGHT',
                                0, 0)
@@ -510,7 +510,15 @@ function M.CreateXPBar()
             E:SmoothColor(ext.Texture)
 
             local text = textParent:CreateFontString(nil, "OVERLAY")
-            text:SetAllPoints(segment)
+            if config.text.position then
+                if config.text.position == "TOP" then
+                    text:SetPoint("CENTER", segment, "TOP", 0, -1)
+                else
+                    text:SetAllPoints(segment)
+                end
+            else
+                text:SetAllPoints(segment)
+            end
             text:SetWordWrap(false)
             text:Hide()
             segment.Text = text

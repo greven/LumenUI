@@ -110,6 +110,7 @@ do
             self:UpdatePower()
             self:UpdateName()
             self:UpdateAuras()
+            self:UpdateRaidTargetIndicator()
         else
             if self:IsEnabled() then self:Disable() end
         end
@@ -132,6 +133,7 @@ do
 
         self:CreateName(frame, textParent)
         self:CreateAuras(frame, "target")
+        self:CreateRaidTargetIndicator(frame)
 
         -- Arrow indicator
         local arrow = frame:CreateTexture(nil, "ARTWORK")
