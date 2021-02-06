@@ -487,7 +487,7 @@ function M.CreateXPBar()
             if config.spark then
                 local spark = segment:CreateTexture(nil, "OVERLAY")
                 spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
-                spark:SetSize(20, config.height + 6)
+                spark:SetSize(12, config.height + 8)
                 spark:SetBlendMode('ADD')
                 spark:SetPoint('CENTER', segment:GetStatusBarTexture(), 'RIGHT',
                                0, 0)

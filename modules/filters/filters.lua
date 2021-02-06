@@ -108,18 +108,37 @@ local aura_filters = {
     }
 }
 
+local class_buffs = {
+    ["DEATHKNIGHT"] = {state = true},
+    ["DEMONHUNTER"] = {state = true},
+    ["DRUID"] = {state = true},
+    ["HUNTER"] = {state = true},
+    ["MAGE"] = {state = true},
+    ["MONK"] = {state = true},
+    ["PALADIN"] = {state = true},
+    ["PRIEST"] = {state = true},
+    ["ROGUE"] = {
+        state = true,
+        [315496] = true -- Slice and Dice
+        -- [121153] = true -- Blindside
+    },
+    ["SHAMAN"] = {state = true},
+    ["WARLOCK"] = {state = true},
+    ["WARRIOR"] = {state = true}
+}
+
 local class_debuffs = {
     ["DEATHKNIGHT"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [55078] = true, -- Blood Plague
         [194310] = true, -- Festering Wound
         [191587] = true -- Virulent Plague
     },
-    ["DEMONHUNTER"] = {state = true, playerOnly = true},
+    ["DEMONHUNTER"] = {state = true, onlyShowPlayer = true},
     ["DRUID"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [203123] = true, -- Maim
         [164812] = true, -- Moonfire
         [155722] = true, -- Rake
@@ -128,7 +147,7 @@ local class_debuffs = {
     },
     ["HUNTER"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [217200] = true, -- Barbed Shot
         [5116] = true, --- Concussive Shot
         [3355] = true, -- Freezing Trap
@@ -136,22 +155,22 @@ local class_debuffs = {
     },
     ["MAGE"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [12654] = true, -- Ignite
         [205708] = true, -- Chilled
         [122] = true, -- Frost Nova
         [228358] = true -- Winter's Chill
     },
-    ["MONK"] = {state = true, playerOnly = true},
+    ["MONK"] = {state = true, onlyShowPlayer = true},
     ["PALADIN"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [853] = true, -- Hammer of Justice
         [197277] = true -- Judgment
     },
     ["PRIEST"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [335467] = true, -- Devouring Plague
         [204213] = true, -- Purge the Wicked
         [214621] = true, -- Schism
@@ -161,7 +180,7 @@ local class_debuffs = {
     },
     ["ROGUE"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [2094] = true, -- Blind
         [199804] = true, -- Between the Eyes
         [1833] = true, -- Cheap Shot
@@ -177,13 +196,13 @@ local class_debuffs = {
     },
     ["SHAMAN"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [188389] = true, -- Flame Shock
         [196840] = true -- Frost Shock
     },
     ["WARLOCK"] = {
         state = true,
-        playerOnly = true,
+        onlyShowPlayer = true,
         [980] = true, -- Agony
         [146739] = true, -- Corruption
         [1714] = true, -- Curse of Tongues
@@ -195,9 +214,10 @@ local class_debuffs = {
         [205179] = true, -- Phantom Singularity
         [27243] = true, -- Seed of Corruption
         [63106] = true, -- Siphon Life
-        [30108] = true -- Unstable Affliction
+        [30108] = true, -- Unstable Affliction
+        [48181] = true -- Haunt
     },
-    ["WARRIOR"] = {state = true, playerOnly = true}
+    ["WARRIOR"] = {state = true, onlyShowPlayer = true}
 }
 
 function M.CreateAuraFilters()
@@ -213,6 +233,13 @@ function M.CreateAuraFilters()
         E:CopyTable(class_debuffs[E.PLAYER_CLASS],
                     C.global.aura_filters["Class Debuffs"])
         C.global.aura_filters["Class Debuffs"].is_init = true
+    end
+
+    -- Class Buffs filters
+    if not C.global.aura_filters["Class Buffs"].is_init then
+        E:CopyTable(class_buffs[E.PLAYER_CLASS],
+                    C.global.aura_filters["Class Buffs"])
+        C.global.aura_filters["Class Buffs"].is_init = true
     end
 end
 

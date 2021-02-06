@@ -91,7 +91,8 @@ D.global = {
     aura_filters = {
         ["Blacklist"] = {is_init = false},
         ["M+ Affixes"] = {is_init = false},
-        ["Class Debuffs"] = {is_init = false}
+        ["Class Debuffs"] = {is_init = false},
+        ["Class Buffs"] = {is_init = false}
     }
 }
 
@@ -483,8 +484,8 @@ D.modules = {
                 p = "BOTTOM",
                 anchor = "UIParent",
                 ap = "BOTTOM",
-                x = 0,
-                y = 180
+                x = -248,
+                y = 38
             }
         },
         zone = { -- ZoneAbility
@@ -2131,7 +2132,7 @@ D.modules = {
                     anchor = "UIParent",
                     ap = "CENTER",
                     x = 0,
-                    y = -240
+                    y = -250
                 },
                 health = {
                     enabled = true,
@@ -2265,6 +2266,71 @@ D.modules = {
                         ap = "TOPLEFT",
                         x = 0,
                         y = 0
+                    }
+                },
+                aura_bars = {
+                    enabled = true,
+                    spacing = 5,
+                    y_growth = "UP",
+                    disable_mouse = false,
+                    sort = false, -- Sort by remaining time
+                    filter = {
+                        custom = {["Class Buffs"] = true},
+                        friendly = {
+                            buff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                mount = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = true,
+                                player_permanent = false,
+                                misc = false
+                            },
+                            debuff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
+                                misc = false
+                            }
+                        },
+                        enemy = {
+                            buff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                mount = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                dispellable = false,
+                                misc = false
+                            },
+                            debuff = {
+                                boss = false,
+                                tank = false,
+                                healer = false,
+                                selfcast = false,
+                                selfcast_permanent = false,
+                                player = false,
+                                player_permanent = false,
+                                misc = false
+                            }
+                        }
+                    },
+                    point = {
+                        p = "BOTTOMLEFT",
+                        anchor = "",
+                        ap = "TOPLEFT",
+                        x = 0,
+                        y = 16
                     }
                 }
             },
@@ -2432,8 +2498,8 @@ D.modules = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
-                    animate = {buff = false, debuff = false},
-                    sort = false, -- Sort by remaining time
+                    animate = {buff = false, debuff = true},
+                    sort = true, -- Sort by remaining time
                     count = {
                         size = 10,
                         outline = true,

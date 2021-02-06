@@ -133,6 +133,7 @@ do
             self:UpdatePower()
             self:UpdatePowerPrediction()
             self:UpdateClassPower()
+            self:UpdateAuraBars()
             self:UpdateThreatIndicator()
 
             if self.Runes then self:UpdateRunes() end
@@ -170,6 +171,7 @@ do
         end
         self:CreateClassPower(frame)
 
+        self:CreateAuraBars(frame)
         self:CreateThreatIndicator(frame)
 
         -- TODO: Attach to Blizzard's Personal Resource Display

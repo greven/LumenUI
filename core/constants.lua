@@ -32,6 +32,8 @@ E.HIDDEN_PARENT = hidden
 E.NOA = hidden:CreateAnimationGroup()
 E.NOOP = function() end
 
+E.DAY, E.HOUR, E.MINUTE = 86400, 3600, 60
+
 -- Screen Size and UI Scale
 do
     local function GetBestScale()

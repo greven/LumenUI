@@ -24,7 +24,7 @@ for _, id in next, C_MountJournal.GetMountIDs() do
     MOUNTS[select(2, C_MountJournal.GetMountInfoByID(id))] = true
 end
 
-local filterFunctions = {
+UF.filterFunctions = {
     default = function(self, unit, aura, name, _, count, debuffType, duration,
                        expiration, caster, isStealable, _, spellID, _,
                        isBossAura)
@@ -48,7 +48,7 @@ local filterFunctions = {
             if enabled then
                 filter = C.global.aura_filters[filter]
                 if filter and filter[spellID] then
-                    if filter.playerOnly then
+                    if filter.onlyShowPlayer then
                         if aura.isPlayer or
                             (caster and UnitIsUnit(caster, "pet")) then
                             return filter.state
@@ -113,8 +113,8 @@ local filterFunctions = {
 
         return config.misc
     end,
-    boss = function(self, unit, aura, _, _, _, debuffType, duration, expiration,
-                    caster, isStealable, _, spellID, _, isBossAura)
+    boss = function(self, unit, aura, name, _, count, debuffType, duration,
+                    expiration, caster, isStealable, _, spellID, _, isBossAura)
         local config = self._config and self._config.filter or nil
         if not config then return end
 
@@ -135,7 +135,14 @@ local filterFunctions = {
             if enabled then
                 filter = C.global.aura_filters[filter]
                 if filter and filter[spellID] then
-                    return filter.state
+                    if filter.onlyShowPlayer then
+                        if aura.isPlayer or
+                            (caster and UnitIsUnit(caster, "pet")) then
+                            return filter.state
+                        end
+                    else
+                        return filter.state
+                    end
                 end
             end
         end
@@ -182,6 +189,27 @@ local filterFunctions = {
         return config.misc
     end
 }
+
+function UF.SortAuras(a, b)
+    if a and b and a:GetParent()._config then
+        if a:IsShown() and b:IsShown() then
+            local aTime = a.noTime and m_huge or a.expiration or -1
+            local bTime = b.noTime and m_huge or b.expiration or -1
+
+            if aTime and bTime then return aTime > bTime end
+        elseif a:IsShown() then
+            return true
+        end
+
+    end
+end
+
+local function element_SortAuras(self)
+    if self._config and self._config.sort then
+        t_sort(self, UF.SortAuras)
+        return 1, #self -- Prevent things from going crazy!
+    end
+end
 
 local function button_UpdateTooltip(self)
     GameTooltip:SetUnitAura(self:GetParent().__owner.unit, self:GetID(),
@@ -248,27 +276,6 @@ local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
                 end
             end
         end
-    end
-end
-
-local function SortAuras(a, b)
-    if a and b and a:GetParent()._config then
-        if a:IsShown() and b:IsShown() then
-            local aTime = a.noTime and m_huge or a.expiration or -1
-            local bTime = b.noTime and m_huge or b.expiration or -1
-
-            if aTime and bTime then return aTime > bTime end
-        elseif a:IsShown() then
-            return true
-        end
-
-    end
-end
-
-local function element_SortAuras(self)
-    if self._config and self._config.sort then
-        t_sort(self, SortAuras)
-        return 1, #self -- Prevent things from going crazy!
     end
 end
 
@@ -351,13 +358,13 @@ local function element_CreateAuraIcon(self, index)
         button.ZoomIn = ag
 
         a1:SetOrder(1)
-        a1:SetDuration(0.25)
+        a1:SetDuration(0.2)
         a2:SetOrder(1)
-        a2:SetDuration(0.25)
+        a2:SetDuration(0.2)
 
-        a1:SetFromAlpha(0.85)
+        a1:SetFromAlpha(0.5)
         a1:SetToAlpha(1.0)
-        a2:SetFromScale(2.5, 2.5)
+        a2:SetFromScale(2.25, 2.25)
         a2:SetToScale(1.0, 1.0)
     end
 
@@ -524,7 +531,8 @@ function UF:CreateAuras(frame, unit)
     element.CreateIcon = element_CreateAuraIcon
     element.PostUpdateIcon = element_PostUpdateIcon
     element.PreSetPosition = element_SortAuras
-    element.CustomFilter = filterFunctions[unit] or filterFunctions.default
+    element.CustomFilter = UF.filterFunctions[unit] or
+                               UF.filterFunctions.default
 
     frame.UpdateAuras = frame_UpdateAuras
     frame.Auras = element
