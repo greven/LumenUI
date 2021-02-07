@@ -11,6 +11,7 @@ local pairs = _G.pairs
 local GetItemInfo = _G.GetItemInfo
 local GetItem = _G.GetItem
 local ItemRefTooltip = _G.ItemRefTooltip
+local IsShiftKeyDown = _G.IsShiftKeyDown
 
 -- ---------------
 
@@ -60,7 +61,7 @@ local function tooltipBar_Hook(self)
     local config = C.modules.tooltips
 
     if self:IsShown() then
-        if config.health.text and self.Text then
+        if self.Text and (config.health.text.show or IsShiftKeyDown()) then
             local _, max = self:GetMinMaxValues()
             if max == 1 then
                 self.Text:Hide()
@@ -74,10 +75,12 @@ local function tooltipBar_Hook(self)
                 self:GetParent()
                     :SetMinimumWidth(self.Text:GetStringWidth() + 32)
             end
+        else
+            if self.Text then self.Text:Hide() end
         end
 
         M:UpdateStatusBarColor(self)
-        GameTooltip:SetPadding(0, 0, 0, config.health.height + 2)
+        GameTooltip:SetPadding(0, 0, 0, config.health.height)
     end
 end
 
@@ -113,6 +116,8 @@ local function tooltip_SetDefaultAnchor(self, parent)
         self:SetPoint(p, "LumTooltipAnchor", p, 0, 0)
     end
 end
+
+local function tooltip_OnTooltipCleared(self) self:SetPadding(0, 0, 0, 0) end
 
 local function tooltip_SetSharedBackdropStyle(self)
     if not self.styled then return end
@@ -170,7 +175,9 @@ function M:ReskinStatusBar(self)
     statusbar:GetStatusBarTexture():SetVertTile(true)
     statusbar:SetHeight(config.health.height)
 
-    if statusbar.Text then updateFont(statusbar.Text, 13, true, true) end
+    if statusbar.Text then
+        updateFont(statusbar.Text, config.health.text.size or 13, true, true)
+    end
 end
 
 function M:ReskinTooltip()
@@ -225,6 +232,7 @@ function M:Init()
         GameTooltip.StatusBar = GameTooltipStatusBar
 
         M:StyleTooltips()
+        GameTooltip:HookScript("OnTooltipCleared", tooltip_OnTooltipCleared)
 
         -- Anchor
         local point = config.point
@@ -259,3 +267,4 @@ function M.Update()
         GameTooltipStatusBar:SetHeight(C.modules.tooltips.health.height)
     end
 end
+
