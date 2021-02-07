@@ -117,7 +117,12 @@ local function tooltip_SetDefaultAnchor(self, parent)
     end
 end
 
-local function tooltip_OnTooltipCleared(self) self:SetPadding(0, 0, 0, 0) end
+local function tooltip_OnTooltipCleared(self)
+    if not self.tooltipCleared then
+        self:SetPadding(0, 0, 0, 0)
+        self.tooltipCleared = true
+    end
+end
 
 local function tooltip_SetSharedBackdropStyle(self)
     if not self.styled then return end
@@ -204,6 +209,7 @@ function M:ReskinTooltip()
         end
 
         self.styled = true
+        self.tooltipCleared = false
     end
 
     if self.bg then
