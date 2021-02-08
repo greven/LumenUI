@@ -36,7 +36,7 @@ function UF:CreateTargetTargetFrame(frame)
     local config = C.modules.unitframes.units[frame._unit]
     local level = frame:GetFrameLevel()
 
-    E:SetBackdrop(frame, 2)
+    E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
 
     local textParent = CreateFrame("Frame", nil, frame)
     textParent:SetFrameLevel(level + 9)

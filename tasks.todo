@@ -1,3 +1,6 @@
+API:
+  ☐ Maybe refactor CreateStatusbar to create statusbars with icons (thin and large), so we can refactor castbar, aurabars, etc. @low
+
 Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!! @bug
   ☐ [BUG] Some options on units that use layout instead of unit (Player Plate, Target Plate) on elements like Health are not being GET correctly, for instance if I disable the perc option on the TargetPlayerPlate and because TargetFrame has perc, it will error on the health. @bug @low @today
@@ -14,14 +17,21 @@ Unitframes:
   ☐ Add target of target to target plate
   ☐ Button dispel glow is not squared! Make it fit the square button
   ☐ Add Player Pet Aura's Buffs Whitelist
-  ☐ Castbar: Add shield texture
+  ☐ Castbar: Add shield texture @low
   ☐ Castbar: Fade in / fade out animation
   ☐ Auras: Make border show  decreasing cooldown!
   ☐ Add fade in / fade out animations when showing and hiding
 
+AuraBars:
+  ☐ Add option to color by debuff type, or class or just remaining time. @low
+
 Minimap:
   ☐ WIP
   ☐ Start from scratch, refactor everything, config, minimap_UpdateConfig -> element_UpdateConfig
+  ☐ Add coordinates
+
+Map:
+  ☐ Add coordinates
 
 Actionbars:
   ☐ Make the glow for when spell can be cast (available resources) different from the proc glow @low
@@ -61,6 +71,7 @@ Blizzard:
   ☐ Reposition PvP Timers and PvP Score frame at the top of the screen
   ☐ Reposition Text Warning (Out of mana, etc) frame
   ☐ Move The Maw level at the top of the screen.
+  ☐ Tweak Flating combat text!
 
 Bags:
   ☐ Show total money in server

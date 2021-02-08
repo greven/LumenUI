@@ -27,7 +27,7 @@ function M:Init()
     if not isInit and C.modules.panel.enabled then
         Panel:SetFrameLevel(5)
 
-        local bg = E:SetBackdrop(Panel, 2, 0.95, nil, {
+        local bg = E:SetBackdrop(Panel, E.SCREEN_SCALE * 3, 0.95, nil, {
             bgFile = C.media.textures.vertlines,
             tile = true,
             tileSize = 8

@@ -16,14 +16,13 @@ local unpack = _G.unpack
 
 -- ---------------
 
-function E:CreateStatusBar(parent, name, texture, thin, orientation)
+function E:CreateStatusBar(parent, name, texture, orientation)
     local bar = CreateFrame("StatusBar", name, parent)
     bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
     bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
 
-    E:SetStatusBarSkin(bar, texture, thin, orientation)
+    E:SetStatusBarSkin(bar, texture, orientation)
     bar.handled = true
-
     return bar
 end
 
@@ -110,10 +109,8 @@ function E:HandleStatusBar(bar, isRecursive)
     end
 end
 
-function E:SetStatusBarSkin(bar, texture, thin, orientation)
+function E:SetStatusBarSkin(bar, texture, orientation)
     if not bar then return end
-
-    -- TODO: Create a thin bar (like we do for castbars and refator castbar etc to use this?)
 
     bar:SetStatusBarTexture(texture or C.media.textures.statusbar)
     bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
@@ -126,19 +123,17 @@ function E:SetStatusBarSkin(bar, texture, thin, orientation)
         bar.Bg:SetAllPoints()
     end
 
-    if not bar.Text then
-        bar.Text = bar:CreateFontString(nil, "ARTWORK", "LumFont12_Outline")
-        bar.Text = text
+    if bar.Text then
+        bar.Text:ClearAllPoints()
+        bar.Text:SetDrawLayer("ARTWORK")
+        bar.Text:SetJustifyV("MIDDLE")
+        bar.Text:SetPoint("TOPLEFT", 1, 0)
+        bar.Text:SetPoint("BOTTOMRIGHT", -1, -1)
+        bar.Text:SetWordWrap(false)
     end
-
-    bar.Text:ClearAllPoints()
-    bar.Text:SetDrawLayer("ARTWORK")
-    bar.Text:SetJustifyV("MIDDLE")
-    bar.Text:SetPoint("TOPLEFT", 1, 0)
-    bar.Text:SetPoint("BOTTOMRIGHT", -1, -1)
-    bar.Text:SetWordWrap(false)
 end
 
+-- Gain / Loss indicators
 do
     local function clamp(v, min, max)
         return m_min(max or 1, m_max(min or 0, v))

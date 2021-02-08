@@ -90,7 +90,7 @@ function UF:CreateUnitIndicator(frame, parent)
     element:SetStatusBarTexture(C.media.textures.flat)
     element:SetOrientation("VERTICAL")
 
-    E:SetBackdrop(element, 2)
+    E:SetBackdrop(element, E.SCREEN_SCALE * 3)
     E:CreateShadow(element)
 
     hooksecurefunc(frame, "Show", update)

@@ -70,7 +70,7 @@ function M:CreateSellFrame()
     local frame = CreateFrame("Frame", "LumVendorGraysFrame", _G.UIParent)
     frame:SetSize(200, 16)
     frame:SetPoint("CENTER", _G.UIParent, 0, 200)
-    E:SetBackdrop(frame, 2)
+    E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
 
     frame.statusbar = E:CreateStatusBar(frame, "LumVendorGraysFrameStatusBar")
     frame.statusbar:SetSize(200, 20)

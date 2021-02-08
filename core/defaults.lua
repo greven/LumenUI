@@ -85,6 +85,7 @@ D.global = {
         texture = D.media.textures.neon,
         bg = D.media.textures.statusbar_bg
     },
+    aura_bars = {texture = D.media.textures.statusbar},
     aura_filters = {
         ["Blacklist"] = {is_init = false},
         ["M+ Affixes"] = {is_init = false},
@@ -721,7 +722,11 @@ D.modules = {
         scale = 1,
         alpha = 0.88,
         border = {size = 10, color_quality = true, color_class = false},
-        health = {height = 5, color_class = true, text = false},
+        health = {
+            height = 5,
+            color_class = true,
+            text = {show = false, size = 12}
+        },
         id = true,
         spell_id = "SHOW", -- SHOW, HIDE, ON_SHIFT_DOWN
         aura_id = "ON_SHIFT_DOWN", -- SHOW, HIDE, ON_SHIFT_DOWN
@@ -837,7 +842,7 @@ D.modules = {
                 power = {
                     enabled = true,
                     height = 2,
-                    gap = 2,
+                    gap = 1,
                     change_threshold = 0.01,
                     color = {
                         power = true,
@@ -1611,7 +1616,7 @@ D.modules = {
                 },
                 castbar = {
                     enabled = true,
-                    width = targetPlateWidth + 22,
+                    width = targetPlateWidth + 34,
                     height = 18,
                     thin = true,
                     color = D.colors.dark_blue,
@@ -1624,10 +1629,10 @@ D.modules = {
                     },
                     text = {size = 12, outline = true, shadow = false},
                     point = {
-                        p = "BOTTOMLEFT",
+                        p = "BOTTOMRIGHT",
                         anchor = "Health",
-                        ap = "TOPLEFT",
-                        x = -22,
+                        ap = "TOPRIGHT",
+                        x = 0,
                         y = 28
                     }
                 },
@@ -2283,10 +2288,25 @@ D.modules = {
                 },
                 aura_bars = {
                     enabled = true,
-                    spacing = 5,
+                    width = playerPlateWidth,
+                    height = 14,
+                    spacing = 10,
+                    gap = 6,
                     y_growth = "UP",
                     disable_mouse = false,
+                    spark = false,
                     sort = false, -- Sort by remaining time
+                    name = {text = {size = 13, outline = true, shadow = false}},
+                    time = {
+                        exp_threshold = 5, -- [1; 10]
+                        m_ss_threshold = 600, -- [91; 3599]
+                        text = {
+                            font = D.global.fonts.cooldown.font,
+                            size = 11,
+                            outline = true,
+                            shadow = false
+                        }
+                    },
                     filter = {
                         custom = {["Class Buffs"] = true},
                         friendly = {
@@ -2343,7 +2363,7 @@ D.modules = {
                         anchor = "",
                         ap = "TOPLEFT",
                         x = 0,
-                        y = 16
+                        y = 18
                     }
                 }
             },
@@ -2512,7 +2532,7 @@ D.modules = {
                     y_growth = "DOWN",
                     disable_mouse = false,
                     animate = {buff = false, debuff = true},
-                    sort = true, -- Sort by remaining time
+                    sort = false, -- Sort by remaining time
                     count = {
                         size = 10,
                         outline = true,

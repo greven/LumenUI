@@ -51,7 +51,7 @@ do
         local config = C.modules.unitframes.units[frame._unit]
         local level = frame:GetFrameLevel()
 
-        E:SetBackdrop(frame, 2)
+        E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
 
         local textParent = CreateFrame("Frame", nil, frame)
         textParent:SetFrameLevel(level + 9)
@@ -61,7 +61,7 @@ do
         local portraitParent = CreateFrame("Frame", nil, frame)
         portraitParent:SetSize(config.portrait.width, config.portrait.height)
         E:SetPosition(portraitParent, config.portrait.point, frame)
-        E:SetBackdrop(portraitParent, 2)
+        E:SetBackdrop(portraitParent, E.SCREEN_SCALE * 3)
         E:CreateShadow(portraitParent)
 
         local health = self:CreateHealthBar(frame, textParent)
@@ -126,10 +126,10 @@ do
 
         local health = self:CreateHealthBar(frame, textParent)
         self:CreateHealthPrediction(frame, health, textParent)
-        E:SetBackdrop(health, 2)
+        E:SetBackdrop(health, E.SCREEN_SCALE * 3)
 
         local power = self:CreatePowerBar(frame, textParent)
-        E:SetBackdrop(power, 2)
+        E:SetBackdrop(power, E.SCREEN_SCALE * 3)
 
         self:CreateName(frame, textParent)
         self:CreateAuras(frame, "target")

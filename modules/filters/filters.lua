@@ -111,7 +111,10 @@ local aura_filters = {
 local class_buffs = {
     ["DEATHKNIGHT"] = {state = true},
     ["DEMONHUNTER"] = {state = true},
-    ["DRUID"] = {state = true},
+    ["DRUID"] = {
+        state = true
+        -- [191034] = true -- Starfall
+    },
     ["HUNTER"] = {state = true},
     ["MAGE"] = {state = true},
     ["MONK"] = {state = true},
@@ -157,7 +160,7 @@ local class_debuffs = {
         state = true,
         onlyShowPlayer = true,
         [12654] = true, -- Ignite
-        [205708] = true, -- Chilled
+        -- [205708] = true, -- Chilled
         [122] = true, -- Frost Nova
         [228358] = true -- Winter's Chill
     },

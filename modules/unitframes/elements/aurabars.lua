@@ -19,7 +19,7 @@ local GameTooltip = _G.GameTooltip
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font, config.size,
+    fontString:SetFont(config.font or C.global.fonts.units.font, config.size,
                        config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
@@ -27,6 +27,87 @@ local function updateFont(fontString, config)
         fontString:SetShadowOffset(1, -1)
     else
         fontString:SetShadowOffset(0, 0)
+    end
+end
+
+local function bar_OnUpdate(self, elapsed)
+    if not self then return end
+
+    local holder = self:GetParent()
+    local element = holder:GetParent()
+    local config = element._config
+
+    self.elapsed = (self.elapsed or 0) + elapsed
+
+    if self.elapsed >= 0.01 then
+        if self.noTime then
+            self:SetValue(1)
+            self.Time:SetText()
+            self:SetScript("OnUpdate", nil)
+        else
+            local remain = self.expiration - GetTime()
+            self:SetValue(remain / self.duration)
+
+            local time1, time2, format, color
+
+            if remain <= 0 then
+                bar.Time:SetText("")
+                return
+            end
+
+            color = C.colors.white
+
+            if remain >= 86400 then
+                time1, time2, format = E:SecondsToTime(remain, "abbr")
+                color = C.colors.cooldown.day
+            elseif remain >= 3600 then
+                time1, time2, format = E:SecondsToTime(remain, "abbr")
+                color = C.colors.cooldown.hour
+            elseif remain >= 60 then
+                if config.time.m_ss_threshold == 0 or remain >
+                    config.time.m_ss_threshold then
+                    time1, time2, format = E:SecondsToTime(remain, "abbr")
+                else
+                    time1, time2, format = E:SecondsToTime(remain, "x:xx")
+                end
+
+                color = C.colors.cooldown.minute
+            elseif remain >= 10 then
+                if remain > config.time.exp_threshold then
+                    time1, time2, format = E:SecondsToTime(remain, "abbr")
+                else
+                    time1, time2, format = E:SecondsToTime(remain, "frac")
+                end
+
+                color = C.colors.cooldown.minute
+            elseif remain >= 1 then
+                if remain > config.time.exp_threshold then
+                    time1, time2, format = E:SecondsToTime(remain, "abbr")
+                else
+                    time1, time2, format = E:SecondsToTime(remain, "frac")
+                end
+
+                color = C.colors.cooldown.second
+            elseif remain >= 0.001 then
+                time1, time2, format = E:SecondsToTime(remain)
+                color = C.colors.cooldown.second
+            end
+
+            if remain <= config.time.exp_threshold then
+                color = C.colors.cooldown.expiration
+            end
+
+            if time1 then
+                self.Time:SetFormattedText(format, time1, time2)
+                self.Time:SetVertexColor(E:GetRGB(color))
+
+                -- Statusbar
+                if remain <= 10 then
+                    self:SetStatusBarColor(E:GetRGB(color))
+                end
+            end
+        end
+        self.elapsed = 0
     end
 end
 
@@ -51,19 +132,67 @@ end
 
 local function element_PostCreateBar(self, bar)
     if not self or not bar then return end
+    self:UpdateConfig()
 
-    E:HandleStatusBar(bar)
-    E:SetStatusBarSkin(bar, C.media.textures.neon)
+    bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
+    E:SetStatusBarSkin(bar, C.global.aura_bars.texture)
     E:SetBackdrop(bar, E.SCREEN_SCALE * 3, C.global.backdrop.alpha)
-    -- E:SetBackdrop(self.Icon, 2)
+    E:CreateShadow(bar)
 
-    bar:SetPoint('LEFT')
-    bar:SetPoint('RIGHT')
+    bar.Icon:SetTexCoord(8 / 64, 56 / 64, 9 / 64, 41 / 64)
+    E:SetBackdrop(bar.Icon, E.SCREEN_SCALE * 3, C.global.backdrop.alpha)
+    E:CreateShadow(bar.Icon)
+
+    bar.Name:SetJustifyH('LEFT')
+    bar.Name:SetJustifyV('MIDDLE')
+    bar.Name:SetPoint("TOP", bar.Holder, "TOP", 0, 0)
+    bar.Name:SetPoint("BOTTOM", bar, "BOTTOM", 0, self._config.height / 2 + 3)
+    bar.Name:SetPoint("LEFT", bar, "LEFT", 2, 0)
+    bar.Name:SetPoint("RIGHT", bar.Time, "LEFT", -8, 0)
+
+    bar.Time:SetPoint("TOP", bar.Holder, "TOP", 0, 0)
+    bar.Time:SetPoint("BOTTOM", bar, "BOTTOM", 0, self._config.height / 2 + 3)
+    bar.Time:SetPoint("RIGHT", bar, "RIGHT", 0, 0)
+
+    bar.Spark:SetTexture(C.media.textures.spark)
+    bar.Spark:SetSize(8, self.height or 8)
+
+    updateFont(bar.Name, self._config.name.text)
+    updateFont(bar.Time, self._config.time.text)
 end
 
-function element_SetPosition(from, to)
-    --   local anchor = self.initialAnchor
-    -- 	local growth = self.growth == 'DOWN' and -1 or 1
+local function element_PostUpdateBar(self, unit, bar, index, position, duration,
+                                     expiration, debuffType, isStealable)
+    self:UpdateConfig()
+
+    -- TODO: Set color by debuff type, color class or just remaining time
+    bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
+    bar:SetScript("OnUpdate", bar_OnUpdate)
+end
+
+function element_SetPosition(self, from, to)
+    local width = self.width
+    local height = self.height
+    local spacing = self.spacing or 1
+    local gap = self.gap or 0
+    local anchor = self.initialAnchor
+    local growth = self.growth == 'DOWN' and -1 or 1
+
+    for i = from, to do
+        local bar = self[i]
+        local holder = bar.Holder
+        if (not bar) then break end
+
+        holder:SetPoint(anchor, self, anchor, 0, growth *
+                            (i > 1 and ((i - 1) * (height + spacing)) or 0))
+
+        local oppositeAnchor = E:FindOppositeAnchor(anchor)
+        local barHeight = E:Clamp(height, height / 6, height / 4)
+
+        bar:ClearAllPoints()
+        bar:SetPoint("TOPLEFT", holder, "BOTTOMLEFT", gap + height, barHeight)
+        bar:SetPoint("BOTTOMRIGHT", 0, 0)
+    end
 end
 
 local function frame_UpdateAuraBars(self)
@@ -88,22 +217,16 @@ function UF:CreateAuraBars(frame, unit)
     element:SetSize(1, 1)
 
     element.spacing = config.spacing or 4
-    element.sparkEnabled = true
-    element.initialAnchor = 'BOTTOMRIGHT'
+    element.gap = config.gap or 4
+    element.width = config.width
+    element.height = config.height
+    element.sparkEnabled = config.spark
+    element.initialAnchor = 'BOTTOMLEFT'
     element.UpdateConfig = element_UpdateConfig
     element.UpdatePosition = element_UpdatePosition
-    -- element.UpdateFonts = element_UpdateFonts
-    -- element.UpdateColors = element_UpdateColors
-    -- element.UpdateMouse = element_UpdateMouse
-    -- element.CreateIcon = element_CreateAuraIcon
-    -- element.PostUpdateIcon = element_PostUpdateIcon
-    -- element.PreSetPosition = element_SortAuras
-    -- element.CustomFilter = filterFunctions[unit] or filterFunctions.default
-
-    -- element.PreSetPosition = UF.SortAuras
     element.PostCreateBar = element_PostCreateBar
-    -- element.PostUpdateBar = element_PostUpdateBar
-    -- element.SetPosition = element_SetPosition
+    element.PostUpdateBar = element_PostUpdateBar
+    element.SetPosition = element_SetPosition
     element.CustomFilter = UF.filterFunctions[unit] or
                                UF.filterFunctions.default
 
@@ -142,16 +265,22 @@ do
                 self:SetScript("OnUpdate", nil)
             else
                 local timeNow = GetTime()
-                self:SetValue((self.expiration - timeNow) / self.duration)
-                self.Time:SetText(E:TimeFormat(self.expiration - timeNow))
+                local remain = self.expiration - timeNow
+                self:SetValue(remain / self.duration)
+                local time1, time2, format = E:SecondsToTime(remain, "abbr")
+                self.Time:SetFormattedText(format, time1, time2)
             end
             self.elapsed = 0
         end
     end
 
     local function createAuraBar(element, index)
+        local holder = CreateFrame("Frame", element:GetName() ..
+                                       'parentAuraBarHolder' .. index, element)
+        holder._width = 0
+
         local statusBar = CreateFrame('StatusBar', element:GetName() ..
-                                          'StatusBar' .. index, element)
+                                          'StatusBar' .. index, holder)
         statusBar:SetStatusBarTexture([[Interface\TargetingFrame\UI-StatusBar]])
         statusBar:SetMinMaxValues(0, 1)
         statusBar.tooltipAnchor = element.tooltipAnchor
@@ -165,9 +294,13 @@ do
         spark:SetBlendMode("ADD")
         spark:SetPoint('CENTER', statusBar:GetStatusBarTexture(), 'RIGHT')
 
-        local icon = statusBar:CreateTexture(nil, 'ARTWORK')
-        icon:SetPoint('RIGHT', statusBar, 'LEFT', -(element.gap or 2), 0)
-        icon:SetSize(element.height, element.height)
+        local iconParent = CreateFrame("Frame", nil, statusBar)
+        iconParent:SetPoint('LEFT', holder, 'LEFT', 0, 0)
+        iconParent:SetSize(element.height, element.height)
+        statusBar.IconParent = iconParent
+
+        local icon = iconParent:CreateTexture(nil, 'ARTWORK')
+        icon:SetAllPoints()
 
         local name = statusBar:CreateFontString(nil, 'OVERLAY',
                                                 'NumberFontNormal')
@@ -177,6 +310,7 @@ do
                                                 'NumberFontNormal')
         time:SetPoint('RIGHT', statusBar, 'RIGHT', -2, 0)
 
+        statusBar.Holder = holder
         statusBar.Icon = icon
         statusBar.Name = name
         statusBar.Time = time
@@ -267,6 +401,10 @@ do
                     r, g, b = color.r, color.g, color.b
                 end
 
+                local holder = statusBar.Holder
+                holder:SetSize(element.width, element.height)
+                holder._width = element.width
+
                 statusBar:SetStatusBarColor(r, g, b)
                 statusBar:SetSize(element.width, element.height)
                 statusBar.Icon:SetSize(element.height, element.height)
@@ -288,19 +426,25 @@ do
     end
 
     local function SetPosition(element, from, to)
+        local width = element.width
         local height = element.height
         local spacing = element.spacing or 1
+        local gap = element.gap or 0
         local anchor = element.initialAnchor
         local growth = element.growth == 'DOWN' and -1 or 1
 
         for i = from, to do
-            local button = element[i]
-            if (not button) then break end
+            local bar = element[i]
+            local holder = bar.Holder
+            if (not bar) then break end
 
-            button:ClearAllPoints()
-            button:SetPoint(anchor, element, anchor, (height + element.gap),
-                            growth *
-                                (i > 1 and ((i - 1) * (height + spacing)) or 0))
+            local y = growth * (i > 1 and ((i - 1) * (height + spacing)) or 0)
+            holder:SetPoint(anchor, element, anchor, 0, y)
+
+            local oppositeAnchor = E:FindOppositeAnchor(anchor)
+            bar:ClearAllPoints()
+            bar:SetPoint(anchor, holder, anchor, height + gap, 0)
+            bar:SetPoint(oppositeAnchor, 0, 0)
         end
     end
 
@@ -396,7 +540,7 @@ do
             element.anchoredBars = 0
             element.width = element.width or 240
             element.height = element.height or 12
-            element.sparkEnabled = element.sparkEnabled or true
+            element.sparkEnabled = element.sparkEnabled
             element.spacing = element.spacing or 2
             element.initialAnchor = element.initialAnchor or 'BOTTOMLEFT'
             element.growth = element.growth or 'UP'

@@ -655,7 +655,7 @@ function M:Init()
         --     border:SetOffset(-5)
         --     Minimap.Border = border
 
-        --     local bg = E:SetBackdrop(textureParent, 2)
+        --     local bg = E:SetBackdrop(textureParent, E.SCREEN_SCALE * 3)
         --     bg:SetFrameLevel(level - 1)
         --     E:CreateShadow(textureParent)
         -- else

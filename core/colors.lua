@@ -129,6 +129,11 @@ D.colors = {
         hour = rgb(255, 255, 255),
         day = rgb(255, 255, 255)
     },
+    cooldown_gradient = {
+        [1] = rgb(240, 32, 30),
+        [2] = rgb(246, 196, 66),
+        [3] = rgb(26, 26, 26)
+    },
     reaction = {
         [1] = b.red, -- Hated
         [2] = b.red, -- Hostile

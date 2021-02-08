@@ -104,7 +104,7 @@ local function element_UpdateIcon(self)
             self:SetPoint("BOTTOMRIGHT", 0, 0)
         end
 
-        E:SetBackdrop(self.Icon, 1.5)
+        E:SetBackdrop(self.Icon, E.SCREEN_SCALE * 3)
         E:CreateShadow(self.Icon)
     elseif config.icon.position == "RIGHT" then
         self.Icon = self.RightIcon
@@ -123,7 +123,7 @@ local function element_UpdateIcon(self)
             self:SetPoint("BOTTOMRIGHT", -config.icon.gap - iconHeight, 0)
         end
 
-        E:SetBackdrop(self.Icon, 1.5)
+        E:SetBackdrop(self.Icon, E.SCREEN_SCALE * 3)
         E:CreateShadow(self.Icon)
     else
         self.Icon = nil
@@ -235,7 +235,7 @@ function UF:CreateCastbar(frame)
     element:SetStatusBarColor(E:GetRGB(config.color))
     element:SetFrameLevel(holder:GetFrameLevel())
     element:SetFrameStrata("HIGH")
-    E:SetBackdrop(element, 1.5)
+    E:SetBackdrop(element, E.SCREEN_SCALE * 3)
     E:CreateShadow(element)
 
     local bg = element:CreateTexture(nil, "BACKGROUND", nil)
@@ -256,13 +256,6 @@ function UF:CreateCastbar(frame)
     icon:SetTexCoord(8 / 64, 56 / 64, 9 / 64, 41 / 64)
     element.RightIcon = icon
 
-    -- TODO: Add shield texture
-    -- local shield = iconParent:CreateTexture(nil, 'OVERLAY')
-    -- shield:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\shield")
-    -- shield:SetSize(16, 16)
-    -- shield:SetPoint('TOPRIGHT', iconParent, 6, 6)
-    -- shield:SetVertexColor(E:GetRGB(C.colors.gray))
-
     local safeZone = element:CreateTexture(nil, "ARTWORK", nil, 1)
     safeZone:SetTexture("Interface\\BUTTONS\\WHITE8X8")
     safeZone:SetVertexColor(E:GetRGBA(C.colors.red, 0.4))
@@ -277,15 +270,15 @@ function UF:CreateCastbar(frame)
     text:SetWordWrap(false)
     text:SetJustifyH("LEFT")
     text:SetPoint("TOP", element, "TOP", 0, 0)
-    text:SetPoint("BOTTOM", element, "BOTTOM", 0, -2.5)
-    text:SetPoint("LEFT", element, "LEFT", 5, 0)
-    text:SetPoint("RIGHT", time, "LEFT", -10, 0)
+    text:SetPoint("BOTTOM", element, "BOTTOM", 0, 0)
+    text:SetPoint("LEFT", element, "LEFT", 4, 0)
+    text:SetPoint("RIGHT", time, "LEFT", -8, 0)
     element.Text = text
 
     local time = textParent:CreateFontString(nil, "ARTWORK")
     time:SetWordWrap(false)
     time:SetPoint("TOP", element, "TOP", 0, 0)
-    time:SetPoint("BOTTOM", element, "BOTTOM", 0, -2)
+    time:SetPoint("BOTTOM", element, "BOTTOM", 0, 0)
     time:SetPoint("RIGHT", element, "RIGHT", -4, 0)
     element.Time = time
 
@@ -299,12 +292,12 @@ function UF:CreateCastbar(frame)
 
     if config.thin then
         text:SetPoint("TOP", holder, "TOP", 0, 0)
-        text:SetPoint("BOTTOM", holder, "BOTTOM", 0, 12)
+        text:SetPoint("BOTTOM", holder, "BOTTOM", 0, config.height / 2)
         text:SetPoint("LEFT", element, "LEFT", 0, 0)
-        text:SetPoint("RIGHT", time, "LEFT", -10, 0)
+        text:SetPoint("RIGHT", time, "LEFT", -8, 0)
 
         time:SetPoint("TOP", holder, "TOP", 0, 0)
-        time:SetPoint("BOTTOM", holder, "BOTTOM", 0, 12)
+        time:SetPoint("BOTTOM", holder, "BOTTOM", 0, config.height / 2)
         time:SetPoint("RIGHT", element, "RIGHT", 0, 0)
     end
 

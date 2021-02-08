@@ -106,23 +106,6 @@ do
     local D = "%d"
     local F = "%.1f"
 
-    function E:TimeFormat(v)
-        if v >= 86400 then
-            return s_format(D_D_ABBR, round(v / 86400)), "e5e5e5"
-        elseif v >= 3600 then
-            return s_format(D_H_ABBR, round(v / 3600)), "e5e5e5"
-        elseif v >= 60 then
-            return s_format(D_M_ABBR, round(v / 60)), "e5e5e5"
-        elseif v >= 5 then
-            return s_format(D_S_ABBR, round(v)),
-                   v >= 30 and "e5e5e5" or v >= 10 and "ffbf19" or "e51919"
-        elseif v >= 0 then
-            return s_format("%.1f", v), "e51919"
-        else
-            return 0
-        end
-    end
-
     function E:SecondsToTime(v, format)
         if format == "abbr" then
             if v >= 86400 then
@@ -630,12 +613,12 @@ do
     end
 
     function E:GetCoords(object)
-        local p, anchor, rP, x, y = object:GetPoint()
+        local p, anchor, ap, x, y = object:GetPoint()
 
         if not x then
-            return p, anchor, rP, x, y
+            return p, anchor, ap, x, y
         else
-            return p, anchor and anchor:GetName() or "UIParent", rP, round(x),
+            return p, anchor and anchor:GetName() or "UIParent", ap, round(x),
                    round(y)
         end
     end
@@ -679,6 +662,31 @@ do
                 return "LEFT"
             elseif x >= screenRight then
                 return "RIGHT"
+            else
+                return "CENTER"
+            end
+        end
+    end
+
+    -- Returns the opposite anchor of a given anchor.
+    function E:FindOppositeAnchor(anchor)
+        if anchor then
+            if anchor == "TOP" then
+                return "BOTTOM"
+            elseif anchor == "BOTTOM" then
+                return "TOP"
+            elseif anchor == "LEFT" then
+                return "RIGHT"
+            elseif anchor == "RIGHT" then
+                return "LEFT"
+            elseif anchor == "TOPLEFT" then
+                return "BOTTOMRIGHT"
+            elseif anchor == "TOPRIGHT" then
+                return "BOTTOMLEFT"
+            elseif anchor == "BOTTOMLEFT" then
+                return "TOPRIGHT"
+            elseif anchor == "BOTTOMRIGHT" then
+                return "TOPLEFT"
             else
                 return "CENTER"
             end
