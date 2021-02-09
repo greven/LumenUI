@@ -1,14 +1,12 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, L, oUF = ns.E, ns.C, ns.L, ns.oUF
+
+local UF = E:AddModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
 local unpack = _G.unpack
 local next = _G.next
-
--- ---------------
-
-local UF = E:AddModule("UnitFrames")
 
 -- ---------------
 
@@ -45,8 +43,7 @@ local function frame_OnLeave(self)
 end
 
 local function frame_UpdateConfig(self)
-    self._config = E:CopyTable(C.modules.unitframes.units[self._layout or
-                                   self._unit], self._config, configIgnoredKeys)
+    self._config = E:CopyTable(C.modules.unitframes.units[self._layout or self._unit], self._config, configIgnoredKeys)
 end
 
 local function frame_UpdateSize(self)
@@ -54,7 +51,9 @@ local function frame_UpdateSize(self)
 
     self:SetSize(width, height)
 
-    if self.TextParent then self.TextParent:SetSize(width - 8, height) end
+    if self.TextParent then
+        self.TextParent:SetSize(width - 8, height)
+    end
 end
 
 local function frame_ForElement(self, element, method, ...)
@@ -80,12 +79,13 @@ function UF:UpdatePowerColors()
     local color = oUF.colors.power
     for k, myColor in next, C.colors.power do
         if type(k) == "string" then
-            if not color[k] then color[k] = {} end
+            if not color[k] then
+                color[k] = {}
+            end
 
             if type(myColor[1]) == "table" then
                 for i, myColor_ in next, myColor do
-                    color[k][i][1], color[k][i][2], color[k][i][3] =
-                        E:GetRGB(myColor_)
+                    color[k][i][1], color[k][i][2], color[k][i][3] = E:GetRGB(myColor_)
                 end
             else
                 color[k][1], color[k][2], color[k][3] = E:GetRGB(myColor)
@@ -106,7 +106,7 @@ function UF:UpdateReactionColors()
     end
 end
 
-function UF:CreateUnitFrame(unit, name)
+function UF:Create(unit, name)
     if not units[unit] then
         if unit == "party" then
             -- Party
@@ -127,7 +127,9 @@ function UF:CreateUnitFrame(unit, name)
 
             object:UpdateConfig()
             E:SetPosition(object, object._config.point)
-            if C.global.shadows.enabled then E:CreateShadow(object) end
+            if C.global.shadows.enabled then
+                E:CreateShadow(object)
+            end
 
             objects[unit] = object
         end
@@ -136,7 +138,7 @@ function UF:CreateUnitFrame(unit, name)
     end
 end
 
-function UF:UpdateUnitFrame(unit, method, ...)
+function UF:For(unit, method, ...)
     if units[unit] then
         if unit == "boss" then
             -- Boss
@@ -149,11 +151,15 @@ function UF:UpdateUnitFrame(unit, method, ...)
 end
 
 function UF:UpdateUnitFrames(method, ...)
-    for unit in next, units do self:UpdateUnitFrame(unit, method, ...) end
+    for unit in next, units do
+        self:For(unit, method, ...)
+    end
 end
 
 function UF:ForEach(method, ...)
-    for unit in next, units do self:UpdateUnitFrame(unit, method, ...) end
+    for unit in next, units do
+        self:For(unit, method, ...)
+    end
 end
 
 function UF:GetUnits(ignoredUnits)
@@ -168,7 +174,9 @@ function UF:GetUnits(ignoredUnits)
     return temp
 end
 
-function UF:IsInit() return isInit end
+function UF:IsInit()
+    return isInit
+end
 
 function UF:Init()
     local config = C.modules.unitframes
@@ -178,83 +186,92 @@ function UF:Init()
         self:UpdatePowerColors()
         self:UpdateReactionColors()
 
-        oUF:Factory(function()
-            oUF:RegisterStyle("Lum", function(frame, unit)
-                local name = frame:GetName()
+        oUF:Factory(
+            function()
+                oUF:RegisterStyle(
+                    "Lum",
+                    function(frame, unit)
+                        local name = frame:GetName()
 
-                frame:RegisterForClicks("AnyUp")
-                frame:SetScript("OnEnter", frame_OnEnter)
-                frame:SetScript("OnLeave", frame_OnLeave)
+                        frame:RegisterForClicks("AnyUp")
+                        frame:SetScript("OnEnter", frame_OnEnter)
+                        frame:SetScript("OnLeave", frame_OnLeave)
 
-                frame._unit = unit:gsub("%d+", "")
-                frame._layout = name:match("Lum(%a+)Frame"):lower()
+                        frame._unit = unit:gsub("%d+", "")
+                        frame._layout = name:match("Lum(%a+)Frame"):lower()
 
-                frame.ForElement = frame_ForElement
-                frame.UpdateConfig = frame_UpdateConfig
-                frame.UpdateSize = frame_UpdateSize
+                        frame.ForElement = frame_ForElement
+                        frame.UpdateConfig = frame_UpdateConfig
+                        frame.UpdateSize = frame_UpdateSize
 
-                if unit == "player" then
-                    if frame._layout == "playerplate" then
-                        UF:CreatePlayerPlateFrame(frame)
-                    else
-                        UF:CreatePlayerFrame(frame)
+                        if unit == "player" then
+                            if frame._layout == "playerplate" then
+                                UF:CreatePlayerPlateFrame(frame)
+                            else
+                                UF:CreatePlayerFrame(frame)
+                            end
+                        elseif unit == "target" then
+                            if frame._layout == "targetplate" then
+                                UF:CreateTargetPlateFrame(frame)
+                            else
+                                UF:CreateTargetFrame(frame)
+                            end
+                        elseif unit == "targettarget" then
+                            UF:CreateTargetTargetFrame(frame)
+                        elseif unit == "focus" then
+                            UF:CreateFocusFrame(frame)
+                        elseif unit == "focustarget" then
+                            UF:CreateFocusTargetFrame(frame)
+                        elseif unit == "pet" then
+                            UF:CreatePetFrame(frame)
+                        end
                     end
-                elseif unit == "target" then
-                    -- UF:CreateTargetFrame(frame)
-                    if frame._layout == "targetplate" then
-                        UF:CreateTargetPlateFrame(frame)
-                    else
-                        UF:CreateTargetFrame(frame)
-                    end
-                elseif unit == "targettarget" then
-                    UF:CreateTargetTargetFrame(frame)
-                elseif unit == "focus" then
-                    UF:CreateFocusFrame(frame)
-                elseif unit == "focustarget" then
-                    UF:CreateFocusTargetFrame(frame)
-                elseif unit == "pet" then
-                    UF:CreatePetFrame(frame)
-                end
-            end)
-        end)
+                )
+            end
+        )
         oUF:SetActiveStyle("Lum")
 
         if config.units.player.enabled then
-            UF:CreateUnitFrame("player", "LumPlayer")
-            UF:UpdateUnitFrame("player", "Update")
-            UF:CreateUnitFrame("pet", "LumPet")
-            UF:UpdateUnitFrame("pet", "Update")
+            UF:Create("player", "LumPlayer")
+            UF:For("player", "Update")
+            UF:Create("pet", "LumPet")
+            UF:For("pet", "Update")
         end
 
         if config.units.playerplate.enabled then
-            UF:CreateUnitFrame("playerplate", "LumPlayerPlate")
-            UF:UpdateUnitFrame("playerplate", "Update")
+            UF:Create("playerplate", "LumPlayerPlate")
+            UF:For("playerplate", "Update")
         end
 
         if config.units.target.enabled then
-            UF:CreateUnitFrame("target", "LumTarget")
-            UF:UpdateUnitFrame("target", "Update")
+            UF:Create("target", "LumTarget")
+            UF:For("target", "Update")
         end
 
         if config.units.targetplate.enabled then
-            UF:CreateUnitFrame("targetplate", "LumTargetPlate")
-            UF:UpdateUnitFrame("targetplate", "Update")
+            UF:Create("targetplate", "LumTargetPlate")
+            UF:For("targetplate", "Update")
         end
 
         if config.units.targettarget.enabled then
-            UF:CreateUnitFrame("targettarget", "LumTargetTarget")
-            UF:UpdateUnitFrame("targettarget", "Update")
+            UF:Create("targettarget", "LumTargetTarget")
+            UF:For("targettarget", "Update")
         end
 
         if config.units.focus.enabled then
-            UF:CreateUnitFrame("focus", "LumFocus")
-            UF:UpdateUnitFrame("focus", "Update")
+            UF:Create("focus", "LumFocus")
+            UF:For("focus", "Update")
         end
 
         if config.units.focustarget.enabled then
-            UF:CreateUnitFrame("focustarget", "LumFocusTarget")
-            UF:UpdateUnitFrame("focustarget", "Update")
+            UF:Create("focustarget", "LumFocusTarget")
+            UF:For("focustarget", "Update")
         end
+
+        -- if config.units.party.enabled then
+        -- UF:Create("party", "LumParty")
+        -- UF:For("party", "Update")
+        -- end
 
         isInit = true
     end
@@ -262,6 +279,8 @@ end
 
 function UF:Update()
     if isInit then
-        for unit in next, units do self:UpdateUnitFrame(unit, "Update") end
+        for unit in next, units do
+            self:For(unit, "Update")
+        end
     end
 end

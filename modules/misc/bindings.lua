@@ -56,27 +56,32 @@ local function setBindings()
 end
 
 local function setHearthstoneCustomText()
-    local Button = CreateFrame("Button", E.ADDON_NAME .. "HearthstoneButton",
-                               nil, "SecureActionButtonTemplate")
+    local Button = CreateFrame("Button", E.ADDON_NAME .. "HearthstoneButton", nil, "SecureActionButtonTemplate")
 
     Button:SetAttribute("type", "macro")
-    Button:SetScript("PreClick", function()
-        if (InCombatLockdown()) then return end
+    Button:SetScript(
+        "PreClick",
+        function()
+            if (InCombatLockdown()) then
+                return
+            end
 
-        t_wipe(toys)
-        for _, itemID in next, hearthstoneToys do
-            if (PlayerHasToy(itemID)) then t_insert(toys, itemID) end
-        end
+            t_wipe(toys)
+            for _, itemID in next, hearthstoneToys do
+                if (PlayerHasToy(itemID)) then
+                    t_insert(toys, itemID)
+                end
+            end
 
-        if (#toys > 0) then
-            -- Pick a random toy
-            Button:SetAttribute("macrotext",
-                                "/cast item:" .. toys[m_rand(#toys)])
-        else
-            -- Hearthstone
-            Button:SetAttribute("macrotext", "/cast item:" .. 6948)
+            if (#toys > 0) then
+                -- Pick a random toy
+                Button:SetAttribute("macrotext", "/cast item:" .. toys[m_rand(#toys)])
+            else
+                -- Hearthstone
+                Button:SetAttribute("macrotext", "/cast item:" .. 6948)
+            end
         end
-    end)
+    )
 end
 
 local function PLAYER_LOGIN()
@@ -84,7 +89,9 @@ local function PLAYER_LOGIN()
     setBindings()
 end
 
-function M.HasBindings() return isInit end
+function M.HasBindings()
+    return isInit
+end
 
 function M.SetUpBindings()
     if not isInit and C.modules.misc.bindings.enabled then
@@ -97,17 +104,22 @@ function M.SetUpBindings()
         end
 
         -- Reload UI
-        CreateFrame("Button", E.ADDON_NAME .. "ReloadButton"):SetScript(
-            "OnClick", ReloadUI)
+        CreateFrame("Button", E.ADDON_NAME .. "ReloadButton"):SetScript("OnClick", ReloadUI)
 
         -- Summon Random Mount
         CreateFrame("Button", E.ADDON_NAME .. "SummonRandomMount"):SetScript(
-            "OnClick", function() C_MountJournal.SummonByID(0) end)
+            "OnClick",
+            function()
+                C_MountJournal.SummonByID(0)
+            end
+        )
 
-        CreateFrame("Button", E.ADDON_NAME .. "SummonYak"):SetScript("OnClick",
-                                                                     function()
-            C_MountJournal.SummonByID(YakID)
-        end)
+        CreateFrame("Button", E.ADDON_NAME .. "SummonYak"):SetScript(
+            "OnClick",
+            function()
+                C_MountJournal.SummonByID(YakID)
+            end
+        )
 
         E:RegisterEvent("PLAYER_LOGIN", PLAYER_LOGIN)
 

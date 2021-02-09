@@ -7,9 +7,13 @@ local _G = getfenv(0)
 -- ---------------
 
 function E:SetBackdrop(frame, offset, alpha, color, backdrop)
-    if frame._backdrop then return end
+    if frame._backdrop then
+        return
+    end
 
-    if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
+    if frame:GetObjectType() == "Texture" then
+        frame = frame:GetParent()
+    end
 
     local level = frame:GetFrameLevel()
     local bg = CreateFrame("Frame", nil, frame, "BackdropTemplate")
@@ -18,7 +22,9 @@ function E:SetBackdrop(frame, offset, alpha, color, backdrop)
 
     if backdrop then
         bg:SetBackdrop(backdrop)
-        if color then bg:SetBackdropColor(E:GetRGB(color)) end
+        if color then
+            bg:SetBackdropColor(E:GetRGB(color))
+        end
     else
         bg:SetBackdrop({bgFile = C.media.textures.flat, tile = false})
         if color then
@@ -36,9 +42,13 @@ function E:SetBackdrop(frame, offset, alpha, color, backdrop)
 end
 
 function E:HandleBackdrop(self, offset, alpha, color, backdrop)
-    if self.handled then return end
+    if self.handled then
+        return
+    end
 
-    if self.SetBackdrop then self:SetBackdrop(nil) end
+    if self.SetBackdrop then
+        self:SetBackdrop(nil)
+    end
     self:DisableDrawLayer("BACKGROUND")
 
     self.bg = E:SetBackdrop(self, offset, alpha, color, backdrop)
@@ -51,9 +61,13 @@ function E:HandleBackdrop(self, offset, alpha, color, backdrop)
 end
 
 function E:CreateShadow(frame, size, alpha)
-    if frame._shadow then return end
+    if frame._shadow then
+        return
+    end
 
-    if frame:GetObjectType() == "Texture" then frame = frame:GetParent() end
+    if frame:GetObjectType() == "Texture" then
+        frame = frame:GetParent()
+    end
 
     local shadowBackdrop = {edgeFile = C.media.textures.glow}
     shadowBackdrop.edgeSize = size or 6
@@ -69,10 +83,11 @@ function E:CreateShadow(frame, size, alpha)
 end
 
 function E:CreateGlow(frame, size, drawLayer, drawSubLevel, offset)
-    if frame._glow then return end
+    if frame._glow then
+        return
+    end
 
-    local glow = E:CreateBorder(frame._backdrop or frame,
-                                drawLayer or "BACKGROUND", drawSubLevel or -7)
+    local glow = E:CreateBorder(frame._backdrop or frame, drawLayer or "BACKGROUND", drawSubLevel or -7)
     glow:SetTexture(C.media.textures.glow)
     glow:SetOffset(offset or -4)
     glow:SetSize(size or 12)

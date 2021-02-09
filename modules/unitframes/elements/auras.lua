@@ -25,11 +25,26 @@ for _, id in next, C_MountJournal.GetMountIDs() do
 end
 
 UF.filterFunctions = {
-    default = function(self, unit, aura, name, _, count, debuffType, duration,
-                       expiration, caster, isStealable, _, spellID, _,
-                       isBossAura)
+    default = function(
+        self,
+        unit,
+        aura,
+        name,
+        _,
+        count,
+        debuffType,
+        duration,
+        expiration,
+        caster,
+        isStealable,
+        _,
+        spellID,
+        _,
+        isBossAura)
         local config = self._config and self._config.filter or nil
-        if not config then return end
+        if not config then
+            return
+        end
 
         aura.name = name
         aura.spell = name
@@ -39,9 +54,8 @@ UF.filterFunctions = {
         aura.duration = duration
         aura.noTime = duration == 0 and expiration == 0
         aura.isStealable = isStealable
-        aura.canDispell = (not aura.isDebuff and isStealable) or
-                              (aura.isDebuff and debuffType and
-                                  E:IsDispellable(debuffType))
+        aura.canDispell =
+            (not aura.isDebuff and isStealable) or (aura.isDebuff and debuffType and E:IsDispellable(debuffType))
 
         -- black and whitelists
         for filter, enabled in next, config.custom do
@@ -49,8 +63,7 @@ UF.filterFunctions = {
                 filter = C.global.aura_filters[filter]
                 if filter and filter[spellID] then
                     if filter.onlyShowPlayer then
-                        if aura.isPlayer or
-                            (caster and UnitIsUnit(caster, "pet")) then
+                        if aura.isPlayer or (caster and UnitIsUnit(caster, "pet")) then
                             return filter.state
                         end
                     else
@@ -63,23 +76,35 @@ UF.filterFunctions = {
         local isFriend = UnitIsFriend("player", unit)
 
         config = isFriend and config.friendly or config.enemy
-        if not config then return end
+        if not config then
+            return
+        end
 
         config = aura.isDebuff and config.debuff or config.buff
-        if not config then return end
+        if not config then
+            return
+        end
 
         -- boss
         isBossAura = isBossAura or E:IsUnitBoss(caster)
-        if isBossAura then return config.boss end
+        if isBossAura then
+            return config.boss
+        end
 
         -- applied by tank
-        if caster and E:IsUnitTank(caster) then return config.tank end
+        if caster and E:IsUnitTank(caster) then
+            return config.tank
+        end
 
         -- applied by healer
-        if caster and E:IsUnitTank(caster) then return config.healer end
+        if caster and E:IsUnitTank(caster) then
+            return config.healer
+        end
 
         -- mounts
-        if MOUNTS[spellID] then return config.mount end
+        if MOUNTS[spellID] then
+            return config.mount
+        end
 
         -- self-cast
         if caster and UnitIsUnit(unit, caster) then
@@ -108,15 +133,33 @@ UF.filterFunctions = {
             end
         else
             -- stealable
-            if isStealable then return config.dispellable end
+            if isStealable then
+                return config.dispellable
+            end
         end
 
         return config.misc
     end,
-    boss = function(self, unit, aura, name, _, count, debuffType, duration,
-                    expiration, caster, isStealable, _, spellID, _, isBossAura)
+    boss = function(
+        self,
+        unit,
+        aura,
+        name,
+        _,
+        count,
+        debuffType,
+        duration,
+        expiration,
+        caster,
+        isStealable,
+        _,
+        spellID,
+        _,
+        isBossAura)
         local config = self._config and self._config.filter or nil
-        if not config then return end
+        if not config then
+            return
+        end
 
         aura.name = name
         aura.spell = name
@@ -126,9 +169,8 @@ UF.filterFunctions = {
         aura.duration = duration
         aura.noTime = duration == 0 and expiration == 0
         aura.isStealable = isStealable
-        aura.canDispell = (not aura.isDebuff and isStealable) or
-                              (aura.isDebuff and debuffType and
-                                  E:IsDispellable(debuffType))
+        aura.canDispell =
+            (not aura.isDebuff and isStealable) or (aura.isDebuff and debuffType and E:IsDispellable(debuffType))
 
         -- black and whitelists
         for filter, enabled in next, config.custom do
@@ -136,8 +178,7 @@ UF.filterFunctions = {
                 filter = C.global.aura_filters[filter]
                 if filter and filter[spellID] then
                     if filter.onlyShowPlayer then
-                        if aura.isPlayer or
-                            (caster and UnitIsUnit(caster, "pet")) then
+                        if aura.isPlayer or (caster and UnitIsUnit(caster, "pet")) then
                             return filter.state
                         end
                     else
@@ -150,20 +191,30 @@ UF.filterFunctions = {
         local isFriend = UnitIsFriend("player", unit)
 
         config = isFriend and config.friendly or config.enemy
-        if not config then return end
+        if not config then
+            return
+        end
 
         config = aura.isDebuff and config.debuff or config.buff
-        if not config then return end
+        if not config then
+            return
+        end
 
         -- boss
         isBossAura = isBossAura or E:IsUnitBoss(caster)
-        if isBossAura then return config.boss end
+        if isBossAura then
+            return config.boss
+        end
 
         -- applied by tank
-        if caster and E:IsUnitTank(caster) then return config.tank end
+        if caster and E:IsUnitTank(caster) then
+            return config.tank
+        end
 
         -- applied by healer
-        if caster and E:IsUnitTank(caster) then return config.healer end
+        if caster and E:IsUnitTank(caster) then
+            return config.healer
+        end
 
         -- applied by player
         if aura.isPlayer or (caster and UnitIsUnit(caster, "pet")) then
@@ -183,7 +234,9 @@ UF.filterFunctions = {
             end
         else
             -- stealable
-            if isStealable then return config.dispellable end
+            if isStealable then
+                return config.dispellable
+            end
         end
 
         return config.misc
@@ -196,11 +249,12 @@ function UF.SortAuras(a, b)
             local aTime = a.noTime and m_huge or a.expiration or -1
             local bTime = b.noTime and m_huge or b.expiration or -1
 
-            if aTime and bTime then return aTime > bTime end
+            if aTime and bTime then
+                return aTime > bTime
+            end
         elseif a:IsShown() then
             return true
         end
-
     end
 end
 
@@ -212,34 +266,33 @@ local function element_SortAuras(self)
 end
 
 local function button_UpdateTooltip(self)
-    GameTooltip:SetUnitAura(self:GetParent().__owner.unit, self:GetID(),
-                            self.filter)
+    GameTooltip:SetUnitAura(self:GetParent().__owner.unit, self:GetID(), self.filter)
 end
 
 local function button_OnEnter(self)
-    if not self:IsVisible() then return end
+    if not self:IsVisible() then
+        return
+    end
 
     GameTooltip:SetOwner(self, self:GetParent().tooltipAnchor)
     self:UpdateTooltip()
 end
 
-local function button_OnLeave() GameTooltip:Hide() end
+local function button_OnLeave()
+    GameTooltip:Hide()
+end
 
-local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
-                                      debuffType)
+local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration, debuffType)
     if aura.isDebuff then
-        aura.Border:SetVertexColor(E:GetRGB(
-                                       C.colors.debuff[debuffType] or
-                                           C.colors.debuff.None))
+        aura.Border:SetVertexColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
 
         if self._config.type then
             if self._config.type.debuff_type then
                 aura.AuraType:SetTexCoord(
-                    unpack(C.media.textures.aura_icons[debuffType] or
-                               C.media.textures.aura_icons["Debuff"]))
+                    unpack(C.media.textures.aura_icons[debuffType] or C.media.textures.aura_icons["Debuff"])
+                )
             else
-                aura.AuraType:SetTexCoord(
-                    unpack(C.media.textures.aura_icons["Debuff"]))
+                aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Debuff"]))
             end
         end
 
@@ -256,15 +309,12 @@ local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
         -- Show cooldown border
         local border_swipe = self._config.cooldown.border_swipe
         if border_swipe and border_swipe.type then
-            aura.cd:SetSwipeColor(E:GetRGB(
-                                      C.colors.debuff[debuffType] or
-                                          C.colors.debuff.None))
+            aura.cd:SetSwipeColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
         end
     else
         aura.Border:SetVertexColor(E:GetRGB(C.global.border.color))
         if self._config.type then
-            aura.AuraType:SetTexCoord(
-                unpack(C.media.textures.aura_icons["Buff"]))
+            aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Buff"]))
         end
 
         -- Zoom animation
@@ -286,16 +336,18 @@ local function element_CreateAuraIcon(self, index)
         config = self._config
     end
 
-    local button =
-        E:CreateButton(self, "$parentAura" .. index, true, true, true)
+    local button = E:CreateButton(self, "$parentAura" .. index, true, true, true)
 
     button.icon = button.Icon
     button.Icon = nil
 
     local count = button.Count
     count:SetAllPoints()
-    count:SetFont(config.count.font or C.media.fonts.normal, config.count.size,
-                  config.count.outline and "OUTLINE" or "")
+    count:SetFont(
+        config.count.font or C.media.fonts.normal,
+        config.count.size,
+        config.count.outline and "OUTLINE" or ""
+    )
     count:SetJustifyH(config.count.h_alignment)
     count:SetJustifyV(config.count.v_alignment)
     count:SetWordWrap(false)
@@ -322,8 +374,7 @@ local function element_CreateAuraIcon(self, index)
 
     -- TODO: Update the stealable texture
     local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
-    stealable:SetTexture(
-        "Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
+    stealable:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
     stealable:SetTexCoord(2 / 32, 30 / 32, 2 / 32, 30 / 32)
     stealable:SetPoint("TOPLEFT", -1, 1)
     stealable:SetPoint("BOTTOMRIGHT", 1, -1)
@@ -332,8 +383,7 @@ local function element_CreateAuraIcon(self, index)
 
     if config.type then
         local auraType = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 3)
-        auraType:SetTexture(
-            "Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
+        auraType:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
         auraType:SetPoint(config.type.position, 2, -2)
         auraType:SetSize(config.type.size, config.type.size)
         button.AuraType = auraType
@@ -377,14 +427,14 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].auras,
-                               self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].auras, self._config)
 
     local size =
         self._config.size_override ~= 0 and self._config.size_override or
-            E:Round((C.modules.unitframes.units[unit].width -
-                        (self.spacing * (self._config.per_row - 1)) + 2) /
-                        self._config.per_row)
+        E:Round(
+            (C.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) /
+                self._config.per_row
+        )
     self._config.size = m_min(m_max(size, 20), 64)
 end
 
@@ -414,9 +464,10 @@ local function element_UpdateSize(self)
     self.size = config.size
     self.numTotal = config.per_row * config.rows
 
-    self:SetSize(config.size * config.per_row + self.spacing *
-                     (config.per_row - 1),
-                 config.size * config.rows + self.spacing * (config.rows - 1))
+    self:SetSize(
+        config.size * config.per_row + self.spacing * (config.per_row - 1),
+        config.size * config.rows + self.spacing * (config.rows - 1)
+    )
 end
 
 local function element_UpdatePoints(self)
@@ -427,23 +478,23 @@ local function element_UpdatePoints(self)
 
     local point = config.point
     if point and point.p then
-        self:SetPoint(point.p, E:ResolveAnchorPoint(self.__owner, point.anchor),
-                      point.ap, point.x, point.y)
+        self:SetPoint(point.p, E:ResolveAnchorPoint(self.__owner, point.anchor), point.ap, point.x, point.y)
     end
 end
 
 local function element_UpdateCooldownConfig(self)
-    if not self.cooldownConfig then self.cooldownConfig = {text = {}} end
+    if not self.cooldownConfig then
+        self.cooldownConfig = {text = {}}
+    end
 
-    self.cooldownConfig.exp_threshold = C.modules.unitframes.cooldown
-                                            .exp_threshold
-    self.cooldownConfig.m_ss_threshold =
-        C.modules.unitframes.cooldown.m_ss_threshold
-    self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text,
-                                           self.cooldownConfig.text)
+    self.cooldownConfig.exp_threshold = C.modules.unitframes.cooldown.exp_threshold
+    self.cooldownConfig.m_ss_threshold = C.modules.unitframes.cooldown.m_ss_threshold
+    self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
 
     for i = 1, self.createdIcons do
-        if not self[i].cd.UpdateConfig then break end
+        if not self[i].cd.UpdateConfig then
+            break
+        end
 
         self[i].cd:UpdateConfig(self.cooldownConfig)
         self[i].cd:UpdateFont()
@@ -483,7 +534,9 @@ local function element_UpdateAuraTypeIcon(self)
     end
 end
 
-local function element_UpdateColors(self) self:ForceUpdate() end
+local function element_UpdateColors(self)
+    self:ForceUpdate()
+end
 
 local function element_UpdateMouse(self)
     self.disableMouse = self._config.disable_mouse
@@ -506,12 +559,13 @@ local function frame_UpdateAuras(self)
         self:DisableElement("Auras")
     end
 
-    if self:IsElementEnabled("Auras") then element:ForceUpdate() end
+    if self:IsElementEnabled("Auras") then
+        element:ForceUpdate()
+    end
 end
 
 function UF:CreateAuras(frame, unit)
-    local config = C.modules.unitframes.units[frame._layout or frame._unit]
-                       .auras
+    local config = C.modules.unitframes.units[frame._layout or frame._unit].auras
 
     local element = CreateFrame("Frame", nil, frame)
     element:SetSize(48, 48)
@@ -531,8 +585,7 @@ function UF:CreateAuras(frame, unit)
     element.CreateIcon = element_CreateAuraIcon
     element.PostUpdateIcon = element_PostUpdateIcon
     element.PreSetPosition = element_SortAuras
-    element.CustomFilter = UF.filterFunctions[unit] or
-                               UF.filterFunctions.default
+    element.CustomFilter = UF.filterFunctions[unit] or UF.filterFunctions.default
 
     frame.UpdateAuras = frame_UpdateAuras
     frame.Auras = element

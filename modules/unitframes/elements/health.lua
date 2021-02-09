@@ -17,8 +17,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font or config.font, config.size,
-                       config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.units.font or config.font, config.size, config.outline and "THINOUTLINE" or nil)
     fontString:SetJustifyH(config.h_alignment)
     fontString:SetJustifyV(config.v_alignment)
     fontString:SetWordWrap(false)
@@ -33,7 +32,9 @@ end
 local function updateTextPoint(frame, fontString, config)
     fontString:ClearAllPoints()
 
-    if config and config.p then E:SetPosition(fontString, config, frame) end
+    if config and config.p then
+        E:SetPosition(fontString, config, frame)
+    end
 end
 
 local function updateTag(frame, fontString, tag)
@@ -52,15 +53,12 @@ do
         local unitGUID = UnitGUID(unit)
         local config = self._config
 
-        self.GainLossIndicators:Update(cur, max, unitGUID ==
-                                           self.GainLossIndicators._UnitGUID)
+        self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
         self.GainLossIndicators._UnitGUID = unitGUID
 
         if config then
             if config.reverse and config.color.smooth then
-                local color = CreateColor(
-                                  oUF:ColorGradient(cur, max,
-                                                    unpack(oUF.colors.smooth)))
+                local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
                 self.bg:SetVertexColor(E:GetRGB(color))
             end
 
@@ -85,9 +83,7 @@ do
             end
 
             -- Kill Range texture
-            if config.kill_range and
-                (E:UnitIsDisconnectedOrDeadOrGhost(unit) or
-                    not UnitCanAttack("player", unit)) then
+            if config.kill_range and (E:UnitIsDisconnectedOrDeadOrGhost(unit) or not UnitCanAttack("player", unit)) then
                 self.KillRange:Hide()
                 self.KillRange.spark:Hide()
             else
@@ -98,8 +94,7 @@ do
             end
         end
 
-        if not (self:IsShown() and max and max ~= 0) or
-            not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+        if not (self:IsShown() and max and max ~= 0) or not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
             self:SetMinMaxValues(0, 1)
             self:SetValue(0)
         end
@@ -116,8 +111,8 @@ do
                         self.bg:SetVertexColor(E:GetRGB(C.colors.health))
                     else
                         self.bg:SetVertexColor(
-                            E:GetRGB(E:GetUnitColor(unit, config.color.class,
-                                                    config.color.reaction)))
+                            E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction))
+                        )
                     end
                 end
             end
@@ -136,38 +131,31 @@ do
         updateTextPoint(self.__owner, self.Text, self._config.text.point)
 
         if self._config.perc then
-            updateTextPoint(self.__owner, self.Text.perc,
-                            self._config.perc.point)
+            updateTextPoint(self.__owner, self.Text.perc, self._config.perc.point)
         end
     end
 
     local function element_UpdateKillZone(self)
         if self._config.kill_range then
             self.KillRange:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
-            self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT",
-                                    self:GetWidth() * 0.2, 0)
+            self.KillRange:SetPoint("TOPRIGHT", self, "TOPLEFT", self:GetWidth() * 0.2, 0)
             self.KillRange.spark:SetSize(1, self:GetHeight())
-            self.KillRange.spark:SetPoint("LEFT", self, "LEFT",
-                                          self:GetWidth() * 0.2, 0)
+            self.KillRange.spark:SetPoint("LEFT", self, "LEFT", self:GetWidth() * 0.2, 0)
         end
     end
 
     local function element_UpdateTags(self)
-        updateTag(self.__owner, self.Text,
-                  self._config.enabled and self._config.text.tag or "")
+        updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
 
         if self._config.perc then
-            updateTag(self.__owner, self.Text.perc,
-                      self._config.enabled and self._config.perc.tag or "")
+            updateTag(self.__owner, self.Text.perc, self._config.enabled and self._config.perc.tag or "")
         end
     end
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].health,
-                                   self._config)
-        self._config.power = E:CopyTable(C.modules.unitframes.units[unit].power,
-                                         self._config.power)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].health, self._config)
+        self._config.power = E:CopyTable(C.modules.unitframes.units[unit].power, self._config.power)
     end
 
     local function element_UpdateColors(self)
@@ -176,11 +164,9 @@ do
         self.colorSmooth = config.color.smooth
         self.colorHealth = not config.reverse and config.color.health
         self.colorTapping = not config.reverse and config.color.tapping
-        self.colorDisconnected = not config.reverse and
-                                     config.color.disconnected
+        self.colorDisconnected = not config.reverse and config.color.disconnected
         self.colorClass = not config.color.smooth and config.color.class
-        self.colorReaction = not config.color.smooth and not config.reverse and
-                                 config.color.reaction
+        self.colorReaction = not config.color.smooth and not config.reverse and config.color.reaction
 
         if config.reverse then
             self.colorClass = false
@@ -262,14 +248,11 @@ do
         element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
         E:SmoothBar(element)
 
-        element.Text = (textParent or element):CreateFontString("Text",
-                                                                "ARTWORK")
+        element.Text = (textParent or element):CreateFontString("Text", "ARTWORK")
 
         if config.perc then
             local perc = element:CreateFontString("Percent", "BACKGROUND")
-            perc:SetTextColor(E:GetRGBA(
-                                  config.perc.color or C.colors.light_gray,
-                                  config.perc.alpha or 1))
+            perc:SetTextColor(E:GetRGBA(config.perc.color or C.colors.light_gray, config.perc.alpha or 1))
             element.Text.perc = perc
         end
 
@@ -320,13 +303,9 @@ end
 do
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].health
-                                       .prediction, self._config)
-        self._config.absorb_text = E:CopyTable(C.global.fonts.units,
-                                               self._config.absorb_text)
-        self._config.heal_absorb_text = E:CopyTable(C.global.fonts.units,
-                                                    self._config
-                                                        .heal_absorb_text)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].health.prediction, self._config)
+        self._config.absorb_text = E:CopyTable(C.global.fonts.units, self._config.absorb_text)
+        self._config.heal_absorb_text = E:CopyTable(C.global.fonts.units, self._config.heal_absorb_text)
     end
 
     local function element_UpdateFonts(self)
@@ -335,27 +314,23 @@ do
     end
 
     local function element_UpdateTextPoints(self)
-        updateTextPoint(self.__owner, self.absorbBar.Text,
-                        self._config.absorb_text.point1)
-        updateTextPoint(self.__owner, self.healAbsorbBar.Text,
-                        self._config.heal_absorb_text.point1)
+        updateTextPoint(self.__owner, self.absorbBar.Text, self._config.absorb_text.point1)
+        updateTextPoint(self.__owner, self.healAbsorbBar.Text, self._config.heal_absorb_text.point1)
     end
 
     local function element_UpdateTags(self)
-        updateTag(self.__owner, self.absorbBar.Text,
-                  self._config.enabled and self._config.absorb_text.tag or "")
-        updateTag(self.__owner, self.healAbsorbBar.Text,
-                  self._config.enabled and self._config.heal_absorb_text.tag or
-                      "")
+        updateTag(self.__owner, self.absorbBar.Text, self._config.enabled and self._config.absorb_text.tag or "")
+        updateTag(
+            self.__owner,
+            self.healAbsorbBar.Text,
+            self._config.enabled and self._config.heal_absorb_text.tag or ""
+        )
     end
 
     local function element_UpdateColors(self)
-        self.myBar._texture:SetColorTexture(
-            E:GetRGBA(C.colors.prediction.my_heal))
-        self.otherBar._texture:SetColorTexture(
-            E:GetRGBA(C.colors.prediction.other_heal))
-        self.healAbsorbBar._texture:SetColorTexture(
-            E:GetRGBA(C.colors.prediction.heal_absorb))
+        self.myBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.my_heal))
+        self.otherBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.other_heal))
+        self.healAbsorbBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.heal_absorb))
     end
 
     local function frame_UpdateHealthPrediction(self)
@@ -397,8 +372,7 @@ do
         healAbsorbBar:ClearAllPoints()
         healAbsorbBar:SetPoint("TOP")
         healAbsorbBar:SetPoint("BOTTOM")
-        healAbsorbBar:SetPoint("RIGHT", self.Health:GetStatusBarTexture(),
-                               "RIGHT")
+        healAbsorbBar:SetPoint("RIGHT", self.Health:GetStatusBarTexture(), "RIGHT")
         healAbsorbBar:SetWidth(width)
 
         element:UpdateColors()
@@ -468,8 +442,7 @@ do
         healAbsorbBar._texture = healAbsorbBar:CreateTexture(nil, "ARTWORK")
         healAbsorbBar._texture:SetAllPoints(healAbsorbBar:GetStatusBarTexture())
 
-        healAbsorbBar.Text = (textParent or parent):CreateFontString(nil,
-                                                                     "ARTWORK")
+        healAbsorbBar.Text = (textParent or parent):CreateFontString(nil, "ARTWORK")
 
         frame.UpdateHealthPrediction = frame_UpdateHealthPrediction
 

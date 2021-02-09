@@ -3,7 +3,9 @@ local E, D, C = ns.E, ns.D, ns.C
 
 -- ---------------
 
-local function rgb(r, g, b) return E:SetRGB({}, r, g, b) end
+local function rgb(r, g, b)
+    return E:SetRGB({}, r, g, b)
+end
 
 local b = {
     black = rgb(0, 0, 0),
@@ -92,9 +94,15 @@ D.colors = {
         [3] = rgb(22, 163, 74)
     },
     smooth = {
-        185 / 255, 28 / 255, 28 / 255, -- rgb(185, 28, 28)
-        253 / 255, 224 / 255, 71 / 255, -- rgb(253, 224, 71)
-        22 / 255, 163 / 255, 74 / 255 -- rgb(22, 163, 74)
+        185 / 255,
+        28 / 255,
+        28 / 255, -- rgb(185, 28, 28)
+        253 / 255,
+        224 / 255,
+        71 / 255, -- rgb(253, 224, 71)
+        22 / 255,
+        163 / 255,
+        74 / 255 -- rgb(22, 163, 74)
     },
     button = {
         normal = rgb(255, 255, 255),
@@ -143,7 +151,6 @@ D.colors = {
         [6] = b.green, -- Honored
         [7] = b.green, -- Revered
         [8] = b.green -- Exalted
-
     },
     difficulty = {
         impossible = rgb(230, 48, 54),

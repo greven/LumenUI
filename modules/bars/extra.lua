@@ -13,8 +13,7 @@ local LibKeyBound = LibStub("LibKeyBound-1.0")
 local isInit = false
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.bars.font, config.size,
-                       config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -25,7 +24,9 @@ local function updateFont(fontString, config)
 end
 
 local function button_UpdateHotKey(self, state)
-    if state ~= nil then self._parent._config.hotkey.enabled = state end
+    if state ~= nil then
+        self._parent._config.hotkey.enabled = state
+    end
 
     if self._parent._config.hotkey.enabled then
         self.HotKey:SetParent(self)
@@ -40,12 +41,15 @@ local function button_UpdateHotKeyFont(self)
     updateFont(self.HotKey, self._parent._config.hotkey)
 end
 
-local function button_OnEnter(self) if LibKeyBound then LibKeyBound:Set(self) end end
+local function button_OnEnter(self)
+    if LibKeyBound then
+        LibKeyBound:Set(self)
+    end
+end
 
 function M.CreateExtraButton()
     if not isInit then
-        local bar = CreateFrame("Frame", "LumExtraActionBar", UIParent,
-                                "SecureHandlerStateTemplate")
+        local bar = CreateFrame("Frame", "LumExtraActionBar", UIParent, "SecureHandlerStateTemplate")
         bar._id = "extra"
         bar._buttons = {}
 
@@ -61,12 +65,10 @@ function M.CreateExtraButton()
 
             ExtraActionBarFrame:ClearAllPoints()
             ExtraActionBarFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", 2, -2)
-            ExtraActionBarFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2,
-                                         2)
+            ExtraActionBarFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 2)
 
             local width, height = ExtraActionButton1:GetSize()
-            self:SetSize((width > 0 and width or 52) + 4,
-                         (height > 0 and height or 52) + 4)
+            self:SetSize((width > 0 and width or 52) + 4, (height > 0 and height or 52) + 4)
             -- E.Movers:Get(self):UpdateSize()
         end
 

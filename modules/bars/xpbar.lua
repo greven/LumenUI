@@ -44,20 +44,17 @@ local LAYOUT = {
 }
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(M:IsRestricted() and CFG or C.modules.bars.xpbar,
-                               self._config)
+    self._config = E:CopyTable(M:IsRestricted() and CFG or C.modules.bars.xpbar, self._config)
 
     if M:IsRestricted() then
-        self._config.text = E:CopyTable(C.modules.bars.xpbar.text,
-                                        self._config.text)
+        self._config.text = E:CopyTable(C.modules.bars.xpbar.text, self._config.text)
     end
 
     self._config.text = E:CopyTable(C.global.fonts.bars, self._config.text)
 end
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.bars.font, config.size,
-                       config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -68,7 +65,9 @@ local function updateFont(fontString, config)
 end
 
 local function bar_UpdateFont(self)
-    for i = 1, MAX_SEGMENTS do updateFont(self[i].Text, self._config.text) end
+    for i = 1, MAX_SEGMENTS do
+        updateFont(self[i].Text, self._config.text)
+    end
 end
 
 local function bar_UpdateTextFormat(self)
@@ -92,7 +91,9 @@ local function bar_UpdateSize(self, width, height)
     for i = 1, MAX_SEGMENTS do
         local layout = E:CalcSegmentsSizes(width, 2, i)
 
-        for j = 1, i do LAYOUT[i][j].size = {layout[j], height} end
+        for j = 1, i do
+            LAYOUT[i][j].size = {layout[j], height}
+        end
     end
 
     self:SetSize(width, height)
@@ -106,7 +107,9 @@ end
 
 local function bar_ForEach(self, method, ...)
     for i = 1, MAX_SEGMENTS do
-        if self[i][method] then self[i][method](self[i], ...) end
+        if self[i][method] then
+            self[i][method](self[i], ...)
+        end
     end
 end
 
@@ -118,7 +121,9 @@ local function bar_Update(self)
     self:UpdateTextVisibility()
     self:UpdateSize(self._config.width, self._config.height)
 
-    if not M:IsRestricted() then self:UpdateFading() end
+    if not M:IsRestricted() then
+        self:UpdateFading()
+    end
 end
 
 local function bar_UpdateSegments(self)
@@ -136,8 +141,7 @@ local function bar_UpdateSegments(self)
             local cur, max = C_PetBattles.GetXP(1, i)
 
             self[index].tooltipInfo = {
-                header = NAME_TEMPLATE:format(C.colors.quality[rarity - 1].hex,
-                                              name),
+                header = NAME_TEMPLATE:format(C.colors.quality[rarity - 1].hex, name),
                 -- line1 = L["LEVEL_TOOLTIP"]:format(level)
                 line1 = s_format("Level: |cffffffff%d|r", level)
             }
@@ -146,15 +150,14 @@ local function bar_UpdateSegments(self)
         end
     else
         -- Artifact
-        if HasArtifactEquipped() and not C_ArtifactUI.IsEquippedArtifactMaxed() and
-            not C_ArtifactUI.IsEquippedArtifactDisabled() then
+        if
+            HasArtifactEquipped() and not C_ArtifactUI.IsEquippedArtifactMaxed() and
+                not C_ArtifactUI.IsEquippedArtifactDisabled()
+         then
             index = index + 1
 
-            local _, _, _, _, totalXP, pointsSpent, _, _, _, _, _, _, tier =
-                C_ArtifactUI.GetEquippedArtifactInfo()
-            local points, cur, max =
-                ArtifactBarGetNumArtifactTraitsPurchasableFromXP(pointsSpent,
-                                                                 totalXP, tier)
+            local _, _, _, _, totalXP, pointsSpent, _, _, _, _, _, _, tier = C_ArtifactUI.GetEquippedArtifactInfo()
+            local points, cur, max = ArtifactBarGetNumArtifactTraitsPurchasableFromXP(pointsSpent, totalXP, tier)
 
             self[index].tooltipInfo = {
                 header = L["ARTIFACT_POWER"],
@@ -166,24 +169,20 @@ local function bar_UpdateSegments(self)
         end
 
         -- Azerite
-        if not C_AzeriteItem.IsAzeriteItemAtMaxLevel or
-            not C_AzeriteItem.IsAzeriteItemAtMaxLevel() then
+        if not C_AzeriteItem.IsAzeriteItemAtMaxLevel or not C_AzeriteItem.IsAzeriteItemAtMaxLevel() then
             local azeriteItem = C_AzeriteItem.FindActiveAzeriteItem()
-            if azeriteItem and azeriteItem:IsEquipmentSlot() and
-                C_AzeriteItem.IsAzeriteItemEnabled(azeriteItem) then
+            if azeriteItem and azeriteItem:IsEquipmentSlot() and C_AzeriteItem.IsAzeriteItemEnabled(azeriteItem) then
                 index = index + 1
 
                 local cur, max = C_AzeriteItem.GetAzeriteItemXPInfo(azeriteItem)
                 local level = C_AzeriteItem.GetPowerLevel(azeriteItem)
 
-                self[index].tooltipInfo =
-                    {
-                        header = L["ARTIFACT_POWER"],
-                        line1 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], level)
-                    }
+                self[index].tooltipInfo = {
+                    header = L["ARTIFACT_POWER"],
+                    line1 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], level)
+                }
 
-                self[index]:Update(cur, max, 0, C.colors.white,
-                                   C.media.textures.statusbar_azerite)
+                self[index]:Update(cur, max, 0, C.colors.white, C.media.textures.statusbar_azerite)
             end
         end
 
@@ -200,28 +199,29 @@ local function bar_UpdateSegments(self)
             }
 
             if bonus > 0 then
-                self[index].tooltipInfo.line2 =
-                    s_format(L["BONUS_XP_TOOLTIP"], BreakUpLargeNumbers(bonus))
+                self[index].tooltipInfo.line2 = s_format(L["BONUS_XP_TOOLTIP"], BreakUpLargeNumbers(bonus))
             else
                 self[index].tooltipInfo.line2 = nil
             end
 
-            self[index]:Update(cur, max, bonus,
-                               bonus > 0 and C.colors.xp[1] or C.colors.xp[2],
-                               C.modules.bars.xpbar.texture)
+            self[index]:Update(
+                cur,
+                max,
+                bonus,
+                bonus > 0 and C.colors.xp[1] or C.colors.xp[2],
+                C.modules.bars.xpbar.texture
+            )
         end
 
         -- Honour
-        if IsWatchingHonorAsXP() or C_PvP.IsActiveBattlefield() or
-            IsInActiveWorldPVP() then
+        if IsWatchingHonorAsXP() or C_PvP.IsActiveBattlefield() or IsInActiveWorldPVP() then
             index = index + 1
 
             local cur, max = UnitHonor("player"), UnitHonorMax("player")
 
             self[index].tooltipInfo = {
                 header = L["HONOR"],
-                line1 = s_format(L["HONOR_LEVEL_TOOLTIP"],
-                                 UnitHonorLevel("player"))
+                line1 = s_format(L["HONOR_LEVEL_TOOLTIP"], UnitHonorLevel("player"))
             }
 
             -- self[index]:Update(cur, max, 0, C.colors.faction[UnitFactionGroup("player")])
@@ -229,22 +229,19 @@ local function bar_UpdateSegments(self)
         end
 
         -- Reputation
-        local name, standing, repMin, repMax, repCur, factionID =
-            GetWatchedFactionInfo()
+        local name, standing, repMin, repMax, repCur, factionID = GetWatchedFactionInfo()
         if name then
             index = index + 1
 
-            local _, friendRep, _, _, _, _, friendTextLevel, friendThreshold,
-                  nextFriendThreshold = GetFriendshipReputation(factionID)
-            local repTextLevel = GetText("FACTION_STANDING_LABEL" .. standing,
-                                         UnitSex("player"))
+            local _, friendRep, _, _, _, _, friendTextLevel, friendThreshold, nextFriendThreshold =
+                GetFriendshipReputation(factionID)
+            local repTextLevel = GetText("FACTION_STANDING_LABEL" .. standing, UnitSex("player"))
             local isParagon, rewardQuestID, hasRewardPending
             local cur, max
 
             if friendRep then
                 if nextFriendThreshold then
-                    max, cur = nextFriendThreshold - friendThreshold,
-                               friendRep - friendThreshold
+                    max, cur = nextFriendThreshold - friendThreshold, friendRep - friendThreshold
                 else
                     max, cur = 1, 1
                 end
@@ -258,8 +255,7 @@ local function bar_UpdateSegments(self)
                     isParagon = C_Reputation.IsFactionParagon(factionID)
 
                     if isParagon then
-                        cur, max, rewardQuestID, hasRewardPending =
-                            C_Reputation.GetFactionParagonInfo(factionID)
+                        cur, max, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(factionID)
                         cur = cur % max
                         repTextLevel = repTextLevel .. "+"
 
@@ -274,14 +270,11 @@ local function bar_UpdateSegments(self)
 
             self[index].tooltipInfo = {
                 header = L["REPUTATION"],
-                line1 = REPUTATION_TEMPLATE:format(name,
-                                                   C.colors.reaction[standing]
-                                                       .hex, repTextLevel)
+                line1 = REPUTATION_TEMPLATE:format(name, C.colors.reaction[standing].hex, repTextLevel)
             }
 
             if isParagon and hasRewardPending then
-                local text = GetQuestLogCompletionText(
-                                 C_QuestLog.GetLogIndexForQuestID(rewardQuestID))
+                local text = GetQuestLogCompletionText(C_QuestLog.GetLogIndexForQuestID(rewardQuestID))
 
                 if text and text ~= "" then
                     self[index].tooltipInfo.line3 = text
@@ -328,8 +321,7 @@ local function bar_UpdateSegments(self)
             self[1]:Show()
 
             self[1]:UpdateText(1, 1)
-            self[1].Texture:SetVertexColor(
-                E:GetRGB(C.colors.class[E.PLAYER_CLASS]))
+            self[1].Texture:SetVertexColor(E:GetRGB(C.colors.class[E.PLAYER_CLASS]))
         end
 
         self._total = index
@@ -339,7 +331,9 @@ end
 local function bar_OnEvent(self, event, ...)
     if event == "UNIT_INVENTORY_CHANGED" then
         local unit = ...
-        if unit == "player" then self:UpdateSegments() end
+        if unit == "player" then
+            self:UpdateSegments()
+        end
     else
         self:UpdateSegments()
     end
@@ -370,13 +364,17 @@ local function segment_OnEnter(self)
         GameTooltip:Show()
     end
 
-    if not self:IsTextLocked() then self.Text:Show() end
+    if not self:IsTextLocked() then
+        self.Text:Show()
+    end
 end
 
 local function segment_OnLeave(self)
     GameTooltip:Hide()
 
-    if not self:IsTextLocked() then self.Text:Hide() end
+    if not self:IsTextLocked() then
+        self.Text:Hide()
+    end
 end
 
 local function segment_Update(self, cur, max, bonus, color, texture)
@@ -409,7 +407,9 @@ local function segment_Update(self, cur, max, bonus, color, texture)
 
     if self._bonus ~= bonus then
         if bonus and bonus > 0 then
-            if cur + bonus > max then bonus = max - cur end
+            if cur + bonus > max then
+                bonus = max - cur
+            end
             self.Extension:SetMinMaxValues(0, max)
             self.Extension:SetValue(bonus)
         else
@@ -428,8 +428,7 @@ local function segment_UpdateText(self, cur, max)
     if cur == 1 and max == 1 then
         self.Text:SetText(nil)
     else
-        self.Text:SetFormattedText(barValueTemplate, E:FormatNumber(cur),
-                                   E:FormatNumber(max), E:NumberToPerc(cur, max))
+        self.Text:SetFormattedText(barValueTemplate, E:FormatNumber(cur), E:FormatNumber(max), E:NumberToPerc(cur, max))
     end
 end
 
@@ -440,9 +439,13 @@ local function segment_LockText(self, isLocked)
     end
 end
 
-local function segment_IsTextLocked(self) return self.textLocked end
+local function segment_IsTextLocked(self)
+    return self.textLocked
+end
 
-function M.HasXPBar() return isInit end
+function M.HasXPBar()
+    return isInit
+end
 
 function M.CreateXPBar()
     if not isInit and (C.modules.bars.xpbar.enabled or M:IsRestricted()) then
@@ -488,9 +491,8 @@ function M.CreateXPBar()
                 local spark = segment:CreateTexture(nil, "OVERLAY")
                 spark:SetTexture(C.media.textures.spark)
                 spark:SetSize(10, config.height)
-                spark:SetBlendMode('ADD')
-                spark:SetPoint('CENTER', segment:GetStatusBarTexture(), 'RIGHT',
-                               0, 0)
+                spark:SetBlendMode("ADD")
+                spark:SetPoint("CENTER", segment:GetStatusBarTexture(), "RIGHT", 0, 0)
                 segment.Spark = spark
             end
 
@@ -570,10 +572,10 @@ function M.CreateXPBar()
         if M:IsRestricted() then
             M:ActionBarController_AddWidget(bar, "XP_BAR")
         else
+            -- E.Movers:Create(bar)
             local config = M:IsRestricted() and CFG or C.modules.bars.xpbar
             local point = config.point
             bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
-            -- E.Movers:Create(bar)
         end
 
         bar:Update()

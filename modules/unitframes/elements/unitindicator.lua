@@ -14,7 +14,9 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function update(self)
-    if not (self.unit and self:IsShown()) then return end
+    if not (self.unit and self:IsShown()) then
+        return
+    end
 
     local element = self.UnitIndicator
     local config = element._config
@@ -29,22 +31,19 @@ local function update(self)
         elseif showRested and isResting then
             element:SetStatusBarColor(E:GetRGB(C.colors.green))
         else
-            element:SetStatusBarColor(E:GetRGB(
-                                          E:GetUnitColor(self.unit, true, true)))
+            element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
     elseif UnitPlayerControlled(self.unit) then -- Player controlled units
         if inCombat then
             element:SetStatusBarColor(E:GetRGB(C.colors.red))
         else
-            element:SetStatusBarColor(E:GetRGB(
-                                          E:GetUnitColor(self.unit, true, true)))
+            element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
     else -- NPCs
         if inCombat then
             element:SetStatusBarColor(E:GetRGB(E:GetUnitReactionColor("target")))
         else
-            element:SetStatusBarColor(E:GetRGB(
-                                          E:GetUnitColor(self.unit, true, true)))
+            element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
     end
 
@@ -59,8 +58,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].unitIndicator,
-                               self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].unitIndicator, self._config)
 end
 
 local function element_UpdateSize(self)

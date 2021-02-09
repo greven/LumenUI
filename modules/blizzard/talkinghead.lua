@@ -19,7 +19,9 @@ local function closeTalkingHead()
     end
 end
 
-function M.HasTalkingHead() return isInit end
+function M.HasTalkingHead()
+    return isInit
+end
 
 function M.SetUpTalkingHead()
     if not isInit and C.modules.blizzard.talking_head.enabled then
@@ -34,8 +36,7 @@ function M.SetUpTalkingHead()
             UIPARENT_MANAGED_FRAME_POSITIONS["TalkingHeadFrame"] = nil
 
             for i, subSystem in next, AlertFrame.alertFrameSubSystems do
-                if subSystem.anchorFrame and subSystem.anchorFrame ==
-                    TalkingHeadFrame then
+                if subSystem.anchorFrame and subSystem.anchorFrame == TalkingHeadFrame then
                     t_remove(AlertFrame.alertFrameSubSystems, i)
                 end
             end

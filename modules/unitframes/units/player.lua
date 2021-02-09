@@ -9,7 +9,9 @@ local UF = E:GetModule("UnitFrames")
 
 local isInit = false
 
-function UF:HasPlayerFrame() return isInit end
+function UF:HasPlayerFrame()
+    return isInit
+end
 
 -- Player Frame
 do
@@ -19,8 +21,7 @@ do
         if self._config.enabled then
             if self._config.visibility then
                 self:Disable()
-                RegisterAttributeDriver(self, "state-visibility",
-                                        self._config.visibility)
+                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
             elseif not self:IsEnabled() then
                 self:Enable()
             end
@@ -39,7 +40,9 @@ do
             self:UpdatePvPIndicator()
             self:UpdateThreatIndicator()
         else
-            if self:IsEnabled() then self:Disable() end
+            if self:IsEnabled() then
+                self:Disable()
+            end
         end
     end
 
@@ -106,7 +109,6 @@ do
     local function onNamePlateUpdate(frame, event, nameplate)
         -- TODO: Remember why the player plate isn't being caught here, we need to get the event on spawn...
         -- print(event, nameplate)
-
         -- print(frame, event, nameplate)
         -- if event == "NAME_PLATE_UNIT_ADDED" then
         --     if UnitIsUnit(nameplate, "player") then
@@ -121,8 +123,7 @@ do
         if self._config.enabled then
             if self._config.visibility then
                 self:Disable()
-                RegisterAttributeDriver(self, "state-visibility",
-                                        self._config.visibility)
+                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
             elseif not self:IsEnabled() then
                 self:Enable()
             end
@@ -136,8 +137,12 @@ do
             self:UpdateAuraBars()
             self:UpdateThreatIndicator()
 
-            if self.Runes then self:UpdateRunes() end
-            if self.Stagger then self:UpdateStagger() end
+            if self.Runes then
+                self:UpdateRunes()
+            end
+            if self.Stagger then
+                self:UpdateStagger()
+            end
         else
             if self:IsEnabled() then
                 self:Disable()

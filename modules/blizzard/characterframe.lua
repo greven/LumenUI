@@ -65,7 +65,8 @@ local INV_SLOTS = {
 
 local RIGHT_PANES = {
     -- CharacterStatsPane,
-    PaperDollTitlesPane, PaperDollEquipmentManagerPane
+    PaperDollTitlesPane,
+    PaperDollEquipmentManagerPane
 }
 
 local SLOT_TEXTURES_TO_REMOVE = {
@@ -78,27 +79,32 @@ local TEXTURES_TO_REMOVE = {
     CharacterModelFrame.BackgroundBotRight,
     CharacterModelFrame.BackgroundOverlay,
     CharacterModelFrame.BackgroundTopLeft,
-    CharacterModelFrame.BackgroundTopRight, CharacterStatsPane.ClassBackground,
-    PaperDollInnerBorderBottom, PaperDollInnerBorderBottom2,
-    PaperDollInnerBorderBottomLeft, PaperDollInnerBorderBottomRight,
-    PaperDollInnerBorderLeft, PaperDollInnerBorderRight,
-    PaperDollInnerBorderTop, PaperDollInnerBorderTopLeft,
+    CharacterModelFrame.BackgroundTopRight,
+    CharacterStatsPane.ClassBackground,
+    PaperDollInnerBorderBottom,
+    PaperDollInnerBorderBottom2,
+    PaperDollInnerBorderBottomLeft,
+    PaperDollInnerBorderBottomRight,
+    PaperDollInnerBorderLeft,
+    PaperDollInnerBorderRight,
+    PaperDollInnerBorderTop,
+    PaperDollInnerBorderTopLeft,
     PaperDollInnerBorderTopRight
 }
 
 local function getItemLevelColor(itemLevel)
-    if itemLevel == "" then itemLevel = 0 end
+    if itemLevel == "" then
+        itemLevel = 0
+    end
 
     -- if an item is worse than the average ilvl by one full step, it's really bad
-    return E:GetGradientAsRGB(
-               (itemLevel - avgItemLevel + ILVL_STEP) / ILVL_STEP, ILVL_COLORS)
+    return E:GetGradientAsRGB((itemLevel - avgItemLevel + ILVL_STEP) / ILVL_STEP, ILVL_COLORS)
 end
 
 local function scanSlot(slotID)
     local link = GetInventoryItemLink("player", slotID)
     if link then
-        return true, GetDetailedItemLevelInfo(link),
-               E:GetItemEnchantGemInfo(link)
+        return true, GetDetailedItemLevelInfo(link), E:GetItemEnchantGemInfo(link)
     elseif GetInventoryItemTexture("player", slotID) then
         -- if there's no link, but there's a texture, it means that there's
         -- an item we have no info for
@@ -109,8 +115,7 @@ local function scanSlot(slotID)
 end
 
 local function updateSlot(slotID)
-    if not (C.modules.blizzard.character_frame.ilvl or
-        C.modules.blizzard.character_frame.enhancements) then
+    if not (C.modules.blizzard.character_frame.ilvl or C.modules.blizzard.character_frame.enhancements) then
         _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetText("")
         _G[EQUIP_SLOTS[slotID]].EnchantText:SetText("")
         _G[EQUIP_SLOTS[slotID]].GemText:SetText("")
@@ -122,8 +127,7 @@ local function updateSlot(slotID)
     if isOk then
         if C.modules.blizzard.character_frame.ilvl then
             _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetText(iLvl)
-            _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetTextColor(
-                getItemLevelColor(iLvl))
+            _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetTextColor(getItemLevelColor(iLvl))
         else
             _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetText("")
         end
@@ -136,13 +140,17 @@ local function updateSlot(slotID)
             _G[EQUIP_SLOTS[slotID]].GemText:SetText("")
         end
     else
-        C_Timer.After(0.33, function() updateSlot(slotID) end)
+        C_Timer.After(
+            0.33,
+            function()
+                updateSlot(slotID)
+            end
+        )
     end
 end
 
 local function updateAllSlots()
-    if not (C.modules.blizzard.character_frame.ilvl or
-        C.modules.blizzard.character_frame.enhancements) then
+    if not (C.modules.blizzard.character_frame.ilvl or C.modules.blizzard.character_frame.enhancements) then
         for _, slotName in next, EQUIP_SLOTS do
             _G[slotName].ItemLevelText:SetText("")
             _G[slotName].EnchantText:SetText("")
@@ -153,9 +161,9 @@ local function updateAllSlots()
     end
 
     local scanComplete = true
-    local showILvl, showEnchants = C.modules.blizzard.character_frame.ilvl,
-                                   C.modules.blizzard.character_frame
-                                       .enhancements
+    local showILvl, showEnchants =
+        C.modules.blizzard.character_frame.ilvl,
+        C.modules.blizzard.character_frame.enhancements
     local isOk, iLvl, enchant, gem1, gem2, gem3
     for slotID, slotName in next, EQUIP_SLOTS do
         isOk, iLvl, enchant, gem1, gem2, gem3 = scanSlot(slotID)
@@ -178,14 +186,20 @@ local function updateAllSlots()
         scanComplete = scanComplete and isOk
     end
 
-    if not scanComplete then C_Timer.After(0.33, updateAllSlots) end
+    if not scanComplete then
+        C_Timer.After(0.33, updateAllSlots)
+    end
 end
 
-function M:HasCharacterFrame() return isInit end
+function M:HasCharacterFrame()
+    return isInit
+end
 
 function M:SetUpCharacterFrame()
     if not isInit and C.modules.blizzard.character_frame.enabled then
-        if CharacterFrame:IsShown() then HideUIPanel(CharacterFrame) end
+        if CharacterFrame:IsShown() then
+            HideUIPanel(CharacterFrame)
+        end
 
         avgItemLevel = m_floor(GetAverageItemLevel())
 
@@ -195,8 +209,7 @@ function M:SetUpCharacterFrame()
 
         for slot, textOnRight in next, INV_SLOTS do
             for _, v in next, {slot:GetRegions()} do
-                if v:IsObjectType("Texture") and
-                    SLOT_TEXTURES_TO_REMOVE[s_upper(v:GetTexture() or "")] then
+                if v:IsObjectType("Texture") and SLOT_TEXTURES_TO_REMOVE[s_upper(v:GetTexture() or "")] then
                     v:SetTexture(nil)
                     v:Hide()
                 end
@@ -236,15 +249,11 @@ function M:SetUpCharacterFrame()
             end
         end
 
-        CharacterHeadSlot:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPLEFT",
-                                   6, -6)
-        CharacterHandsSlot:SetPoint("TOPRIGHT", CharacterFrame.Inset,
-                                    "TOPRIGHT", -6, -6)
-        CharacterMainHandSlot:SetPoint("BOTTOMLEFT", CharacterFrame.Inset,
-                                       "BOTTOMLEFT", 176, 5)
+        CharacterHeadSlot:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPLEFT", 6, -6)
+        CharacterHandsSlot:SetPoint("TOPRIGHT", CharacterFrame.Inset, "TOPRIGHT", -6, -6)
+        CharacterMainHandSlot:SetPoint("BOTTOMLEFT", CharacterFrame.Inset, "BOTTOMLEFT", 176, 5)
         CharacterSecondaryHandSlot:ClearAllPoints()
-        CharacterSecondaryHandSlot:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset,
-                                            "BOTTOMRIGHT", -176, 5)
+        CharacterSecondaryHandSlot:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "BOTTOMRIGHT", -176, 5)
 
         CharacterModelFrame:SetSize(0, 0)
         CharacterModelFrame:ClearAllPoints()
@@ -261,8 +270,7 @@ function M:SetUpCharacterFrame()
         for _, pane in next, RIGHT_PANES do
             pane:SetSize(0, 0)
             pane:SetPoint("TOPLEFT", CharacterFrame.InsetRight, "TOPLEFT", 3, -2)
-            pane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight,
-                          "BOTTOMRIGHT", -21, 4)
+            pane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, "BOTTOMRIGHT", -21, 4)
 
             pane.scrollBar:SetPoint("TOPLEFT", pane, "TOPRIGHT", 0, -18)
             pane.scrollBar:SetPoint("BOTTOMLEFT", pane, "BOTTOMRIGHT", 0, 13)
@@ -277,55 +285,67 @@ function M:SetUpCharacterFrame()
             end
         end
 
-        hooksecurefunc("CharacterFrame_Expand", function()
-            CharacterFrame:SetSize(640, 431) -- 540 + 100, 424 + 7
-            CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame,
-                                          "BOTTOMLEFT", 432, 4)
+        hooksecurefunc(
+            "CharacterFrame_Expand",
+            function()
+                CharacterFrame:SetSize(640, 431) -- 540 + 100, 424 + 7
+                CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", 432, 4)
 
-            CharacterFrame.Inset.Bg:SetTexture(
-                "Interface\\DressUpFrame\\DressingRoom" .. E.PLAYER_CLASS)
-            CharacterFrame.Inset.Bg:SetTexCoord(1 / 512, 479 / 512, 46 / 512,
-                                                455 / 512)
-            CharacterFrame.Inset.Bg:SetHorizTile(false)
-            CharacterFrame.Inset.Bg:SetVertTile(false)
+                CharacterFrame.Inset.Bg:SetTexture("Interface\\DressUpFrame\\DressingRoom" .. E.PLAYER_CLASS)
+                CharacterFrame.Inset.Bg:SetTexCoord(1 / 512, 479 / 512, 46 / 512, 455 / 512)
+                CharacterFrame.Inset.Bg:SetHorizTile(false)
+                CharacterFrame.Inset.Bg:SetVertTile(false)
 
-            updateAllSlots()
-        end)
-
-        hooksecurefunc("CharacterFrame_Collapse", function()
-            CharacterFrame:SetHeight(424)
-            CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame,
-                                          "BOTTOMLEFT", 332, 4)
-
-            CharacterFrame.Inset.Bg:SetTexture(
-                "Interface\\FrameGeneral\\UI-Background-Marble", "REPEAT",
-                "REPEAT")
-            CharacterFrame.Inset.Bg:SetTexCoord(0, 1, 0, 1)
-            CharacterFrame.Inset.Bg:SetHorizTile(true)
-            CharacterFrame.Inset.Bg:SetVertTile(true)
-        end)
-
-        E:RegisterEvent("ITEM_LOCK_CHANGED", function(bagOrSlotID, slotID)
-            if CharacterFrame:IsShown() and bagOrSlotID and not slotID and
-                EQUIP_SLOTS[bagOrSlotID] then updateSlot(bagOrSlotID) end
-        end)
-
-        E:RegisterEvent("PLAYER_EQUIPMENT_CHANGED", function(slotID)
-            if CharacterFrame:IsShown() and EQUIP_SLOTS[slotID] then
-                updateSlot(slotID)
+                updateAllSlots()
             end
-        end)
+        )
 
-        E:RegisterEvent("PLAYER_AVG_ITEM_LEVEL_UPDATE", function()
-            avgItemLevel = m_floor(GetAverageItemLevel())
-        end)
+        hooksecurefunc(
+            "CharacterFrame_Collapse",
+            function()
+                CharacterFrame:SetHeight(424)
+                CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", 332, 4)
+
+                CharacterFrame.Inset.Bg:SetTexture("Interface\\FrameGeneral\\UI-Background-Marble", "REPEAT", "REPEAT")
+                CharacterFrame.Inset.Bg:SetTexCoord(0, 1, 0, 1)
+                CharacterFrame.Inset.Bg:SetHorizTile(true)
+                CharacterFrame.Inset.Bg:SetVertTile(true)
+            end
+        )
+
+        E:RegisterEvent(
+            "ITEM_LOCK_CHANGED",
+            function(bagOrSlotID, slotID)
+                if CharacterFrame:IsShown() and bagOrSlotID and not slotID and EQUIP_SLOTS[bagOrSlotID] then
+                    updateSlot(bagOrSlotID)
+                end
+            end
+        )
+
+        E:RegisterEvent(
+            "PLAYER_EQUIPMENT_CHANGED",
+            function(slotID)
+                if CharacterFrame:IsShown() and EQUIP_SLOTS[slotID] then
+                    updateSlot(slotID)
+                end
+            end
+        )
+
+        E:RegisterEvent(
+            "PLAYER_AVG_ITEM_LEVEL_UPDATE",
+            function()
+                avgItemLevel = m_floor(GetAverageItemLevel())
+            end
+        )
 
         isInit = true
     end
 end
 
 function M:UpdateCharacterFrame()
-    if not isInit then return end
+    if not isInit then
+        return
+    end
 
     updateAllSlots()
 end

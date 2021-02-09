@@ -18,24 +18,43 @@ local IsShiftKeyDown = _G.IsShiftKeyDown
 local isInit = false
 
 M.Tooltips = {
-    ChatMenu, EmoteMenu, LanguageMenu, VoiceMacroMenu, GameTooltip,
-    EmbeddedItemTooltip, ItemRefTooltip, ItemRefShoppingTooltip1,
-    ItemRefShoppingTooltip2, ShoppingTooltip1, ShoppingTooltip2,
-    AutoCompleteBox, FriendsTooltip, QuestScrollFrame.StoryTooltip,
-    QuestScrollFrame.CampaignTooltip, GeneralDockManagerOverflowButtonList,
-    ReputationParagonTooltip, NamePlateTooltip, QueueStatusFrame,
-    FloatingGarrisonFollowerTooltip, FloatingGarrisonFollowerAbilityTooltip,
-    FloatingGarrisonMissionTooltip, GarrisonFollowerAbilityTooltip,
-    GarrisonFollowerTooltip, FloatingGarrisonShipyardFollowerTooltip,
-    GarrisonShipyardFollowerTooltip, BattlePetTooltip,
-    PetBattlePrimaryAbilityTooltip, PetBattlePrimaryUnitTooltip,
-    FloatingBattlePetTooltip, FloatingPetBattleAbilityTooltip,
-    IMECandidatesFrame, QuickKeybindTooltip
+    ChatMenu,
+    EmoteMenu,
+    LanguageMenu,
+    VoiceMacroMenu,
+    GameTooltip,
+    EmbeddedItemTooltip,
+    ItemRefTooltip,
+    ItemRefShoppingTooltip1,
+    ItemRefShoppingTooltip2,
+    ShoppingTooltip1,
+    ShoppingTooltip2,
+    AutoCompleteBox,
+    FriendsTooltip,
+    QuestScrollFrame.StoryTooltip,
+    QuestScrollFrame.CampaignTooltip,
+    GeneralDockManagerOverflowButtonList,
+    ReputationParagonTooltip,
+    NamePlateTooltip,
+    QueueStatusFrame,
+    FloatingGarrisonFollowerTooltip,
+    FloatingGarrisonFollowerAbilityTooltip,
+    FloatingGarrisonMissionTooltip,
+    GarrisonFollowerAbilityTooltip,
+    GarrisonFollowerTooltip,
+    FloatingGarrisonShipyardFollowerTooltip,
+    GarrisonShipyardFollowerTooltip,
+    BattlePetTooltip,
+    PetBattlePrimaryAbilityTooltip,
+    PetBattlePrimaryUnitTooltip,
+    FloatingBattlePetTooltip,
+    FloatingPetBattleAbilityTooltip,
+    IMECandidatesFrame,
+    QuickKeybindTooltip
 }
 
 local function updateFont(fontString, size, outline, shadow)
-    fontString:SetFont(C.media.fonts.normal, size,
-                       outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.media.fonts.normal, size, outline and "THINOUTLINE" or nil)
 
     if shadow then
         fontString:SetShadowOffset(1, -1)
@@ -57,7 +76,9 @@ local function reskinDropdown()
 end
 
 local function tooltipBar_Hook(self)
-    if self:IsForbidden() or self:GetParent():IsForbidden() then return end
+    if self:IsForbidden() or self:GetParent():IsForbidden() then
+        return
+    end
     local config = C.modules.tooltips
 
     if self:IsShown() then
@@ -69,14 +90,14 @@ local function tooltipBar_Hook(self)
                 local value = self:GetValue()
 
                 self.Text:Show()
-                self.Text:SetFormattedText("%s / %s", E:FormatNumber(value),
-                                           E:FormatNumber(max))
+                self.Text:SetFormattedText("%s / %s", E:FormatNumber(value), E:FormatNumber(max))
 
-                self:GetParent()
-                    :SetMinimumWidth(self.Text:GetStringWidth() + 32)
+                self:GetParent():SetMinimumWidth(self.Text:GetStringWidth() + 32)
             end
         else
-            if self.Text then self.Text:Hide() end
+            if self.Text then
+                self.Text:Hide()
+            end
         end
 
         M:UpdateStatusBarColor(self)
@@ -84,11 +105,17 @@ local function tooltipBar_Hook(self)
     end
 end
 
-local function tooltip_Hook(self) M.ReskinTooltip(self) end
+local function tooltip_Hook(self)
+    M.ReskinTooltip(self)
+end
 
 local function tooltip_SetDefaultAnchor(self, parent)
-    if self:IsForbidden() then return end
-    if self:GetAnchorType() ~= "ANCHOR_NONE" then return end
+    if self:IsForbidden() then
+        return
+    end
+    if self:GetAnchorType() ~= "ANCHOR_NONE" then
+        return
+    end
 
     if parent then
         if C.modules.tooltips.anchor_cursor then
@@ -125,12 +152,16 @@ local function tooltip_OnTooltipCleared(self)
 end
 
 local function tooltip_SetSharedBackdropStyle(self)
-    if not self.styled then return end
+    if not self.styled then
+        return
+    end
     self:SetBackdrop(nil)
 end
 
 function M:StyleTooltips()
-    for _, tt in pairs(M.Tooltips) do tt:HookScript("OnShow", tooltip_Hook) end
+    for _, tt in pairs(M.Tooltips) do
+        tt:HookScript("OnShow", tooltip_Hook)
+    end
     hooksecurefunc("UIDropDownMenu_CreateFrames", reskinDropdown)
 end
 
@@ -143,16 +174,11 @@ function M:SetupTooltipFonts()
 
     if GameTooltip.hasMoney then
         for i = 1, GameTooltip.numMoneyFrames do
-            updateFont(_G["GameTooltipMoneyFrame" .. i .. "PrefixText"],
-                       textSize)
-            updateFont(_G["GameTooltipMoneyFrame" .. i .. "SuffixText"],
-                       textSize)
-            updateFont(_G["GameTooltipMoneyFrame" .. i .. "GoldButtonText"],
-                       textSize)
-            updateFont(_G["GameTooltipMoneyFrame" .. i .. "SilverButtonText"],
-                       textSize)
-            updateFont(_G["GameTooltipMoneyFrame" .. i .. "CopperButtonText"],
-                       textSize)
+            updateFont(_G["GameTooltipMoneyFrame" .. i .. "PrefixText"], textSize)
+            updateFont(_G["GameTooltipMoneyFrame" .. i .. "SuffixText"], textSize)
+            updateFont(_G["GameTooltipMoneyFrame" .. i .. "GoldButtonText"], textSize)
+            updateFont(_G["GameTooltipMoneyFrame" .. i .. "SilverButtonText"], textSize)
+            updateFont(_G["GameTooltipMoneyFrame" .. i .. "CopperButtonText"], textSize)
         end
     end
 
@@ -186,21 +212,33 @@ function M:ReskinStatusBar(self)
 end
 
 function M:ReskinTooltip()
-    if not self then return end
-    if self:IsForbidden() then return end
+    if not self then
+        return
+    end
+    if self:IsForbidden() then
+        return
+    end
 
     local config = C.modules.tooltips
     self:SetScale(config.scale)
 
     if not self.styled then
-        E:HandleBackdrop(self, nil, config.alpha, C.global.backdrop.color, {
-            bgFile = C.media.textures.flat,
-            edgeFile = C.media.textures.backdrop_border,
-            edgeSize = C.modules.tooltips.border.size,
-            tile = false
-        })
+        E:HandleBackdrop(
+            self,
+            nil,
+            config.alpha,
+            C.global.backdrop.color,
+            {
+                bgFile = C.media.textures.flat,
+                edgeFile = C.media.textures.backdrop_border,
+                edgeSize = C.modules.tooltips.border.size,
+                tile = false
+            }
+        )
 
-        if self.StatusBar then M:ReskinStatusBar(self) end
+        if self.StatusBar then
+            M:ReskinStatusBar(self)
+        end
 
         if self.GetBackdrop then
             self.GetBackdrop = self.bg.GetBackdrop
@@ -229,7 +267,9 @@ function M:ReskinTooltip()
     end
 end
 
-function M.IsInit() return isInit end
+function M.IsInit()
+    return isInit
+end
 
 function M:Init()
     local config = C.modules.tooltips
@@ -249,8 +289,7 @@ function M:Init()
         -- E.Movers:Create(anchor)
 
         -- Backdrop
-        hooksecurefunc("SharedTooltip_SetBackdropStyle",
-                       tooltip_SetSharedBackdropStyle)
+        hooksecurefunc("SharedTooltip_SetBackdropStyle", tooltip_SetSharedBackdropStyle)
 
         -- Statusbar
         GameTooltipStatusBar:HookScript("OnShow", tooltipBar_Hook)
@@ -273,4 +312,3 @@ function M.Update()
         GameTooltipStatusBar:SetHeight(C.modules.tooltips.health.height)
     end
 end
-

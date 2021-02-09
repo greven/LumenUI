@@ -11,7 +11,13 @@ local unpack = _G.unpack
 -- ---------------
 
 local sections = {
-    "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "TOP", "BOTTOM", "LEFT",
+    "TOPLEFT",
+    "TOPRIGHT",
+    "BOTTOMLEFT",
+    "BOTTOMRIGHT",
+    "TOP",
+    "BOTTOM",
+    "LEFT",
     "RIGHT"
 }
 
@@ -19,10 +25,8 @@ local function border_SetOffset(self, offset)
     self.offset = offset
     self.TOPLEFT:SetPoint("BOTTOMRIGHT", self.parent, "TOPLEFT", -offset, offset)
     self.TOPRIGHT:SetPoint("BOTTOMLEFT", self.parent, "TOPRIGHT", offset, offset)
-    self.BOTTOMLEFT:SetPoint("TOPRIGHT", self.parent, "BOTTOMLEFT", -offset,
-                             -offset)
-    self.BOTTOMRIGHT:SetPoint("TOPLEFT", self.parent, "BOTTOMRIGHT", offset,
-                              -offset)
+    self.BOTTOMLEFT:SetPoint("TOPRIGHT", self.parent, "BOTTOMLEFT", -offset, -offset)
+    self.BOTTOMRIGHT:SetPoint("TOPLEFT", self.parent, "BOTTOMRIGHT", offset, -offset)
 end
 
 local function border_SetTexture(self, texture)
@@ -46,7 +50,9 @@ local function border_SetTexture(self, texture)
 end
 
 local function border_SetSize(self, size)
-    if size < 1 then size = 1 end
+    if size < 1 then
+        size = 1
+    end
 
     self.size = size
     self.TOPLEFT:SetSize(size, size)
@@ -69,24 +75,37 @@ local function border_SetSize(self, size)
     end
 end
 
-local function border_Hide(self) for _, v in next, sections do self[v]:Hide() end end
-
-local function border_Show(self) for _, v in next, sections do self[v]:Show() end end
-
-local function border_GetVertexColor(self) self.TOPLEFT:GetVertexColor() end
-
-local function border_SetVertexColor(self, r, g, b, a)
-    for _, v in next, sections do self[v]:SetVertexColor(r, g, b, a) end
+local function border_Hide(self)
+    for _, v in next, sections do
+        self[v]:Hide()
+    end
 end
 
-local function border_IsObjectType(_, t) return t == "Border" end
+local function border_Show(self)
+    for _, v in next, sections do
+        self[v]:Show()
+    end
+end
+
+local function border_GetVertexColor(self)
+    self.TOPLEFT:GetVertexColor()
+end
+
+local function border_SetVertexColor(self, r, g, b, a)
+    for _, v in next, sections do
+        self[v]:SetVertexColor(r, g, b, a)
+    end
+end
+
+local function border_IsObjectType(_, t)
+    return t == "Border"
+end
 
 function E:CreateBorder(parent, drawLayer, drawSubLevel)
     local border = {calcTile = true, offset = 0, parent = parent, size = 1}
 
     for _, v in next, sections do
-        border[v] = parent:CreateTexture(nil, drawLayer or "OVERLAY", nil,
-                                         drawSubLevel or 1)
+        border[v] = parent:CreateTexture(nil, drawLayer or "OVERLAY", nil, drawSubLevel or 1)
     end
 
     border.TOPLEFT:SetTexCoord(0.5, 0.625, 0, 1)

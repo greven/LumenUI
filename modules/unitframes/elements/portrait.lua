@@ -19,8 +19,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].portrait,
-                               self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].portrait, self._config)
 end
 
 local function element_UpdateFonts(self)
@@ -28,8 +27,7 @@ local function element_UpdateFonts(self)
     local config = self._config.text
 
     if element then
-        element:SetFont(config.font or C.media.fonts.condensed, config.size,
-                        config.outline and "OUTLINE" or nil)
+        element:SetFont(config.font or C.media.fonts.condensed, config.size, config.outline and "OUTLINE" or nil)
         element:SetJustifyH(config.h_alignment)
         element:SetJustifyV(config.v_alignment)
         element:SetWordWrap(config.word_wrap)
@@ -47,7 +45,9 @@ local function element_UpdateTextPoints(self)
 
     self.Text:ClearAllPoints()
 
-    if config and config.p then E:SetPosition(self.Text, config, self) end
+    if config and config.p then
+        E:SetPosition(self.Text, config, self)
+    end
 end
 
 local function element_UpdateTags(self)

@@ -119,7 +119,11 @@ local class_buffs = {
     ["MAGE"] = {state = true},
     ["MONK"] = {state = true},
     ["PALADIN"] = {state = true},
-    ["PRIEST"] = {state = true},
+    ["PRIEST"] = {
+        state = true,
+        [17] = true, -- Power Word: Shield
+        [194249] = true -- Voidform
+    },
     ["ROGUE"] = {
         state = true,
         [315496] = true -- Slice and Dice
@@ -233,20 +237,20 @@ function M.CreateAuraFilters()
 
     -- Class Debuffs filters
     if not C.global.aura_filters["Class Debuffs"].is_init then
-        E:CopyTable(class_debuffs[E.PLAYER_CLASS],
-                    C.global.aura_filters["Class Debuffs"])
+        E:CopyTable(class_debuffs[E.PLAYER_CLASS], C.global.aura_filters["Class Debuffs"])
         C.global.aura_filters["Class Debuffs"].is_init = true
     end
 
     -- Class Buffs filters
     if not C.global.aura_filters["Class Buffs"].is_init then
-        E:CopyTable(class_buffs[E.PLAYER_CLASS],
-                    C.global.aura_filters["Class Buffs"])
+        E:CopyTable(class_buffs[E.PLAYER_CLASS], C.global.aura_filters["Class Buffs"])
         C.global.aura_filters["Class Buffs"].is_init = true
     end
 end
 
-function M:IsInit() return isInit end
+function M:IsInit()
+    return isInit
+end
 
 function M:Init()
     if not isInit then

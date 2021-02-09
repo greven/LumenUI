@@ -66,31 +66,33 @@ local customTags = {
     class = function(unit)
         if UnitIsPlayer(unit) then
             local class = UnitClass(unit)
-            if class then return class end
+            if class then
+                return class
+            end
         end
         return ""
     end,
-
     -- Util to output an hex color
     color = function(_, _, color)
-        if not color then return end
+        if not color then
+            return
+        end
         return "|c" .. E:ToHex(C.colors[color])
     end,
-
     -- Creature difficulty color
     color_difficulty = function(unit)
         local level = UnitEffectiveLevel(unit)
         local color = GetCreatureDifficultyColor(level)
 
-        if level > 0 then return "|c" .. E:ToHex(color) end
+        if level > 0 then
+            return "|c" .. E:ToHex(color)
+        end
         return "|c" .. E:ToHex(C.colors.difficulty.impossible)
     end,
-
     -- Color unit by disconnected, tapped, class or reaction
     color_unit = function(unit)
         return "|c" .. E:ToHex(E:GetUnitColor(unit, true, true))
     end,
-
     -- Health current value
     health_cur = function(unit, _, colorCap, colorStatus)
         local offline = "Offline"
@@ -109,7 +111,6 @@ local customTags = {
             return E:FormatNumber(UnitHealth(unit), colorCap) or ""
         end
     end,
-
     -- Health value or percentage when not max
     health_cur_perc = function(unit)
         if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
@@ -124,7 +125,6 @@ local customTags = {
             end
         end
     end,
-
     -- Health percentage
     health_perc = function(unit)
         if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
@@ -134,7 +134,6 @@ local customTags = {
             return s_format("%d%%", E:NumberToPerc(cur, max))
         end
     end,
-
     -- Unit level
     level = function(unit)
         local level
@@ -146,7 +145,6 @@ local customTags = {
 
         return level > 0 and level or "??"
     end,
-
     -- Unit name
     name = function(unit, realUnit, truncate)
         local name = UnitName(realUnit or unit) or ""
@@ -157,69 +155,63 @@ local customTags = {
         end
         return name
     end,
-
     -- Unit name abbreviated
     name_abbr = function(unit, realUnit)
         local name = UnitName(realUnit or unit) or ""
-        if name and s_find(name, '%s') then name = E:Abbreviate(name) end
+        if name and s_find(name, "%s") then
+            name = E:Abbreviate(name)
+        end
         return name
     end,
-
     -- Unit Classification (Rare, Elite, Boss, ...)
     npc_type = function(unit, realUnit, color)
         local classification = UnitClassification(realUnit or unit)
 
         if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) ..
-                       "Boss|r" or "Boss"
+            return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) .. "Boss|r" or "Boss"
         elseif classification == "rare" then
             return color and "|cff008FF7Rare|r" or "Rare"
         elseif classification == "rareelite" then
-            return color and "|cff008FF7Rare|r |c" ..
-                       E:ToHex(C.colors.difficulty.very_difficult) .. "Elite|r" or
-                       "Rare Elite"
+            return color and "|cff008FF7Rare|r |c" .. E:ToHex(C.colors.difficulty.very_difficult) .. "Elite|r" or
+                "Rare Elite"
         elseif classification == "elite" then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) ..
-                       "Elite|r" or "Elite"
+            return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) .. "Elite|r" or "Elite"
         end
 
         return ""
     end,
-
     -- Unit Classification (Rare (R), Elite(+), Boss(B), ...)
     npc_type_short = function(unit, realUnit, color)
         local classification = UnitClassification(realUnit or unit)
 
         if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) ..
-                       "+|r" or "+"
+            return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) .. "+|r" or "+"
         elseif classification == "rare" then
             return color and "|cff008FF7R|r" or "R"
         elseif classification == "rareelite" then
-            return color and "|cff008FF7R|r|c" ..
-                       E:ToHex(C.colors.difficulty.very_difficult) .. "+|r" or
-                       "R+"
+            return color and "|cff008FF7R|r|c" .. E:ToHex(C.colors.difficulty.very_difficult) .. "+|r" or "R+"
         elseif classification == "elite" then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) ..
-                       "+|r" or "+"
+            return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) .. "+|r" or "+"
         elseif classification == "minus" then
             return "-"
         end
         return ""
     end,
-
     -- Power value
     power_cur = function(unit)
-        if E:UnitIsDisconnectedOrDeadOrGhost(unit) then return end
+        if E:UnitIsDisconnectedOrDeadOrGhost(unit) then
+            return
+        end
 
         local type = UnitPowerType(unit)
         local max = UnitPowerMax(unit, type)
         if max and max ~= 0 then
             local cur = UnitPower(unit, type)
-            if cur > 0 then return E:FormatNumber(cur) end
+            if cur > 0 then
+                return E:FormatNumber(cur)
+            end
         end
     end,
-
     -- Player pvp timer
     pvptimer = function()
         if IsPVPTimerRunning() then
@@ -235,28 +227,35 @@ local customTags = {
             end
         end
     end,
-
     -- Player race or NPC creature type/family
     race = function(unit)
         if UnitIsPlayer(unit) then
             local race = UnitRace(unit)
-            if race then return race end
+            if race then
+                return race
+            end
         else
             local creature = UnitCreatureFamily(unit) or UnitCreatureType(unit)
-            if creature then return creature end
+            if creature then
+                return creature
+            end
         end
         return ""
     end,
-
     -- Player spec
-    spec = function(unit) return E:GetUnitSpecializationInfo(unit) end,
-
+    spec = function(unit)
+        return E:GetUnitSpecializationInfo(unit)
+    end,
     -- New Line
-    nl = function() return "\n" end
+    nl = function()
+        return "\n"
+    end
 }
 
 -- Register Shared Events
-for _, tag in ipairs(sharedEvents) do tagSharedEvents[tag] = true end
+for _, tag in ipairs(sharedEvents) do
+    tagSharedEvents[tag] = true
+end
 
 -- Register Custom tags and events
 for tag, func in next, customTags do

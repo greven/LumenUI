@@ -9,7 +9,9 @@ local UF = E:GetModule("UnitFrames")
 
 local isInit = false
 
-function UF:HasTargetTargetFrame() return isInit end
+function UF:HasTargetTargetFrame()
+    return isInit
+end
 
 local function frame_Update(self)
     self:UpdateConfig()
@@ -28,7 +30,9 @@ local function frame_Update(self)
         self:UpdatePower()
         self:UpdateName()
     else
-        if self:IsEnabled() then self:Disable() end
+        if self:IsEnabled() then
+            self:Disable()
+        end
     end
 end
 

@@ -8,7 +8,9 @@ local M = E:AddModule("Blizzard")
 
 local isInit = false
 
-function M:IsInit() return isInit end
+function M:IsInit()
+    return isInit
+end
 
 function M:Init()
     if not isInit and C.modules.blizzard.enabled then

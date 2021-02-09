@@ -55,25 +55,33 @@ local GetInspectSpecialization = _G.GetInspectSpecialization
 -- > Math
 -- ---------------
 
-local function round(val) return m_floor(val + 0.5) end
+local function round(val)
+    return m_floor(val + 0.5)
+end
 
-local function clamp(val, min, max) return m_min(max or 1, m_max(min or 0, val)) end
+local function clamp(val, min, max)
+    return m_min(max or 1, m_max(min or 0, val))
+end
 
-function E:Round(val) return val and round(val) or nil end
+function E:Round(val)
+    return val and round(val) or nil
+end
 
-function E:Clamp(val, ...) return val and clamp(val, ...) or nil end
+function E:Clamp(val, ...)
+    return val and clamp(val, ...) or nil
+end
 
-function E:NumberToPerc(v1, v2) return (v1 and v2) and (v1 / v2 * 100) or nil end
+function E:NumberToPerc(v1, v2)
+    return (v1 and v2) and (v1 / v2 * 100) or nil
+end
 
 function E:FormatNumber(val, colorCap)
     local FIRST_NUMBER_CAP = "%s.%d" .. _G.FIRST_NUMBER_CAP_NO_SPACE
     local SECOND_NUMBER_CAP = "%s.%d" .. _G.SECOND_NUMBER_CAP_NO_SPACE
 
     if colorCap then
-        FIRST_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.FIRST_NUMBER_CAP_NO_SPACE ..
-                               "|r"
-        SECOND_NUMBER_CAP =
-            "%s.%d|cffBBBBBB" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
+        FIRST_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.FIRST_NUMBER_CAP_NO_SPACE .. "|r"
+        SECOND_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
     end
 
     if val >= 1E6 then
@@ -121,8 +129,7 @@ do
             end
         elseif format == "x:xx" then
             if v >= 86400 then
-                return m_floor(v / 86400), m_floor(v % 86400 / 3600),
-                       X_XX_FORMAT
+                return m_floor(v / 86400), m_floor(v % 86400 / 3600), X_XX_FORMAT
             elseif v >= 3600 then
                 return m_floor(v / 3600), m_floor(v % 3600 / 60), X_XX_FORMAT
             elseif v >= 60 then
@@ -171,8 +178,8 @@ do
 end
 
 E.WaitTable = {}
-E.WaitFrame = CreateFrame('Frame', 'Lum_WaitFrame', _G.UIParent)
-E.WaitFrame:SetScript('OnUpdate', E.WaitFunc)
+E.WaitFrame = CreateFrame("Frame", "Lum_WaitFrame", _G.UIParent)
+E.WaitFrame:SetScript("OnUpdate", E.WaitFunc)
 
 function E:WaitFunc(elapse)
     local i = 1
@@ -184,19 +191,25 @@ function E:WaitFunc(elapse)
             t_remove(E.WaitTable, i)
             data[2](unpack(data[3]))
 
-            if #E.WaitTable == 0 then E.WaitFrame:Hide() end
+            if #E.WaitTable == 0 then
+                E.WaitFrame:Hide()
+            end
         end
     end
 end
 
 -- Add time before calling a function
 function E:Delay(delay, func, ...)
-    if type(delay) ~= 'number' or type(func) ~= 'function' then return false end
+    if type(delay) ~= "number" or type(func) ~= "function" then
+        return false
+    end
 
     -- Restrict to the lowest time that the C_Timer API allows us
-    if delay < 0.01 then delay = 0.01 end
+    if delay < 0.01 then
+        delay = 0.01
+    end
 
-    if select('#', ...) <= 0 then
+    if select("#", ...) <= 0 then
         C_Timer_After(delay, func)
     else
         t_insert(E.WaitTable, {delay, func, {...}})
@@ -211,7 +224,9 @@ end
 -- ---------------
 
 function E:CopyTable(src, dest, ignore)
-    if type(dest) ~= "table" then dest = {} end
+    if type(dest) ~= "table" then
+        dest = {}
+    end
 
     for k, v in next, src do
         if not ignore or not ignore[k] then
@@ -227,13 +242,17 @@ function E:CopyTable(src, dest, ignore)
 end
 
 function E:UpdateTable(src, dest)
-    if type(dest) ~= "table" then dest = {} end
+    if type(dest) ~= "table" then
+        dest = {}
+    end
 
     for k, v in next, src do
         if type(v) == "table" then
             dest[k] = self:UpdateTable(v, dest[k])
         else
-            if dest[k] == nil then dest[k] = v end
+            if dest[k] == nil then
+                dest[k] = v
+            end
         end
     end
 
@@ -241,7 +260,9 @@ function E:UpdateTable(src, dest)
 end
 
 function E:ReplaceTable(src, dest)
-    if type(dest) ~= "table" then dest = {} end
+    if type(dest) ~= "table" then
+        dest = {}
+    end
 
     for k, v in next, dest do
         if type(src[k]) == "table" then
@@ -255,13 +276,19 @@ function E:ReplaceTable(src, dest)
 end
 
 function E:DiffTable(src, dest)
-    if type(dest) ~= "table" then return {} end
+    if type(dest) ~= "table" then
+        return {}
+    end
 
-    if type(src) ~= "table" then return dest end
+    if type(src) ~= "table" then
+        return dest
+    end
 
     for k, v in next, dest do
         if type(v) == "table" then
-            if not next(self:DiffTable(src[k], v)) then dest[k] = nil end
+            if not next(self:DiffTable(src[k], v)) then
+                dest[k] = nil
+            end
         elseif v == src[k] then
             dest[k] = nil
         end
@@ -273,17 +300,25 @@ end
 local function isEqualTable(a, b)
     for k, v in next, a do
         if type(v) == "table" and type(b[k]) == "table" then
-            if not isEqualTable(v, b[k]) then return false end
+            if not isEqualTable(v, b[k]) then
+                return false
+            end
         else
-            if v ~= b[k] then return false end
+            if v ~= b[k] then
+                return false
+            end
         end
     end
 
     for k, v in next, b do
         if type(v) == "table" and type(a[k]) == "table" then
-            if not isEqualTable(v, a[k]) then return false end
+            if not isEqualTable(v, a[k]) then
+                return false
+            end
         else
-            if v ~= a[k] then return false end
+            if v ~= a[k] then
+                return false
+            end
         end
     end
 
@@ -291,7 +326,9 @@ local function isEqualTable(a, b)
 end
 
 function E:IsEqualTable(a, b)
-    if type(a) ~= type(b) then return false end
+    if type(a) ~= type(b) then
+        return false
+    end
 
     if type(a) == "table" then
         return isEqualTable(a, b)
@@ -303,13 +340,19 @@ end
 -- Count the number of elements
 function E:TableCount(elements)
     local count = 0
-    for _ in pairs(elements) do count = count + 1 end
+    for _ in pairs(elements) do
+        count = count + 1
+    end
     return count
 end
 
 -- Check if the table contains a specific value
 function E:TableHasValue(tab, val)
-    for _, v in ipairs(tab) do if v == val then return true end end
+    for _, v in ipairs(tab) do
+        if v == val then
+            return true
+        end
+    end
     return false
 end
 
@@ -339,25 +382,26 @@ function E:CreateString(frame, size, color, font, name, anchor, x, y)
     return fs
 end
 
-function E:TruncateString(v, length) return s_utf8sub(v, 1, length) end
+function E:TruncateString(v, length)
+    return s_utf8sub(v, 1, length)
+end
 
 function E:Abbreviate(v)
-    local letters, lastWord = '', s_match(v, '.+%s(.+)$')
+    local letters, lastWord = "", s_match(v, ".+%s(.+)$")
     if lastWord then
-        for word in g_match(v, '.-%s') do
-            local firstLetter = s_utf8sub(g_sub(word, '^[%s%p]*', ''), 1, 1)
+        for word in g_match(v, ".-%s") do
+            local firstLetter = s_utf8sub(g_sub(word, "^[%s%p]*", ""), 1, 1)
             if firstLetter ~= s_utf8lower(firstLetter) then
-                letters = format('%s%s. ', letters, firstLetter)
+                letters = format("%s%s. ", letters, firstLetter)
             end
-            v = s_format('%s%s', letters, lastWord)
+            v = s_format("%s%s", letters, lastWord)
         end
     end
     return v
 end
 
 function E:Print(...)
-    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join("", E.LUMEN, " |cFFaaaaaa›|r ",
-                                            ...))
+    _G.DEFAULT_CHAT_FRAME:AddMessage(s_join("", E.LUMEN, " |cFFaaaaaa›|r ", ...))
 end
 
 -- ---------------
@@ -378,16 +422,21 @@ do
             end
 
             local key = r .. "-" .. g .. "-" .. b
-            if rgb_hex_cache[key] then return rgb_hex_cache[key] end
-            rgb_hex_cache[key] = s_format("ff%.2x%.2x%.2x", clamp(r) * 255,
-                                          clamp(g) * 255, clamp(b) * 255)
+            if rgb_hex_cache[key] then
+                return rgb_hex_cache[key]
+            end
+            rgb_hex_cache[key] = s_format("ff%.2x%.2x%.2x", clamp(r) * 255, clamp(g) * 255, clamp(b) * 255)
             return rgb_hex_cache[key]
         end
     end
 
-    function E:ToHex(r, g, b) return hex(r, g, b) end
+    function E:ToHex(r, g, b)
+        return hex(r, g, b)
+    end
 
-    function E:GetRGB(color) return color.r, color.g, color.b end
+    function E:GetRGB(color)
+        return color.r, color.g, color.b
+    end
 
     function E:GetRGBA(color, a)
         return color.r, color.g, color.b, a or color.a
@@ -407,9 +456,13 @@ do
         return color
     end
 
-    function E:SetRGB(color, r, g, b) return self:SetRGBA(color, r, g, b, 1) end
+    function E:SetRGB(color, r, g, b)
+        return self:SetRGBA(color, r, g, b, 1)
+    end
 
-    function E:WrapText(color, text) return "|c" .. color.hex .. text .. "|r" end
+    function E:WrapText(color, text)
+        return "|c" .. color.hex .. text .. "|r"
+    end
 
     -- Gradients
     local function calcGradient(perc, ...)
@@ -425,27 +478,47 @@ do
         local i, relperc = m_modf(perc * (num / 3 - 1))
         local r1, g1, b1, r2, g2, b2 = select((i * 3) + 1, ...)
 
-        return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc,
-               b1 + (b2 - b1) * relperc
+        return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc, b1 + (b2 - b1) * relperc
     end
 
     function E:GetGradientAsRGB(perc, color)
-        return calcGradient(perc, color[1].r, color[1].g, color[1].b,
-                            color[2].r, color[2].g, color[2].b, color[3].r,
-                            color[3].g, color[3].b)
+        return calcGradient(
+            perc,
+            color[1].r,
+            color[1].g,
+            color[1].b,
+            color[2].r,
+            color[2].g,
+            color[2].b,
+            color[3].r,
+            color[3].g,
+            color[3].b
+        )
     end
 
     function E:GetGradientAsHex(perc, color)
-        return hex(calcGradient(perc, color[1].r, color[1].g, color[1].b,
-                                color[2].r, color[2].g, color[2].b, color[3].r,
-                                color[3].g, color[3].b))
+        return hex(
+            calcGradient(
+                perc,
+                color[1].r,
+                color[1].g,
+                color[1].b,
+                color[2].r,
+                color[2].g,
+                color[2].b,
+                color[3].r,
+                color[3].g,
+                color[3].b
+            )
+        )
     end
 
     function E:AreColorsEqual(color1, color2)
-        if not color1 or not color2 then return end
+        if not color1 or not color2 then
+            return
+        end
 
-        return color1.r == color2.r and color1.g == color2.g and color1.b ==
-                   color2.b
+        return color1.r == color2.r and color1.g == color2.g and color1.b == color2.b
     end
 
     do
@@ -453,16 +526,14 @@ do
         local objects = {}
 
         local function isCloseEnough(r, g, b, tR, tG, tB)
-            return m_abs(r - tR) <= 0.05 and m_abs(g - tG) <= 0.05 and
-                       m_abs(b - tB) <= 0.05
+            return m_abs(r - tR) <= 0.05 and m_abs(g - tG) <= 0.05 and m_abs(b - tB) <= 0.05
         end
 
         local function onUpdate(self, elapsed)
             for object, target in next, objects do
                 local r, g, b
 
-                if isCloseEnough(object._r, object._g, object._b, target.r,
-                                 target.g, target.b) then
+                if isCloseEnough(object._r, object._g, object._b, target.r, target.g, target.b) then
                     r, g, b = target.r, target.g, target.b
                     objects[object] = nil
 
@@ -471,9 +542,7 @@ do
                     end
                 else
                     -- 15 = 0.25 * 60
-                    r, g, b = calcGradient(15 * elapsed, object._r, object._g,
-                                           object._b, target.r, target.g,
-                                           target.b)
+                    r, g, b = calcGradient(15 * elapsed, object._r, object._g, object._b, target.r, target.g, target.b)
                 end
 
                 object:SetVertexColor_(r, g, b, target.a)
@@ -496,7 +565,9 @@ do
         end
 
         function E:SetSmoothedVertexColor(object, r, g, b, a)
-            if not object.GetVertexColor then return end
+            if not object.GetVertexColor then
+                return
+            end
 
             if not object.SetVertexColor_ then
                 object.SetVertexColor_ = object.SetVertexColor
@@ -507,7 +578,9 @@ do
         end
 
         function E:SmoothColor(object)
-            if not object.GetVertexColor then return end
+            if not object.GetVertexColor then
+                return
+            end
 
             object.SetVertexColor_ = object.SetVertexColor
             object.SetVertexColor = object_SetSmoothedVertexColor
@@ -528,7 +601,9 @@ do
 
             assert(anchor, "Invalid anchor: " .. children[1] .. ".")
 
-            for i = 2, #children do anchor = anchor[children[i]] end
+            for i = 2, #children do
+                anchor = anchor[children[i]]
+            end
 
             return anchor
         else
@@ -550,7 +625,9 @@ do
 
     function E:SetPosition(frame, point, relative)
         local anchor = point.anchor
-        if relative then anchor = E:ResolveAnchorPoint(relative, anchor) end
+        if relative then
+            anchor = E:ResolveAnchorPoint(relative, anchor)
+        end
 
         if point.anchor and point.ap then
             frame:SetPoint(point.p, anchor, point.ap, point.x, point.y)
@@ -565,13 +642,17 @@ do
         local result = {}
 
         if segSize % 1 == 0 then
-            for i = 1, numSegs do result[i] = segSize end
+            for i = 1, numSegs do
+                result[i] = segSize
+            end
         else
             local numOddSegs = numSegs % 2 == 0 and 2 or 1
             local numNormalSegs = numSegs - numOddSegs
             segSize = round(segSize)
 
-            for i = 1, numNormalSegs / 2 do result[i] = segSize end
+            for i = 1, numNormalSegs / 2 do
+                result[i] = segSize
+            end
 
             for i = numSegs - numNormalSegs / 2 + 1, numSegs do
                 result[i] = segSize
@@ -588,7 +669,9 @@ do
     end
 
     function E:ForceShow(object)
-        if not object then return end
+        if not object then
+            return
+        end
 
         object:Show()
 
@@ -596,10 +679,14 @@ do
     end
 
     function E:ForceHide(object, skipEvents)
-        if not object then return end
+        if not object then
+            return
+        end
 
         if object.UnregisterAllEvents then
-            if not skipEvents then object:UnregisterAllEvents() end
+            if not skipEvents then
+                object:UnregisterAllEvents()
+            end
 
             if object:GetName() then
                 object.ignoreFramePositionManager = true
@@ -618,8 +705,7 @@ do
         if not x then
             return p, anchor, ap, x, y
         else
-            return p, anchor and anchor:GetName() or "UIParent", ap, round(x),
-                   round(y)
+            return p, anchor and anchor:GetName() or "UIParent", ap, round(x), round(y)
         end
     end
 
@@ -634,7 +720,9 @@ do
             x, y = frame:GetCenter()
         end
 
-        if not (x and y) then return "UNKNOWN" end
+        if not (x and y) then
+            return "UNKNOWN"
+        end
 
         local screenWidth = UIParent:GetRight()
         local screenHeight = UIParent:GetTop()
@@ -701,11 +789,11 @@ end
 do
     function E:UnitIsDisconnectedOrDeadOrGhost(unit)
         if (not UnitIsConnected(unit)) then
-            return 'Offline'
+            return "Offline"
         elseif (UnitIsGhost(unit)) then
-            return 'Ghost'
+            return "Ghost"
         elseif (UnitIsDead(unit)) then
-            return 'Dead'
+            return "Dead"
         end
     end
 
@@ -732,8 +820,7 @@ do
             return C.colors.reaction[2]
         end
 
-        return C.colors.reaction[UnitReaction(unit, "player")] or
-                   C.colors.reaction[4]
+        return C.colors.reaction[UnitReaction(unit, "player")] or C.colors.reaction[4]
     end
 
     function E:GetUnitClassification(unit)
@@ -780,8 +867,7 @@ do
     function E:GetUnitSpecializationInfo(unit)
         if UnitExists(unit) then
             local isPlayer = UnitIsUnit(unit, "player")
-            local specID = isPlayer and GetSpecialization() or
-                               GetInspectSpecialization(unit)
+            local specID = isPlayer and GetSpecialization() or GetInspectSpecialization(unit)
 
             if specID and specID > 0 then
                 if isPlayer then
@@ -816,8 +902,7 @@ do
     end
 
     function E:GetCreatureDifficultyColor(level)
-        return self:GetRelativeDifficultyColor(UnitEffectiveLevel("player"),
-                                               level > 0 and level or 199)
+        return self:GetRelativeDifficultyColor(UnitEffectiveLevel("player"), level > 0 and level or 199)
     end
 
     do
@@ -851,8 +936,7 @@ do
                 end
 
                 -- Main hand
-                local mainItemLevel, mainQuality, mainEquipLoc, mainItemClass,
-                      mainItemSubClass, _ = 0
+                local mainItemLevel, mainQuality, mainEquipLoc, mainItemClass, mainItemSubClass, _ = 0
                 link = GetInventoryItemLink(unit, 16)
                 if link then
                     mainItemLevel = GetDetailedItemLevelInfo(link)
@@ -872,10 +956,12 @@ do
                     isOK = false
                 end
 
-                if mainQuality == 6 or
-                    (not offEquipLoc and X2_INVTYPES[mainEquipLoc] and
-                        X2_EXCEPTIONS[mainItemClass] ~= mainItemSubClass and
-                        GetInspectSpecialization(unit) ~= 72) then
+                if
+                    mainQuality == 6 or
+                        (not offEquipLoc and X2_INVTYPES[mainEquipLoc] and
+                            X2_EXCEPTIONS[mainItemClass] ~= mainItemSubClass and
+                            GetInspectSpecialization(unit) ~= 72)
+                 then
                     mainItemLevel = m_max(mainItemLevel, offItemLevel)
                     total = total + mainItemLevel * 2
                 else
@@ -884,7 +970,9 @@ do
 
                 -- at the beginning of an arena match no info might be available,
                 -- so despite having equipped gear a person may appear naked
-                if total == 0 then isOK = false end
+                if total == 0 then
+                    isOK = false
+                end
 
                 -- print("|cffffd200" .. UnitName(unit) .. "|r", "total:", total, "cur:", m_floor(total / 16), isOK and "|cff11ff11SUCCESS!|r" or "|cffff1111FAIL!|r")
                 return isOK and m_floor(total / 16)
@@ -901,24 +989,36 @@ do
 
         E:RegisterEvent("UNIT_NAME_UPDATE", updateUnitInfo)
 
-        E:RegisterEvent("GROUP_ROSTER_UPDATE", function()
-            t_wipe(rosterInfo)
+        E:RegisterEvent(
+            "GROUP_ROSTER_UPDATE",
+            function()
+                t_wipe(rosterInfo)
 
-            local prefix, num
-            if IsInRaid() then
-                prefix, num = "raid", GetNumGroupMembers()
-            elseif IsInGroup() then
-                prefix, num = "party", GetNumSubgroupMembers()
+                local prefix, num
+                if IsInRaid() then
+                    prefix, num = "raid", GetNumGroupMembers()
+                elseif IsInGroup() then
+                    prefix, num = "party", GetNumSubgroupMembers()
+                end
+
+                if prefix then
+                    for i = 1, num do
+                        updateUnitInfo(prefix .. i)
+                    end
+                end
             end
+        )
 
-            if prefix then
-                for i = 1, num do updateUnitInfo(prefix .. i) end
+        E:RegisterEvent(
+            "GROUP_LEFT",
+            function()
+                t_wipe(rosterInfo)
             end
-        end)
+        )
 
-        E:RegisterEvent("GROUP_LEFT", function() t_wipe(rosterInfo) end)
-
-        function E:GetRosterInfo() return rosterInfo end
+        function E:GetRosterInfo()
+            return rosterInfo
+        end
 
         function E:IsUnitTank(unit)
             return rosterInfo[UnitGUID(unit)] == "TANK"
@@ -935,9 +1035,9 @@ do
 
     function E:IsUnitBoss(unit)
         return unit and
-                   (UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") or
-                       UnitIsUnit(unit, "boss3") or UnitIsUnit(unit, "boss4") or
-                       UnitIsUnit(unit, "boss5"))
+            (UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") or UnitIsUnit(unit, "boss3") or
+                UnitIsUnit(unit, "boss4") or
+                UnitIsUnit(unit, "boss5"))
     end
 end
 
@@ -948,33 +1048,40 @@ end
 do
     local dispelTypes = {}
 
-    E:RegisterEvent("SPELLS_CHANGED", function()
-        -- Soothe (Druid)
-        dispelTypes[""] = IsSpellKnown(2908) -- Enrage
+    E:RegisterEvent(
+        "SPELLS_CHANGED",
+        function()
+            -- Soothe (Druid)
+            dispelTypes[""] = IsSpellKnown(2908) -- Enrage
 
-        -- Cleanse Spirit (Shaman), Nature's Cure (Druid), Purify Spirit (Shaman), Remove Corruption (Druid), Remove Curse (Mage)
-        dispelTypes["Curse"] = IsSpellKnown(51886) or IsSpellKnown(88423) or
-                                   IsSpellKnown(77130) or IsSpellKnown(2782) or
-                                   IsSpellKnown(475)
+            -- Cleanse Spirit (Shaman), Nature's Cure (Druid), Purify Spirit (Shaman), Remove Corruption (Druid), Remove Curse (Mage)
+            dispelTypes["Curse"] =
+                IsSpellKnown(51886) or IsSpellKnown(88423) or IsSpellKnown(77130) or IsSpellKnown(2782) or
+                IsSpellKnown(475)
 
-        -- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Purify (Priest), Purify Disease (Priest)
-        dispelTypes["Disease"] = IsSpellKnown(4987) or IsSpellKnown(213644) or
-                                     IsSpellKnown(115450) or
-                                     IsSpellKnown(218164) or IsSpellKnown(527) or
-                                     IsSpellKnown(213634)
+            -- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Purify (Priest), Purify Disease (Priest)
+            dispelTypes["Disease"] =
+                IsSpellKnown(4987) or IsSpellKnown(213644) or IsSpellKnown(115450) or IsSpellKnown(218164) or
+                IsSpellKnown(527) or
+                IsSpellKnown(213634)
 
-        -- Cleanse (Paladin), Detox (Monk), Mass Dispel (Priest), Nature's Cure (Druid), Purify (Priest), Purify Spirit (Shaman)
-        dispelTypes["Magic"] = IsSpellKnown(4987) or IsSpellKnown(115450) or
-                                   IsSpellKnown(32375) or IsSpellKnown(88423) or
-                                   IsSpellKnown(527) or IsSpellKnown(77130)
+            -- Cleanse (Paladin), Detox (Monk), Mass Dispel (Priest), Nature's Cure (Druid), Purify (Priest), Purify Spirit (Shaman)
+            dispelTypes["Magic"] =
+                IsSpellKnown(4987) or IsSpellKnown(115450) or IsSpellKnown(32375) or IsSpellKnown(88423) or
+                IsSpellKnown(527) or
+                IsSpellKnown(77130)
 
-        -- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Nature's Cure (Druid), Remove Corruption (Druid)
-        dispelTypes["Poison"] = IsSpellKnown(4987) or IsSpellKnown(213644) or
-                                    IsSpellKnown(115450) or IsSpellKnown(218164) or
-                                    IsSpellKnown(88423) or IsSpellKnown(2782)
-    end)
+            -- Cleanse (Paladin), Cleanse Toxins (Paladin), Detox (Monk), Detox (Monk), Nature's Cure (Druid), Remove Corruption (Druid)
+            dispelTypes["Poison"] =
+                IsSpellKnown(4987) or IsSpellKnown(213644) or IsSpellKnown(115450) or IsSpellKnown(218164) or
+                IsSpellKnown(88423) or
+                IsSpellKnown(2782)
+        end
+    )
 
-    function E:IsDispellable(debuffType) return dispelTypes[debuffType] end
+    function E:IsDispellable(debuffType)
+        return dispelTypes[debuffType]
+    end
 end
 
 -----------
@@ -982,7 +1089,7 @@ end
 -----------
 
 do
-    local ENCHANT_PATTERN = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')
+    local ENCHANT_PATTERN = ENCHANTED_TOOLTIP_LINE:gsub("%%s", "(.+)")
     local GEM_TEMPLATE = "|T%s:0:0:0:0:64:64:4:60:4:60|t "
 
     local EMPTY_SOCKET_TEXTURES = {
@@ -1012,20 +1119,20 @@ do
 
     local itemCache = {}
 
-    local scanTip = CreateFrame("GameTooltip", "LumScanTip", nil,
-                                "GameTooltipTemplate")
+    local scanTip = CreateFrame("GameTooltip", "LumScanTip", nil, "GameTooltipTemplate")
     scanTip:SetOwner(UIParent, "ANCHOR_NONE")
 
     local function wipeScanTip()
         scanTip:ClearLines()
 
-        for i = 1, 10 do _G["LumScanTipTexture" .. i]:SetTexture(nil) end
+        for i = 1, 10 do
+            _G["LumScanTipTexture" .. i]:SetTexture(nil)
+        end
     end
 
     function E:GetItemEnchantGemInfo(itemLink)
         if itemCache[itemLink] then
-            return itemCache[itemLink].enchant, itemCache[itemLink].gem1,
-                   itemCache[itemLink].gem2, itemCache[itemLink].gem3
+            return itemCache[itemLink].enchant, itemCache[itemLink].gem1, itemCache[itemLink].gem2, itemCache[itemLink].gem3
         else
             itemCache[itemLink] = {}
         end
@@ -1080,7 +1187,6 @@ do
         itemCache[itemLink].gem2 = gem2
         itemCache[itemLink].gem3 = gem3
 
-        return itemCache[itemLink].enchant, itemCache[itemLink].gem1,
-               itemCache[itemLink].gem2, itemCache[itemLink].gem3
+        return itemCache[itemLink].enchant, itemCache[itemLink].gem1, itemCache[itemLink].gem2, itemCache[itemLink].gem3
     end
 end

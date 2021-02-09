@@ -25,14 +25,17 @@ local headers = {}
 local function updateAura(button, index)
     local filter = button:GetParent():GetAttribute("filter")
     if filter == "HELPFUL" then
-        if not buffs[button] then return end
+        if not buffs[button] then
+            return
+        end
     else
-        if not debuffs[button] then return end
+        if not debuffs[button] then
+            return
+        end
     end
 
     local unit = button:GetParent():GetAttribute("unit")
-    local name, texture, count, debuffType, duration, expirationTime =
-        UnitAura(unit, index, filter)
+    local name, texture, count, debuffType, duration, expirationTime = UnitAura(unit, index, filter)
     if name then
         button.Icon:SetTexture(texture)
         button.Count:SetText(count > 1 and count)
@@ -45,13 +48,12 @@ local function updateAura(button, index)
         end
 
         if filter == "HARMFUL" then
-            button.Border:SetVertexColor(
-                E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
+            button.Border:SetVertexColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
 
             if debuffType and button.showDebuffType then
                 button.AuraType:SetTexCoord(
-                    unpack(M.textures.aura_icons[debuffType] or
-                               M.textures.aura_icons["Debuff"]))
+                    unpack(M.textures.aura_icons[debuffType] or M.textures.aura_icons["Debuff"])
+                )
                 button.AuraType:Show()
             else
                 button.AuraType:Hide()
@@ -64,7 +66,9 @@ local function updateAura(button, index)
 end
 
 local function updateTempEnchant(button, index)
-    if not buffs[button] then return end
+    if not buffs[button] then
+        return
+    end
 
     local hasEnchant, duration, count, _
 
@@ -115,8 +119,7 @@ local function button_OnEnter(self)
     GameTooltip:SetFrameLevel(self:GetFrameLevel() + 2)
 
     if self:GetAttribute("index") then
-        GameTooltip:SetUnitAura(self:GetParent():GetAttribute("unit"),
-                                self:GetID(), self:GetAttribute("filter"))
+        GameTooltip:SetUnitAura(self:GetParent():GetAttribute("unit"), self:GetID(), self:GetAttribute("filter"))
     elseif self:GetAttribute("totem-slot") then
         GameTooltip:SetTotem(self:GetID())
     else
@@ -124,7 +127,9 @@ local function button_OnEnter(self)
     end
 end
 
-local function button_OnLeave() GameTooltip:Hide() end
+local function button_OnLeave()
+    GameTooltip:Hide()
+end
 
 local function button_UpdateAuraTypeIcon(self)
     local config = self._parent._config.type
@@ -179,8 +184,7 @@ local function handleButton(button, header)
     button.TextParent = textParent
 
     local auraType = textParent:CreateTexture(nil, "ARTWORK", nil, 3)
-    auraType:SetTexture(
-        "Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
+    auraType:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\aura-icons")
     auraType:Hide()
     button.AuraType = auraType
 
@@ -198,8 +202,7 @@ end
 
 local function header_OnAttributeChanged(self, attr, value)
     -- Gotta catch 'em all!
-    if (attr:match("^child") or attr:match("^temp[Ee]nchant")) and
-        not (buffs[value] or debuffs[value]) then
+    if (attr:match("^child") or attr:match("^temp[Ee]nchant")) and not (buffs[value] or debuffs[value]) then
         handleButton(value, self)
 
         if self:GetAttribute("filter") == "HELPFUL" then
@@ -219,6 +222,13 @@ local function header_Update(self)
         self:UpdateCooldownConfig()
         E:UpdateBarLayout(self)
     else
+        -- local mover = E.Movers:Get(self, true)
+        -- if mover then
+        --     mover:UpdateSize()
+        -- else
+        --     mover = E.Movers:Create(self)
+        --     mover:SetClampRectInsets(-6, 6, 6, -6)
+        -- end
         local config = self._config
         local initialAnchor
 
@@ -243,63 +253,63 @@ local function header_Update(self)
         self:ForEachButton("SetSize", config.size, config.size)
         self:UpdateCooldownConfig()
         self:SetAttribute("filter", self._filter)
-        self:SetAttribute("initialConfigFunction", ([[
+        self:SetAttribute(
+            "initialConfigFunction",
+            ([[
 			self:SetAttribute("type2", "cancelaura")
 			self:SetWidth(%1$d)
 			self:SetHeight(%1$d)
-		]]):format(config.size))
+		]]):format(
+                config.size
+            )
+        )
         self:SetAttribute("maxWraps", config.num_rows)
-        self:SetAttribute("minHeight", config.num_rows * config.size +
-                              (config.num_rows - 1) * config.spacing)
-        self:SetAttribute("minWidth", config.per_row * config.size +
-                              (config.per_row - 1) * config.spacing)
+        self:SetAttribute("minHeight", config.num_rows * config.size + (config.num_rows - 1) * config.spacing)
+        self:SetAttribute("minWidth", config.per_row * config.size + (config.per_row - 1) * config.spacing)
         self:SetAttribute("point", initialAnchor)
         self:SetAttribute("separateOwn", config.sep_own)
         self:SetAttribute("sortDirection", config.sort_dir)
         self:SetAttribute("sortMethod", config.sort_method)
         self:SetAttribute("wrapAfter", config.per_row)
         self:SetAttribute("wrapXOffset", 0)
-        self:SetAttribute("wrapYOffset", (config.y_growth == "UP" and 1 or -1) *
-                              (config.size + (config.row_gap or config.spacing)))
-        self:SetAttribute("xOffset", (config.x_growth == "RIGHT" and 1 or -1) *
-                              (config.size + config.spacing))
+        self:SetAttribute(
+            "wrapYOffset",
+            (config.y_growth == "UP" and 1 or -1) * (config.size + (config.row_gap or config.spacing))
+        )
+        self:SetAttribute("xOffset", (config.x_growth == "RIGHT" and 1 or -1) * (config.size + config.spacing))
         self:SetAttribute("yOffset", 0)
         self:Show()
-
-        -- local mover = E.Movers:Get(self, true)
-        -- if mover then
-        --     mover:UpdateSize()
-        -- else
-        --     mover = E.Movers:Create(self)
-        --     mover:SetClampRectInsets(-6, 6, 6, -6)
-        -- end
     end
 end
 
 local function header_ForEachButton(self, method, ...)
     local buttons = self._buttons or {self:GetChildren()}
     for _, button in next, buttons do
-        if button[method] then button[method](button, ...) end
+        if button[method] then
+            button[method](button, ...)
+        end
     end
 end
 
 local function header_UpdateConfig(self)
     self._config = E:CopyTable(C.modules.auras[self._filter], self._config)
-    self._config.cooldown = E:CopyTable(C.modules.auras.cooldown,
-                                        self._config.cooldown)
+    self._config.cooldown = E:CopyTable(C.modules.auras.cooldown, self._config.cooldown)
 end
 
 local function header_UpdateCooldownConfig(self)
-    if not self.cooldownConfig then self.cooldownConfig = {text = {}} end
+    if not self.cooldownConfig then
+        self.cooldownConfig = {text = {}}
+    end
 
     self.cooldownConfig.exp_threshold = self._config.cooldown.exp_threshold
     self.cooldownConfig.m_ss_threshold = self._config.cooldown.m_ss_threshold
-    self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text,
-                                           self.cooldownConfig.text)
+    self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
 
     local buttons = self._buttons or {self:GetChildren()}
     for _, button in next, buttons do
-        if not button.Cooldown.UpdateConfig then break end
+        if not button.Cooldown.UpdateConfig then
+            break
+        end
 
         button.Cooldown:UpdateConfig(self.cooldownConfig)
         button.Cooldown:UpdateFont()
@@ -354,10 +364,13 @@ local function createHeader(filter)
             totem.Cooldown = E.Cooldowns.Handle(cd)
         end
     else
-        header = CreateFrame("Frame",
-                             filter == "HELPFUL" and "LumBuffHeader" or
-                                 "LumDebuffHeader", UIParent,
-                             "SecureAuraHeaderTemplate")
+        header =
+            CreateFrame(
+            "Frame",
+            filter == "HELPFUL" and "LumBuffHeader" or "LumDebuffHeader",
+            UIParent,
+            "SecureAuraHeaderTemplate"
+        )
         header:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         header:HookScript("OnAttributeChanged", header_OnAttributeChanged)
         header:SetAttribute("unit", "player")
@@ -384,7 +397,9 @@ local function createHeader(filter)
     RegisterStateDriver(header, "visibility", "[petbattle] hide; show")
 end
 
-function M.IsInit() return isInit end
+function M.IsInit()
+    return isInit
+end
 
 function M.Init()
     if not isInit and C.modules.auras.enabled then
@@ -401,11 +416,15 @@ function M.Init()
     end
 end
 
-function M:Update() self:ForEachHeader("Update") end
+function M:Update()
+    self:ForEachHeader("Update")
+end
 
 function M:ForEachHeader(method, ...)
     for _, header in next, headers do
-        if header[method] then header[method](header, ...) end
+        if header[method] then
+            header[method](header, ...)
+        end
     end
 end
 

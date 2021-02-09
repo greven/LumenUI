@@ -15,9 +15,16 @@ local LibKeyBound = LibStub("LibKeyBound-1.0")
 local isInit = false
 
 local BUTTONS = {
-    PetActionButton1, PetActionButton2, PetActionButton3, PetActionButton4,
-    PetActionButton5, PetActionButton6, PetActionButton7, PetActionButton8,
-    PetActionButton9, PetActionButton10
+    PetActionButton1,
+    PetActionButton2,
+    PetActionButton3,
+    PetActionButton4,
+    PetActionButton5,
+    PetActionButton6,
+    PetActionButton7,
+    PetActionButton8,
+    PetActionButton9,
+    PetActionButton10
 }
 
 local function bar_Update(self)
@@ -40,13 +47,11 @@ local function bar_UpdateButtonConfig(self)
     end
 
     for k, v in next, C.colors.button do
-        self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig
-            .colors[k][3] = E:GetRGB(v)
+        self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
     end
 
     self.buttonConfig.clickOnDown = self._config.click_on_down
-    self.buttonConfig.desaturation = E:CopyTable(self._config.desaturation,
-                                                 self.buttonConfig.desaturation)
+    self.buttonConfig.desaturation = E:CopyTable(self._config.desaturation, self.buttonConfig.desaturation)
     self.buttonConfig.outOfRangeColoring = self._config.range_indicator
     self.buttonConfig.showGrid = self._config.grid
 
@@ -56,7 +61,9 @@ local function bar_UpdateButtonConfig(self)
 end
 
 local function button_UpdateGrid(self, state)
-    if state ~= nil then self._parent._config.grid = state end
+    if state ~= nil then
+        self._parent._config.grid = state
+    end
 
     self:ShowGrid()
     self:HideGrid()
@@ -68,14 +75,19 @@ local function button_ShowGrid(self)
 end
 
 local function button_HideGrid(self)
-    if self.showgrid > 0 then self.showgrid = self.showgrid - 1 end
+    if self.showgrid > 0 then
+        self.showgrid = self.showgrid - 1
+    end
 
-    if not self.config.showGrid and self.showgrid == 0 and
-        not GetPetActionInfo(self:GetID()) then self:SetAlpha(0) end
+    if not self.config.showGrid and self.showgrid == 0 and not GetPetActionInfo(self:GetID()) then
+        self:SetAlpha(0)
+    end
 end
 
 local function button_UpdateHotKey(self, state)
-    if state ~= nil then self._parent._config.hotkey.enabled = state end
+    if state ~= nil then
+        self._parent._config.hotkey.enabled = state
+    end
 
     if self._parent._config.hotkey.enabled then
         self.HotKey:SetParent(self)
@@ -89,8 +101,7 @@ end
 local function button_UpdateHotKeyFont(self)
     local config = self._parent._config.hotkey
 
-    self.HotKey:SetFont(C.global.fonts.bars.font, config.size,
-                        config.outline and "THINOUTLINE" or nil)
+    self.HotKey:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
 
     self.HotKey:SetWordWrap(false)
 
@@ -125,8 +136,7 @@ end
 local function button_UpdateConfig(self, config)
     self.config = E:CopyTable(config, self.config)
 
-    if self.config.outOfRangeColoring == "button" and
-        self.config.outOfManaColoring == "button" then
+    if self.config.outOfRangeColoring == "button" and self.config.outOfManaColoring == "button" then
         self.HotKey:SetVertexColor(unpack(self.config.colors.normal))
     end
 
@@ -138,8 +148,7 @@ end
 
 local function button_Update(self)
     local id = self:GetID()
-    local name, texture, isToken, isActive, autoCastAllowed, autoCastEnabled,
-          spellID = GetPetActionInfo(id)
+    local name, texture, isToken, isActive, autoCastAllowed, autoCastEnabled, spellID = GetPetActionInfo(id)
 
     if not isToken then
         self.icon:SetTexture(texture)
@@ -151,7 +160,9 @@ local function button_Update(self)
 
     self.isToken = isToken
 
-    if spellID then self.tooltipSubtext = GetSpellSubtext(spellID) end
+    if spellID then
+        self.tooltipSubtext = GetSpellSubtext(spellID)
+    end
 
     if PetHasActionBar() and isActive then
         if IsPetAttackAction(id) then
@@ -193,12 +204,15 @@ local function button_Update(self)
     self:UpdateCooldown()
 end
 
-local function button_OnEnter(self) if LibKeyBound then LibKeyBound:Set(self) end end
+local function button_OnEnter(self)
+    if LibKeyBound then
+        LibKeyBound:Set(self)
+    end
+end
 
 function M.CreatePetActionBar()
     if not isInit then
-        local bar = CreateFrame("Frame", "LumPetBar", UIParent,
-                                "SecureHandlerStateTemplate")
+        local bar = CreateFrame("Frame", "LumPetBar", UIParent, "SecureHandlerStateTemplate")
         bar._id = "bar6"
         bar._buttons = {}
 
@@ -208,8 +222,7 @@ function M.CreatePetActionBar()
         bar.UpdateButtonConfig = bar_UpdateButtonConfig
 
         for i = 1, #BUTTONS do
-            local button = CreateFrame("CheckButton", "$parentButton" .. i, bar,
-                                       "PetActionButtonTemplate")
+            local button = CreateFrame("CheckButton", "$parentButton" .. i, bar, "PetActionButtonTemplate")
             button:SetID(i)
             button:SetScript("OnEvent", nil)
             button:SetScript("OnUpdate", nil)
@@ -243,23 +256,27 @@ function M.CreatePetActionBar()
             bar._buttons[i] = button
         end
 
-        bar:SetScript("OnEvent", function(self, event, arg1)
-            if event == "PET_BAR_UPDATE" or event ==
-                "PET_SPECIALIZATION_CHANGED" or event == "PET_UI_UPDATE" or
-                (event == "UNIT_PET" and arg1 == "player") or
-                ((event == "UNIT_FLAGS" or event == "UNIT_AURA") and arg1 ==
-                    "pet") or event == "PLAYER_CONTROL_LOST" or event ==
-                "PLAYER_CONTROL_GAINED" or event ==
-                "PLAYER_FARSIGHT_FOCUS_CHANGED" then
-                self:UpdateButtons("Update")
-            elseif event == "PET_BAR_UPDATE_COOLDOWN" then
-                self:UpdateButtons("UpdateCooldown")
-            elseif event == "PET_BAR_SHOWGRID" then
-                self:UpdateButtons("ShowGrid")
-            elseif event == "PET_BAR_HIDEGRID" then
-                self:UpdateButtons("HideGrid")
+        bar:SetScript(
+            "OnEvent",
+            function(self, event, arg1)
+                if
+                    event == "PET_BAR_UPDATE" or event == "PET_SPECIALIZATION_CHANGED" or event == "PET_UI_UPDATE" or
+                        (event == "UNIT_PET" and arg1 == "player") or
+                        ((event == "UNIT_FLAGS" or event == "UNIT_AURA") and arg1 == "pet") or
+                        event == "PLAYER_CONTROL_LOST" or
+                        event == "PLAYER_CONTROL_GAINED" or
+                        event == "PLAYER_FARSIGHT_FOCUS_CHANGED"
+                 then
+                    self:UpdateButtons("Update")
+                elseif event == "PET_BAR_UPDATE_COOLDOWN" then
+                    self:UpdateButtons("UpdateCooldown")
+                elseif event == "PET_BAR_SHOWGRID" then
+                    self:UpdateButtons("ShowGrid")
+                elseif event == "PET_BAR_HIDEGRID" then
+                    self:UpdateButtons("HideGrid")
+                end
             end
-        end)
+        )
 
         bar:RegisterEvent("PET_BAR_HIDEGRID")
         bar:RegisterEvent("PET_BAR_SHOWGRID")
@@ -282,77 +299,70 @@ function M.CreatePetActionBar()
         local flashTime = 0
         local rangeTimer = -1
         local updater = CreateFrame("Frame")
-        updater:SetScript("OnUpdate", function(_, elapsed)
-            flashTime = flashTime - elapsed
-            rangeTimer = rangeTimer - elapsed
+        updater:SetScript(
+            "OnUpdate",
+            function(_, elapsed)
+                flashTime = flashTime - elapsed
+                rangeTimer = rangeTimer - elapsed
 
-            if rangeTimer <= 0 or flashTime <= 0 then
-                if PetHasActionBar() then
-                    for _, button in next, bar._buttons do
-                        if button.flashing and flashTime <= 0 then
-                            if button.Flash:IsShown() then
-                                button.Flash:Hide()
-                            else
-                                button.Flash:Show()
-                            end
-                        end
-
-                        if rangeTimer <= 0 then
-                            local _, _, _, _, _, _, _, checksRange, inRange =
-                                GetPetActionInfo(button:GetID())
-                            local oldRange = button.outOfRange
-                            button.outOfRange =
-                                (checksRange and inRange == false or false)
-
-                            local oldCheck = button.checksRange
-                            button.checksRange = checksRange
-
-                            if oldCheck ~= button.checksRange or oldRange ~=
-                                button.outOfRange then
-                                if button.config.outOfRangeColoring == "button" then
-                                    button:UpdateUsable()
+                if rangeTimer <= 0 or flashTime <= 0 then
+                    if PetHasActionBar() then
+                        for _, button in next, bar._buttons do
+                            if button.flashing and flashTime <= 0 then
+                                if button.Flash:IsShown() then
+                                    button.Flash:Hide()
+                                else
+                                    button.Flash:Show()
                                 end
+                            end
 
-                                if button.config.outOfRangeColoring == "hotkey" then
-                                    if checksRange then
-                                        local hotkey = button.HotKey
+                            if rangeTimer <= 0 then
+                                local _, _, _, _, _, _, _, checksRange, inRange = GetPetActionInfo(button:GetID())
+                                local oldRange = button.outOfRange
+                                button.outOfRange = (checksRange and inRange == false or false)
 
-                                        if inRange == false then
-                                            if hotkey:GetText() ==
-                                                RANGE_INDICATOR then
-                                                hotkey:Show()
+                                local oldCheck = button.checksRange
+                                button.checksRange = checksRange
+
+                                if oldCheck ~= button.checksRange or oldRange ~= button.outOfRange then
+                                    if button.config.outOfRangeColoring == "button" then
+                                        button:UpdateUsable()
+                                    end
+
+                                    if button.config.outOfRangeColoring == "hotkey" then
+                                        if checksRange then
+                                            local hotkey = button.HotKey
+
+                                            if inRange == false then
+                                                if hotkey:GetText() == RANGE_INDICATOR then
+                                                    hotkey:Show()
+                                                end
+                                                hotkey:SetVertexColor(unpack(button.config.colors.range))
+                                            else
+                                                if hotkey:GetText() == RANGE_INDICATOR then
+                                                    hotkey:Hide()
+                                                end
+                                                hotkey:SetVertexColor(unpack(button.config.colors.normal))
                                             end
-                                            hotkey:SetVertexColor(
-                                                unpack(
-                                                    button.config.colors.range))
                                         else
-                                            if hotkey:GetText() ==
-                                                RANGE_INDICATOR then
-                                                hotkey:Hide()
-                                            end
-                                            hotkey:SetVertexColor(
-                                                unpack(
-                                                    button.config.colors.normal))
+                                            button.HotKey:SetVertexColor(unpack(button.config.colors.normal))
                                         end
-                                    else
-                                        button.HotKey:SetVertexColor(
-                                            unpack(button.config.colors.normal))
                                     end
                                 end
                             end
                         end
                     end
-                end
 
-                if flashTime <= 0 then
-                    flashTime = flashTime + ATTACK_BUTTON_FLASH_TIME
-                end
+                    if flashTime <= 0 then
+                        flashTime = flashTime + ATTACK_BUTTON_FLASH_TIME
+                    end
 
-                if rangeTimer <= 0 then
-                    rangeTimer = TOOLTIP_UPDATE_TIME
+                    if rangeTimer <= 0 then
+                        rangeTimer = TOOLTIP_UPDATE_TIME
+                    end
                 end
             end
-        end)
+        )
 
         isInit = true
     end

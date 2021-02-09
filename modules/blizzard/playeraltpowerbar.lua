@@ -10,7 +10,9 @@ local _G = getfenv(0)
 
 local isInit = false
 
-function M.HasAltPowerBar() return isInit end
+function M.HasAltPowerBar()
+    return isInit
+end
 
 function M.SetUpAltPowerBar()
     if not isInit and C.modules.blizzard.player_alt_power_bar.enabled then

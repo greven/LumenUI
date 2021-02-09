@@ -13,8 +13,16 @@ local LibKeyBound = LibStub("LibKeyBound-1.0")
 local isInit = false
 
 local BUTTONS = {
-    StanceButton1, StanceButton2, StanceButton3, StanceButton4, StanceButton5,
-    StanceButton6, StanceButton7, StanceButton8, StanceButton9, StanceButton10
+    StanceButton1,
+    StanceButton2,
+    StanceButton3,
+    StanceButton4,
+    StanceButton5,
+    StanceButton6,
+    StanceButton7,
+    StanceButton8,
+    StanceButton9,
+    StanceButton10
 }
 
 local function button_Update(self)
@@ -48,7 +56,9 @@ local function button_Update(self)
 end
 
 local function button_UpdateHotKey(self, state)
-    if state ~= nil then self._parent._config.hotkey.enabled = state end
+    if state ~= nil then
+        self._parent._config.hotkey.enabled = state
+    end
 
     if self._parent._config.hotkey.enabled then
         self.HotKey:SetParent(self)
@@ -62,8 +72,7 @@ end
 local function button_UpdateHotKeyFont(self)
     local config = self._parent._config.hotkey
 
-    self.HotKey:SetFont(C.global.fonts.bars.font, config.size,
-                        config.outline and "THINOUTLINE" or nil)
+    self.HotKey:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
     self.HotKey:SetWordWrap(false)
 
     if config.shadow then
@@ -77,12 +86,15 @@ local function button_UpdateCooldown(self)
     CooldownFrame_Set(self.cooldown, GetShapeshiftFormCooldown(self:GetID()))
 end
 
-local function button_OnEnter(self) if LibKeyBound then LibKeyBound:Set(self) end end
+local function button_OnEnter(self)
+    if LibKeyBound then
+        LibKeyBound:Set(self)
+    end
+end
 
 function M.CreateStanceBar()
     if not isInit then
-        local bar = CreateFrame("Frame", "LumStanceBar", UIParent,
-                                "SecureHandlerStateTemplate")
+        local bar = CreateFrame("Frame", "LumStanceBar", UIParent, "SecureHandlerStateTemplate")
         bar._id = "bar7"
         bar._buttons = {}
 
@@ -112,8 +124,7 @@ function M.CreateStanceBar()
         end
 
         for i = 1, #BUTTONS do
-            local button = CreateFrame("CheckButton", "$parentButton" .. i, bar,
-                                       "StanceButtonTemplate")
+            local button = CreateFrame("CheckButton", "$parentButton" .. i, bar, "StanceButtonTemplate")
             button:SetID(i)
             button:SetScript("OnEvent", nil)
             button:SetScript("OnUpdate", nil)
@@ -139,23 +150,26 @@ function M.CreateStanceBar()
             bar._buttons[i] = button
         end
 
-        bar:SetScript("OnEvent", function(self, event)
-            if event == "UPDATE_SHAPESHIFT_COOLDOWN" then
-                self:UpdateButtons("Update")
-            elseif event == "PLAYER_REGEN_ENABLED" then
-                if self.needsUpdate and not InCombatLockdown() then
-                    self.needsUpdate = nil
-                    self:UpdateForms()
-                end
-            else
-                if InCombatLockdown() then
-                    self.needsUpdate = true
+        bar:SetScript(
+            "OnEvent",
+            function(self, event)
+                if event == "UPDATE_SHAPESHIFT_COOLDOWN" then
                     self:UpdateButtons("Update")
+                elseif event == "PLAYER_REGEN_ENABLED" then
+                    if self.needsUpdate and not InCombatLockdown() then
+                        self.needsUpdate = nil
+                        self:UpdateForms()
+                    end
                 else
-                    self:UpdateForms()
+                    if InCombatLockdown() then
+                        self.needsUpdate = true
+                        self:UpdateButtons("Update")
+                    else
+                        self:UpdateForms()
+                    end
                 end
             end
-        end)
+        )
 
         bar:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
         bar:RegisterEvent("PLAYER_ENTERING_WORLD")

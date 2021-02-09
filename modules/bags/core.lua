@@ -24,7 +24,9 @@ local function frame_OnEvent(self, event)
     end
 end
 
-function M.IsInit() return isInit end
+function M.IsInit()
+    return isInit
+end
 
 function M:Init()
     if not isInit and C.modules.bags.enabled then

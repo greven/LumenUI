@@ -15,48 +15,52 @@ local widgets = {}
 local updater = CreateFrame("Frame", nil, _G.UIParent)
 local config
 
-updater:SetScript("OnUpdate", function(_, elapsed)
-    for object, widget in next, activeWidgets do
-        widget.fadeTimer = widget.fadeTimer + elapsed
-        config = widget.config
+updater:SetScript(
+    "OnUpdate",
+    function(_, elapsed)
+        for object, widget in next, activeWidgets do
+            widget.fadeTimer = widget.fadeTimer + elapsed
+            config = widget.config
 
-        if widget.mode == "IN" then
-            if widget.fadeTimer >= config.in_delay then
-                object:SetAlpha(config.min_alpha +
-                                    ((config.max_alpha - config.min_alpha) *
-                                        ((widget.fadeTimer - config.in_delay) /
-                                            config.in_duration)))
+            if widget.mode == "IN" then
+                if widget.fadeTimer >= config.in_delay then
+                    object:SetAlpha(
+                        config.min_alpha +
+                            ((config.max_alpha - config.min_alpha) *
+                                ((widget.fadeTimer - config.in_delay) / config.in_duration))
+                    )
 
-                if widget.fadeTimer >= config.in_delay + config.in_duration then
-                    activeWidgets[object] = nil
-                    object:SetAlpha(config.max_alpha)
-                    widget.mode = nil
-                    widget.isFaded = nil
+                    if widget.fadeTimer >= config.in_delay + config.in_duration then
+                        activeWidgets[object] = nil
+                        object:SetAlpha(config.max_alpha)
+                        widget.mode = nil
+                        widget.isFaded = nil
+                    end
                 end
-            end
-        elseif widget.mode == "OUT" then
-            if widget.fadeTimer >= config.out_delay then
-                object:SetAlpha(config.max_alpha -
-                                    ((config.max_alpha - config.min_alpha) *
-                                        ((widget.fadeTimer - config.out_delay) /
-                                            config.out_duration)))
+            elseif widget.mode == "OUT" then
+                if widget.fadeTimer >= config.out_delay then
+                    object:SetAlpha(
+                        config.max_alpha -
+                            ((config.max_alpha - config.min_alpha) *
+                                ((widget.fadeTimer - config.out_delay) / config.out_duration))
+                    )
 
-                if widget.fadeTimer >= config.out_delay + config.out_duration then
-                    activeWidgets[object] = nil
-                    object:SetAlpha(config.min_alpha)
-                    widget.mode = nil
-                    widget.isFaded = true
+                    if widget.fadeTimer >= config.out_delay + config.out_duration then
+                        activeWidgets[object] = nil
+                        object:SetAlpha(config.min_alpha)
+                        widget.mode = nil
+                        widget.isFaded = true
+                    end
                 end
             end
         end
     end
-end)
+)
 
 local function isMouseOverBar(frame)
     return frame:IsMouseOver(4, -4, -4, 4) or
-               (SpellFlyout:IsShown() and SpellFlyout:GetParent() and
-                   SpellFlyout:GetParent():GetParent() == frame and
-                   SpellFlyout:IsMouseOver(4, -4, -4, 4))
+        (SpellFlyout:IsShown() and SpellFlyout:GetParent() and SpellFlyout:GetParent():GetParent() == frame and
+            SpellFlyout:IsMouseOver(4, -4, -4, 4))
 end
 
 local function fader_OnUpdate(self, elapsed)
@@ -144,7 +148,9 @@ function E:FadeIn(object, inDelay, inDuration, minAlpha, maxAlpha)
     -- reset it via UpdateFading later
     local tbl = widgets[object] and widgets or miscWidgets
 
-    if not tbl[object] then tbl[object] = {config = {}} end
+    if not tbl[object] then
+        tbl[object] = {config = {}}
+    end
 
     tbl[object].config.in_delay = inDelay or 0
     tbl[object].config.in_duration = inDuration or 0.15
@@ -163,7 +169,9 @@ function E:FadeOut(object, outDelay, outDuration, minAlpha, maxAlpha)
     -- reset it via UpdateFading later
     local tbl = widgets[object] and widgets or miscWidgets
 
-    if not tbl[object] then tbl[object] = {config = {}} end
+    if not tbl[object] then
+        tbl[object] = {config = {}}
+    end
 
     tbl[object].config.in_delay = 0
     tbl[object].config.in_duration = 0.15

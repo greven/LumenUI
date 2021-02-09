@@ -28,7 +28,9 @@ local ID = "|cffffd100" .. _G.ID .. ":|r %d"
 local TOTAL = "|cffffd100" .. _G.TOTAL .. ":|r %d"
 
 local function addSpellInfo(tooltip, id, caster)
-    if not (id and C.modules.tooltips.id) then return end
+    if not (id and C.modules.tooltips.id) then
+        return
+    end
 
     local name = tooltip:GetName()
     local textLeft = ID:format(id)
@@ -36,14 +38,15 @@ local function addSpellInfo(tooltip, id, caster)
     for i = 1, tooltip:NumLines() do
         local text = _G[name .. "TextLeft" .. i]:GetText()
 
-        if text and text:match(textLeft) then return end
+        if text and text:match(textLeft) then
+            return
+        end
     end
 
     tooltip:AddLine(" ")
 
     if caster and type(caster) == "string" then
-        tooltip:AddDoubleLine(textLeft, UnitName(caster), 1, 1, 1,
-                              E:GetRGB(E:GetUnitColor(caster, true, true)))
+        tooltip:AddDoubleLine(textLeft, UnitName(caster), 1, 1, 1, E:GetRGB(E:GetUnitColor(caster, true, true)))
     else
         tooltip:AddLine(textLeft, 1, 1, 1)
     end
@@ -52,7 +55,9 @@ local function addSpellInfo(tooltip, id, caster)
 end
 
 local function addGenericInfo(tooltip, id)
-    if not (id and C.modules.tooltips.id) then return end
+    if not (id and C.modules.tooltips.id) then
+        return
+    end
 
     local name = tooltip:GetName()
     local textLeft = ID:format(id)
@@ -60,7 +65,9 @@ local function addGenericInfo(tooltip, id)
     for i = 2, tooltip:NumLines() do
         local text = _G[name .. "TextLeft" .. i]:GetText()
 
-        if text and text:match(textLeft) then return end
+        if text and text:match(textLeft) then
+            return
+        end
     end
 
     tooltip:AddLine(" ")
@@ -69,7 +76,9 @@ local function addGenericInfo(tooltip, id)
 end
 
 local function addItemInfo(tooltip, id, showQuantity)
-    if not id then return end
+    if not id then
+        return
+    end
 
     local name = tooltip:GetName()
     local textLeft, textRight
@@ -80,7 +89,9 @@ local function addItemInfo(tooltip, id, showQuantity)
         for i = 2, tooltip:NumLines() do
             local text = _G[name .. "TextLeft" .. i]:GetText()
 
-            if text and text:match(textLeft) then return end
+            if text and text:match(textLeft) then
+                return
+            end
         end
     end
 
@@ -90,24 +101,29 @@ local function addItemInfo(tooltip, id, showQuantity)
         for i = 2, tooltip:NumLines() do
             local text = _G[name .. "TextRight" .. i]:GetText()
 
-            if text and text:match(textRight) then return end
+            if text and text:match(textRight) then
+                return
+            end
         end
     end
 
     if textLeft or textRight then
         tooltip:AddLine(" ")
-        tooltip:AddDoubleLine(textLeft or " ", textRight or " ", 1, 1, 1, 1, 1,
-                              1)
+        tooltip:AddDoubleLine(textLeft or " ", textRight or " ", 1, 1, 1, 1, 1, 1)
         tooltip:Show()
     end
 end
 
 local function validateLink(link)
-    if not link then return end
+    if not link then
+        return
+    end
 
     link = link:match("|H(.+)|h.+|h") or link
 
-    if link:match("^%w+:(%d+)") then return link end
+    if link:match("^%w+:(%d+)") then
+        return link
+    end
 
     return
 end
@@ -115,7 +131,9 @@ end
 local function handleLink(tooltip, link, showExtraInfo)
     link = validateLink(link)
 
-    if not link then return end
+    if not link then
+        return
+    end
 
     local linkType, id = link:match("^(%w+):(%d+)")
 
@@ -127,7 +145,9 @@ local function handleLink(tooltip, link, showExtraInfo)
 end
 
 local function tooltip_SetUnitAura(self, unit, index, filter)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local config = C.modules.tooltips
     local isShiftKeyDown = IsShiftKeyDown()
@@ -141,7 +161,9 @@ local function tooltip_SetUnitAura(self, unit, index, filter)
 end
 
 local function tooltip_SetSpell(self)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local config = C.modules.tooltips
     local isShiftKeyDown = IsShiftKeyDown()
@@ -155,7 +177,9 @@ local function tooltip_SetSpell(self)
 end
 
 local function tooltip_SetArtifactPowerByID(self, powerID)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local info = C_ArtifactUI.GetPowerInfo(powerID)
 
@@ -163,7 +187,9 @@ local function tooltip_SetArtifactPowerByID(self, powerID)
 end
 
 local function tooltip_SetLoot(self, index)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local link = GetLootSlotLink(index)
 
@@ -171,7 +197,9 @@ local function tooltip_SetLoot(self, index)
 end
 
 local function tooltip_SetLootRollItem(self, rollID)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local link = GetLootRollItemLink(rollID)
 
@@ -179,7 +207,9 @@ local function tooltip_SetLootRollItem(self, rollID)
 end
 
 local function tooltip_SetMerchantItem(self, index)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local link = GetMerchantItemLink(index)
 
@@ -187,7 +217,9 @@ local function tooltip_SetMerchantItem(self, index)
 end
 
 local function tooltip_SetRecipeReagentItem(self, recipeID, reagentIndex)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local link = C_TradeSkillUI.GetRecipeReagentItemLink(recipeID, reagentIndex)
 
@@ -195,7 +227,9 @@ local function tooltip_SetRecipeReagentItem(self, recipeID, reagentIndex)
 end
 
 local function tooltip_SetBackpackToken(self, index)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local info = C_CurrencyInfo.GetBackpackCurrencyInfo(index)
 
@@ -203,7 +237,9 @@ local function tooltip_SetBackpackToken(self, index)
 end
 
 local function tooltip_SetCurrencyToken(self, index)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local link = C_CurrencyInfo.GetCurrencyListLink(index)
 
@@ -211,21 +247,29 @@ local function tooltip_SetCurrencyToken(self, index)
 end
 
 local function tooltip_SetQuest(self)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
-    if not (self.questID and GameTooltip:IsOwned(self)) then return end
+    if not (self.questID and GameTooltip:IsOwned(self)) then
+        return
+    end
 
     addGenericInfo(GameTooltip, self.questID)
 end
 
 local function tooltip_SetHyperlink(self, link)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     handleLink(self, link, true)
 end
 
 local function tooltip_SetSpellOrItem(self)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local _, linkOrId = self:GetSpell()
 
@@ -239,16 +283,19 @@ local function tooltip_SetSpellOrItem(self)
 end
 
 local function tooltip_SetLFGDungeonReward(self, dungeonID, rewardID)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local link = GetLFGDungeonRewardLink(dungeonID, rewardID)
 
     handleLink(self, link)
 end
 
-local function tooltip_SetLFGDungeonShortageReward(self, dungeonID, rewardArg,
-                                                   rewardID)
-    if self:IsForbidden() then return end
+local function tooltip_SetLFGDungeonShortageReward(self, dungeonID, rewardArg, rewardID)
+    if self:IsForbidden() then
+        return
+    end
 
     local link = GetLFGDungeonShortageRewardLink(dungeonID, rewardArg, rewardID)
 
@@ -256,7 +303,9 @@ local function tooltip_SetLFGDungeonShortageReward(self, dungeonID, rewardArg,
 end
 
 local function tooltip_SetItem(self)
-    if self:IsForbidden() then return end
+    if self:IsForbidden() then
+        return
+    end
 
     local _, link = self:GetItem()
 
@@ -270,16 +319,14 @@ function M:SetupTooltipInfo()
         hooksecurefunc(GameTooltip, "SetUnitAura", tooltip_SetUnitAura)
         hooksecurefunc(GameTooltip, "SetUnitBuff", tooltip_SetUnitAura)
         hooksecurefunc(GameTooltip, "SetUnitDebuff", tooltip_SetUnitAura)
-        hooksecurefunc(GameTooltip, "SetArtifactPowerByID",
-                       tooltip_SetArtifactPowerByID)
+        hooksecurefunc(GameTooltip, "SetArtifactPowerByID", tooltip_SetArtifactPowerByID)
 
         -- Items
         GameTooltip:HookScript("OnTooltipSetItem", tooltip_SetItem)
         hooksecurefunc(GameTooltip, "SetLootItem", tooltip_SetLoot)
         hooksecurefunc(GameTooltip, "SetLootRollItem", tooltip_SetLootRollItem)
         hooksecurefunc(GameTooltip, "SetMerchantItem", tooltip_SetMerchantItem)
-        hooksecurefunc(GameTooltip, "SetRecipeReagentItem",
-                       tooltip_SetRecipeReagentItem)
+        hooksecurefunc(GameTooltip, "SetRecipeReagentItem", tooltip_SetRecipeReagentItem)
         hooksecurefunc(GameTooltip, "SetToyByItemID", addItemInfo)
 
         -- Currencies
@@ -296,11 +343,8 @@ function M:SetupTooltipInfo()
         hooksecurefunc(GameTooltip, "SetHyperlink", tooltip_SetHyperlink)
         hooksecurefunc(ItemRefTooltip, "SetHyperlink", tooltip_SetHyperlink)
         hooksecurefunc(GameTooltip, "SetAction", tooltip_SetSpellOrItem)
-        hooksecurefunc(GameTooltip, "SetRecipeResultItem",
-                       tooltip_SetSpellOrItem)
-        hooksecurefunc(GameTooltip, "SetLFGDungeonReward",
-                       tooltip_SetLFGDungeonReward)
-        hooksecurefunc(GameTooltip, "SetLFGDungeonShortageReward",
-                       tooltip_SetLFGDungeonShortageReward)
+        hooksecurefunc(GameTooltip, "SetRecipeResultItem", tooltip_SetSpellOrItem)
+        hooksecurefunc(GameTooltip, "SetLFGDungeonReward", tooltip_SetLFGDungeonReward)
+        hooksecurefunc(GameTooltip, "SetLFGDungeonShortageReward", tooltip_SetLFGDungeonShortageReward)
     end
 end

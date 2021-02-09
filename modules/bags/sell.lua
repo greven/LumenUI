@@ -27,34 +27,33 @@ local config = C.modules.bags
 
 local function frame_OnUpdate(self, elapsed)
     M.SellFrame.Info.progressTimer = M.SellFrame.Info.progressTimer - elapsed
-    if M.SellFrame.Info.progressTimer > 0 then return end
+    if M.SellFrame.Info.progressTimer > 0 then
+        return
+    end
     M.SellFrame.Info.progressTimer = M.SellFrame.Info.sellInterval
 
     local goldGained, lastItem = M:GetVendorProgress()
     if goldGained then
-
         M.SellFrame.Info.goldGained = M.SellFrame.Info.goldGained + goldGained
         M.SellFrame.Info.itemsSold = M.SellFrame.Info.itemsSold + 1
         M.SellFrame.statusbar:SetValue(M.SellFrame.Info.itemsSold)
 
-        local timeLeft = (M.SellFrame.Info.progressMax -
-                             M.SellFrame.Info.itemsSold) *
-                             M.SellFrame.Info.sellInterval
-        M.SellFrame.statusbar.Text:SetText(
-            M.SellFrame.Info.itemsSold .. ' / ' .. M.SellFrame.Info.progressMax)
+        local timeLeft = (M.SellFrame.Info.progressMax - M.SellFrame.Info.itemsSold) * M.SellFrame.Info.sellInterval
+        M.SellFrame.statusbar.Text:SetText(M.SellFrame.Info.itemsSold .. " / " .. M.SellFrame.Info.progressMax)
     elseif lastItem then
         M.SellFrame:Hide()
 
         if M.SellFrame.Info.goldGained > 0 then
-            E:Print(s_format(L["SOLD_GRAY_ITEMS_FOR"],
-                             GetMoneyString(M.SellFrame.Info.goldGained, true)))
+            E:Print(s_format(L["SOLD_GRAY_ITEMS_FOR"], GetMoneyString(M.SellFrame.Info.goldGained, true)))
         end
     end
 end
 
 function M:GetVendorProgress()
     local item = M.SellFrame.Info.items[1]
-    if not item then return nil, true end -- Nothing more to sell
+    if not item then
+        return nil, true
+    end -- Nothing more to sell
 
     local bag, slot, itemPrice, link = unpack(item)
     local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
@@ -90,7 +89,7 @@ function M:CreateSellFrame()
         items = {}
     }
 
-    frame:SetScript('OnUpdate', frame_OnUpdate)
+    frame:SetScript("OnUpdate", frame_OnUpdate)
     frame:Hide()
 
     self.SellFrame = frame
@@ -103,14 +102,11 @@ function M:GetGraysValue()
         for slot = 1, GetContainerNumSlots(bag) do
             local itemID = GetContainerItemID(bag, slot)
             if itemID then
-                local _, _, rarity, _, _, itype, _, _, _, _, itemPrice =
-                    GetItemInfo(itemID)
+                local _, _, rarity, _, _, itype, _, _, _, _, itemPrice = GetItemInfo(itemID)
                 if itemPrice then
-                    local stackCount =
-                        select(2, GetContainerItemInfo(bag, slot)) or 1
+                    local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
                     local stackPrice = itemPrice * stackCount
-                    if rarity and rarity == 0 and (itype and itype ~= 'Quest') and
-                        (stackPrice > 0) then
+                    if rarity and rarity == 0 and (itype and itype ~= "Quest") and (stackPrice > 0) then
                         value = value + stackPrice
                     end
                 end
@@ -122,29 +118,31 @@ function M:GetGraysValue()
 end
 
 function M:VendorGrays()
-    if M.SellFrame:IsShown() then return end
+    if M.SellFrame:IsShown() then
+        return
+    end
 
     for bag = 0, 4, 1 do
         for slot = 1, GetContainerNumSlots(bag), 1 do
             local itemID = GetContainerItemID(bag, slot)
             if itemID then
-                local _, link, rarity, _, _, itype, _, _, _, _, itemPrice =
-                    GetItemInfo(itemID)
+                local _, link, rarity, _, _, itype, _, _, _, _, itemPrice = GetItemInfo(itemID)
 
-                if rarity and rarity == 0 and (itype and itype ~= 'Quest') and
-                    (itemPrice and itemPrice > 0) then
-                    t_insert(M.SellFrame.Info.items,
-                             {bag, slot, itemPrice, link})
+                if rarity and rarity == 0 and (itype and itype ~= "Quest") and (itemPrice and itemPrice > 0) then
+                    t_insert(M.SellFrame.Info.items, {bag, slot, itemPrice, link})
                 end
-
             end
         end
     end
 
     local itemCount = t_maxn(M.SellFrame.Info.items)
 
-    if not M.SellFrame.Info.items then return end
-    if itemCount < 1 then return end
+    if not M.SellFrame.Info.items then
+        return
+    end
+    if itemCount < 1 then
+        return
+    end
 
     M.SellFrame.Info.progressTimer = 0
     M.SellFrame.Info.sellInterval = 0.2
@@ -154,7 +152,7 @@ function M:VendorGrays()
 
     M.SellFrame.statusbar:SetMinMaxValues(0, itemCount)
     M.SellFrame.statusbar:SetValue(0)
-    M.SellFrame.statusbar.Text:SetText('0 / ' .. itemCount)
+    M.SellFrame.statusbar.Text:SetText("0 / " .. itemCount)
 
     M.SellFrame:Show()
 end

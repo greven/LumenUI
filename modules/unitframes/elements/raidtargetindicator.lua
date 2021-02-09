@@ -9,8 +9,7 @@ local UF = E:GetModule("UnitFrames")
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].raid_target,
-                               self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].raid_target, self._config)
 end
 
 local function element_UpdateSize(self)
@@ -32,11 +31,9 @@ local function frame_UpdateRaidTargetIndicator(self)
     element:UpdateSize()
     element:UpdatePoints()
 
-    if element._config.enabled and
-        not self:IsElementEnabled("RaidTargetIndicator") then
+    if element._config.enabled and not self:IsElementEnabled("RaidTargetIndicator") then
         self:EnableElement("RaidTargetIndicator")
-    elseif not element._config.enabled and
-        self:IsElementEnabled("RaidTargetIndicator") then
+    elseif not element._config.enabled and self:IsElementEnabled("RaidTargetIndicator") then
         self:DisableElement("RaidTargetIndicator")
     end
 

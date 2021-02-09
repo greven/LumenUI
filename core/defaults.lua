@@ -12,7 +12,9 @@ local targetHeight = 28
 local targetPlateWidth = 153
 local targetPlateHeight = playerPlateHeight
 
-local function rgb(r, g, b) return E:SetRGB({}, r, g, b) end
+local function rgb(r, g, b)
+    return E:SetRGB({}, r, g, b)
+end
 
 local function auraWidth(frameWidth, count, spacing)
     return (frameWidth - (spacing * (count - 1))) / count
@@ -43,6 +45,7 @@ D.media = {
         border = Media .. "textures\\border",
         backdrop_border = Media .. "textures\\backdrop-border",
         button_backdrop = Media .. "textures\\button-backdrop",
+        button_normal = Media .. "textures\\button-normal",
         button_highlight = Media .. "textures\\button-highlight",
         button_checked = Media .. "textures\\button-checked",
         arrow = Media .. "textures\\arrow",
@@ -78,7 +81,12 @@ D.global = {
         color = D.colors.dark_gray
     },
     buttons = {
-        border = {texture = D.media.textures.border, size = 16, offset = -4}
+        border = {texture = D.media.textures.border, size = 16, offset = -4},
+        textures = {
+            normal = D.media.textures.button_normal,
+            highlight = D.media.textures.button_highlight,
+            checked = D.media.textures.button_checked
+        }
     },
     shadows = {enabled = true, alpha = 0.3},
     castbar = {
@@ -201,7 +209,8 @@ D.modules = {
             m_ss_threshold = 120 -- [91; 3599]
         },
         desaturation = {unusable = true, mana = true, range = true},
-        bar1 = { -- MainMenuBar
+        bar1 = {
+            -- MainMenuBar
             flyout_dir = "UP",
             grid = false,
             num = 12,
@@ -235,7 +244,8 @@ D.modules = {
                 y = -8
             }
         },
-        bar2 = { -- MultiBarBottomLeft
+        bar2 = {
+            -- MultiBarBottomLeft
             flyout_dir = "UP",
             grid = true,
             num = 12,
@@ -269,7 +279,8 @@ D.modules = {
                 y = 23
             }
         },
-        bar3 = { -- MultiBarBottomRight
+        bar3 = {
+            -- MultiBarBottomRight
             flyout_dir = "UP",
             grid = true,
             num = 12,
@@ -303,7 +314,8 @@ D.modules = {
                 y = 24 + 36
             }
         },
-        bar4 = { -- MultiBarLeft
+        bar4 = {
+            -- MultiBarLeft
             flyout_dir = "LEFT",
             grid = false,
             num = 12,
@@ -337,7 +349,8 @@ D.modules = {
                 y = 0
             }
         },
-        bar5 = { -- MultiBarRight
+        bar5 = {
+            -- MultiBarRight
             flyout_dir = "LEFT",
             grid = false,
             num = 12,
@@ -371,7 +384,8 @@ D.modules = {
                 y = 0
             }
         },
-        bar6 = { -- PetAction
+        bar6 = {
+            -- PetAction
             flyout_dir = "UP",
             grid = false,
             num = 10,
@@ -403,7 +417,8 @@ D.modules = {
                 y = 142
             }
         },
-        bar7 = { -- Stance
+        bar7 = {
+            -- Stance
             flyout_dir = "UP",
             num = 10,
             per_row = 10,
@@ -461,7 +476,8 @@ D.modules = {
                 y = 20
             }
         },
-        extra = { -- ExtraAction
+        extra = {
+            -- ExtraAction
             size = 30,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
@@ -486,7 +502,8 @@ D.modules = {
                 y = 38
             }
         },
-        zone = { -- ZoneAbility
+        zone = {
+            -- ZoneAbility
             size = 40,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             visible = true,
@@ -510,7 +527,8 @@ D.modules = {
                 y = 250
             }
         },
-        vehicle = { -- LeaveVehicle
+        vehicle = {
+            -- LeaveVehicle
             size = 32,
             visible = true,
             blizz_vehicle = true,
@@ -720,7 +738,7 @@ D.modules = {
     tooltips = {
         enabled = true,
         scale = 1,
-        alpha = 0.88,
+        alpha = 0.9,
         border = {size = 10, color_quality = true, color_class = false},
         health = {
             height = 5,

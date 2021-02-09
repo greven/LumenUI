@@ -14,7 +14,9 @@ local UF = E:GetModule("UnitFrames")
 
 local isInit = false
 
-function UF:HasTargetFrame() return isInit end
+function UF:HasTargetFrame()
+    return isInit
+end
 
 -- Target Frame
 do
@@ -24,8 +26,7 @@ do
         if self._config.enabled then
             if self._config.visibility then
                 self:Disable()
-                RegisterAttributeDriver(self, "state-visibility",
-                                        self._config.visibility)
+                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
             elseif not self:IsEnabled() then
                 self:Enable()
             end
@@ -43,7 +44,9 @@ do
             self:UpdateRaidTargetIndicator()
             self:UpdateThreatIndicator()
         else
-            if self:IsEnabled() then self:Disable() end
+            if self:IsEnabled() then
+                self:Disable()
+            end
         end
     end
 
@@ -81,8 +84,7 @@ do
         info:SetFont(C.media.fonts.condensed, 15, "OUTLINE")
         info:SetTextColor(E:GetRGB(C.colors.light_gray))
         info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
-        frame:Tag(info,
-                  "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
+        frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
 
         frame.Update = frame_Update
 
@@ -98,8 +100,7 @@ do
         if self._config.enabled then
             if self._config.visibility then
                 self:Disable()
-                RegisterAttributeDriver(self, "state-visibility",
-                                        self._config.visibility)
+                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
             elseif not self:IsEnabled() then
                 self:Enable()
             end
@@ -112,7 +113,9 @@ do
             self:UpdateAuras()
             self:UpdateRaidTargetIndicator()
         else
-            if self:IsEnabled() then self:Disable() end
+            if self:IsEnabled() then
+                self:Disable()
+            end
         end
     end
 

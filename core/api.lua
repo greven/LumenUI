@@ -41,8 +41,7 @@ local function SetInside(frame, anchor, xOffset, yOffset, anchor2)
     DisablePixelSnap(frame)
     frame:ClearAllPoints()
     frame:SetPoint("TOPLEFT", anchor, "TOPLEFT", xOffset, -yOffset)
-    frame:SetPoint("BOTTOMRIGHT", anchor2 or anchor, "BOTTOMRIGHT", -xOffset,
-                   yOffset)
+    frame:SetPoint("BOTTOMRIGHT", anchor2 or anchor, "BOTTOMRIGHT", -xOffset, yOffset)
 end
 
 local function SetOutside(frame, anchor, xOffset, yOffset, anchor2)
@@ -53,14 +52,17 @@ local function SetOutside(frame, anchor, xOffset, yOffset, anchor2)
     DisablePixelSnap(frame)
     frame:ClearAllPoints()
     frame:SetPoint("TOPLEFT", anchor, "TOPLEFT", -xOffset, yOffset)
-    frame:SetPoint("BOTTOMRIGHT", anchor2 or anchor, "BOTTOMRIGHT", xOffset,
-                   -yOffset)
+    frame:SetPoint("BOTTOMRIGHT", anchor2 or anchor, "BOTTOMRIGHT", xOffset, -yOffset)
 end
 
 local function addapi(object)
     local mt = getmetatable(object).__index
-    if not object.SetInside then mt.SetInside = SetInside end
-    if not object.SetOutside then mt.SetOutside = SetOutside end
+    if not object.SetInside then
+        mt.SetInside = SetInside
+    end
+    if not object.SetOutside then
+        mt.SetOutside = SetOutside
+    end
     if not object.DisabledPixelSnap then
         if mt.SetTexture then
             hooksecurefunc(mt, "SetTexture", DisablePixelSnap)

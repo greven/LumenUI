@@ -9,7 +9,9 @@ local UF = E:GetModule("UnitFrames")
 
 local isInit = false
 
-function UF:HasPetFrame() return isInit end
+function UF:HasPetFrame()
+    return isInit
+end
 
 local function frame_Update(self)
     self:UpdateConfig()
@@ -17,8 +19,7 @@ local function frame_Update(self)
     if self._config.enabled then
         if self._config.visibility then
             self:Disable()
-            RegisterAttributeDriver(self, "state-visibility",
-                                    self._config.visibility)
+            RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
         elseif not self:IsEnabled() then
             self:Enable()
         end
@@ -31,7 +32,9 @@ local function frame_Update(self)
         self:UpdateCastbar()
         self:UpdateAuras()
     else
-        if self:IsEnabled() then self:Disable() end
+        if self:IsEnabled() then
+            self:Disable()
+        end
     end
 end
 

@@ -25,62 +25,64 @@ local defaults = {
 local updateTime = 0
 local time1, time2, format, color
 E.Cooldowns.Updater = CreateFrame("Frame")
-E.Cooldowns.Updater:SetScript("OnUpdate", function(_, elapsed)
-    updateTime = updateTime + elapsed
-    if updateTime >= 0.1 then
-        for cooldown, expiration in next, activeCooldowns do
-            if cooldown:IsVisible() and cooldown.Timer:IsVisible() then
-                local remain = expiration - GetTime()
-                if remain <= 0 then
-                    cooldown.Timer:SetText("")
-                    activeCooldowns[cooldown] = nil
-                    return
-                end
-
-                color = C.colors.white
-
-                if remain >= 86400 then
-                    time1, time2, format = E:SecondsToTime(remain, "abbr")
-                    color = C.colors.cooldown.day
-                elseif remain >= 3600 then
-                    time1, time2, format = E:SecondsToTime(remain, "abbr")
-                    color = C.colors.cooldown.hour
-                elseif remain >= 60 then
-                    if cooldown.config.m_ss_threshold == 0 or remain >
-                        cooldown.config.m_ss_threshold then
-                        time1, time2, format = E:SecondsToTime(remain, "abbr")
-                    else
-                        time1, time2, format = E:SecondsToTime(remain, "x:xx")
+E.Cooldowns.Updater:SetScript(
+    "OnUpdate",
+    function(_, elapsed)
+        updateTime = updateTime + elapsed
+        if updateTime >= 0.1 then
+            for cooldown, expiration in next, activeCooldowns do
+                if cooldown:IsVisible() and cooldown.Timer:IsVisible() then
+                    local remain = expiration - GetTime()
+                    if remain <= 0 then
+                        cooldown.Timer:SetText("")
+                        activeCooldowns[cooldown] = nil
+                        return
                     end
 
-                    color = C.colors.cooldown.minute
-                elseif remain >= 1 then
-                    if remain > cooldown.config.exp_threshold then
+                    color = C.colors.white
+
+                    if remain >= 86400 then
                         time1, time2, format = E:SecondsToTime(remain, "abbr")
-                    else
-                        time1, time2, format = E:SecondsToTime(remain, "frac")
+                        color = C.colors.cooldown.day
+                    elseif remain >= 3600 then
+                        time1, time2, format = E:SecondsToTime(remain, "abbr")
+                        color = C.colors.cooldown.hour
+                    elseif remain >= 60 then
+                        if cooldown.config.m_ss_threshold == 0 or remain > cooldown.config.m_ss_threshold then
+                            time1, time2, format = E:SecondsToTime(remain, "abbr")
+                        else
+                            time1, time2, format = E:SecondsToTime(remain, "x:xx")
+                        end
+
+                        color = C.colors.cooldown.minute
+                    elseif remain >= 1 then
+                        if remain > cooldown.config.exp_threshold then
+                            time1, time2, format = E:SecondsToTime(remain, "abbr")
+                        else
+                            time1, time2, format = E:SecondsToTime(remain, "frac")
+                        end
+
+                        color = C.colors.cooldown.second
+                    elseif remain >= 0.001 then
+                        time1, time2, format = E:SecondsToTime(remain)
+                        color = C.colors.cooldown.second
                     end
 
-                    color = C.colors.cooldown.second
-                elseif remain >= 0.001 then
-                    time1, time2, format = E:SecondsToTime(remain)
-                    color = C.colors.cooldown.second
-                end
+                    if remain <= cooldown.config.exp_threshold then
+                        color = C.colors.cooldown.expiration
+                    end
 
-                if remain <= cooldown.config.exp_threshold then
-                    color = C.colors.cooldown.expiration
-                end
-
-                if time1 then
-                    cooldown.Timer:SetFormattedText(format, time1, time2)
-                    cooldown.Timer:SetVertexColor(E:GetRGB(color))
+                    if time1 then
+                        cooldown.Timer:SetFormattedText(format, time1, time2)
+                        cooldown.Timer:SetVertexColor(E:GetRGB(color))
+                    end
                 end
             end
-        end
 
-        updateTime = 0
+            updateTime = 0
+        end
     end
-end)
+)
 
 local function cooldown_Clear(self)
     self.Timer:SetText("")
@@ -102,8 +104,7 @@ end
 local function cooldown_UpdateFont(self)
     local config = self.config.text
 
-    self.Timer:SetFont(config.font or C.media.fonts.normal, config.size,
-                       config.outline and "OUTLINE" or nil)
+    self.Timer:SetFont(config.font or C.media.fonts.normal, config.size, config.outline and "OUTLINE" or nil)
     self.Timer:SetJustifyH("CENTER")
     self.Timer:SetJustifyV(config.v_alignment)
     self.Timer:SetShown(config.enabled)
@@ -116,7 +117,9 @@ local function cooldown_UpdateFont(self)
     end
 
     local point = config.point
-    if point then self.Timer:SetPoint(point.p, point.x, point.y) end
+    if point then
+        self.Timer:SetPoint(point.p, point.x, point.y)
+    end
 end
 
 local function cooldown_UpdateConfig(self, config)
@@ -133,7 +136,9 @@ local function cooldown_UpdateConfig(self, config)
 end
 
 function E.Cooldowns.Handle(cooldown)
-    if E.OMNICC or handledCooldowns[cooldown] then return cooldown end
+    if E.OMNICC or handledCooldowns[cooldown] then
+        return cooldown
+    end
 
     cooldown:SetDrawBling(false)
     cooldown:SetDrawEdge(false)
@@ -168,8 +173,7 @@ function E.Cooldowns.Handle(cooldown)
 end
 
 function E.Cooldowns.Create(parent)
-    local cooldown = CreateFrame("Cooldown", nil, parent,
-                                 "CooldownFrameTemplate")
+    local cooldown = CreateFrame("Cooldown", nil, parent, "CooldownFrameTemplate")
     cooldown:SetPoint("TOPLEFT", 0, 0)
     cooldown:SetPoint("BOTTOMRIGHT", 0, 0)
 
@@ -180,6 +184,8 @@ end
 
 function E.Cooldowns:ForEach(method, ...)
     for cooldown in next, handledCooldowns do
-        if cooldown[method] then cooldown[method](cooldown, ...) end
+        if cooldown[method] then
+            cooldown[method](cooldown, ...)
+        end
     end
 end

@@ -49,9 +49,18 @@ local ACTION_BARS = {
         name = "LumActionBar1",
         type = "ACTIONBUTTON",
         b_buttons = {
-            ActionButton1, ActionButton2, ActionButton3, ActionButton4,
-            ActionButton5, ActionButton6, ActionButton7, ActionButton8,
-            ActionButton9, ActionButton10, ActionButton11, ActionButton12
+            ActionButton1,
+            ActionButton2,
+            ActionButton3,
+            ActionButton4,
+            ActionButton5,
+            ActionButton6,
+            ActionButton7,
+            ActionButton8,
+            ActionButton9,
+            ActionButton10,
+            ActionButton11,
+            ActionButton12
         },
         num_buttons = 12
     },
@@ -59,12 +68,18 @@ local ACTION_BARS = {
         name = "LumActionBar2",
         type = "MULTIACTIONBAR1BUTTON",
         b_buttons = {
-            MultiBarBottomLeftButton1, MultiBarBottomLeftButton2,
-            MultiBarBottomLeftButton3, MultiBarBottomLeftButton4,
-            MultiBarBottomLeftButton5, MultiBarBottomLeftButton6,
-            MultiBarBottomLeftButton7, MultiBarBottomLeftButton8,
-            MultiBarBottomLeftButton9, MultiBarBottomLeftButton10,
-            MultiBarBottomLeftButton11, MultiBarBottomLeftButton12
+            MultiBarBottomLeftButton1,
+            MultiBarBottomLeftButton2,
+            MultiBarBottomLeftButton3,
+            MultiBarBottomLeftButton4,
+            MultiBarBottomLeftButton5,
+            MultiBarBottomLeftButton6,
+            MultiBarBottomLeftButton7,
+            MultiBarBottomLeftButton8,
+            MultiBarBottomLeftButton9,
+            MultiBarBottomLeftButton10,
+            MultiBarBottomLeftButton11,
+            MultiBarBottomLeftButton12
         },
         num_buttons = 12,
         page = 6
@@ -73,12 +88,18 @@ local ACTION_BARS = {
         name = "LumActionBar3",
         type = "MULTIACTIONBAR2BUTTON",
         b_buttons = {
-            MultiBarBottomRightButton1, MultiBarBottomRightButton2,
-            MultiBarBottomRightButton3, MultiBarBottomRightButton4,
-            MultiBarBottomRightButton5, MultiBarBottomRightButton6,
-            MultiBarBottomRightButton7, MultiBarBottomRightButton8,
-            MultiBarBottomRightButton9, MultiBarBottomRightButton10,
-            MultiBarBottomRightButton11, MultiBarBottomRightButton12
+            MultiBarBottomRightButton1,
+            MultiBarBottomRightButton2,
+            MultiBarBottomRightButton3,
+            MultiBarBottomRightButton4,
+            MultiBarBottomRightButton5,
+            MultiBarBottomRightButton6,
+            MultiBarBottomRightButton7,
+            MultiBarBottomRightButton8,
+            MultiBarBottomRightButton9,
+            MultiBarBottomRightButton10,
+            MultiBarBottomRightButton11,
+            MultiBarBottomRightButton12
         },
         num_buttons = 12,
         page = 5
@@ -87,10 +108,18 @@ local ACTION_BARS = {
         name = "LumActionBar4",
         type = "MULTIACTIONBAR4BUTTON",
         b_buttons = {
-            MultiBarLeftButton1, MultiBarLeftButton2, MultiBarLeftButton3,
-            MultiBarLeftButton4, MultiBarLeftButton5, MultiBarLeftButton6,
-            MultiBarLeftButton7, MultiBarLeftButton8, MultiBarLeftButton9,
-            MultiBarLeftButton10, MultiBarLeftButton11, MultiBarLeftButton12
+            MultiBarLeftButton1,
+            MultiBarLeftButton2,
+            MultiBarLeftButton3,
+            MultiBarLeftButton4,
+            MultiBarLeftButton5,
+            MultiBarLeftButton6,
+            MultiBarLeftButton7,
+            MultiBarLeftButton8,
+            MultiBarLeftButton9,
+            MultiBarLeftButton10,
+            MultiBarLeftButton11,
+            MultiBarLeftButton12
         },
         num_buttons = 12,
         page = 4
@@ -99,10 +128,18 @@ local ACTION_BARS = {
         name = "LumActionBar5",
         type = "MULTIACTIONBAR3BUTTON",
         b_buttons = {
-            MultiBarRightButton1, MultiBarRightButton2, MultiBarRightButton3,
-            MultiBarRightButton4, MultiBarRightButton5, MultiBarRightButton6,
-            MultiBarRightButton7, MultiBarRightButton8, MultiBarRightButton9,
-            MultiBarRightButton10, MultiBarRightButton11, MultiBarRightButton12
+            MultiBarRightButton1,
+            MultiBarRightButton2,
+            MultiBarRightButton3,
+            MultiBarRightButton4,
+            MultiBarRightButton5,
+            MultiBarRightButton6,
+            MultiBarRightButton7,
+            MultiBarRightButton8,
+            MultiBarRightButton9,
+            MultiBarRightButton10,
+            MultiBarRightButton11,
+            MultiBarRightButton12
         },
         num_buttons = 12,
         page = 3
@@ -121,7 +158,9 @@ local function getBarPage()
     local condition = PAGES["DEFAULT"]
     local page = PAGES[E.PLAYER_CLASS]
 
-    if page then condition = condition .. " " .. page end
+    if page then
+        condition = condition .. " " .. page
+    end
 
     return condition .. " [form] 1; 1"
 end
@@ -139,28 +178,21 @@ local function bar_Update(self)
 end
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(M:IsRestricted() and CFG.bar1 or
-                                   C.modules.bars.bar1, self._config)
+    self._config = E:CopyTable(M:IsRestricted() and CFG.bar1 or C.modules.bars.bar1, self._config)
     self._config.click_on_down = C.modules.bars.click_on_down
-    self._config.cooldown = E:CopyTable(C.modules.bars.bar1.cooldown,
-                                        self._config.cooldown)
-    self._config.cooldown = E:CopyTable(C.modules.bars.cooldown,
-                                        self._config.cooldown)
-    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation,
-                                            self._config.desaturation)
+    self._config.cooldown = E:CopyTable(C.modules.bars.bar1.cooldown, self._config.cooldown)
+    self._config.cooldown = E:CopyTable(C.modules.bars.cooldown, self._config.cooldown)
+    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation, self._config.desaturation)
     self._config.lock = C.modules.bars.lock
     self._config.mana_indicator = C.modules.bars.mana_indicator
     self._config.range_indicator = C.modules.bars.range_indicator
     self._config.rightclick_selfcast = C.modules.bars.rightclick_selfcast
 
     if M:IsRestricted() then
-        self._config.count = E:CopyTable(C.modules.bars.bar1.count,
-                                         self._config.count)
+        self._config.count = E:CopyTable(C.modules.bars.bar1.count, self._config.count)
         self._config.grid = C.modules.bars.bar1.grid
-        self._config.hotkey = E:CopyTable(C.modules.bars.bar1.hotkey,
-                                          self._config.hotkey)
-        self._config.macro = E:CopyTable(C.modules.bars.bar1.macro,
-                                         self._config.macro)
+        self._config.hotkey = E:CopyTable(C.modules.bars.bar1.hotkey, self._config.hotkey)
+        self._config.macro = E:CopyTable(C.modules.bars.bar1.macro, self._config.macro)
     end
 
     self._config.count = E:CopyTable(C.global.fonts.bars, self._config.count)
@@ -179,13 +211,11 @@ local function bar_UpdateButtonConfig(self)
     end
 
     for k, v in next, C.colors.button do
-        self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig
-            .colors[k][3] = E:GetRGB(v)
+        self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
     end
 
     self.buttonConfig.clickOnDown = self._config.click_on_down
-    self.buttonConfig.desaturation = E:CopyTable(self._config.desaturation,
-                                                 self.buttonConfig.desaturation)
+    self.buttonConfig.desaturation = E:CopyTable(self._config.desaturation, self.buttonConfig.desaturation)
     self.buttonConfig.flyoutDirection = self._config.flyout_dir
     self.buttonConfig.hideElements.hotkey = not self._config.hotkey.enabled
     self.buttonConfig.hideElements.macro = not self._config.macro.enabled
@@ -200,14 +230,12 @@ local function bar_UpdateButtonConfig(self)
         button:SetAttribute("buttonlock", self._config.lock)
         button:SetAttribute("checkselfcast", true)
         button:SetAttribute("checkfocuscast", true)
-        button:SetAttribute("*unit2", self._config.rightclick_selfcast and
-                                "player" or nil)
+        button:SetAttribute("*unit2", self._config.rightclick_selfcast and "player" or nil)
     end
 end
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.bars.font, config.size,
-                       config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
 
     fontString:SetWordWrap(false)
 
@@ -241,8 +269,7 @@ function M.CreateActionBars()
         }
 
         for barID, data in next, ACTION_BARS do
-            local bar = CreateFrame("Frame", data.name, UIParent,
-                                    "SecureHandlerStateTemplate")
+            local bar = CreateFrame("Frame", data.name, UIParent, "SecureHandlerStateTemplate")
             bar._id = barID
             bar._buttons = {}
 
@@ -256,9 +283,7 @@ function M.CreateActionBars()
             end
 
             for i = 1, data.num_buttons do
-                local button = LibActionButton:CreateButton(i,
-                                                            "$parentButton" .. i,
-                                                            bar)
+                local button = LibActionButton:CreateButton(i, "$parentButton" .. i, bar)
                 button:SetState(0, "action", i)
                 button._parent = bar
                 button._command = data.type .. i
@@ -280,44 +305,56 @@ function M.CreateActionBars()
                 data.b_buttons[i]:UnregisterAllEvents()
 
                 E:SkinActionButton(button)
-                E:SetBackdrop(button, nil, nil, nil, {
-                    bgFile = C.media.textures.button_backdrop,
-                    tile = false
-                })
+                E:SetBackdrop(
+                    button,
+                    nil,
+                    nil,
+                    nil,
+                    {
+                        bgFile = C.media.textures.button_backdrop,
+                        tile = false
+                    }
+                )
 
                 bar._buttons[i] = button
             end
 
-            bar:SetAttribute("_onstate-page", [[
+            bar:SetAttribute(
+                "_onstate-page",
+                [[
 				self:SetAttribute("state", newstate)
 				control:ChildUpdate("state", newstate)
-			]])
+			]]
+            )
 
-            RegisterStateDriver(bar, "page",
-                                barID == "bar1" and getBarPage() or data.page)
+            RegisterStateDriver(bar, "page", barID == "bar1" and getBarPage() or data.page)
         end
 
         for barID, bar in next, M:GetBars() do
             if barID == "bar1" and M:IsRestricted() then
                 M:ActionBarController_AddWidget(bar, "ACTION_BAR")
             else
+                -- E.Movers:Create(bar)
                 local point = config[barID].point
                 bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
-                -- E.Movers:Create(bar)
             end
 
             bar:Update()
         end
 
-        hooksecurefunc(SpellFlyout, "Toggle", function(self, ID)
-            if self:IsShown() then
-                local _, _, numSlots = GetFlyoutInfo(ID)
+        hooksecurefunc(
+            SpellFlyout,
+            "Toggle",
+            function(self, ID)
+                if self:IsShown() then
+                    local _, _, numSlots = GetFlyoutInfo(ID)
 
-                for i = 1, numSlots do
-                    E:SkinFlyoutButton(_G["SpellFlyoutButton" .. i])
+                    for i = 1, numSlots do
+                        E:SkinFlyoutButton(_G["SpellFlyoutButton" .. i])
+                    end
                 end
             end
-        end)
+        )
 
         isInit = true
     end

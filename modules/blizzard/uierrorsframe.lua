@@ -26,8 +26,7 @@ local defaults = {
 }
 
 local function updateFont(fontString, config)
-    fontString:SetFont(config.font or C.media.fonts.normal, config.size or 12,
-                       config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(config.font or C.media.fonts.normal, config.size or 12, config.outline and "THINOUTLINE" or nil)
 
     if config.shadow then
         fontString:SetShadowOffset(1, -1)
@@ -36,7 +35,9 @@ local function updateFont(fontString, config)
     end
 end
 
-function M.HasErrorsFrame() return isInit end
+function M.HasErrorsFrame()
+    return isInit
+end
 
 function M.SetUpErrorsFrame()
     if not isInit and C.modules.blizzard.errors_frame.enabled then

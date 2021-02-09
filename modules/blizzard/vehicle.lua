@@ -18,8 +18,7 @@ local isInit = false
 local function updatePosition(_, _, anchor)
     if anchor == "MinimapCluster" or anchor == _G.MinimapCluster then
         _G.VehicleSeatIndicator:ClearAllPoints()
-        _G.VehicleSeatIndicator:SetPoint(
-            unpack(C.modules.blizzard.vehicle.point))
+        _G.VehicleSeatIndicator:SetPoint(unpack(C.modules.blizzard.vehicle.point))
     end
 end
 
@@ -37,14 +36,14 @@ local function setUpVehicle(vehicleID)
 
             local _, xOffset, yOffset = GetVehicleUIIndicatorSeat(vehicleID, i)
             button:ClearAllPoints()
-            button:SetPoint("CENTER", button:GetParent(), "TOPLEFT",
-                            xOffset * size, -yOffset * size)
+            button:SetPoint("CENTER", button:GetParent(), "TOPLEFT", xOffset * size, -yOffset * size)
         end
     end
-
 end
 
-function M.HasVehicleSeatFrame() return isInit end
+function M.HasVehicleSeatFrame()
+    return isInit
+end
 
 function M.SetUpVehicleSeatFrame()
     if not isInit and C.modules.blizzard.vehicle.enabled then

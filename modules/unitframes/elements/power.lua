@@ -13,8 +13,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font, config.size,
-                       config.outline and "OUTLINE" or nil)
+    fontString:SetFont(C.global.fonts.units.font, config.size, config.outline and "OUTLINE" or nil)
     fontString:SetJustifyH(config.h_alignment)
     fontString:SetJustifyV(config.v_alignment)
     fontString:SetWordWrap(false)
@@ -29,7 +28,9 @@ end
 local function updateTextPoint(frame, fontString, config)
     fontString:ClearAllPoints()
 
-    if config and config.p then E:SetPosition(fontString, config, frame) end
+    if config and config.p then
+        E:SetPosition(fontString, config, frame)
+    end
 end
 
 local function updateTag(frame, fontString, tag)
@@ -42,15 +43,16 @@ local function updateTag(frame, fontString, tag)
     end
 end
 
-local function element_UpdateFonts(self) updateFont(self.Text, self._config.text) end
+local function element_UpdateFonts(self)
+    updateFont(self.Text, self._config.text)
+end
 
 local function element_UpdateTextPoints(self)
     updateTextPoint(self.__owner, self.Text, self._config.text.point)
 end
 
 local function element_UpdateTags(self)
-    updateTag(self.__owner, self.Text,
-              self._config.enabled and self._config.text.tag or "")
+    updateTag(self.__owner, self.Text, self._config.enabled and self._config.text.tag or "")
 end
 
 local function element_UpdateGainLossPoints(self)
@@ -70,11 +72,12 @@ do
     local function element_PostUpdate(self, unit, cur, _, max)
         local shouldShown = self:IsShown() and max and max ~= 0
 
-        if self.UpdateContainer then self:UpdateContainer(shouldShown) end
+        if self.UpdateContainer then
+            self:UpdateContainer(shouldShown)
+        end
 
         local unitGUID = UnitGUID(unit)
-        self.GainLossIndicators:Update(cur, max, unitGUID ==
-                                           self.GainLossIndicators._UnitGUID)
+        self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
         self.GainLossIndicators._UnitGUID = unitGUID
 
         if shouldShown and cur ~= max then
@@ -91,8 +94,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].power,
-                                   self._config)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].power, self._config)
     end
 
     local function element_UpdateSize(self)
@@ -207,8 +209,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit]
-                                       .additional_power, self._config)
+        self._config = E:CopyTable(C.modules.unitframes.units[unit].additional_power, self._config)
     end
 
     local function element_UpdateSize(self)
@@ -220,12 +221,13 @@ do
         local point = config.point
         if point and point.p then
             self:ClearAllPoints()
-            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor),
-                          point.ap, point.x, point.y)
+            self:SetPoint(point.p, E:ResolveAnchorPoint(frame, point.anchor), point.ap, point.x, point.y)
         end
     end
 
-    local function element_UpdateColors(self) self:ForceUpdate() end
+    local function element_UpdateColors(self)
+        self:ForceUpdate()
+    end
 
     local function frame_UpdateAdditionalPower(frame)
         local element = frame.AdditionalPower
@@ -237,11 +239,9 @@ do
         element:UpdateGainLossPoints()
         element:UpdateGainLossThreshold()
 
-        if element._config.enabled and
-            not frame:IsElementEnabled("AdditionalPower") then
+        if element._config.enabled and not frame:IsElementEnabled("AdditionalPower") then
             frame:EnableElement("AdditionalPower")
-        elseif not element._config.enabled and
-            frame:IsElementEnabled("AdditionalPower") then
+        elseif not element._config.enabled and frame:IsElementEnabled("AdditionalPower") then
             frame:DisableElement("AdditionalPower")
         end
 
@@ -291,10 +291,8 @@ do
         end
 
         local unit = self.__owner._layout or self.__owner._unit
-        self._config.power.enabled = C.modules.unitframes.units[unit].power
-                                         .prediction.enabled
-        self._config.additional_power.enabled =
-            C.modules.unitframes.units[unit].additional_power.prediction.enabled
+        self._config.power.enabled = C.modules.unitframes.units[unit].power.prediction.enabled
+        self._config.additional_power.enabled = C.modules.unitframes.units[unit].additional_power.prediction.enabled
     end
 
     local function element_UpdateColors(self)
@@ -317,8 +315,7 @@ do
 
             mainBar_:SetPoint("TOP")
             mainBar_:SetPoint("BOTTOM")
-            mainBar_:SetPoint("RIGHT", frame.Power:GetStatusBarTexture(),
-                              "RIGHT")
+            mainBar_:SetPoint("RIGHT", frame.Power:GetStatusBarTexture(), "RIGHT")
             mainBar_:SetWidth(width)
 
             element.mainBar = mainBar_
@@ -338,9 +335,7 @@ do
             local width = frame.AdditionalPower:GetWidth()
             width = width > 0 and width or altBar_:SetPoint("TOP")
             altBar_:SetPoint("BOTTOM")
-            altBar_:SetPoint("RIGHT",
-                             frame.AdditionalPower:GetStatusBarTexture(),
-                             "RIGHT")
+            altBar_:SetPoint("RIGHT", frame.AdditionalPower:GetStatusBarTexture(), "RIGHT")
             altBar_:SetWidth(width)
 
             element.altBar = altBar_
@@ -376,7 +371,9 @@ do
         altBar:SetStatusBarTexture(C.media.textures.flat)
         altBar:SetReverseFill(true)
         E:SmoothBar(altBar)
-        if parent2 then parent2.CostPrediction = altBar end
+        if parent2 then
+            parent2.CostPrediction = altBar
+        end
 
         frame.UpdatePowerPrediction = frame_UpdatePowerPrediction
 

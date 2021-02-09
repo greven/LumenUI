@@ -31,7 +31,8 @@ hidden:Hide()
 E.HIDDEN_PARENT = hidden
 
 E.NOA = hidden:CreateAnimationGroup()
-E.NOOP = function() end
+E.NOOP = function()
+end
 
 E.DAY, E.HOUR, E.MINUTE = 86400, 3600, 60
 
@@ -60,4 +61,6 @@ do
 end
 
 -- Constants not available at ADDON_LOADED
-function E:UpdateConstants() E.PLAYER_GUID = UnitGUID("player") end
+function E:UpdateConstants()
+    E.PLAYER_GUID = UnitGUID("player")
+end

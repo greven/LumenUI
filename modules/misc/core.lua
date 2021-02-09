@@ -11,7 +11,9 @@ local _G = getfenv(0)
 local isInit = false
 local config = C.modules.misc
 
-function M:IsInit() return isInit end
+function M:IsInit()
+    return isInit
+end
 
 function M:Init()
     if not isInit and config.enabled then

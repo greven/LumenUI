@@ -24,38 +24,34 @@ do
     local repairStatus, repairType, repairCost, canRepair
 
     function M.AutoRepairOutput()
-        if repairType == 'GUILD' then
-            if repairStatus == 'GUILD_REPAIR_FAILED' then
+        if repairType == "GUILD" then
+            if repairStatus == "GUILD_REPAIR_FAILED" then
                 M:AttemptAutoRepair(true) -- Try using player money instead
             else
-                E:Print(s_format(L["ITEMS_REPAIRED_GUILD_FUNDS"],
-                                 GetMoneyString(repairCost, true)))
+                E:Print(s_format(L["ITEMS_REPAIRED_GUILD_FUNDS"], GetMoneyString(repairCost, true)))
             end
-        elseif repairType == 'PLAYER' then
-            if STATUS == 'PLAYER_REPAIR_FAILED' then
+        elseif repairType == "PLAYER" then
+            if STATUS == "PLAYER_REPAIR_FAILED" then
                 E:Print(L["NOT_ENOUGH_MONEY_TO_REPAIR"])
             else
-                E:Print(s_format(L["ITEMS_REPAIRED"],
-                                 GetMoneyString(repairCost, true)))
+                E:Print(s_format(L["ITEMS_REPAIRED"], GetMoneyString(repairCost, true)))
             end
-
         end
     end
 
     function M.AttemptAutoRepair(playerOverride)
-        local useGuildFunds = C.modules.misc.merchant.auto_repair
-                                  .use_guild_funds
-        repairType = useGuildFunds and 'GUILD' or 'PLAYER'
+        local useGuildFunds = C.modules.misc.merchant.auto_repair.use_guild_funds
+        repairType = useGuildFunds and "GUILD" or "PLAYER"
 
         repairCost, canRepair = GetRepairAllCost()
 
         if canRepair and repairCost > 0 then
-            local tryGuild = not playerOverride and useGuildFunds and
-                                 IsInGuild()
-            local useGuild = tryGuild and CanGuildBankRepair() and repairCost <=
-                                 GetGuildBankWithdrawMoney()
+            local tryGuild = not playerOverride and useGuildFunds and IsInGuild()
+            local useGuild = tryGuild and CanGuildBankRepair() and repairCost <= GetGuildBankWithdrawMoney()
 
-            if not useGuild then repairType = 'PLAYER' end
+            if not useGuild then
+                repairType = "PLAYER"
+            end
 
             RepairAllItems(useGuild)
             E:Delay(0.5, M.AutoRepairOutput)
@@ -69,8 +65,9 @@ local function frame_OnEvent(self, event, ...)
             E:Delay(0.5, Bags.VendorGrays)
         end
 
-        if not config.auto_repair.enabled or IsShiftKeyDown() or
-            not CanMerchantRepair() then return end
+        if not config.auto_repair.enabled or IsShiftKeyDown() or not CanMerchantRepair() then
+            return
+        end
 
         -- Prepare to catch 'not enough money' messages
         self:RegisterEvent("UI_ERROR_MESSAGE")
@@ -81,9 +78,9 @@ local function frame_OnEvent(self, event, ...)
         local messageType = select(1, ...)
 
         if messageType == LE_GAME_ERR_GUILD_NOT_ENOUGH_MONEY then
-            repairStatus = 'GUILD_REPAIR_FAILED'
+            repairStatus = "GUILD_REPAIR_FAILED"
         elseif messageType == LE_GAME_ERR_NOT_ENOUGH_MONEY then
-            repairStatus = 'PLAYER_REPAIR_FAILED'
+            repairStatus = "PLAYER_REPAIR_FAILED"
         end
     end
 

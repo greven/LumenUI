@@ -15,12 +15,14 @@ local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 local function element_Override(self, _, unit)
-    if unit ~= self.unit then return end
+    if unit ~= self.unit then
+        return
+    end
 
     local element = self.PvPIndicator
     unit = unit or self.unit
 
-    local factionGroup = UnitFactionGroup(unit) or 'Neutral'
+    local factionGroup = UnitFactionGroup(unit) or "Neutral"
     local status
 
     if UnitIsPVPFreeForAll(unit) then
@@ -65,8 +67,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].pvp,
-                               self._config)
+    self._config = E:CopyTable(C.modules.unitframes.units[unit].pvp, self._config)
 end
 
 local function element_UpdateSize(self)
@@ -114,7 +115,9 @@ local function frame_UpdatePvPIndicator(self)
         self:DisableElement("PvPIndicator")
     end
 
-    if self:IsElementEnabled("PvPIndicator") then element:ForceUpdate() end
+    if self:IsElementEnabled("PvPIndicator") then
+        element:ForceUpdate()
+    end
 end
 
 function UF:CreatePvPIndicator(frame, parent)

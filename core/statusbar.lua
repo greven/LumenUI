@@ -27,7 +27,9 @@ function E:CreateStatusBar(parent, name, texture, orientation)
 end
 
 function E:HandleStatusBar(bar, isRecursive)
-    if bar.handled then return end
+    if bar.handled then
+        return
+    end
 
     local children = {bar:GetChildren()}
     local regions = {bar:GetRegions()}
@@ -42,14 +44,15 @@ function E:HandleStatusBar(bar, isRecursive)
             if layer == "BACKGROUND" then
                 if texture and s_match(texture, "[Cc][Oo][Ll][Oo][Rr]") then
                     bg = region
-                elseif texture and
-                    s_match(texture, "[Bb][Aa][Cc][Kk][Gg][Rr][Oo][Uu][Nn][Dd]") then
+                elseif texture and s_match(texture, "[Bb][Aa][Cc][Kk][Gg][Rr][Oo][Uu][Nn][Dd]") then
                     bg = region
                 else
                     E:ForceHide(region)
                 end
             else
-                if region ~= sbt then E:ForceHide(region) end
+                if region ~= sbt then
+                    E:ForceHide(region)
+                end
             end
         elseif region:IsObjectType("FontString") then
             text = region
@@ -76,7 +79,9 @@ function E:HandleStatusBar(bar, isRecursive)
             bar.RealBar = rbar
         end
 
-        if not bg then bg = bar:CreateTexture(nil, "BACKGROUND") end
+        if not bg then
+            bg = bar:CreateTexture(nil, "BACKGROUND")
+        end
 
         bg:SetColorTexture(E:GetRGB(C.colors.dark_gray))
         bg:SetAllPoints()
@@ -110,7 +115,9 @@ function E:HandleStatusBar(bar, isRecursive)
 end
 
 function E:SetStatusBarSkin(bar, texture, orientation)
-    if not bar then return end
+    if not bar then
+        return
+    end
 
     bar:SetStatusBarTexture(texture or C.media.textures.statusbar)
     bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
@@ -172,16 +179,16 @@ do
             local prev = (self._prev or cur) * max / (self._max or max)
             local diff = cur - prev
 
-            if m_abs(diff) / max < self.threshold then diff = 0 end
+            if m_abs(diff) / max < self.threshold then
+                diff = 0
+            end
 
             if diff > 0 then
                 if self.Gain and self.Gain:GetAlpha() == 0 then
                     if self.orientation == "VERTICAL" then
-                        attachGainToVerticalBar(self.Gain, self.__owner, prev,
-                                                max)
+                        attachGainToVerticalBar(self.Gain, self.__owner, prev, max)
                     else
-                        attachGainToHorizontalBar(self.Gain, self.__owner, prev,
-                                                  max)
+                        attachGainToHorizontalBar(self.Gain, self.__owner, prev, max)
                     end
 
                     self.Gain:SetAlpha(1)
@@ -196,17 +203,14 @@ do
                 if self.Loss then
                     if self.Loss:GetAlpha() <= 0.33 then
                         if self.orientation == "VERTICAL" then
-                            attachLossToVerticalBar(self.Loss, self.__owner,
-                                                    prev, max)
+                            attachLossToVerticalBar(self.Loss, self.__owner, prev, max)
                         else
-                            attachLossToHorizontalBar(self.Loss, self.__owner,
-                                                      prev, max)
+                            attachLossToHorizontalBar(self.Loss, self.__owner, prev, max)
                         end
 
                         self.Loss:SetAlpha(1)
                         self.Loss.FadeOut:Restart()
-                    elseif self.Loss.FadeOut.Alpha:IsDelaying() or
-                        self.Loss:GetAlpha() >= 0.66 then
+                    elseif self.Loss.FadeOut.Alpha:IsDelaying() or self.Loss:GetAlpha() >= 0.66 then
                         self.Loss.FadeOut:Restart()
                     end
                 end
@@ -241,32 +245,20 @@ do
         orientation = orientation or "HORIZONTAL"
         if orientation == "HORIZONTAL" then
             self.Gain_:ClearAllPoints()
-            self.Gain_:SetPoint("TOPRIGHT", self.__owner:GetStatusBarTexture(),
-                                "TOPRIGHT", 0, 0)
-            self.Gain_:SetPoint("BOTTOMRIGHT",
-                                self.__owner:GetStatusBarTexture(),
-                                "BOTTOMRIGHT", 0, 0)
+            self.Gain_:SetPoint("TOPRIGHT", self.__owner:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
+            self.Gain_:SetPoint("BOTTOMRIGHT", self.__owner:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 
             self.Loss_:ClearAllPoints()
-            self.Loss_:SetPoint("TOPLEFT", self.__owner:GetStatusBarTexture(),
-                                "TOPRIGHT", 0, 0)
-            self.Loss_:SetPoint("BOTTOMLEFT",
-                                self.__owner:GetStatusBarTexture(),
-                                "BOTTOMRIGHT", 0, 0)
+            self.Loss_:SetPoint("TOPLEFT", self.__owner:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
+            self.Loss_:SetPoint("BOTTOMLEFT", self.__owner:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
         else
             self.Gain_:ClearAllPoints()
-            self.Gain_:SetPoint("TOPLEFT", self.__owner:GetStatusBarTexture(),
-                                "TOPLEFT", 0, 0)
-            self.Gain_:SetPoint("TOPRIGHT", self.__owner:GetStatusBarTexture(),
-                                "TOPRIGHT", 0, 0)
+            self.Gain_:SetPoint("TOPLEFT", self.__owner:GetStatusBarTexture(), "TOPLEFT", 0, 0)
+            self.Gain_:SetPoint("TOPRIGHT", self.__owner:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 
             self.Loss_:ClearAllPoints()
-            self.Loss_:SetPoint("BOTTOMLEFT",
-                                self.__owner:GetStatusBarTexture(), "TOPLEFT",
-                                0, 0)
-            self.Loss_:SetPoint("BOTTOMRIGHT",
-                                self.__owner:GetStatusBarTexture(), "TOPRIGHT",
-                                0, 0)
+            self.Loss_:SetPoint("BOTTOMLEFT", self.__owner:GetStatusBarTexture(), "TOPLEFT", 0, 0)
+            self.Loss_:SetPoint("BOTTOMRIGHT", self.__owner:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
         end
 
         self.orientation = orientation
@@ -343,7 +335,9 @@ do
     end
 
     local function isCloseEnough(new, target, range)
-        if range > 0 then return m_abs((new - target) / range) <= 0.001 end
+        if range > 0 then
+            return m_abs((new - target) / range) <= 0.001
+        end
 
         return true
     end
@@ -352,8 +346,7 @@ do
 
     local function onUpdate(_, elapsed)
         for object, target in next, activeObjects do
-            local new = Lerp(object._value, target,
-                             clamp(AMOUNT * elapsed * TARGET_FPS))
+            local new = Lerp(object._value, target, clamp(AMOUNT * elapsed * TARGET_FPS))
             if isCloseEnough(new, target, object._max - object._min) then
                 new = target
                 activeObjects[object] = nil
@@ -379,7 +372,9 @@ do
             end
 
             local target = activeObjects[self]
-            if target then activeObjects[self] = target * ratio end
+            if target then
+                activeObjects[self] = target * ratio
+            end
 
             local cur = self._value
             if cur then
@@ -426,8 +421,12 @@ do
 
         handledObjects[bar] = nil
 
-        if not next(handledObjects) then frame:SetScript("OnUpdate", nil) end
+        if not next(handledObjects) then
+            frame:SetScript("OnUpdate", nil)
+        end
     end
 
-    function E:SetSmoothingAmount(amount) AMOUNT = clamp(amount, 0.3, 0.6) end
+    function E:SetSmoothingAmount(amount)
+        AMOUNT = clamp(amount, 0.3, 0.6)
+    end
 end

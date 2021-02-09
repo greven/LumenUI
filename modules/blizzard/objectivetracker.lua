@@ -15,7 +15,9 @@ local IsShiftKeyDown = _G.IsShiftKeyDown
 
 local isInit = false
 
-function M.HasObjectiveTracker() return isInit end
+function M.HasObjectiveTracker()
+    return isInit
+end
 
 function M.SetUpObjectiveTracker()
     if not isInit and C.modules.blizzard.objective_tracker.enabled then
@@ -30,16 +32,16 @@ function M.SetUpObjectiveTracker()
         ObjectiveTrackerFrame:SetParent(holder)
         ObjectiveTrackerFrame:ClearAllPoints()
         ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 47, 0)
-        ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:HookScript("OnClick",
-                                                                   function()
-            if ObjectiveTrackerFrame.collapsed then
-                ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT",
-                                               26, 0)
-            else
-                ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT",
-                                               47, 0)
+        ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:HookScript(
+            "OnClick",
+            function()
+                if ObjectiveTrackerFrame.collapsed then
+                    ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 26, 0)
+                else
+                    ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 47, 0)
+                end
             end
-        end)
+        )
 
         isInit = true
     end
@@ -47,7 +49,6 @@ end
 
 function M.UpdateObjectiveTracker()
     if isInit then
-        ObjectiveTrackerFrame:SetHeight(C.modules.blizzard.objective_tracker
-                                            .height)
+        ObjectiveTrackerFrame:SetHeight(C.modules.blizzard.objective_tracker.height)
     end
 end

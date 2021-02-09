@@ -51,7 +51,7 @@ local function bar_OnUpdate(self, elapsed)
             local time1, time2, format, color
 
             if remain <= 0 then
-                bar.Time:SetText("")
+                self.Time:SetText("")
                 return
             end
 
@@ -147,7 +147,7 @@ local function element_PostCreateBar(self, bar)
     bar.Name:SetJustifyV('MIDDLE')
     bar.Name:SetPoint("TOP", bar.Holder, "TOP", 0, 0)
     bar.Name:SetPoint("BOTTOM", bar, "BOTTOM", 0, self._config.height / 2 + 3)
-    bar.Name:SetPoint("LEFT", bar, "LEFT", 2, 0)
+    bar.Name:SetPoint("LEFT", bar, "LEFT", 0, 0)
     bar.Name:SetPoint("RIGHT", bar.Time, "LEFT", -8, 0)
 
     bar.Time:SetPoint("TOP", bar.Holder, "TOP", 0, 0)
@@ -166,7 +166,7 @@ local function element_PostUpdateBar(self, unit, bar, index, position, duration,
     self:UpdateConfig()
 
     -- TODO: Set color by debuff type, color class or just remaining time
-    bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
+    bar:SetStatusBarColor(E:GetRGB(C.colors.gray))
     bar:SetScript("OnUpdate", bar_OnUpdate)
 end
 
@@ -304,11 +304,11 @@ do
 
         local name = statusBar:CreateFontString(nil, 'OVERLAY',
                                                 'NumberFontNormal')
-        name:SetPoint('LEFT', statusBar, 'LEFT', 2, 0)
+        name:SetPoint('LEFT', statusBar, 'LEFT', 1, 0)
 
         local time = statusBar:CreateFontString(nil, 'OVERLAY',
                                                 'NumberFontNormal')
-        time:SetPoint('RIGHT', statusBar, 'RIGHT', -2, 0)
+        time:SetPoint('RIGHT', statusBar, 'RIGHT', -1, 0)
 
         statusBar.Holder = holder
         statusBar.Icon = icon
