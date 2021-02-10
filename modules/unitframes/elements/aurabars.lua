@@ -134,6 +134,7 @@ local function element_PostCreateBar(self, bar)
     end
 
     self:UpdateConfig()
+    bar:EnableMouse(self._config.enable_mouse)
 
     bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
     E:SetStatusBarSkin(bar, C.global.aura_bars.texture)

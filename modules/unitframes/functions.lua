@@ -69,7 +69,9 @@ do
     frame._layout = name:match("Lum(%a+)Frame"):lower()
 
     E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
-    E:CreateShadow(frame)
+    if C.global.shadows.enabled then
+      E:CreateShadow(frame)
+    end
 
     frame.ForElement = frame_ForElement
     frame.UpdateConfig = frame_UpdateConfig
@@ -77,18 +79,10 @@ do
   end
 end
 
--- Sets frame state-visibility
-function UF:SetStateVisibility(frame)
-  if not frame then
-    return
-  end
-
-  if frame._config.visibility then
-    frame:Disable()
-    RegisterAttributeDriver(frame, "state-visibility", frame._config.visibility)
-  elseif not frame:IsEnabled() then
-    frame:Enable()
-  end
+function UF:UpdateColors()
+  self:UpdateHealthColors()
+  self:UpdatePowerColors()
+  self:UpdateReactionColors()
 end
 
 function UF:UpdateHealthColors()
@@ -132,5 +126,19 @@ function UF:UpdateReactionColors()
   local color = oUF.colors.reaction
   for k, v in next, C.colors.reaction do
     color[k][1], color[k][2], color[k][3] = E:GetRGB(v)
+  end
+end
+
+-- Sets frame state-visibility
+function UF:SetStateVisibility(frame)
+  if not frame then
+    return
+  end
+
+  if frame._config.visibility then
+    frame:Disable()
+    RegisterAttributeDriver(frame, "state-visibility", frame._config.visibility)
+  elseif not frame:IsEnabled() then
+    frame:Enable()
   end
 end

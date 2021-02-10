@@ -88,7 +88,7 @@ D.global = {
             checked = D.media.textures.button_checked
         }
     },
-    shadows = {enabled = true, alpha = 0.3},
+    shadows = {enabled = true, alpha = 0.4},
     castbar = {
         texture = D.media.textures.neon,
         bg = D.media.textures.statusbar_bg
@@ -2312,7 +2312,7 @@ D.modules = {
                     spacing = 10,
                     gap = 6,
                     y_growth = "UP",
-                    disable_mouse = false,
+                    enable_mouse = true,
                     spark = true,
                     sort = false, -- Sort by remaining time
                     name = {text = {size = 13, outline = true, shadow = false}},
