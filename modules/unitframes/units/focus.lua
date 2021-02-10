@@ -17,12 +17,7 @@ local function frame_Update(self)
     self:UpdateConfig()
 
     if self._config.enabled then
-        if self._config.visibility then
-            self:Disable()
-            RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
-        elseif not self:IsEnabled() then
-            self:Enable()
-        end
+        UF:SetStateVisibility(self)
 
         self:UpdateSize()
         self:UpdateHealth()
@@ -43,8 +38,6 @@ end
 function UF:CreateFocusFrame(frame)
     local config = C.modules.unitframes.units[frame._unit]
     local level = frame:GetFrameLevel()
-
-    E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
 
     local textParent = CreateFrame("Frame", nil, frame)
     textParent:SetFrameLevel(level + 9)

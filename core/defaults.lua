@@ -82,8 +82,8 @@ D.global = {
     },
     buttons = {
         border = {texture = D.media.textures.border, size = 16, offset = -4},
-        textures = {
-            normal = D.media.textures.button_normal,
+        texture = {
+            normal = D.media.textures.button_normal, -- normal = "",
             highlight = D.media.textures.button_highlight,
             checked = D.media.textures.button_checked
         }
@@ -1921,6 +1921,7 @@ D.modules = {
                 enabled = true,
                 width = 135,
                 height = 17,
+                visibility = "[vehicleui][petbattle][overridebar][possessbar][@pet,noexists] hide; [@pet,exists] show",
                 point = {
                     p = "LEFT",
                     anchor = "LumPlayerFrame",
@@ -2161,7 +2162,7 @@ D.modules = {
                 enabled = true,
                 width = playerPlateWidth,
                 height = playerPlateHeight,
-                visibility = "[petbattle,vehicleui,overridebar,possessbar] hide; [harm,nodead][combat][group][mod:alt] show; [] hide; show",
+                visibility = "[petbattle,overridebar,possessbar] hide; [vehicleui][harm,nodead][combat][group][mod:alt] show; [] hide; show",
                 attached = true, -- Attach Position to Blizzard's Player nameplate
                 point = {
                     p = "CENTER",
@@ -2312,7 +2313,7 @@ D.modules = {
                     gap = 6,
                     y_growth = "UP",
                     disable_mouse = false,
-                    spark = false,
+                    spark = true,
                     sort = false, -- Sort by remaining time
                     name = {text = {size = 13, outline = true, shadow = false}},
                     time = {
@@ -2389,7 +2390,7 @@ D.modules = {
                 enabled = true,
                 width = targetPlateWidth,
                 height = targetPlateHeight,
-                visibility = "[petbattle,vehicleui,overridebar,possessbar] hide; [harm,nodead][exists,combat][exists,nocombat,mod:alt] show; [] hide; show",
+                visibility = "[petbattle,overridebar,possessbar] hide; [harm,nodead][exists,combat][exists,nocombat,mod:alt][vehicleui,exists] show; [] hide; show",
                 point = {
                     p = "LEFT",
                     anchor = "LumPlayerPlateFrame",

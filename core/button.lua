@@ -99,7 +99,7 @@ local function setPushedTexture(button)
         return
     end
 
-    button:SetPushedTexture(C.global.buttons.textures.highlight)
+    button:SetPushedTexture(C.global.buttons.texture.highlight)
     button:GetPushedTexture():SetVertexColor(E:GetRGB(C.colors.cyan))
     button:GetPushedTexture():SetInside()
 end
@@ -110,7 +110,7 @@ local function setHighlightTexture(button)
         return
     end
 
-    button:SetHighlightTexture(C.global.buttons.textures.highlight, "ADD")
+    button:SetHighlightTexture(C.global.buttons.texture.highlight, "ADD")
     button:GetHighlightTexture():SetVertexColor(E:GetRGB(C.colors.blue))
     button:GetHighlightTexture():SetInside()
 end
@@ -120,7 +120,7 @@ local function setCheckedTexture(button)
         return
     end
 
-    button:SetCheckedTexture(C.global.buttons.textures.checked)
+    button:SetCheckedTexture(C.global.buttons.texture.checked)
     button:GetCheckedTexture():SetInside()
 end
 
@@ -245,7 +245,14 @@ local function skinButton(button, borderTexture)
     end
 
     if bNormalTexture then
-        bNormalTexture:SetTexture(nil)
+        if C.global.buttons.texture.normal then
+            -- TODO: Find a way to make normal texture work on actionbar buttons?
+            -- button:SetNormalTexture(C.global.buttons.texture.normal)
+            -- bNormalTexture:SetInside(1)
+            button:SetNormalTexture(nil)
+        else
+            bNormalTexture:SetNormalTexture(nil)
+        end
         hooksecurefunc(button, "SetNormalTexture", setNormalTextureHook)
 
         local border = E:CreateBorder(button)
@@ -286,10 +293,6 @@ do
         end
 
         skinButton(button)
-
-        local bNormalTexture = button.GetNormalTexture and button:GetNormalTexture()
-        bNormalTexture:SetTexture(C.global.buttons.textures.normal)
-        bNormalTexture:SetInside(1)
 
         local bBorder = button.Border
         local bFloatingBG = _G[button:GetName() .. "FloatingBG"]
@@ -340,7 +343,7 @@ do
             return
         end
 
-        skinButton(button, C.media.textures.border)
+        skinButton(button)
 
         local azeriteTexture = button.AzeriteTexture
         if azeriteTexture then

@@ -24,12 +24,7 @@ do
         self:UpdateConfig()
 
         if self._config.enabled then
-            if self._config.visibility then
-                self:Disable()
-                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
-            elseif not self:IsEnabled() then
-                self:Enable()
-            end
+            UF:SetStateVisibility(self)
 
             self:UpdateSize()
             self:UpdateHealth()
@@ -53,8 +48,6 @@ do
     function UF:CreateTargetFrame(frame)
         local config = C.modules.unitframes.units[frame._unit]
         local level = frame:GetFrameLevel()
-
-        E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
 
         local textParent = CreateFrame("Frame", nil, frame)
         textParent:SetFrameLevel(level + 9)
@@ -128,11 +121,9 @@ do
         frame.TextParent = textParent
 
         local health = self:CreateHealthBar(frame, textParent)
-        self:CreateHealthPrediction(frame, health, textParent)
-        E:SetBackdrop(health, E.SCREEN_SCALE * 3)
-
         local power = self:CreatePowerBar(frame, textParent)
-        E:SetBackdrop(power, E.SCREEN_SCALE * 3)
+
+        self:CreateHealthPrediction(frame, health, textParent)
 
         self:CreateName(frame, textParent)
         self:CreateAuras(frame, "target")

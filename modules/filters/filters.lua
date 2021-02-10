@@ -126,8 +126,26 @@ local class_buffs = {
     },
     ["ROGUE"] = {
         state = true,
-        [315496] = true -- Slice and Dice
-        -- [121153] = true -- Blindside
+        [315496] = true, -- Slice and Dice
+        [13750] = true, -- Adrenaline Rush
+        [13877] = true, -- Blade Flurry
+        [31224] = true, -- Cloak of Shadows
+        [5277] = true, -- Evasion
+        [193356] = true, -- Broadside (Roll the Bones)
+        [199600] = true, -- Buried Treasure (Roll the Bones)
+        [193358] = true, -- Grand Melee (Roll the Bones)
+        [193357] = true, -- Ruthless Precision (Roll the Bones)
+        [199603] = true, -- Skull and Crossbones (Roll the Bones)
+        [193359] = true, -- True Bearing (Roll the Bones)
+        [199754] = true, -- Riposte
+        [121471] = true, -- Shadow Blades
+        [185422] = true, -- Shadow Dance
+        [114018] = true, -- Shroud of Concealment
+        [2983] = true, -- Sprint
+        [212283] = true, -- Symbols of Death
+        [11327] = true -- Vanish
+        -- [32645] = true, -- Envenom
+        -- [121153] = true, -- Blindside
     },
     ["SHAMAN"] = {state = true},
     ["WARLOCK"] = {state = true},

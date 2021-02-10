@@ -19,12 +19,7 @@ do
         self:UpdateConfig()
 
         if self._config.enabled then
-            if self._config.visibility then
-                self:Disable()
-                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
-            elseif not self:IsEnabled() then
-                self:Enable()
-            end
+            UF:SetStateVisibility(self)
 
             self:UpdateSize()
             self:UpdateHealth()
@@ -50,8 +45,6 @@ do
         local config = C.modules.unitframes.units[frame._unit]
         local level = frame:GetFrameLevel()
 
-        E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
-
         local textParent = CreateFrame("Frame", nil, frame)
         textParent:SetFrameLevel(level + 9)
         textParent:SetAllPoints()
@@ -64,13 +57,14 @@ do
         E:CreateShadow(portraitParent)
 
         self:CreateHealthBar(frame, textParent)
-        self:CreateHealthPrediction(frame, frame.Health, textParent)
-
         self:CreatePowerBar(frame, textParent)
+
         local addPower = self:CreateAdditionalPower(frame)
         addPower:SetFrameLevel(frame:GetFrameLevel() + 3)
         E:SetBackdrop(addPower, E.SCREEN_SCALE * 3)
         E:CreateShadow(addPower)
+
+        self:CreateHealthPrediction(frame, frame.Health, textParent)
         self:CreatePowerPrediction(frame, frame.Power, addPower)
 
         self:CreateName(frame, textParent)
@@ -121,12 +115,7 @@ do
         self:UpdateConfig()
 
         if self._config.enabled then
-            if self._config.visibility then
-                self:Disable()
-                RegisterAttributeDriver(self, "state-visibility", self._config.visibility)
-            elseif not self:IsEnabled() then
-                self:Enable()
-            end
+            UF:SetStateVisibility(self)
 
             self:UpdateSize()
             self:UpdateHealth()
@@ -161,12 +150,10 @@ do
         frame.TextParent = textParent
 
         local health = self:CreateHealthBar(frame, textParent)
-        self:CreateHealthPrediction(frame, health, textParent)
-        E:SetBackdrop(health, E.SCREEN_SCALE * 3)
-
         local power = self:CreatePowerBar(frame, textParent)
+
+        self:CreateHealthPrediction(frame, health, textParent)
         self:CreatePowerPrediction(frame, frame.Power)
-        E:SetBackdrop(power, E.SCREEN_SCALE * 3)
 
         -- Class Power
         if E.PLAYER_CLASS == "MONK" then
