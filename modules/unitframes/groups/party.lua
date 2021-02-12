@@ -22,7 +22,8 @@ local function frame_Update(self)
     self:UpdateHealth()
     self:UpdatePower()
     self:UpdateHealthPrediction()
-  -- self:UpdatePowerPrediction()
+    self:UpdateName()
+    self:UpdateThreatIndicator()
   end
 end
 
@@ -36,10 +37,12 @@ function UF:CreatePartyFrame(frame)
   frame.TextParent = textParent
 
   local health = self:CreateHealthBar(frame, textParent)
-  local power = self:CreatePowerBar(frame, textParent)
+  local power = self:CreatePowerBar(frame, textParent, C.global.statusbar.texture)
 
   self:CreateHealthPrediction(frame, health, textParent)
-  -- self:CreatePowerPrediction(frame, frame.Power)
+
+  self:CreateName(frame, textParent)
+  self:CreateThreatIndicator(frame)
 
   frame.Update = frame_Update
 

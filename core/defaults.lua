@@ -1118,7 +1118,7 @@ D.modules = {
                             p = "RIGHT",
                             anchor = "",
                             ap = "RIGHT",
-                            x = -6,
+                            x = -5,
                             y = 1.5
                         }
                     },
@@ -1230,7 +1230,7 @@ D.modules = {
                         p = "LEFT",
                         anchor = "",
                         ap = "LEFT",
-                        x = 6,
+                        x = 5,
                         y = 1.5
                     }
                 },
@@ -2642,8 +2642,8 @@ D.modules = {
             },
             party = {
                 enabled = true,
-                width = 120,
-                height = 20,
+                width = 110,
+                height = 25,
                 x_offset = 5,
                 y_offset = 5,
                 orientation = "HORIZONTAL", -- HORIZONTAL or VERTICAL
@@ -2661,16 +2661,17 @@ D.modules = {
                     change_threshold = 0.001,
                     reverse = true,
                     color = {
-                        smooth = false,
+                        smooth = true,
                         health = false,
                         tapping = false,
-                        disconnected = true,
-                        class = true,
+                        disconnected = false,
+                        class = false,
                         reaction = false
                     },
                     text = {
-                        tag = "",
-                        size = 14,
+                        tag = "[lum:health_perc]",
+                        size = 13,
+                        alpha = 0.9,
                         outline = true,
                         shadow = false,
                         h_alignment = "CENTER",
@@ -2680,8 +2681,8 @@ D.modules = {
                             p = "CENTER",
                             anchor = "",
                             ap = "CENTER",
-                            x = 0,
-                            y = 0
+                            x = 4,
+                            y = 0.5
                         }
                     },
                     prediction = {
@@ -2720,15 +2721,15 @@ D.modules = {
                         alpha = 0.9,
                         outline = true,
                         shadow = false,
-                        h_alignment = "RIGHT",
+                        h_alignment = "CENTER",
                         v_alignment = "MIDDLE",
                         hide_when_max = true,
                         point = {
-                            p = "BOTTOMRIGHT",
+                            p = "CENTER",
                             anchor = "",
-                            ap = "TOPRIGHT",
-                            x = 2,
-                            y = 4
+                            ap = "CENTER",
+                            x = 0,
+                            y = 0
                         }
                     }
                 },
@@ -2737,10 +2738,10 @@ D.modules = {
                     height = 2,
                     gap = 1,
                     color = {
-                        power = true,
-                        tapping = true,
+                        power = false,
+                        tapping = false,
                         disconnected = false,
-                        class = false
+                        class = true
                     },
                     text = {
                         tag = "",
@@ -2757,7 +2758,24 @@ D.modules = {
                             y = 6
                         }
                     }
-                }
+                },
+                name = {
+                    tag = "[lum:color_unit][lum:name(22)]",
+                    size = 13,
+                    outline = true,
+                    shadow = false,
+                    h_alignment = "CENTER",
+                    v_alignment = "BOTTOM",
+                    word_wrap = false,
+                    point = {
+                        p = "CENTER",
+                        anchor = "",
+                        ap = "TOP",
+                        x = 2,
+                        y = 10
+                    }
+                },
+                threat = {enabled = true}
             }
         }
     }

@@ -72,10 +72,6 @@ do
     local function element_PostUpdate(self, unit, cur, _, max)
         local shouldShown = self:IsShown() and max and max ~= 0
 
-        if self.UpdateContainer then
-            self:UpdateContainer(shouldShown)
-        end
-
         local unitGUID = UnitGUID(unit)
         self.GainLossIndicators:Update(cur, max, unitGUID == self.GainLossIndicators._UnitGUID)
         self.GainLossIndicators._UnitGUID = unitGUID
@@ -139,26 +135,24 @@ do
 
         if self:IsElementEnabled("Power") then
             element:ForceUpdate()
-        elseif element.UpdateContainer then
-            element:UpdateContainer(false)
         end
     end
 
-    function UF:CreatePowerBar(frame, textParent)
+    function UF:CreatePowerBar(frame, textParent, textureOverride)
         local config = C.modules.unitframes.units[frame._layout or frame._unit].power
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("BOTTOMLEFT", frame)
         element:SetPoint("BOTTOMRIGHT", frame)
-        element:SetStatusBarTexture(C.media.textures.neon)
+        element:SetStatusBarTexture(textureOverride or C.media.textures.neon)
         element:GetStatusBarTexture():SetVertTile(true)
         E:SmoothBar(element)
 
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
         bg:SetTexture(C.media.textures.flat)
-        bg:SetAlpha(0.3)
-        bg.multiplier = 0.4
+        bg:SetAlpha(0.5)
+        bg.multiplier = 0.1
         element.bg = bg
 
         element.Text = (textParent or element):CreateFontString(nil, "ARTWORK")

@@ -178,7 +178,7 @@ do
             self:SetStatusBarTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
             self:SetAlpha(0.98)
 
-            self.bg:SetTexture(C.global.statusbar.texture)
+            self.bg:SetTexture(textureOverride or C.media.textures.flat)
             self.bg:SetAlpha(0.9)
         end
 
@@ -240,19 +240,20 @@ do
         element:ForceUpdate()
     end
 
-    function UF:CreateHealthBar(frame, textParent)
+    function UF:CreateHealthBar(frame, textParent, textureOverride)
         local config = C.modules.unitframes.units[frame._layout or frame._unit].health
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("TOPLEFT", frame)
         element:SetPoint("TOPRIGHT", frame)
-        element:SetStatusBarTexture(C.global.statusbar.texture)
+        element:SetStatusBarTexture(textureOverride or C.global.statusbar.texture)
         element:GetStatusBarTexture():SetHorizTile(true)
         element:GetStatusBarTexture():SetVertTile(true)
         element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
         E:SmoothBar(element)
 
         element.Text = (textParent or element):CreateFontString("Text", "ARTWORK")
+        element.Text:SetTextColor(E:GetRGBA(config.text.color or C.colors.light_gray, config.text.alpha or 1))
 
         if config.perc then
             local perc = element:CreateFontString("Percent", "BACKGROUND")

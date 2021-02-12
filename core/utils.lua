@@ -466,13 +466,7 @@ do
 
     -- Make color lighter (add white)
     function E:TintColor(color, factor)
-        if not color or not factor then
-            return
-        end
-
-        local r, g, b = E:GetRGB(color)
-
-        if not r then
+        if not r or not factor then
             return
         end
 
@@ -484,14 +478,8 @@ do
     end
 
     -- Make color darker (add black)
-    function E:ShadeColor(color, factor)
-        if not color or not factor then
-            return
-        end
-
-        local r, g, b = E:GetRGB(color)
-
-        if not r then
+    function E:ShadeColor(r, g, b, factor)
+        if not r or not factor then
             return
         end
 
