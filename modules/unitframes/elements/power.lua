@@ -145,7 +145,7 @@ do
     end
 
     function UF:CreatePowerBar(frame, textParent)
-        local config = C.modules.unitframes.units[frame._unit].power
+        local config = C.modules.unitframes.units[frame._layout or frame._unit].power
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("BOTTOMLEFT", frame)

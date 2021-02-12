@@ -464,6 +464,44 @@ do
         return "|c" .. color.hex .. text .. "|r"
     end
 
+    -- Make color lighter (add white)
+    function E:TintColor(color, factor)
+        if not color or not factor then
+            return
+        end
+
+        local r, g, b = E:GetRGB(color)
+
+        if not r then
+            return
+        end
+
+        local R = r + (1 - r) * factor
+        local G = g + (1 - g) * factor
+        local B = b + (1 - b) * factor
+
+        return R, G, B
+    end
+
+    -- Make color darker (add black)
+    function E:ShadeColor(color, factor)
+        if not color or not factor then
+            return
+        end
+
+        local r, g, b = E:GetRGB(color)
+
+        if not r then
+            return
+        end
+
+        local R = r * (1 - factor)
+        local G = g * (1 - factor)
+        local B = b * (1 - factor)
+
+        return R, G, B
+    end
+
     -- Gradients
     local function calcGradient(perc, ...)
         local num = select("#", ...)

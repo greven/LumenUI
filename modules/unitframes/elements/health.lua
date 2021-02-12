@@ -154,8 +154,12 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].health, self._config)
-        self._config.power = E:CopyTable(C.modules.unitframes.units[unit].power, self._config.power)
+        local config = C.modules.unitframes.units[unit]
+
+        self._config = E:CopyTable(config.health, self._config)
+        if config.power then
+            self._config.power = E:CopyTable(config.power, self._config.power)
+        end
     end
 
     local function element_UpdateColors(self)
@@ -171,7 +175,7 @@ do
         if config.reverse then
             self.colorClass = false
             self.colorSmooth = false
-            self:SetStatusBarTexture(C.media.textures.vertlines)
+            self:SetStatusBarTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
             self:SetAlpha(0.98)
 
             self.bg:SetTexture(C.global.statusbar.texture)
@@ -237,7 +241,7 @@ do
     end
 
     function UF:CreateHealthBar(frame, textParent)
-        local config = C.modules.unitframes.units[frame._unit].health
+        local config = C.modules.unitframes.units[frame._layout or frame._unit].health
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("TOPLEFT", frame)
@@ -261,7 +265,9 @@ do
 
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
-        bg:SetTexture(C.media.textures.statusbar_bg)
+        bg:SetTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
+        bg:SetHorizTile(true)
+        bg:SetVertTile(true)
         bg:SetAlpha(0.5)
         bg.multiplier = 0.3
         element.bg = bg

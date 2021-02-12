@@ -227,7 +227,7 @@ local function frame_UpdateCastbar(self)
 end
 
 function UF:CreateCastbar(frame)
-    local config = C.modules.unitframes.units[frame._unit].castbar
+    local config = C.modules.unitframes.units[frame._layout or frame._unit].castbar
 
     local holder = CreateFrame("Frame", "$parentCastbarHolder", frame)
     holder._width = 0
@@ -241,10 +241,12 @@ function UF:CreateCastbar(frame)
     E:CreateShadow(element)
 
     local bg = element:CreateTexture(nil, "BACKGROUND", nil)
-    bg:SetAllPoints(element)
-    bg:SetTexture(C.global.castbar.bg)
+    bg:SetAllPoints()
+    bg:SetTexture(C.global.castbar.bg, "REPEAT", "REPEAT")
+    bg:SetHorizTile(true)
+    bg:SetVertTile(true)
     bg:SetVertexColor(E:GetRGB(C.colors.dark_gray))
-    bg:SetAlpha(0.6)
+    bg:SetAlpha(0.5)
     element.bg = bg
 
     local iconParent = CreateFrame("Frame", nil, element)

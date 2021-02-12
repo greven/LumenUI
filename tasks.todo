@@ -94,6 +94,7 @@ Roadmap:
   ☐ Add GUI after first stable release (future plans)
   ☐ Consider adding LibSharedMedia for fonts, statusbar textures, etc.
   ☐ Add Mask support for buttons?
+  ☐ How to add support for cyrilic languages, chinese?
 
 Archive:
   ✔ Auras: Cooldown spiral is 1 pixel short of the aura border @bug @done(21-02-04 02:41) @project(Unitframes)

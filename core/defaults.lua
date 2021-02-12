@@ -31,9 +31,8 @@ D.media = {
     },
     textures = {
         statusbar = Media .. "textures\\statusbar",
-        statusbar_bg = Media .. "textures\\statusbar-bg",
         statusbar_azerite = Media .. "textures\\statusbar-azerite",
-        flat = Media .. "textures\\statusbar",
+        flat = Media .. "textures\\flat",
         neon = Media .. "textures\\neon",
         mint = Media .. "textures\\mint",
         vertlines = Media .. "textures\\vertlines",
@@ -91,7 +90,7 @@ D.global = {
     shadows = {enabled = true, alpha = 0.4},
     castbar = {
         texture = D.media.textures.neon,
-        bg = D.media.textures.statusbar_bg
+        bg = D.media.textures.vertlines
     },
     aura_bars = {texture = D.media.textures.statusbar},
     aura_filters = {
@@ -2638,6 +2637,125 @@ D.modules = {
                         ap = "RIGHT",
                         x = 2,
                         y = 20
+                    }
+                }
+            },
+            party = {
+                enabled = true,
+                width = 120,
+                height = 20,
+                x_offset = 5,
+                y_offset = 5,
+                orientation = "HORIZONTAL", -- HORIZONTAL or VERTICAL
+                show_solo = true,
+                point = {
+                    p = "CENTER",
+                    anchor = "UIParent",
+                    ap = "CENTER",
+                    x = 0,
+                    y = -400
+                },
+                health = {
+                    enabled = true,
+                    kill_range = false,
+                    change_threshold = 0.001,
+                    reverse = true,
+                    color = {
+                        smooth = false,
+                        health = false,
+                        tapping = false,
+                        disconnected = true,
+                        class = true,
+                        reaction = false
+                    },
+                    text = {
+                        tag = "",
+                        size = 14,
+                        outline = true,
+                        shadow = false,
+                        h_alignment = "CENTER",
+                        v_alignment = "MIDDLE",
+                        hide_when_max = true,
+                        point = {
+                            p = "CENTER",
+                            anchor = "",
+                            ap = "CENTER",
+                            x = 0,
+                            y = 0
+                        }
+                    },
+                    prediction = {
+                        enabled = true,
+                        absorb_text = {
+                            -- tag = "[lum:color_absorb_damage][lum_absorb_damage]|r",
+                            size = 12,
+                            h_alignment = "CENTER",
+                            v_alignment = "MIDDLE",
+                            point1 = {
+                                p = "BOTTOM",
+                                anchor = "Health.Text",
+                                ap = "TOP",
+                                x = 0,
+                                y = 2
+                            }
+                        },
+                        heal_absorb_text = {
+                            -- tag = "[lum:color_absorb_heal][lum:absorb_heal]|r",
+                            size = 12,
+                            h_alignment = "CENTER",
+                            v_alignment = "MIDDLE",
+                            point1 = {
+                                p = "BOTTOM",
+                                anchor = "Health.Text",
+                                ap = "TOP",
+                                x = 0,
+                                y = 16
+                            }
+                        }
+                    },
+                    perc = {
+                        tag = "",
+                        size = 14,
+                        color = D.colors.light_gray,
+                        alpha = 0.9,
+                        outline = true,
+                        shadow = false,
+                        h_alignment = "RIGHT",
+                        v_alignment = "MIDDLE",
+                        hide_when_max = true,
+                        point = {
+                            p = "BOTTOMRIGHT",
+                            anchor = "",
+                            ap = "TOPRIGHT",
+                            x = 2,
+                            y = 4
+                        }
+                    }
+                },
+                power = {
+                    enabled = true,
+                    height = 2,
+                    gap = 1,
+                    color = {
+                        power = true,
+                        tapping = true,
+                        disconnected = false,
+                        class = false
+                    },
+                    text = {
+                        tag = "",
+                        size = 14,
+                        outline = true,
+                        shadow = false,
+                        h_alignment = "CENTER",
+                        v_alignment = "MIDDLE",
+                        point = {
+                            p = "BOTTOM",
+                            anchor = "",
+                            ap = "TOP",
+                            x = 0,
+                            y = 6
+                        }
                     }
                 }
             }

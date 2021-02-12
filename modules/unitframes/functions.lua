@@ -40,7 +40,8 @@ do
   end
 
   local function frame_UpdateConfig(self)
-    self._config = E:CopyTable(C.modules.unitframes.units[self._layout or self._unit], self._config, configIgnoredKeys)
+    local config = C.modules.unitframes.units
+    self._config = E:CopyTable(config[self._layout or self._unit], self._config, configIgnoredKeys)
   end
 
   local function frame_UpdateSize(self)
@@ -64,14 +65,13 @@ do
     frame:SetScript("OnEnter", frame_OnEnter)
     frame:SetScript("OnLeave", frame_OnLeave)
 
-    local name = frame:GetName()
-    frame._unit = unit:gsub("%d+", "")
-    frame._layout = name:match("Lum(%a+)Frame"):lower()
-
     E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
     if C.global.shadows.enabled then
       E:CreateShadow(frame)
     end
+
+    frame._unit = unit:gsub("%d+", "")
+    frame._layout = frame:GetName():match("Lum(%a+)Frame"):lower()
 
     frame.ForElement = frame_ForElement
     frame.UpdateConfig = frame_UpdateConfig

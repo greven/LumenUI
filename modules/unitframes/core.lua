@@ -16,7 +16,17 @@ local units = {}
 
 function UF:For(unit, method, ...)
     if units[unit] and C.modules.unitframes.units[unit].enabled then
-        if unit == "boss" then
+        if unit == "party" then
+            local header = objects[unit]
+            if header then
+                for i = 1, header:GetNumChildren() do
+                    local child = select(i, header:GetChildren())
+                    if child and child[method] then
+                        child[method](child, ...)
+                    end
+                end
+            end
+        elseif unit == "boss" then
             -- Boss
         elseif objects[unit] then
             if objects[unit][method] then
@@ -50,14 +60,71 @@ function UF:GetUnits(ignoredUnits)
     return temp
 end
 
+function UF:CreateHeader(unit, name)
+    local config = C.modules.unitframes.units
+
+    -- Party
+    do
+        local partyWidth = config.party.width
+        local partyHeight = config.party.height
+        local xOffset, yOffset = config.party.x_offset, config.party.y_offset
+        local horizontalParty = config.party.orientation == "HORIZONTAL"
+        local groupingOrder = horizontalParty and "TANK,HEALER,DAMAGER,NONE" or "NONE,DAMAGER,HEALER,TANK"
+        local showSolo = config.party.show_solo
+
+        -- Spawn Headers here
+        local header =
+            oUF:SpawnHeader(
+            "LumPartyFrame",
+            nil,
+            "solo,party",
+            "showPlayer",
+            true,
+            "showSolo",
+            showSolo,
+            "showParty",
+            true,
+            "showRaid",
+            false,
+            "xoffset",
+            xOffset,
+            "yOffset",
+            yOffset,
+            "groupingOrder",
+            groupingOrder,
+            "groupBy",
+            "ASSIGNEDROLE",
+            "sortMethod",
+            "NAME",
+            "point",
+            horizontalParty and "LEFT" or "BOTTOM",
+            "columnAnchorPoint",
+            "LEFT",
+            "oUF-initialConfigFunction",
+            ([[
+                self:SetWidth(%d)
+                self:SetHeight(%d)
+                ]]):format(
+                partyWidth,
+                partyHeight
+            )
+        )
+
+        header:ClearAllPoints()
+
+        return header
+    end
+end
+
 function UF:Create(unit, name)
     if not units[unit] then
-        if unit == "party" then
-            -- Party
-        elseif unit == "raid" then
-            -- Raid
-        elseif unit == "boss" then
+        if unit == "boss" then
             -- Boss
+        elseif unit == "party" then
+            local header = UF:CreateHeader("party", name .. "Frame")
+
+            E:SetPosition(header, C.modules.unitframes.units[unit].point)
+            objects[unit] = header
         else
             local object
 
@@ -69,9 +136,7 @@ function UF:Create(unit, name)
                 object = oUF:Spawn(unit, name .. "Frame")
             end
 
-            object:UpdateConfig()
-            E:SetPosition(object, object._config.point)
-
+            E:SetPosition(object, C.modules.unitframes.units[unit].point)
             objects[unit] = object
         end
 
@@ -79,58 +144,15 @@ function UF:Create(unit, name)
     end
 end
 
-function UF:SpawnFrames()
-    local config = C.modules.unitframes
-
-    if config.units.player.enabled then
-        UF:Create("player", "LumPlayer")
-        UF:For("player", "Update")
-        UF:Create("pet", "LumPet")
-        UF:For("pet", "Update")
-    end
-
-    if config.units.playerplate.enabled then
-        UF:Create("playerplate", "LumPlayerPlate")
-        UF:For("playerplate", "Update")
-    end
-
-    if config.units.target.enabled then
-        UF:Create("target", "LumTarget")
-        UF:For("target", "Update")
-    end
-
-    if config.units.targetplate.enabled then
-        UF:Create("targetplate", "LumTargetPlate")
-        UF:For("targetplate", "Update")
-    end
-
-    if config.units.targettarget.enabled then
-        UF:Create("targettarget", "LumTargetTarget")
-        UF:For("targettarget", "Update")
-    end
-
-    if config.units.focus.enabled then
-        UF:Create("focus", "LumFocus")
-        UF:For("focus", "Update")
-    end
-
-    if config.units.focustarget.enabled then
-        UF:Create("focustarget", "LumFocusTarget")
-        UF:For("focustarget", "Update")
-    end
-
-    -- if config.units.party.enabled then
-    -- UF:Create("party", "LumParty")
-    -- UF:For("party", "Update")
-    -- end
-end
-
 function UF:CreateFrames()
+    local config = C.modules.unitframes.units
+
     oUF:Factory(
         function()
             oUF:RegisterStyle(
                 "Lum",
                 function(frame, unit)
+                    frame._parent = frame:GetParent()
                     UF:SetSharedStyle(frame, unit)
 
                     if unit == "player" then
@@ -153,11 +175,57 @@ function UF:CreateFrames()
                         UF:CreateFocusTargetFrame(frame)
                     elseif unit == "pet" then
                         UF:CreatePetFrame(frame)
+                    elseif unit == "party" then
+                        UF:CreatePartyFrame(frame)
+                    elseif unit:match("^boss%d") then
+                    -- TODO: Create Boss
                     end
                 end
             )
             oUF:SetActiveStyle("Lum")
-            UF:SpawnFrames()
+
+            -- Spawn Frames
+            if config.player.enabled then
+                UF:Create("player", "LumPlayer")
+                UF:For("player", "Update")
+                UF:Create("pet", "LumPet")
+                UF:For("pet", "Update")
+            end
+
+            if config.playerplate.enabled then
+                UF:Create("playerplate", "LumPlayerPlate")
+                UF:For("playerplate", "Update")
+            end
+
+            if config.target.enabled then
+                UF:Create("target", "LumTarget")
+                UF:For("target", "Update")
+            end
+
+            if config.targetplate.enabled then
+                UF:Create("targetplate", "LumTargetPlate")
+                UF:For("targetplate", "Update")
+            end
+
+            if config.targettarget.enabled then
+                UF:Create("targettarget", "LumTargetTarget")
+                UF:For("targettarget", "Update")
+            end
+
+            if config.focus.enabled then
+                UF:Create("focus", "LumFocus")
+                UF:For("focus", "Update")
+            end
+
+            if config.focustarget.enabled then
+                UF:Create("focustarget", "LumFocusTarget")
+                UF:For("focustarget", "Update")
+            end
+
+            if config.party.enabled then
+                UF:Create("party", "LumParty")
+                UF:For("party", "Update")
+            end
         end
     )
 end

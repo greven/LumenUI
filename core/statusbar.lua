@@ -124,10 +124,12 @@ function E:SetStatusBarSkin(bar, texture, orientation)
     bar:SetOrientation(orientation or "HORIZONTAL")
 
     if bar.Bg then
-        bar.Bg:SetTexture(C.media.textures.statusbar_bg)
+        bar.Bg:SetTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
+        bar.Bg:SetAllPoints()
+        bar.Bg:SetHorizTile(true)
+        bar.Bg:SetVertTile(true)
         bar.Bg:SetColorTexture(bar:GetStatusBarColor())
         bar.Bg:SetAlpha(0.25)
-        bar.Bg:SetAllPoints()
     end
 
     if bar.Text then
