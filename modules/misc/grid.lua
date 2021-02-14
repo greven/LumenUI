@@ -1,7 +1,7 @@
 local _, ns = ...
 local E, C, L = ns.E, ns.C, ns.L
 
-local M = E:GetModule("Misc")
+local MISC = E:GetModule("Misc")
 
 -- Lua
 local _G = getfenv(0)
@@ -44,11 +44,11 @@ local function releaseGridLines()
   end
 end
 
-function M.HideGrid()
+function MISC.HideGrid()
   Grid:Hide()
 end
 
-function M.ShowGrid()
+function MISC.ShowGrid()
   releaseGridLines()
 
   local screenWidth, screenHeight = UIParent:GetRight(), UIParent:GetTop()
@@ -114,7 +114,7 @@ function M.ShowGrid()
   end
 end
 
-function M.SetUpGridLines()
+function MISC.SetUpGridLines()
   if not isInit then
     Grid = CreateFrame("Frame", nil, UIParent)
     Grid:SetFrameStrata("BACKGROUND")
@@ -125,10 +125,10 @@ function M.SetUpGridLines()
       function()
         if not InCombatLockdown() then
           if not areToggledOn then
-            M:ShowGrid()
+            MISC:ShowGrid()
             areToggledOn = true
           else
-            M:HideGrid()
+            MISC:HideGrid()
             areToggledOn = false
           end
         end

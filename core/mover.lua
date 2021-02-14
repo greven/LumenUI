@@ -64,7 +64,7 @@ function E.Movers:Create(object, isSimple)
     mover:GetHighlightTexture():SetAlpha(0.1)
 
     local bg = mover:CreateTexture(nil, "BACKGROUND", nil, 0)
-    bg:SetColorTexture(E:GetRGBA(C.global.colors.blue, 0.6))
+    bg:SetColorTexture(E:GetRGBA(C.db.global.colors.blue, 0.6))
     bg:SetAllPoints()
     mover.Bg = bg
 

@@ -1,7 +1,7 @@
 local _, ns = ...
 local E, C, L = ns.E, ns.C, ns.L
 
-local M = E:AddModule("Misc")
+local MISC = E:AddModule("Misc")
 
 -- Lua
 local _G = getfenv(0)
@@ -9,17 +9,16 @@ local _G = getfenv(0)
 -- ---------------
 
 local isInit = false
-local config = C.profile.modules.misc
 
-function M:IsInit()
+function MISC:IsInit()
     return isInit
 end
 
-function M:Init()
-    if not isInit and config.enabled then
+function MISC:Init()
+    if not isInit and C.db.profile.modules.misc.enabled then
+        self:SetUpGridLines()
         self:SetUpBindings()
         self:SetUpMerchant()
-        self:SetUpGridLines()
 
         isInit = true
     end

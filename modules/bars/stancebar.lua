@@ -42,13 +42,13 @@ local function button_Update(self)
 
         if isCastable then
             self.icon:SetDesaturated(false)
-            self.icon:SetVertexColor(E:GetRGB(C.global.colors.button.normal))
+            self.icon:SetVertexColor(E:GetRGB(C.db.global.colors.button.normal))
         else
             self.icon:SetDesaturated(true)
-            self.icon:SetVertexColor(E:GetRGB(C.global.colors.button.unusable))
+            self.icon:SetVertexColor(E:GetRGB(C.db.global.colors.button.unusable))
         end
 
-        self.HotKey:SetVertexColor(E:GetRGB(C.global.colors.button.normal))
+        self.HotKey:SetVertexColor(E:GetRGB(C.db.global.colors.button.normal))
 
         self:UpdateHotKey()
         self:UpdateCooldown()
@@ -72,7 +72,7 @@ end
 local function button_UpdateHotKeyFont(self)
     local config = self._parent._config.hotkey
 
-    self.HotKey:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
+    self.HotKey:SetFont(C.db.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
     self.HotKey:SetWordWrap(false)
 
     if config.shadow then
@@ -183,7 +183,7 @@ function BARS.CreateStanceBar()
         bar:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
         bar:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 
-        local point = C.profile.modules.bars.bar7.point
+        local point = C.db.profile.modules.bars.bar7.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

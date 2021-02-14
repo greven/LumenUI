@@ -43,19 +43,19 @@ local function element_Override(self, _, unit)
         element:SetTexture("Interface\\AddOns\\LumenUI\\media\\textures\\pvp")
 
         if status == "Alliance" then
-            element:SetVertexColor(E:GetRGB(C.global.colors.faction[status]))
+            element:SetVertexColor(E:GetRGB(C.db.global.colors.faction[status]))
             if element.Timer then
-                element.Timer:SetTextColor(E:GetRGB(C.global.colors.faction[status]))
+                element.Timer:SetTextColor(E:GetRGB(C.db.global.colors.faction[status]))
             end
         elseif status == "Horde" then
-            element:SetVertexColor(E:GetRGB(C.global.colors.faction[status]))
+            element:SetVertexColor(E:GetRGB(C.db.global.colors.faction[status]))
             if element.Timer then
-                element.Timer:SetTextColor(E:GetRGB(C.global.colors.faction[status]))
+                element.Timer:SetTextColor(E:GetRGB(C.db.global.colors.faction[status]))
             end
         else
-            element:SetVertexColor(E:GetRGB(C.global.colors.amber))
+            element:SetVertexColor(E:GetRGB(C.db.global.colors.amber))
             if element.Timer then
-                element.Timer:SetTextColor(E:GetRGB(C.global.colors.amber))
+                element.Timer:SetTextColor(E:GetRGB(C.db.global.colors.amber))
             end
         end
 
@@ -67,7 +67,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].pvp, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].pvp, self._config)
 end
 
 local function element_UpdateSize(self)

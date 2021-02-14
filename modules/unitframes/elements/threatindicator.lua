@@ -13,7 +13,7 @@ local UnitExists = _G.UnitExists
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._unit
-    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].threat, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].threat, self._config)
 end
 
 local function element_PostUpdate(self, _, status)

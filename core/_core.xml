@@ -1,13 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Include file="templates.xml"/>
-
   <Script file="core.lua" />
   <Script file="utils.lua" />
-
   <Script file="media.lua" />
   <Script file="defaults.lua" />
   <Script file="constants.lua" />
-
   <Script file="api.lua" />
   <Script file="bar.lua" />
   <Script file="backdrop.lua" />
@@ -17,6 +14,4 @@
   <Script file="fading.lua" />
   <Script file="mover.lua" />
   <Script file="statusbar.lua" />
-
-  <Script file="dev.lua" />
 </Ui>

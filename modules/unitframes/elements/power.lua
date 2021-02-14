@@ -13,7 +13,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font, config.size, config.outline and "OUTLINE" or nil)
+    fontString:SetFont(C.db.global.fonts.units.font, config.size, config.outline and "OUTLINE" or nil)
     fontString:SetJustifyH(config.h_alignment)
     fontString:SetJustifyV(config.v_alignment)
     fontString:SetWordWrap(false)
@@ -90,7 +90,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].power, self._config)
+        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].power, self._config)
     end
 
     local function element_UpdateSize(self)
@@ -139,7 +139,7 @@ do
     end
 
     function UF:CreatePowerBar(frame, textParent, textureOverride)
-        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].power
+        local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].power
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("BOTTOMLEFT", frame)
@@ -202,7 +202,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].additional_power, self._config)
+        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].additional_power, self._config)
     end
 
     local function element_UpdateSize(self)
@@ -284,14 +284,14 @@ do
         end
 
         local unit = self.__owner._layout or self.__owner._unit
-        self._config.power.enabled = C.profile.modules.unitframes.units[unit].power.prediction.enabled
+        self._config.power.enabled = C.db.profile.modules.unitframes.units[unit].power.prediction.enabled
         self._config.additional_power.enabled =
-            C.profile.modules.unitframes.units[unit].additional_power.prediction.enabled
+            C.db.profile.modules.unitframes.units[unit].additional_power.prediction.enabled
     end
 
     local function element_UpdateColors(self)
-        self.mainBar_:SetStatusBarColor(E:GetRGB(C.global.colors.prediction.power_cost))
-        self.altBar_:SetStatusBarColor(E:GetRGB(C.global.colors.prediction.power_cost))
+        self.mainBar_:SetStatusBarColor(E:GetRGB(C.db.global.colors.prediction.power_cost))
+        self.altBar_:SetStatusBarColor(E:GetRGB(C.db.global.colors.prediction.power_cost))
     end
 
     local function frame_UpdatePowerPrediction(frame)

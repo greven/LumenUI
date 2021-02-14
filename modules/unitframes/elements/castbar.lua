@@ -14,7 +14,7 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.db.global.fonts.units.font, config.size, config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -28,7 +28,7 @@ local function element_PostCastStart(self)
     local unit = self.__owner.unit
 
     if self.notInterruptible then
-        self:SetStatusBarColor(E:GetRGB(C.global.colors.castbar.notinterruptible))
+        self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.notinterruptible))
 
         if self.Icon and unit ~= "player" then
             self.Icon:SetDesaturated(true)
@@ -36,12 +36,12 @@ local function element_PostCastStart(self)
     else
         if self.casting then
             if self._config.color_by_class then
-                self:SetStatusBarColor(E:GetRGB(C.global.colors.castbar.class[E.PLAYER_CLASS]))
+                self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.class[E.PLAYER_CLASS]))
             else
-                self:SetStatusBarColor(E:GetRGB(C.global.colors.castbar.casting))
+                self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.casting))
             end
         elseif self.channeling then
-            self:SetStatusBarColor(E:GetRGB(C.global.colors.castbar.channeling))
+            self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.channeling))
         end
 
         if self.Icon then
@@ -53,7 +53,7 @@ end
 local function element_PostCastFail(self)
     self:SetMinMaxValues(0, 1)
     self:SetValue(1)
-    self:SetStatusBarColor(E:GetRGB(C.global.colors.castbar.failed))
+    self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.failed))
 
     self.Time:SetText("")
     if self.Time.max then
@@ -63,7 +63,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].castbar, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].castbar, self._config)
 end
 
 local function element_UpdateFonts(self)
@@ -140,7 +140,7 @@ end
 
 local function element_UpdateColors(self)
     if self._config.color_by_class then
-        self:SetStatusBarColor(E:GetRGB(C.global.colors.castbar.class[E.PLAYER_CLASS]))
+        self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.class[E.PLAYER_CLASS]))
     end
 end
 
@@ -227,13 +227,13 @@ local function frame_UpdateCastbar(self)
 end
 
 function UF:CreateCastbar(frame)
-    local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].castbar
+    local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].castbar
 
     local holder = CreateFrame("Frame", "$parentCastbarHolder", frame)
     holder._width = 0
 
     local element = CreateFrame("StatusBar", nil, holder)
-    element:SetStatusBarTexture(C.global.castbar.texture)
+    element:SetStatusBarTexture(C.db.global.castbar.texture)
     element:SetStatusBarColor(E:GetRGB(config.color))
     element:SetFrameLevel(holder:GetFrameLevel())
     element:SetFrameStrata("HIGH")
@@ -242,10 +242,10 @@ function UF:CreateCastbar(frame)
 
     local bg = element:CreateTexture(nil, "BACKGROUND", nil)
     bg:SetAllPoints()
-    bg:SetTexture(C.global.castbar.bg, "REPEAT", "REPEAT")
+    bg:SetTexture(C.db.global.castbar.bg, "REPEAT", "REPEAT")
     bg:SetHorizTile(true)
     bg:SetVertTile(true)
-    bg:SetVertexColor(E:GetRGB(C.global.colors.dark_gray))
+    bg:SetVertexColor(E:GetRGB(C.db.global.colors.dark_gray))
     bg:SetAlpha(0.5)
     element.bg = bg
 
@@ -262,7 +262,7 @@ function UF:CreateCastbar(frame)
 
     local safeZone = element:CreateTexture(nil, "ARTWORK", nil, 1)
     safeZone:SetTexture("Interface\\BUTTONS\\WHITE8X8")
-    safeZone:SetVertexColor(E:GetRGBA(C.global.colors.red, 0.4))
+    safeZone:SetVertexColor(E:GetRGBA(C.db.global.colors.red, 0.4))
     element.SafeZone_ = safeZone
 
     local textParent = CreateFrame("Frame", nil, element)

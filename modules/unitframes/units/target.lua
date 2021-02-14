@@ -46,7 +46,7 @@ do
     end
 
     function UF:CreateTargetFrame(frame)
-        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
+        local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit]
         local level = frame:GetFrameLevel()
 
         local textParent = CreateFrame("Frame", nil, frame)
@@ -74,8 +74,8 @@ do
 
         -- Level and Race
         local info = textParent:CreateFontString(nil, "ARTWORK")
-        info:SetFont(C.global.fonts.units.font, 15, "OUTLINE")
-        info:SetTextColor(E:GetRGB(C.global.colors.light_gray))
+        info:SetFont(C.db.global.fonts.units.font, 15, "OUTLINE")
+        info:SetTextColor(E:GetRGB(C.db.global.colors.light_gray))
         info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
         frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
 

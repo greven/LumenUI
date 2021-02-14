@@ -13,7 +13,7 @@ local LibKeyBound = LibStub("LibKeyBound-1.0")
 local isInit = false
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.db.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -92,7 +92,7 @@ function M.CreateExtraButton()
         ExtraActionButton1.UpdateHotKey = button_UpdateHotKey
         ExtraActionButton1.UpdateHotKeyFont = button_UpdateHotKeyFont
 
-        local point = C.profile.modules.bars.extra.point
+        local point = C.db.profile.modules.bars.extra.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

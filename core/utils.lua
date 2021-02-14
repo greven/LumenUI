@@ -371,7 +371,7 @@ function E:CreateString(frame, size, color, font, name, anchor, x, y)
     if color and type(color) == "boolean" then
         fs:SetTextColor(E:GetRGB(E.CLASS_COLOR))
     else
-        fs:SetTextColor(E:GetRGB(C.global.colors.white))
+        fs:SetTextColor(E:GetRGB(C.db.global.colors.white))
     end
 
     if anchor and x and y then
@@ -826,28 +826,28 @@ do
 
     function E:GetUnitColor(unit, colorByClass, colorByReaction)
         if not UnitIsConnected(unit) then
-            return C.global.colors.disconnected
+            return C.db.global.colors.disconnected
         elseif not UnitPlayerControlled(unit) and UnitIsTapDenied(unit) then
-            return C.global.colors.tapped
+            return C.db.global.colors.tapped
         elseif colorByClass and UnitIsPlayer(unit) then
             return self:GetUnitClassColor(unit)
         elseif colorByReaction then
             return self:GetUnitReactionColor(unit)
         end
 
-        return C.global.colors.dark_gray
+        return C.db.global.colors.dark_gray
     end
 
     function E:GetUnitClassColor(unit)
-        return C.global.colors.class[select(2, UnitClass(unit))] or C.global.colors.white
+        return C.db.global.colors.class[select(2, UnitClass(unit))] or C.db.global.colors.white
     end
 
     function E:GetUnitReactionColor(unit)
         if select(2, UnitDetailedThreatSituation("player", unit)) ~= nil then
-            return C.global.colors.reaction[2]
+            return C.db.global.colors.reaction[2]
         end
 
-        return C.global.colors.reaction[UnitReaction(unit, "player")] or C.global.colors.reaction[4]
+        return C.db.global.colors.reaction[UnitReaction(unit, "player")] or C.db.global.colors.reaction[4]
     end
 
     function E:GetUnitClassification(unit)
@@ -939,15 +939,15 @@ do
     function E:GetRelativeDifficultyColor(unitLevel, challengeLevel)
         local diff = challengeLevel - unitLevel
         if diff >= 5 then
-            return C.global.colors.difficulty.impossible
+            return C.db.global.colors.difficulty.impossible
         elseif diff >= 3 then
-            return C.global.colors.difficulty.very_difficult
+            return C.db.global.colors.difficulty.very_difficult
         elseif diff >= -4 then
-            return C.global.colors.difficulty.difficult
+            return C.db.global.colors.difficulty.difficult
         elseif -diff <= UnitQuestTrivialLevelRange("player") then
-            return C.global.colors.difficulty.standard
+            return C.db.global.colors.difficulty.standard
         else
-            return C.global.colors.difficulty.trivial
+            return C.db.global.colors.difficulty.trivial
         end
     end
 

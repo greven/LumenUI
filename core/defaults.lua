@@ -2997,6 +2997,3 @@ D.profile = {
         }
     }
 }
-
--- Copy defaults to the config table
-E:CopyTable(D, C)

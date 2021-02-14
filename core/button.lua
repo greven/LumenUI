@@ -99,8 +99,8 @@ local function setPushedTexture(button)
         return
     end
 
-    button:SetPushedTexture(C.global.buttons.texture.highlight)
-    button:GetPushedTexture():SetVertexColor(E:GetRGB(C.global.colors.cyan))
+    button:SetPushedTexture(C.db.global.buttons.texture.highlight)
+    button:GetPushedTexture():SetVertexColor(E:GetRGB(C.db.global.colors.cyan))
     button:GetPushedTexture():SetInside()
 end
 
@@ -110,8 +110,8 @@ local function setHighlightTexture(button)
         return
     end
 
-    button:SetHighlightTexture(C.global.buttons.texture.highlight, "ADD")
-    button:GetHighlightTexture():SetVertexColor(E:GetRGB(C.global.colors.blue))
+    button:SetHighlightTexture(C.db.global.buttons.texture.highlight, "ADD")
+    button:GetHighlightTexture():SetVertexColor(E:GetRGB(C.db.global.colors.blue))
     button:GetHighlightTexture():SetInside()
 end
 
@@ -120,7 +120,7 @@ local function setCheckedTexture(button)
         return
     end
 
-    button:SetCheckedTexture(C.global.buttons.texture.checked)
+    button:SetCheckedTexture(C.db.global.buttons.texture.checked)
     button:GetCheckedTexture():SetInside()
 end
 
@@ -167,7 +167,7 @@ local function skinButton(button, borderTexture)
     setIcon(bIcon)
 
     if bFlash then
-        bFlash:SetColorTexture(E:GetRGBA(C.global.colors.red, 0.65))
+        bFlash:SetColorTexture(E:GetRGBA(C.db.global.colors.red, 0.65))
         bFlash:SetAllPoints()
     end
 
@@ -245,9 +245,9 @@ local function skinButton(button, borderTexture)
     end
 
     if bNormalTexture then
-        if C.global.buttons.texture.normal then
+        if C.db.global.buttons.texture.normal then
             -- TODO: Find a way to make normal texture work on actionbar buttons?
-            -- button:SetNormalTexture(C.global.buttons.texture.normal)
+            -- button:SetNormalTexture(C.db.global.buttons.texture.normal)
             -- bNormalTexture:SetInside(1)
             button:SetNormalTexture(nil)
         else
@@ -256,9 +256,9 @@ local function skinButton(button, borderTexture)
         hooksecurefunc(button, "SetNormalTexture", setNormalTextureHook)
 
         local border = E:CreateBorder(button)
-        border:SetTexture(borderTexture or C.global.buttons.border.texture)
-        border:SetSize(C.global.buttons.border.size)
-        border:SetOffset(C.global.buttons.border.offset)
+        border:SetTexture(borderTexture or C.db.global.buttons.border.texture)
+        border:SetSize(C.db.global.buttons.border.size)
+        border:SetOffset(C.db.global.buttons.border.offset)
         button.Border_ = border
     end
 
@@ -281,9 +281,9 @@ do
         local button = self:GetParent()
 
         if button:IsEquipped() then
-            button.Border_:SetVertexColor(E:GetRGB(C.global.colors.green))
+            button.Border_:SetVertexColor(E:GetRGB(C.db.global.colors.green))
         else
-            button.Border_:SetVertexColor(E:GetRGB(C.global.border.color))
+            button.Border_:SetVertexColor(E:GetRGB(C.db.global.border.color))
         end
     end
 

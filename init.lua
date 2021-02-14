@@ -25,6 +25,8 @@ E:RegisterEvent(
                 E:InitModules()
             end
         )
+
+        ns.C, ns.D, ns.L = nil, nil, nil
     end
 )
 

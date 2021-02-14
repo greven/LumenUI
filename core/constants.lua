@@ -1,5 +1,5 @@
 local A, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, D, L = ns.E, ns.D, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -20,7 +20,7 @@ E.LUMEN = "|cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r"
 E.PLAYER_CLASS = select(2, UnitClass("player"))
 E.PLAYER_NAME = UnitName("player")
 E.NAME_REALM = UnitName("player") .. " - " .. GetRealmName()
-E.CLASS_COLOR = C.global.colors.class[E.PLAYER_CLASS]
+E.CLASS_COLOR = D.global.colors.class[E.PLAYER_CLASS]
 
 -- !ClassColors addon
 if (IsAddOnLoaded("!ClassColors") and CUSTOM_CLASS_COLORS) then

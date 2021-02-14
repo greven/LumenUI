@@ -66,11 +66,11 @@ function BARS.CreateVehicleExitButton()
         button.Icon:SetTexture("Interface\\Vehicles\\UI-Vehicles-Button-Exit-Up")
         button.Icon:SetTexCoord(12 / 64, 52 / 64, 12 / 64, 52 / 64)
 
-        button.Border:SetVertexColor(E:GetRGB(C.global.colors.red))
+        button.Border:SetVertexColor(E:GetRGB(C.db.global.colors.red))
 
         button_onEvent(button)
 
-        local point = C.profile.modules.bars.vehicle.point
+        local point = C.db.profile.modules.bars.vehicle.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

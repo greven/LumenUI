@@ -13,7 +13,7 @@ local elements = {}
 local Panel
 
 local function panel_UpdateConfig(self)
-    self._config = E:CopyTable(C.profile.modules.panel, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.panel, self._config)
 end
 
 local function panel_UpdateSize(self)
@@ -33,7 +33,7 @@ local function panel_UpdateBackdrop(self)
             tileSize = 8
         }
     )
-    bg:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
+    bg:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
 end
 
 local function panel_UpdatePoints(self)
@@ -45,7 +45,7 @@ local function element_UpdateVisibility(self)
 end
 
 local function element_UpdateConfig(self)
-    self._config = E:CopyTable(C.profile.modules.panel[self._id], self._config)
+    self._config = E:CopyTable(C.db.profile.modules.panel[self._id], self._config)
 end
 
 local function element_UpdatePoints(self)
@@ -79,7 +79,7 @@ function PANEL:IsInit()
 end
 
 function PANEL:Init()
-    if not isInit and C.profile.modules.panel.enabled then
+    if not isInit and C.db.profile.modules.panel.enabled then
         Panel = CreateFrame("Frame", "LumPanel", _G.UIParent)
 
         Panel.UpdateConfig = panel_UpdateConfig

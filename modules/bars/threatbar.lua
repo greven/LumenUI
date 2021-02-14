@@ -80,7 +80,7 @@ local function element_OnEvent(self, event, ...)
         bar:SetValue(percent)
       end
     elseif percent then
-      bar:SetStatusBarColor(C.global.colors.threat[status])
+      bar:SetStatusBarColor(C.db.global.colors.threat[status])
       -- bar.Text:SetFormattedText("%s: %.0f%%", name, percent)
       bar:SetValue(percent)
     else
@@ -125,7 +125,7 @@ function BARS.HasThreatBar()
 end
 
 function BARS.CreateThreatBar()
-  if not isInit and C.profile.modules.bars.threatbar.enabled then
+  if not isInit and C.db.profile.modules.bars.threatbar.enabled then
     local element = CreateFrame("Frame", "LumThreatBar", UIParent)
     element._id = "threatbar"
     element.list = {}
@@ -142,7 +142,7 @@ function BARS.CreateThreatBar()
     bar:SetFrameLevel(5)
     bar:SetMinMaxValues(0, 100)
     bar:SetValue(0.5)
-    bar:SetStatusBarColor(E:GetRGB(C.global.colors.threat[1]))
+    bar:SetStatusBarColor(E:GetRGB(C.db.global.colors.threat[1]))
     bar.Bg:SetAlpha(0.3)
     bar.Overlay =
       E:SetBackdrop(
@@ -156,7 +156,7 @@ function BARS.CreateThreatBar()
         tileSize = 8
       }
     )
-    bar.Overlay:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
+    bar.Overlay:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
     element.Bar = bar
     E:SmoothBar(bar)
     bar:Hide()

@@ -27,15 +27,15 @@ local function update(self)
 
     if self.unit == "player" then
         if inCombat then
-            element:SetStatusBarColor(E:GetRGB(C.global.colors.red))
+            element:SetStatusBarColor(E:GetRGB(C.db.global.colors.red))
         elseif showRested and isResting then
-            element:SetStatusBarColor(E:GetRGB(C.global.colors.green))
+            element:SetStatusBarColor(E:GetRGB(C.db.global.colors.green))
         else
             element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
     elseif UnitPlayerControlled(self.unit) then -- Player controlled units
         if inCombat then
-            element:SetStatusBarColor(E:GetRGB(C.global.colors.red))
+            element:SetStatusBarColor(E:GetRGB(C.db.global.colors.red))
         else
             element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
@@ -58,7 +58,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].unitIndicator, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].unitIndicator, self._config)
 end
 
 local function element_UpdateSize(self)

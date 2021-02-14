@@ -26,15 +26,15 @@ function E:SetBackdrop(frame, offset, alpha, color, backdrop)
             bg:SetBackdropColor(E:GetRGB(color))
         end
     else
-        bg:SetBackdrop({bgFile = C.global.backdrop.texture, tile = false})
+        bg:SetBackdrop({bgFile = C.db.global.backdrop.texture, tile = false})
         if color then
             bg:SetBackdropColor(E:GetRGB(color))
         else
-            bg:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
+            bg:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
         end
     end
 
-    bg:SetAlpha(alpha or C.global.backdrop.alpha)
+    bg:SetAlpha(alpha or C.db.global.backdrop.alpha)
 
     frame._backdrop = bg
 
@@ -75,7 +75,7 @@ function E:CreateShadow(frame, size, alpha)
     local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     shadow:SetOutside(frame, size or 6, size or 6)
     shadow:SetBackdrop(shadowBackdrop)
-    shadow:SetBackdropBorderColor(0, 0, 0, alpha or C.global.shadows.alpha)
+    shadow:SetBackdropBorderColor(0, 0, 0, alpha or C.db.global.shadows.alpha)
     shadow:SetFrameLevel(1)
 
     frame._shadow = shadow

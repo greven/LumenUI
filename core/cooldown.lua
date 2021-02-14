@@ -39,14 +39,14 @@ E.Cooldowns.Updater:SetScript(
                         return
                     end
 
-                    color = C.global.colors.white
+                    color = C.db.global.colors.white
 
                     if remain >= 86400 then
                         time1, time2, format = E:SecondsToTime(remain, "abbr")
-                        color = C.global.colors.cooldown.day
+                        color = C.db.global.colors.cooldown.day
                     elseif remain >= 3600 then
                         time1, time2, format = E:SecondsToTime(remain, "abbr")
-                        color = C.global.colors.cooldown.hour
+                        color = C.db.global.colors.cooldown.hour
                     elseif remain >= 60 then
                         if cooldown.config.m_ss_threshold == 0 or remain > cooldown.config.m_ss_threshold then
                             time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -54,7 +54,7 @@ E.Cooldowns.Updater:SetScript(
                             time1, time2, format = E:SecondsToTime(remain, "x:xx")
                         end
 
-                        color = C.global.colors.cooldown.minute
+                        color = C.db.global.colors.cooldown.minute
                     elseif remain >= 1 then
                         if remain > cooldown.config.exp_threshold then
                             time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -62,14 +62,14 @@ E.Cooldowns.Updater:SetScript(
                             time1, time2, format = E:SecondsToTime(remain, "frac")
                         end
 
-                        color = C.global.colors.cooldown.second
+                        color = C.db.global.colors.cooldown.second
                     elseif remain >= 0.001 then
                         time1, time2, format = E:SecondsToTime(remain)
-                        color = C.global.colors.cooldown.second
+                        color = C.db.global.colors.cooldown.second
                     end
 
                     if remain <= cooldown.config.exp_threshold then
-                        color = C.global.colors.cooldown.expiration
+                        color = C.db.global.colors.cooldown.expiration
                     end
 
                     if time1 then
@@ -128,7 +128,7 @@ local function cooldown_UpdateConfig(self, config)
         self.config = E:CopyTable(config, self.config)
     end
 
-    self.config.text = E:CopyTable(C.global.fonts.cooldown, self.config.text)
+    self.config.text = E:CopyTable(C.db.global.fonts.cooldown, self.config.text)
 
     if self.config.m_ss_threshold ~= 0 and self.config.m_ss_threshold < 91 then
         self.config.m_ss_threshold = 0

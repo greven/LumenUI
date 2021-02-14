@@ -127,11 +127,11 @@ local function tooltip_SetUnit(self)
 
     if UnitIsPlayer(unit) then
         local name, realm = UnitName(unit)
-        name = C.profile.modules.tooltips.title and UnitPVPName(unit) or name
+        name = C.db.profile.modules.tooltips.title and UnitPVPName(unit) or name
 
         if realm and realm ~= "" then
             if isShiftKeyDown then
-                name = s_format("%s|c%s-%s|r", name, C.global.colors.gray.hex, realm)
+                name = s_format("%s|c%s-%s|r", name, C.db.global.colors.gray.hex, realm)
             elseif UnitRealmRelationship(unit) ~= LE_REALM_RELATION_VIRTUAL then
                 name = name .. L["FOREIGN_SERVER_LABEL"]
             end
@@ -139,7 +139,7 @@ local function tooltip_SetUnit(self)
 
         GameTooltipTextLeft1:SetFormattedText(
             "|c%s%s|r|c%s%s|r",
-            C.global.colors.gray.hex,
+            C.db.global.colors.gray.hex,
             UnitIsAFK(unit) and AFK or UnitIsDND(unit) and DND or "",
             nameColor.hex,
             name
@@ -185,15 +185,15 @@ local function tooltip_SetUnit(self)
 
             if isShiftKeyDown then
                 if guildRealm then
-                    guildName = s_format("%s|c%s-%s|r", guildName, C.global.colors.gray.hex, guildRealm)
+                    guildName = s_format("%s|c%s-%s|r", guildName, C.db.global.colors.gray.hex, guildRealm)
                 end
 
                 if guildRankName then
-                    guildName = GUILD_TEMPLATE:format(C.global.colors.gray.hex, guildRankName, guildName)
+                    guildName = GUILD_TEMPLATE:format(C.db.global.colors.gray.hex, guildRankName, guildName)
                 end
             end
 
-            GameTooltipTextLeft2:SetText(E:WrapText(C.global.colors.light_cyan, guildName))
+            GameTooltipTextLeft2:SetText(E:WrapText(C.db.global.colors.light_cyan, guildName))
         end
 
         local levelLine = getLineByText(self, scaledLevel > 0 and scaledLevel or "%?%?", lineOffset)
@@ -211,7 +211,7 @@ local function tooltip_SetUnit(self)
                 UnitClass(unit)
             )
 
-            if C.profile.modules.tooltips.inspect and isShiftKeyDown and level > 10 then
+            if C.db.profile.modules.tooltips.inspect and isShiftKeyDown and level > 10 then
                 TOOLTIPS:AddInspectInfo(self, unit, 0)
             end
         end
@@ -282,13 +282,13 @@ local function tooltip_SetUnit(self)
     end
 
     -- Show Target info
-    if C.profile.modules.tooltips.target then
+    if C.db.profile.modules.tooltips.target then
         local unitTarget = unit .. "target"
         if UnitExists(unitTarget) then
             local name = UnitName(unitTarget)
 
             if UnitIsPlayer(unitTarget) and name == E.PLAYER_NAME then
-                name = E:WrapText(C.global.colors.red, s_upper(L["YOU"]) .. "!")
+                name = E:WrapText(C.db.global.colors.red, s_upper(L["YOU"]) .. "!")
             elseif UnitIsPlayer(unitTarget) then
                 name =
                     PLAYER_TEMPLATE:format(
@@ -324,16 +324,16 @@ function TOOLTIPS:UpdateStatusBarColor(self)
         return
     end
 
-    self:SetStatusBarColor(E:GetRGB(C.global.colors.health))
+    self:SetStatusBarColor(E:GetRGB(C.db.global.colors.health))
 
     if UnitIsPlayer(unit) then
         -- Border color
-        if C.profile.modules.tooltips.border.color_class and self.bg then
+        if C.db.profile.modules.tooltips.border.color_class and self.bg then
             self.bg:SetBackdropBorderColor(E:GetRGB(E:GetUnitClassColor(unit)))
         end
 
         -- Statusbar color
-        if C.profile.modules.tooltips.health.color_class then
+        if C.db.profile.modules.tooltips.health.color_class then
             self:SetStatusBarColor(E:GetRGB(E:GetUnitClassColor(unit)))
         end
     end

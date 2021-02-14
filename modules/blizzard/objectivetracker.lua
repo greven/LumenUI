@@ -20,12 +20,12 @@ function M.HasObjectiveTracker()
 end
 
 function M.SetUpObjectiveTracker()
-    if not isInit and C.profile.modules.blizzard.objective_tracker.enabled then
+    if not isInit and C.db.profile.modules.blizzard.objective_tracker.enabled then
         local holder = CreateFrame("Frame", "LumOTFrameHolder", UIParent)
         holder:SetFrameStrata("LOW")
         holder:SetFrameLevel(ObjectiveTrackerFrame:GetFrameLevel() + 1)
         holder:SetSize(199, 25)
-        holder:SetPoint(unpack(C.profile.modules.blizzard.objective_tracker.point))
+        holder:SetPoint(unpack(C.db.profile.modules.blizzard.objective_tracker.point))
 
         ObjectiveTrackerFrame:SetMovable(true)
         ObjectiveTrackerFrame:SetUserPlaced(true)
@@ -49,6 +49,6 @@ end
 
 function M.UpdateObjectiveTracker()
     if isInit then
-        ObjectiveTrackerFrame:SetHeight(C.profile.modules.blizzard.objective_tracker.height)
+        ObjectiveTrackerFrame:SetHeight(C.db.profile.modules.blizzard.objective_tracker.height)
     end
 end

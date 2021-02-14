@@ -29,7 +29,7 @@ local function frame_Update(self)
 end
 
 function UF:CreatePartyFrame(frame)
-  local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
+  local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit]
   local level = frame:GetFrameLevel()
 
   local textParent = CreateFrame("Frame", nil, frame)
@@ -38,7 +38,7 @@ function UF:CreatePartyFrame(frame)
   frame.TextParent = textParent
 
   local health = self:CreateHealthBar(frame, textParent)
-  local power = self:CreatePowerBar(frame, textParent, C.global.statusbar.texture)
+  local power = self:CreatePowerBar(frame, textParent, C.db.global.statusbar.texture)
 
   self:CreateHealthPrediction(frame, health, textParent)
 

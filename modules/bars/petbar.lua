@@ -46,7 +46,7 @@ local function bar_UpdateButtonConfig(self)
         }
     end
 
-    for k, v in next, C.global.colors.button do
+    for k, v in next, C.db.global.colors.button do
         self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
     end
 
@@ -101,7 +101,7 @@ end
 local function button_UpdateHotKeyFont(self)
     local config = self._parent._config.hotkey
 
-    self.HotKey:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
+    self.HotKey:SetFont(C.db.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
 
     self.HotKey:SetWordWrap(false)
 
@@ -290,7 +290,7 @@ function BARS.CreatePetActionBar()
         bar:RegisterEvent("UNIT_FLAGS")
         bar:RegisterEvent("UNIT_PET")
 
-        local point = C.profile.modules.bars.bar6.point
+        local point = C.db.profile.modules.bars.bar6.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

@@ -502,7 +502,7 @@ end
 local function button_OnUpdate(self)
     local degrees = getPosition(nil, GetCursorPosition())
 
-    C.profile.modules.minimap.buttons[self:GetName()] = degrees
+    C.db.profile.modules.minimap.buttons[self:GetName()] = degrees
 
     updatePosition(self, degrees)
 end
@@ -533,11 +533,11 @@ local function getTooltipPoint(self)
 end
 
 local function minimap_UpdateConfig(self)
-    self._config = E:CopyTable(C.profile.modules.minimap, self._config)
-    self._config.buttons = E:CopyTable(C.profile.modules.minimap.buttons, self._config.buttons)
-    self._config.collect = E:CopyTable(C.profile.modules.minimap.collect, self._config.collect)
-    self._config.color = E:CopyTable(C.profile.modules.minimap.color, self._config.color)
-    self._config.size = C.profile.modules.minimap.size
+    self._config = E:CopyTable(C.db.profile.modules.minimap, self._config)
+    self._config.buttons = E:CopyTable(C.db.profile.modules.minimap.buttons, self._config.buttons)
+    self._config.collect = E:CopyTable(C.db.profile.modules.minimap.collect, self._config.collect)
+    self._config.color = E:CopyTable(C.db.profile.modules.minimap.color, self._config.color)
+    self._config.size = C.db.profile.modules.minimap.size
 end
 
 local function minimap_UpdateSize(self)
@@ -614,12 +614,12 @@ function MINIMAP:IsInit()
 end
 
 function MINIMAP:Init()
-    if not isInit and C.profile.modules.bars.enabled then
+    if not isInit and C.db.profile.modules.bars.enabled then
         if not IsAddOnLoaded("Blizzard_TimeManager") then
             LoadAddOn("Blizzard_TimeManager")
         end
 
-        isSquare = C.profile.modules.minimap.square
+        isSquare = C.db.profile.modules.minimap.square
 
         -- local level = Minimap:GetFrameLevel()
         -- local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
@@ -659,7 +659,7 @@ function MINIMAP:Init()
 
         --     local border = E:CreateBorder(textureParent)
         --     border:SetTexture(M.textures.border_thick)
-        --     border:SetVertexColor(E:GetRGB(C.global.border.color))
+        --     border:SetVertexColor(E:GetRGB(C.db.global.border.color))
         --     border:SetOffset(-5)
         --     Minimap.Border = border
 
@@ -687,7 +687,7 @@ function MINIMAP:Init()
         --     Minimap.Collection = button
 
         --     button:SetScript("OnEnter", function(self)
-        --         if C.profile.modules.minimap.collect.tooltip then
+        --         if C.db.profile.modules.minimap.collect.tooltip then
         --             local p, rP, x, y = getTooltipPoint(self)
 
         --             GameTooltip:SetOwner(self, "ANCHOR_NONE")
@@ -809,7 +809,7 @@ function MINIMAP:Init()
         -- end
 
         -- local function handleChildren()
-        --     local shouldCollect = C.profile.modules.minimap.collect.enabled
+        --     local shouldCollect = C.db.profile.modules.minimap.collect.enabled
 
         --     for i = 1, select("#", Minimap:GetChildren()) do
         --         local child = select(i, Minimap:GetChildren())

@@ -79,7 +79,7 @@ local function tooltipBar_Hook(self)
     if self:IsForbidden() or self:GetParent():IsForbidden() then
         return
     end
-    local config = C.profile.modules.tooltips
+    local config = C.db.profile.modules.tooltips
 
     if self:IsShown() then
         if self.Text and (config.health.text.show or IsShiftKeyDown()) then
@@ -118,7 +118,7 @@ local function tooltip_SetDefaultAnchor(self, parent)
     end
 
     if parent then
-        if C.profile.modules.tooltips.anchor_cursor then
+        if C.db.profile.modules.tooltips.anchor_cursor then
             self:SetOwner(parent, "ANCHOR_CURSOR")
             return
         else
@@ -193,7 +193,7 @@ function TOOLTIPS:SetupTooltipFonts()
 end
 
 function TOOLTIPS:ReskinStatusBar(self)
-    local config = C.profile.modules.tooltips
+    local config = C.db.profile.modules.tooltips
     local statusbar = self.StatusBar
 
     E:HandleStatusBar(statusbar)
@@ -219,7 +219,7 @@ function TOOLTIPS:ReskinTooltip()
         return
     end
 
-    local config = C.profile.modules.tooltips
+    local config = C.db.profile.modules.tooltips
     self:SetScale(config.scale)
 
     if not self.styled then
@@ -227,11 +227,11 @@ function TOOLTIPS:ReskinTooltip()
             self,
             nil,
             config.alpha,
-            C.global.backdrop.color,
+            C.db.global.backdrop.color,
             {
                 bgFile = M.textures.flat,
                 edgeFile = M.textures.backdrop_border,
-                edgeSize = C.profile.modules.tooltips.border.size,
+                edgeSize = C.db.profile.modules.tooltips.border.size,
                 tile = false
             }
         )
@@ -251,13 +251,13 @@ function TOOLTIPS:ReskinTooltip()
     end
 
     if self.bg then
-        self.bg:SetBackdropBorderColor(E:GetRGB(C.global.border.color))
+        self.bg:SetBackdropBorderColor(E:GetRGB(C.db.global.border.color))
         if config.border.color_quality and self.GetItem then
             local _, item = self:GetItem()
 
             if item then
                 local quality = select(3, GetItemInfo(item))
-                local color = C.global.colors.quality[quality or 1]
+                local color = C.db.global.colors.quality[quality or 1]
 
                 if color then
                     self.bg:SetBackdropBorderColor(color.r, color.g, color.b)
@@ -272,7 +272,7 @@ function TOOLTIPS.IsInit()
 end
 
 function TOOLTIPS:Init()
-    local config = C.profile.modules.tooltips
+    local config = C.db.profile.modules.tooltips
 
     if not isInit and config.enabled then
         GameTooltip.StatusBar = GameTooltipStatusBar
@@ -309,6 +309,6 @@ end
 function TOOLTIPS.Update()
     if isInit then
         TOOLTIPS.ReskinTooltip(GameTooltip)
-        GameTooltipStatusBar:SetHeight(C.profile.modules.tooltips.health.height)
+        GameTooltipStatusBar:SetHeight(C.db.profile.modules.tooltips.health.height)
     end
 end

@@ -17,7 +17,11 @@ local UF = E:GetModule("UnitFrames")
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.units.font or config.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(
+        C.db.global.fonts.units.font or config.font,
+        config.size,
+        config.outline and "THINOUTLINE" or nil
+    )
     fontString:SetJustifyH(config.h_alignment)
     fontString:SetJustifyV(config.v_alignment)
     fontString:SetWordWrap(false)
@@ -108,7 +112,7 @@ do
             if config.reverse then
                 if not config.color.smooth then
                     if config.color.health then
-                        self.bg:SetVertexColor(E:GetRGB(C.global.colors.health))
+                        self.bg:SetVertexColor(E:GetRGB(C.db.global.colors.health))
                     else
                         self.bg:SetVertexColor(
                             E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction))
@@ -154,7 +158,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        local config = C.profile.modules.unitframes.units[unit]
+        local config = C.db.profile.modules.unitframes.units[unit]
 
         self._config = E:CopyTable(config.health, self._config)
         if config.power then
@@ -241,23 +245,23 @@ do
     end
 
     function UF:CreateHealthBar(frame, textParent, textureOverride)
-        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].health
+        local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].health
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("TOPLEFT", frame)
         element:SetPoint("TOPRIGHT", frame)
-        element:SetStatusBarTexture(textureOverride or C.global.statusbar.texture)
+        element:SetStatusBarTexture(textureOverride or C.db.global.statusbar.texture)
         element:GetStatusBarTexture():SetHorizTile(true)
         element:GetStatusBarTexture():SetVertTile(true)
-        element:SetStatusBarColor(E:GetRGB(C.global.statusbar.color))
+        element:SetStatusBarColor(E:GetRGB(C.db.global.statusbar.color))
         E:SmoothBar(element)
 
         element.Text = (textParent or element):CreateFontString("Text", "ARTWORK")
-        element.Text:SetTextColor(E:GetRGBA(config.text.color or C.global.colors.light_gray, config.text.alpha or 1))
+        element.Text:SetTextColor(E:GetRGBA(config.text.color or C.db.global.colors.light_gray, config.text.alpha or 1))
 
         if config.perc then
             local perc = element:CreateFontString("Percent", "BACKGROUND")
-            perc:SetTextColor(E:GetRGBA(config.perc.color or C.global.colors.light_gray, config.perc.alpha or 1))
+            perc:SetTextColor(E:GetRGBA(config.perc.color or C.db.global.colors.light_gray, config.perc.alpha or 1))
             element.Text.perc = perc
         end
 
@@ -310,9 +314,9 @@ end
 do
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].health.prediction, self._config)
-        self._config.absorb_text = E:CopyTable(C.global.fonts.units, self._config.absorb_text)
-        self._config.heal_absorb_text = E:CopyTable(C.global.fonts.units, self._config.heal_absorb_text)
+        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].health.prediction, self._config)
+        self._config.absorb_text = E:CopyTable(C.db.global.fonts.units, self._config.absorb_text)
+        self._config.heal_absorb_text = E:CopyTable(C.db.global.fonts.units, self._config.heal_absorb_text)
     end
 
     local function element_UpdateFonts(self)
@@ -335,9 +339,9 @@ do
     end
 
     local function element_UpdateColors(self)
-        self.myBar._texture:SetColorTexture(E:GetRGBA(C.global.colors.prediction.my_heal))
-        self.otherBar._texture:SetColorTexture(E:GetRGBA(C.global.colors.prediction.other_heal))
-        self.healAbsorbBar._texture:SetColorTexture(E:GetRGBA(C.global.colors.prediction.heal_absorb))
+        self.myBar._texture:SetColorTexture(E:GetRGBA(C.db.global.colors.prediction.my_heal))
+        self.otherBar._texture:SetColorTexture(E:GetRGBA(C.db.global.colors.prediction.other_heal))
+        self.healAbsorbBar._texture:SetColorTexture(E:GetRGBA(C.db.global.colors.prediction.heal_absorb))
     end
 
     local function frame_UpdateHealthPrediction(self)

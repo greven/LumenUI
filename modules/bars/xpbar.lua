@@ -44,17 +44,17 @@ local LAYOUT = {
 }
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(BARS:IsRestricted() and CFG or C.profile.modules.bars.xpbar, self._config)
+    self._config = E:CopyTable(BARS:IsRestricted() and CFG or C.db.profile.modules.bars.xpbar, self._config)
 
     if BARS:IsRestricted() then
-        self._config.text = E:CopyTable(C.profile.modules.bars.xpbar.text, self._config.text)
+        self._config.text = E:CopyTable(C.db.profile.modules.bars.xpbar.text, self._config.text)
     end
 
-    self._config.text = E:CopyTable(C.global.fonts.bars, self._config.text)
+    self._config.text = E:CopyTable(C.db.global.fonts.bars, self._config.text)
 end
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.db.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -145,12 +145,12 @@ local function bar_UpdateSegments(self)
             local cur, max = C_PetBattles.GetXP(1, i)
 
             self[index].tooltipInfo = {
-                header = NAME_TEMPLATE:format(C.global.colors.quality[rarity - 1].hex, name),
+                header = NAME_TEMPLATE:format(C.db.global.colors.quality[rarity - 1].hex, name),
                 -- line1 = L["LEVEL_TOOLTIP"]:format(level)
                 line1 = s_format("Level: |cffffffff%d|r", level)
             }
 
-            self[index]:Update(cur, max, 0, C.global.colors.xp[2])
+            self[index]:Update(cur, max, 0, C.db.global.colors.xp[2])
         end
     else
         -- Artifact
@@ -169,7 +169,7 @@ local function bar_UpdateSegments(self)
                 line2 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], pointsSpent)
             }
 
-            self[index]:Update(cur, max, 0, C.global.colors.artifact)
+            self[index]:Update(cur, max, 0, C.db.global.colors.artifact)
         end
 
         -- Azerite
@@ -186,7 +186,7 @@ local function bar_UpdateSegments(self)
                     line1 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], level)
                 }
 
-                self[index]:Update(cur, max, 0, C.global.colors.white, M.textures.statusbar_azerite)
+                self[index]:Update(cur, max, 0, C.db.global.colors.white, M.textures.statusbar_azerite)
             end
         end
 
@@ -212,8 +212,8 @@ local function bar_UpdateSegments(self)
                 cur,
                 max,
                 bonus,
-                bonus > 0 and C.global.colors.xp[1] or C.global.colors.xp[2],
-                C.profile.modules.bars.xpbar.texture
+                bonus > 0 and C.db.global.colors.xp[1] or C.db.global.colors.xp[2],
+                C.db.profile.modules.bars.xpbar.texture
             )
         end
 
@@ -228,8 +228,8 @@ local function bar_UpdateSegments(self)
                 line1 = s_format(L["HONOR_LEVEL_TOOLTIP"], UnitHonorLevel("player"))
             }
 
-            -- self[index]:Update(cur, max, 0, C.global.colors.faction[UnitFactionGroup("player")])
-            self[index]:Update(cur, max, 0, C.global.colors.difficulty.impossible)
+            -- self[index]:Update(cur, max, 0, C.db.global.colors.faction[UnitFactionGroup("player")])
+            self[index]:Update(cur, max, 0, C.db.global.colors.difficulty.impossible)
         end
 
         -- Reputation
@@ -274,7 +274,7 @@ local function bar_UpdateSegments(self)
 
             self[index].tooltipInfo = {
                 header = L["REPUTATION"],
-                line1 = REPUTATION_TEMPLATE:format(name, C.global.colors.reaction[standing].hex, repTextLevel)
+                line1 = REPUTATION_TEMPLATE:format(name, C.db.global.colors.reaction[standing].hex, repTextLevel)
             }
 
             if isParagon and hasRewardPending then
@@ -287,7 +287,7 @@ local function bar_UpdateSegments(self)
                 self[index].tooltipInfo.line3 = nil
             end
 
-            self[index]:Update(cur, max, 0, C.global.colors.reaction[standing])
+            self[index]:Update(cur, max, 0, C.db.global.colors.reaction[standing])
         end
     end
 
@@ -325,7 +325,7 @@ local function bar_UpdateSegments(self)
             self[1]:Show()
 
             self[1]:UpdateText(1, 1)
-            self[1].Texture:SetVertexColor(E:GetRGB(C.global.colors.class[E.PLAYER_CLASS]))
+            self[1].Texture:SetVertexColor(E:GetRGB(C.db.global.colors.class[E.PLAYER_CLASS]))
         end
 
         self._total = index
@@ -452,8 +452,8 @@ function BARS.HasXPBar()
 end
 
 function BARS.CreateXPBar()
-    if not isInit and (C.profile.modules.bars.xpbar.enabled or BARS:IsRestricted()) then
-        local config = C.profile.modules.bars.xpbar
+    if not isInit and (C.db.profile.modules.bars.xpbar.enabled or BARS:IsRestricted()) then
+        local config = C.db.profile.modules.bars.xpbar
         local bar = CreateFrame("Frame", "LumXPBar", UIParent)
         bar._id = "xpbar"
 
@@ -490,7 +490,7 @@ function BARS.CreateXPBar()
                 tileSize = 8
             }
         )
-        bar.Overlay:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
+        bar.Overlay:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
 
         for i = 1, MAX_SEGMENTS do
             local segment = CreateFrame("StatusBar", "$parentSegment" .. i, bar)
@@ -545,7 +545,7 @@ function BARS.CreateXPBar()
 
             local bg = bar:CreateTexture(nil, "ARTWORK")
             bg:SetTexture(M.textures.flat)
-            bg:SetVertexColor(C.global.colors.dark_gray)
+            bg:SetVertexColor(C.db.global.colors.dark_gray)
             bg:SetAllPoints()
             bg:SetAlpha(0.3)
             -- E:SetBackdrop(bg, E.SCREEN_SCALE * 3, 0.5)
@@ -591,7 +591,7 @@ function BARS.CreateXPBar()
             BARS:ActionBarController_AddWidget(bar, "XP_BAR")
         else
             -- E.Movers:Create(bar)
-            local config = BARS:IsRestricted() and CFG or C.profile.modules.bars.xpbar
+            local config = BARS:IsRestricted() and CFG or C.db.profile.modules.bars.xpbar
             local point = config.point
             bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         end

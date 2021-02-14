@@ -15,9 +15,9 @@ function M.HasDurabilityFrame()
 end
 
 function M.SetUpDurabilityFrame()
-    if not isInit and C.profile.modules.blizzard.durability.enabled then
+    if not isInit and C.db.profile.modules.blizzard.durability.enabled then
         DurabilityFrame:ClearAllPoints()
-        DurabilityFrame:SetPoint(unpack(C.profile.modules.blizzard.durability.point))
+        DurabilityFrame:SetPoint(unpack(C.db.profile.modules.blizzard.durability.point))
         -- E.Movers:Create(DurabilityFrame)
 
         isInit = true

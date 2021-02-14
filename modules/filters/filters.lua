@@ -247,22 +247,22 @@ local class_debuffs = {
 
 function M.CreateAuraFilters()
     for filter, v in next, aura_filters do
-        if not C.global.aura_filters[filter].is_init then
-            E:CopyTable(v, C.global.aura_filters[filter])
-            C.global.aura_filters[filter].is_init = true
+        if not C.db.global.aura_filters[filter].is_init then
+            E:CopyTable(v, C.db.global.aura_filters[filter])
+            C.db.global.aura_filters[filter].is_init = true
         end
     end
 
     -- Class Debuffs filters
-    if not C.global.aura_filters["Class Debuffs"].is_init then
-        E:CopyTable(class_debuffs[E.PLAYER_CLASS], C.global.aura_filters["Class Debuffs"])
-        C.global.aura_filters["Class Debuffs"].is_init = true
+    if not C.db.global.aura_filters["Class Debuffs"].is_init then
+        E:CopyTable(class_debuffs[E.PLAYER_CLASS], C.db.global.aura_filters["Class Debuffs"])
+        C.db.global.aura_filters["Class Debuffs"].is_init = true
     end
 
     -- Class Buffs filters
-    if not C.global.aura_filters["Class Buffs"].is_init then
-        E:CopyTable(class_buffs[E.PLAYER_CLASS], C.global.aura_filters["Class Buffs"])
-        C.global.aura_filters["Class Buffs"].is_init = true
+    if not C.db.global.aura_filters["Class Buffs"].is_init then
+        E:CopyTable(class_buffs[E.PLAYER_CLASS], C.db.global.aura_filters["Class Buffs"])
+        C.db.global.aura_filters["Class Buffs"].is_init = true
     end
 end
 
@@ -280,10 +280,10 @@ end
 
 function M:ResetAuraFilter(filter)
     if aura_filters[filter] then
-        t_wipe(C.global.aura_filters[filter])
+        t_wipe(C.db.global.aura_filters[filter])
 
-        E:CopyTable(aura_filters[filter], C.global.aura_filters[filter])
+        E:CopyTable(aura_filters[filter], C.db.global.aura_filters[filter])
 
-        C.global.aura_filters[filter].is_init = true
+        C.db.global.aura_filters[filter].is_init = true
     end
 end

@@ -40,7 +40,7 @@ do
   end
 
   local function frame_UpdateConfig(self)
-    local config = C.profile.modules.unitframes.units
+    local config = C.db.profile.modules.unitframes.units
     self._config = E:CopyTable(config[self._layout or self._unit], self._config, configIgnoredKeys)
   end
 
@@ -66,7 +66,7 @@ do
     frame:SetScript("OnLeave", frame_OnLeave)
 
     E:SetBackdrop(frame, E.SCREEN_SCALE * 3)
-    if C.global.shadows.enabled then
+    if C.db.global.shadows.enabled then
       E:CreateShadow(frame)
     end
 
@@ -87,20 +87,20 @@ end
 
 function UF:UpdateHealthColors()
   local color = oUF.colors.health
-  color[1], color[2], color[3] = E:GetRGB(C.global.colors.health)
+  color[1], color[2], color[3] = E:GetRGB(C.db.global.colors.health)
 
   color = oUF.colors.tapped
-  color[1], color[2], color[3] = E:GetRGB(C.global.colors.tapped)
+  color[1], color[2], color[3] = E:GetRGB(C.db.global.colors.tapped)
 
   color = oUF.colors.disconnected
-  color[1], color[2], color[3] = E:GetRGB(C.global.colors.disconnected)
+  color[1], color[2], color[3] = E:GetRGB(C.db.global.colors.disconnected)
 
-  oUF.colors.smooth = C.global.colors.smooth
+  oUF.colors.smooth = C.db.global.colors.smooth
 end
 
 function UF:UpdatePowerColors()
   local color = oUF.colors.power
-  for k, myColor in next, C.global.colors.power do
+  for k, myColor in next, C.db.global.colors.power do
     if type(k) == "string" then
       if not color[k] then
         color[k] = {}
@@ -117,14 +117,14 @@ function UF:UpdatePowerColors()
   end
 
   color = oUF.colors.runes
-  for k, v in next, C.global.colors.runes do
+  for k, v in next, C.db.global.colors.runes do
     color[k][1], color[k][2], color[k][3] = E:GetRGB(v)
   end
 end
 
 function UF:UpdateReactionColors()
   local color = oUF.colors.reaction
-  for k, v in next, C.global.colors.reaction do
+  for k, v in next, C.db.global.colors.reaction do
     color[k][1], color[k][2], color[k][3] = E:GetRGB(v)
   end
 end

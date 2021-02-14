@@ -9,7 +9,7 @@ local UF = E:GetModule("UnitFrames")
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].raid_target, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].raid_target, self._config)
 end
 
 local function element_UpdateSize(self)

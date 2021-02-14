@@ -1,7 +1,7 @@
 local _, ns = ...
 local E, C, L = ns.E, ns.C, ns.L
 
-local M = E:GetModule("Misc")
+local MISC = E:GetModule("Misc")
 
 -- Lua
 local _G = getfenv(0)
@@ -89,12 +89,12 @@ local function PLAYER_LOGIN()
     setBindings()
 end
 
-function M.HasBindings()
+function MISC.HasBindings()
     return isInit
 end
 
-function M.SetUpBindings()
-    if not isInit and C.profile.modules.misc.bindings.enabled then
+function MISC.SetUpBindings()
+    if not isInit and C.db.profile.modules.misc.bindings.enabled then
         -- Summon Grand Expedition Yak
         local YakID = 0 -- Fallback to Random Mounts
         for i, v in pairs(C_MountJournal.GetMountIDs()) do

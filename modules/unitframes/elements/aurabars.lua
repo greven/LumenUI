@@ -19,7 +19,11 @@ local GameTooltip = _G.GameTooltip
 -- ---------------
 
 local function updateFont(fontString, config)
-    fontString:SetFont(config.font or C.global.fonts.units.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(
+        config.font or C.db.global.fonts.units.font,
+        config.size,
+        config.outline and "THINOUTLINE" or nil
+    )
     fontString:SetWordWrap(false)
 
     if config.shadow then
@@ -56,14 +60,14 @@ local function bar_OnUpdate(self, elapsed)
                 return
             end
 
-            color = C.global.colors.white
+            color = C.db.global.colors.white
 
             if remain >= 86400 then
                 time1, time2, format = E:SecondsToTime(remain, "abbr")
-                color = C.global.colors.cooldown.day
+                color = C.db.global.colors.cooldown.day
             elseif remain >= 3600 then
                 time1, time2, format = E:SecondsToTime(remain, "abbr")
-                color = C.global.colors.cooldown.hour
+                color = C.db.global.colors.cooldown.hour
             elseif remain >= 60 then
                 if config.time.m_ss_threshold == 0 or remain > config.time.m_ss_threshold then
                     time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -71,7 +75,7 @@ local function bar_OnUpdate(self, elapsed)
                     time1, time2, format = E:SecondsToTime(remain, "x:xx")
                 end
 
-                color = C.global.colors.cooldown.minute
+                color = C.db.global.colors.cooldown.minute
             elseif remain >= 10 then
                 if remain > config.time.exp_threshold then
                     time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -79,7 +83,7 @@ local function bar_OnUpdate(self, elapsed)
                     time1, time2, format = E:SecondsToTime(remain, "frac")
                 end
 
-                color = C.global.colors.cooldown.minute
+                color = C.db.global.colors.cooldown.minute
             elseif remain >= 1 then
                 if remain > config.time.exp_threshold then
                     time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -87,14 +91,14 @@ local function bar_OnUpdate(self, elapsed)
                     time1, time2, format = E:SecondsToTime(remain, "frac")
                 end
 
-                color = C.global.colors.cooldown.second
+                color = C.db.global.colors.cooldown.second
             elseif remain >= 0.001 then
                 time1, time2, format = E:SecondsToTime(remain)
-                color = C.global.colors.cooldown.second
+                color = C.db.global.colors.cooldown.second
             end
 
             if remain <= config.time.exp_threshold then
-                color = C.global.colors.cooldown.expiration
+                color = C.db.global.colors.cooldown.expiration
             end
 
             if time1 then
@@ -113,7 +117,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].aura_bars, self._config)
+    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].aura_bars, self._config)
 end
 
 local function element_UpdatePosition(self)
@@ -137,12 +141,12 @@ local function element_PostCreateBar(self, bar)
     bar:EnableMouse(self._config.enable_mouse)
 
     bar.Bg = bar:CreateTexture(nil, "BACKGROUND")
-    E:SetStatusBarSkin(bar, C.global.aura_bars.texture)
-    E:SetBackdrop(bar, E.SCREEN_SCALE * 3, C.global.backdrop.alpha)
+    E:SetStatusBarSkin(bar, C.db.global.aura_bars.texture)
+    E:SetBackdrop(bar, E.SCREEN_SCALE * 3, C.db.global.backdrop.alpha)
     E:CreateShadow(bar)
 
     bar.Icon:SetTexCoord(8 / 64, 56 / 64, 9 / 64, 41 / 64)
-    E:SetBackdrop(bar.Icon, E.SCREEN_SCALE * 3, C.global.backdrop.alpha)
+    E:SetBackdrop(bar.Icon, E.SCREEN_SCALE * 3, C.db.global.backdrop.alpha)
     E:CreateShadow(bar.Icon)
 
     bar.Name:SetJustifyH("LEFT")
@@ -168,7 +172,7 @@ local function element_PostUpdateBar(self, unit, bar, index, position, duration,
     self:UpdateConfig()
 
     -- TODO: Set color by debuff type, color class or just remaining time or gradient
-    bar:SetStatusBarColor(E:GetRGB(C.global.colors.dark_gray))
+    bar:SetStatusBarColor(E:GetRGB(C.db.global.colors.dark_gray))
     bar:SetScript("OnUpdate", bar_OnUpdate)
 end
 
@@ -215,7 +219,7 @@ local function frame_UpdateAuraBars(self)
 end
 
 function UF:CreateAuraBars(frame, unit)
-    local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].aura_bars
+    local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].aura_bars
 
     local element = CreateFrame("Frame", "$parent_AuraBars", frame)
     element:SetSize(1, 1)

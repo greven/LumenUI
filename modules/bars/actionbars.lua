@@ -178,26 +178,26 @@ local function bar_Update(self)
 end
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(BARS:IsRestricted() and CFG.bar1 or C.profile.modules.bars.bar1, self._config)
-    self._config.click_on_down = C.profile.modules.bars.click_on_down
-    self._config.cooldown = E:CopyTable(C.profile.modules.bars.bar1.cooldown, self._config.cooldown)
-    self._config.cooldown = E:CopyTable(C.profile.modules.bars.cooldown, self._config.cooldown)
-    self._config.desaturation = E:CopyTable(C.profile.modules.bars.desaturation, self._config.desaturation)
-    self._config.lock = C.profile.modules.bars.lock
-    self._config.mana_indicator = C.profile.modules.bars.mana_indicator
-    self._config.range_indicator = C.profile.modules.bars.range_indicator
-    self._config.rightclick_selfcast = C.profile.modules.bars.rightclick_selfcast
+    self._config = E:CopyTable(BARS:IsRestricted() and CFG.bar1 or C.db.profile.modules.bars.bar1, self._config)
+    self._config.click_on_down = C.db.profile.modules.bars.click_on_down
+    self._config.cooldown = E:CopyTable(C.db.profile.modules.bars.bar1.cooldown, self._config.cooldown)
+    self._config.cooldown = E:CopyTable(C.db.profile.modules.bars.cooldown, self._config.cooldown)
+    self._config.desaturation = E:CopyTable(C.db.profile.modules.bars.desaturation, self._config.desaturation)
+    self._config.lock = C.db.profile.modules.bars.lock
+    self._config.mana_indicator = C.db.profile.modules.bars.mana_indicator
+    self._config.range_indicator = C.db.profile.modules.bars.range_indicator
+    self._config.rightclick_selfcast = C.db.profile.modules.bars.rightclick_selfcast
 
     if BARS:IsRestricted() then
-        self._config.count = E:CopyTable(C.profile.modules.bars.bar1.count, self._config.count)
-        self._config.grid = C.profile.modules.bars.bar1.grid
-        self._config.hotkey = E:CopyTable(C.profile.modules.bars.bar1.hotkey, self._config.hotkey)
-        self._config.macro = E:CopyTable(C.profile.modules.bars.bar1.macro, self._config.macro)
+        self._config.count = E:CopyTable(C.db.profile.modules.bars.bar1.count, self._config.count)
+        self._config.grid = C.db.profile.modules.bars.bar1.grid
+        self._config.hotkey = E:CopyTable(C.db.profile.modules.bars.bar1.hotkey, self._config.hotkey)
+        self._config.macro = E:CopyTable(C.db.profile.modules.bars.bar1.macro, self._config.macro)
     end
 
-    self._config.count = E:CopyTable(C.global.fonts.bars, self._config.count)
-    self._config.hotkey = E:CopyTable(C.global.fonts.bars, self._config.hotkey)
-    self._config.macro = E:CopyTable(C.global.fonts.bars, self._config.macro)
+    self._config.count = E:CopyTable(C.db.global.fonts.bars, self._config.count)
+    self._config.hotkey = E:CopyTable(C.db.global.fonts.bars, self._config.hotkey)
+    self._config.macro = E:CopyTable(C.db.global.fonts.bars, self._config.macro)
 end
 
 local function bar_UpdateButtonConfig(self)
@@ -210,7 +210,7 @@ local function bar_UpdateButtonConfig(self)
         }
     end
 
-    for k, v in next, C.global.colors.button do
+    for k, v in next, C.db.global.colors.button do
         self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
     end
 
@@ -235,7 +235,7 @@ local function bar_UpdateButtonConfig(self)
 end
 
 local function updateFont(fontString, config)
-    fontString:SetFont(C.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(C.db.global.fonts.bars.font, config.size, config.outline and "THINOUTLINE" or nil)
 
     fontString:SetWordWrap(false)
 
@@ -261,11 +261,11 @@ end
 function BARS.CreateActionBars()
     if not isInit then
         local config = {
-            bar1 = BARS:IsRestricted() and CFG.bar1 or C.profile.modules.bars.bar1,
-            bar2 = C.profile.modules.bars.bar2,
-            bar3 = C.profile.modules.bars.bar3,
-            bar4 = C.profile.modules.bars.bar4,
-            bar5 = C.profile.modules.bars.bar5
+            bar1 = BARS:IsRestricted() and CFG.bar1 or C.db.profile.modules.bars.bar1,
+            bar2 = C.db.profile.modules.bars.bar2,
+            bar3 = C.db.profile.modules.bars.bar3,
+            bar4 = C.db.profile.modules.bars.bar4,
+            bar5 = C.db.profile.modules.bars.bar5
         }
 
         for barID, data in next, ACTION_BARS do
