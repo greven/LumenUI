@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local A, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -39,14 +39,14 @@ E.Cooldowns.Updater:SetScript(
                         return
                     end
 
-                    color = C.colors.white
+                    color = C.global.colors.white
 
                     if remain >= 86400 then
                         time1, time2, format = E:SecondsToTime(remain, "abbr")
-                        color = C.colors.cooldown.day
+                        color = C.global.colors.cooldown.day
                     elseif remain >= 3600 then
                         time1, time2, format = E:SecondsToTime(remain, "abbr")
-                        color = C.colors.cooldown.hour
+                        color = C.global.colors.cooldown.hour
                     elseif remain >= 60 then
                         if cooldown.config.m_ss_threshold == 0 or remain > cooldown.config.m_ss_threshold then
                             time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -54,7 +54,7 @@ E.Cooldowns.Updater:SetScript(
                             time1, time2, format = E:SecondsToTime(remain, "x:xx")
                         end
 
-                        color = C.colors.cooldown.minute
+                        color = C.global.colors.cooldown.minute
                     elseif remain >= 1 then
                         if remain > cooldown.config.exp_threshold then
                             time1, time2, format = E:SecondsToTime(remain, "abbr")
@@ -62,14 +62,14 @@ E.Cooldowns.Updater:SetScript(
                             time1, time2, format = E:SecondsToTime(remain, "frac")
                         end
 
-                        color = C.colors.cooldown.second
+                        color = C.global.colors.cooldown.second
                     elseif remain >= 0.001 then
                         time1, time2, format = E:SecondsToTime(remain)
-                        color = C.colors.cooldown.second
+                        color = C.global.colors.cooldown.second
                     end
 
                     if remain <= cooldown.config.exp_threshold then
-                        color = C.colors.cooldown.expiration
+                        color = C.global.colors.cooldown.expiration
                     end
 
                     if time1 then
@@ -104,7 +104,7 @@ end
 local function cooldown_UpdateFont(self)
     local config = self.config.text
 
-    self.Timer:SetFont(config.font or C.media.fonts.normal, config.size, config.outline and "OUTLINE" or nil)
+    self.Timer:SetFont(config.font or M.fonts.normal, config.size, config.outline and "OUTLINE" or nil)
     self.Timer:SetJustifyH("CENTER")
     self.Timer:SetJustifyV(config.v_alignment)
     self.Timer:SetShown(config.enabled)

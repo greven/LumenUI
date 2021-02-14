@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- ---------------
 
@@ -15,13 +15,13 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].name, self._config)
+    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].name, self._config)
 end
 
 local function element_UpdateFonts(self)
     local config = self._config
 
-    self:SetFont(config.font or C.media.fonts.condensed, config.size, config.outline and "OUTLINE" or nil)
+    self:SetFont(config.font or M.fonts.condensed, config.size, config.outline and "OUTLINE" or nil)
     self:SetJustifyH(config.h_alignment)
     self:SetJustifyV(config.v_alignment)
     self:SetWordWrap(config.word_wrap)

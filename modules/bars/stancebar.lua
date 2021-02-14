@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Bars")
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -42,13 +42,13 @@ local function button_Update(self)
 
         if isCastable then
             self.icon:SetDesaturated(false)
-            self.icon:SetVertexColor(E:GetRGB(C.colors.button.normal))
+            self.icon:SetVertexColor(E:GetRGB(C.global.colors.button.normal))
         else
             self.icon:SetDesaturated(true)
-            self.icon:SetVertexColor(E:GetRGB(C.colors.button.unusable))
+            self.icon:SetVertexColor(E:GetRGB(C.global.colors.button.unusable))
         end
 
-        self.HotKey:SetVertexColor(E:GetRGB(C.colors.button.normal))
+        self.HotKey:SetVertexColor(E:GetRGB(C.global.colors.button.normal))
 
         self:UpdateHotKey()
         self:UpdateCooldown()
@@ -92,13 +92,13 @@ local function button_OnEnter(self)
     end
 end
 
-function M.CreateStanceBar()
+function BARS.CreateStanceBar()
     if not isInit then
         local bar = CreateFrame("Frame", "LumStanceBar", UIParent, "SecureHandlerStateTemplate")
         bar._id = "bar7"
         bar._buttons = {}
 
-        M:AddBar(bar._id, bar)
+        BARS:AddBar(bar._id, bar)
 
         bar.Update = function(self)
             self:UpdateConfig()
@@ -183,7 +183,7 @@ function M.CreateStanceBar()
         bar:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
         bar:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 
-        local point = C.modules.bars.bar7.point
+        local point = C.profile.modules.bars.bar7.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

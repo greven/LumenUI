@@ -18,7 +18,7 @@ local GetMoneyString = _G.GetMoneyString
 -- ---------------
 
 local isInit = false
-local config = C.modules.misc.merchant
+local config = C.profile.modules.misc.merchant
 
 do
     local repairStatus, repairType, repairCost, canRepair
@@ -40,7 +40,7 @@ do
     end
 
     function M.AttemptAutoRepair(playerOverride)
-        local useGuildFunds = C.modules.misc.merchant.auto_repair.use_guild_funds
+        local useGuildFunds = C.profile.modules.misc.merchant.auto_repair.use_guild_funds
         repairType = useGuildFunds and "GUILD" or "PLAYER"
 
         repairCost, canRepair = GetRepairAllCost()
@@ -96,5 +96,7 @@ function M.SetUpMerchant()
 
         frame:SetScript("OnEvent", frame_OnEvent)
         frame:RegisterEvent("MERCHANT_SHOW")
+
+        isInit = true
     end
 end

@@ -6,4 +6,4 @@ local C = ns.C
 -- ----------------------------------------------------------
 -- Important: Override each property individually
 
--- C.media.fonts.condensed = "Interface\\AddOns\\LumenUI\\media\\fonts\\Expressway.ttf"
+-- C.global.fonts.units.font = "Interface\\AddOns\\LumenUI\\media\\fonts\\Expressway.ttf"

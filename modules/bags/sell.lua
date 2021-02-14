@@ -23,7 +23,7 @@ local GetMoneyString = _G.GetMoneyString
 
 -- ---------------
 
-local config = C.modules.bags
+local config = C.profile.modules.bags
 
 local function frame_OnUpdate(self, elapsed)
     M.SellFrame.Info.progressTimer = M.SellFrame.Info.progressTimer - elapsed
@@ -74,7 +74,7 @@ function M:CreateSellFrame()
     frame.statusbar = E:CreateStatusBar(frame, "LumVendorGraysFrameStatusBar")
     frame.statusbar:SetSize(200, 20)
     frame.statusbar:SetAllPoints()
-    frame.statusbar:SetStatusBarColor(E:GetRGB(C.colors.dark_red))
+    frame.statusbar:SetStatusBarColor(E:GetRGB(C.global.colors.dark_red))
 
     frame.statusbar.Title = E:CreateString(frame)
     frame.statusbar.Title:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 1, 4)

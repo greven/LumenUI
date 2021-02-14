@@ -36,7 +36,7 @@ local function frame_Update(self)
 end
 
 function UF:CreateFocusFrame(frame)
-    local config = C.modules.unitframes.units[frame._layout or frame._unit]
+    local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
     local level = frame:GetFrameLevel()
 
     local textParent = CreateFrame("Frame", nil, frame)

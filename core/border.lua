@@ -135,7 +135,7 @@ function E:CreateBorder(parent, drawLayer, drawSubLevel)
     border.Show = border_Show
 
     -- Defaults
-    border:SetTexture(C.media.textures.border)
+    border:SetTexture(C.global.border.texture)
     border:SetVertexColor(E:GetRGB(C.global.border.color))
     border:SetOffset(-3)
     border:SetSize(16)

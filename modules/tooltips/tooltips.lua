@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:AddModule("Tooltips")
+local TOOLTIPS = E:AddModule("Tooltips")
 
 local _G = getfenv(0)
 local hooksecurefunc = _G.hooksecurefunc
@@ -17,7 +17,7 @@ local IsShiftKeyDown = _G.IsShiftKeyDown
 
 local isInit = false
 
-M.Tooltips = {
+TOOLTIPS.Tooltips = {
     ChatMenu,
     EmoteMenu,
     LanguageMenu,
@@ -54,7 +54,7 @@ M.Tooltips = {
 }
 
 local function updateFont(fontString, size, outline, shadow)
-    fontString:SetFont(C.media.fonts.normal, size, outline and "THINOUTLINE" or nil)
+    fontString:SetFont(M.fonts.normal, size, outline and "THINOUTLINE" or nil)
 
     if shadow then
         fontString:SetShadowOffset(1, -1)
@@ -69,7 +69,7 @@ local function reskinDropdown()
         for i = 1, UIDROPDOWNMENU_MAXLEVELS do
             local menu = _G[name .. i .. "MenuBackdrop"]
             if menu and not menu.styled then
-                menu:HookScript("OnShow", M.ReskinTooltip)
+                menu:HookScript("OnShow", TOOLTIPS.ReskinTooltip)
             end
         end
     end
@@ -79,7 +79,7 @@ local function tooltipBar_Hook(self)
     if self:IsForbidden() or self:GetParent():IsForbidden() then
         return
     end
-    local config = C.modules.tooltips
+    local config = C.profile.modules.tooltips
 
     if self:IsShown() then
         if self.Text and (config.health.text.show or IsShiftKeyDown()) then
@@ -100,13 +100,13 @@ local function tooltipBar_Hook(self)
             end
         end
 
-        M:UpdateStatusBarColor(self)
+        TOOLTIPS:UpdateStatusBarColor(self)
         GameTooltip:SetPadding(0, 0, 0, config.health.height)
     end
 end
 
 local function tooltip_Hook(self)
-    M.ReskinTooltip(self)
+    TOOLTIPS.ReskinTooltip(self)
 end
 
 local function tooltip_SetDefaultAnchor(self, parent)
@@ -118,7 +118,7 @@ local function tooltip_SetDefaultAnchor(self, parent)
     end
 
     if parent then
-        if C.modules.tooltips.anchor_cursor then
+        if C.profile.modules.tooltips.anchor_cursor then
             self:SetOwner(parent, "ANCHOR_CURSOR")
             return
         else
@@ -158,14 +158,14 @@ local function tooltip_SetSharedBackdropStyle(self)
     self:SetBackdrop(nil)
 end
 
-function M:StyleTooltips()
-    for _, tt in pairs(M.Tooltips) do
+function TOOLTIPS:StyleTooltips()
+    for _, tt in pairs(TOOLTIPS.Tooltips) do
         tt:HookScript("OnShow", tooltip_Hook)
     end
     hooksecurefunc("UIDropDownMenu_CreateFrames", reskinDropdown)
 end
 
-function M:SetupTooltipFonts()
+function TOOLTIPS:SetupTooltipFonts()
     local textSize = 12
 
     updateFont(GameTooltipHeaderText, textSize + 2, true, false)
@@ -192,12 +192,12 @@ function M:SetupTooltipFonts()
     end
 end
 
-function M:ReskinStatusBar(self)
-    local config = C.modules.tooltips
+function TOOLTIPS:ReskinStatusBar(self)
+    local config = C.profile.modules.tooltips
     local statusbar = self.StatusBar
 
     E:HandleStatusBar(statusbar)
-    E:SetStatusBarSkin(statusbar, C.media.textures.statusbar)
+    E:SetStatusBarSkin(statusbar, M.textures.statusbar)
     E:SetBackdrop(statusbar, E.SCREEN_SCALE * 1.5, config.alpha)
     statusbar:ClearAllPoints()
     statusbar:SetPoint("LEFT", 4, 0)
@@ -211,7 +211,7 @@ function M:ReskinStatusBar(self)
     end
 end
 
-function M:ReskinTooltip()
+function TOOLTIPS:ReskinTooltip()
     if not self then
         return
     end
@@ -219,7 +219,7 @@ function M:ReskinTooltip()
         return
     end
 
-    local config = C.modules.tooltips
+    local config = C.profile.modules.tooltips
     self:SetScale(config.scale)
 
     if not self.styled then
@@ -229,15 +229,15 @@ function M:ReskinTooltip()
             config.alpha,
             C.global.backdrop.color,
             {
-                bgFile = C.media.textures.flat,
-                edgeFile = C.media.textures.backdrop_border,
-                edgeSize = C.modules.tooltips.border.size,
+                bgFile = M.textures.flat,
+                edgeFile = M.textures.backdrop_border,
+                edgeSize = C.profile.modules.tooltips.border.size,
                 tile = false
             }
         )
 
         if self.StatusBar then
-            M:ReskinStatusBar(self)
+            TOOLTIPS:ReskinStatusBar(self)
         end
 
         if self.GetBackdrop then
@@ -257,7 +257,7 @@ function M:ReskinTooltip()
 
             if item then
                 local quality = select(3, GetItemInfo(item))
-                local color = C.colors.quality[quality or 1]
+                local color = C.global.colors.quality[quality or 1]
 
                 if color then
                     self.bg:SetBackdropBorderColor(color.r, color.g, color.b)
@@ -267,17 +267,17 @@ function M:ReskinTooltip()
     end
 end
 
-function M.IsInit()
+function TOOLTIPS.IsInit()
     return isInit
 end
 
-function M:Init()
-    local config = C.modules.tooltips
+function TOOLTIPS:Init()
+    local config = C.profile.modules.tooltips
 
     if not isInit and config.enabled then
         GameTooltip.StatusBar = GameTooltipStatusBar
 
-        M:StyleTooltips()
+        TOOLTIPS:StyleTooltips()
         GameTooltip:HookScript("OnTooltipCleared", tooltip_OnTooltipCleared)
 
         -- Anchor
@@ -296,9 +296,9 @@ function M:Init()
         GameTooltipStatusBar:HookScript("OnValueChanged", tooltipBar_Hook)
 
         -- Elements
-        M:SetupTooltipFonts()
-        M:SetupTooltipInfo()
-        M:SetupUnitInfo()
+        TOOLTIPS:SetupTooltipFonts()
+        TOOLTIPS:SetupTooltipInfo()
+        TOOLTIPS:SetupUnitInfo()
 
         self:Update()
 
@@ -306,9 +306,9 @@ function M:Init()
     end
 end
 
-function M.Update()
+function TOOLTIPS.Update()
     if isInit then
-        M.ReskinTooltip(GameTooltip)
-        GameTooltipStatusBar:SetHeight(C.modules.tooltips.health.height)
+        TOOLTIPS.ReskinTooltip(GameTooltip)
+        GameTooltipStatusBar:SetHeight(C.profile.modules.tooltips.health.height)
     end
 end

@@ -92,7 +92,7 @@ function M.CreateExtraButton()
         ExtraActionButton1.UpdateHotKey = button_UpdateHotKey
         ExtraActionButton1.UpdateHotKeyFont = button_UpdateHotKeyFont
 
-        local point = C.modules.bars.extra.point
+        local point = C.profile.modules.bars.extra.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

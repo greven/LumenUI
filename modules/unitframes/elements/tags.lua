@@ -77,7 +77,7 @@ local customTags = {
         if not color then
             return
         end
-        return "|c" .. E:ToHex(C.colors[color])
+        return "|c" .. E:ToHex(C.global.colors[color])
     end,
     -- Creature difficulty color
     color_difficulty = function(unit)
@@ -87,7 +87,7 @@ local customTags = {
         if level > 0 then
             return "|c" .. E:ToHex(color)
         end
-        return "|c" .. E:ToHex(C.colors.difficulty.impossible)
+        return "|c" .. E:ToHex(C.global.colors.difficulty.impossible)
     end,
     -- Color unit by disconnected, tapped, class or reaction
     color_unit = function(unit)
@@ -99,8 +99,8 @@ local customTags = {
         local dead = "Dead"
 
         if colorStatus then
-            offline = "|c" .. E:ToHex(C.colors.light_gray) .. offline .. "|r"
-            dead = "|c" .. E:ToHex(C.colors.light_red) .. dead .. "|r"
+            offline = "|c" .. E:ToHex(C.global.colors.light_gray) .. offline .. "|r"
+            dead = "|c" .. E:ToHex(C.global.colors.light_red) .. dead .. "|r"
         end
 
         if not UnitIsConnected(unit) then
@@ -168,14 +168,14 @@ local customTags = {
         local classification = UnitClassification(realUnit or unit)
 
         if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) .. "Boss|r" or "Boss"
+            return color and "|c" .. E:ToHex(C.global.colors.difficulty.impossible) .. "Boss|r" or "Boss"
         elseif classification == "rare" then
             return color and "|cff008FF7Rare|r" or "Rare"
         elseif classification == "rareelite" then
-            return color and "|cff008FF7Rare|r |c" .. E:ToHex(C.colors.difficulty.very_difficult) .. "Elite|r" or
+            return color and "|cff008FF7Rare|r |c" .. E:ToHex(C.global.colors.difficulty.very_difficult) .. "Elite|r" or
                 "Rare Elite"
         elseif classification == "elite" then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) .. "Elite|r" or "Elite"
+            return color and "|c" .. E:ToHex(C.global.colors.difficulty.difficult) .. "Elite|r" or "Elite"
         end
 
         return ""
@@ -185,13 +185,13 @@ local customTags = {
         local classification = UnitClassification(realUnit or unit)
 
         if classification == "worldboss" or UnitLevel(realUnit or unit) <= 0 then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.impossible) .. "+|r" or "+"
+            return color and "|c" .. E:ToHex(C.global.colors.difficulty.impossible) .. "+|r" or "+"
         elseif classification == "rare" then
             return color and "|cff008FF7R|r" or "R"
         elseif classification == "rareelite" then
-            return color and "|cff008FF7R|r|c" .. E:ToHex(C.colors.difficulty.very_difficult) .. "+|r" or "R+"
+            return color and "|cff008FF7R|r|c" .. E:ToHex(C.global.colors.difficulty.very_difficult) .. "+|r" or "R+"
         elseif classification == "elite" then
-            return color and "|c" .. E:ToHex(C.colors.difficulty.difficult) .. "+|r" or "+"
+            return color and "|c" .. E:ToHex(C.global.colors.difficulty.difficult) .. "+|r" or "+"
         elseif classification == "minus" then
             return "-"
         end

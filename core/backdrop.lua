@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -26,7 +26,7 @@ function E:SetBackdrop(frame, offset, alpha, color, backdrop)
             bg:SetBackdropColor(E:GetRGB(color))
         end
     else
-        bg:SetBackdrop({bgFile = C.media.textures.flat, tile = false})
+        bg:SetBackdrop({bgFile = C.global.backdrop.texture, tile = false})
         if color then
             bg:SetBackdropColor(E:GetRGB(color))
         else
@@ -69,7 +69,7 @@ function E:CreateShadow(frame, size, alpha)
         frame = frame:GetParent()
     end
 
-    local shadowBackdrop = {edgeFile = C.media.textures.glow}
+    local shadowBackdrop = {edgeFile = M.textures.glow}
     shadowBackdrop.edgeSize = size or 6
 
     local shadow = CreateFrame("Frame", nil, frame, "BackdropTemplate")
@@ -88,7 +88,7 @@ function E:CreateGlow(frame, size, drawLayer, drawSubLevel, offset)
     end
 
     local glow = E:CreateBorder(frame._backdrop or frame, drawLayer or "BACKGROUND", drawSubLevel or -7)
-    glow:SetTexture(C.media.textures.glow)
+    glow:SetTexture(M.textures.glow)
     glow:SetOffset(offset or -4)
     glow:SetSize(size or 12)
 

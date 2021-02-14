@@ -1,8 +1,8 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Bars")
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -178,21 +178,21 @@ local function bar_Update(self)
 end
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(M:IsRestricted() and CFG.bar1 or C.modules.bars.bar1, self._config)
-    self._config.click_on_down = C.modules.bars.click_on_down
-    self._config.cooldown = E:CopyTable(C.modules.bars.bar1.cooldown, self._config.cooldown)
-    self._config.cooldown = E:CopyTable(C.modules.bars.cooldown, self._config.cooldown)
-    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation, self._config.desaturation)
-    self._config.lock = C.modules.bars.lock
-    self._config.mana_indicator = C.modules.bars.mana_indicator
-    self._config.range_indicator = C.modules.bars.range_indicator
-    self._config.rightclick_selfcast = C.modules.bars.rightclick_selfcast
+    self._config = E:CopyTable(BARS:IsRestricted() and CFG.bar1 or C.profile.modules.bars.bar1, self._config)
+    self._config.click_on_down = C.profile.modules.bars.click_on_down
+    self._config.cooldown = E:CopyTable(C.profile.modules.bars.bar1.cooldown, self._config.cooldown)
+    self._config.cooldown = E:CopyTable(C.profile.modules.bars.cooldown, self._config.cooldown)
+    self._config.desaturation = E:CopyTable(C.profile.modules.bars.desaturation, self._config.desaturation)
+    self._config.lock = C.profile.modules.bars.lock
+    self._config.mana_indicator = C.profile.modules.bars.mana_indicator
+    self._config.range_indicator = C.profile.modules.bars.range_indicator
+    self._config.rightclick_selfcast = C.profile.modules.bars.rightclick_selfcast
 
-    if M:IsRestricted() then
-        self._config.count = E:CopyTable(C.modules.bars.bar1.count, self._config.count)
-        self._config.grid = C.modules.bars.bar1.grid
-        self._config.hotkey = E:CopyTable(C.modules.bars.bar1.hotkey, self._config.hotkey)
-        self._config.macro = E:CopyTable(C.modules.bars.bar1.macro, self._config.macro)
+    if BARS:IsRestricted() then
+        self._config.count = E:CopyTable(C.profile.modules.bars.bar1.count, self._config.count)
+        self._config.grid = C.profile.modules.bars.bar1.grid
+        self._config.hotkey = E:CopyTable(C.profile.modules.bars.bar1.hotkey, self._config.hotkey)
+        self._config.macro = E:CopyTable(C.profile.modules.bars.bar1.macro, self._config.macro)
     end
 
     self._config.count = E:CopyTable(C.global.fonts.bars, self._config.count)
@@ -210,7 +210,7 @@ local function bar_UpdateButtonConfig(self)
         }
     end
 
-    for k, v in next, C.colors.button do
+    for k, v in next, C.global.colors.button do
         self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
     end
 
@@ -258,14 +258,14 @@ local function button_UpdateCountFont(self)
     updateFont(self.Count, self._parent._config.count)
 end
 
-function M.CreateActionBars()
+function BARS.CreateActionBars()
     if not isInit then
         local config = {
-            bar1 = M:IsRestricted() and CFG.bar1 or C.modules.bars.bar1,
-            bar2 = C.modules.bars.bar2,
-            bar3 = C.modules.bars.bar3,
-            bar4 = C.modules.bars.bar4,
-            bar5 = C.modules.bars.bar5
+            bar1 = BARS:IsRestricted() and CFG.bar1 or C.profile.modules.bars.bar1,
+            bar2 = C.profile.modules.bars.bar2,
+            bar3 = C.profile.modules.bars.bar3,
+            bar4 = C.profile.modules.bars.bar4,
+            bar5 = C.profile.modules.bars.bar5
         }
 
         for barID, data in next, ACTION_BARS do
@@ -273,7 +273,7 @@ function M.CreateActionBars()
             bar._id = barID
             bar._buttons = {}
 
-            M:AddBar(bar._id, bar)
+            BARS:AddBar(bar._id, bar)
 
             bar.Update = bar_Update
             bar.UpdateButtonConfig = bar_UpdateButtonConfig
@@ -311,7 +311,7 @@ function M.CreateActionBars()
                     nil,
                     nil,
                     {
-                        bgFile = C.media.textures.button_backdrop,
+                        bgFile = M.textures.button_backdrop,
                         tile = false
                     }
                 )
@@ -330,9 +330,9 @@ function M.CreateActionBars()
             RegisterStateDriver(bar, "page", barID == "bar1" and getBarPage() or data.page)
         end
 
-        for barID, bar in next, M:GetBars() do
-            if barID == "bar1" and M:IsRestricted() then
-                M:ActionBarController_AddWidget(bar, "ACTION_BAR")
+        for barID, bar in next, BARS:GetBars() do
+            if barID == "bar1" and BARS:IsRestricted() then
+                BARS:ActionBarController_AddWidget(bar, "ACTION_BAR")
             else
                 -- E.Movers:Create(bar)
                 local point = config[barID].point

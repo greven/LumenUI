@@ -48,7 +48,7 @@ local function updateAura(button, index)
         end
 
         if filter == "HARMFUL" then
-            button.Border:SetVertexColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
+            button.Border:SetVertexColor(E:GetRGB(C.global.colors.debuff[debuffType] or C.global.colors.debuff.None))
 
             if debuffType and button.showDebuffType then
                 button.AuraType:SetTexCoord(
@@ -90,7 +90,7 @@ local function updateTempEnchant(button, index)
             button.Cooldown:Hide()
         end
 
-        button.Border:SetVertexColor(E:GetRGB(C.colors.buff.Enchant))
+        button.Border:SetVertexColor(E:GetRGB(C.global.colors.buff.Enchant))
     end
 end
 
@@ -165,7 +165,7 @@ local function handleButton(button, header)
     button.Icon = E:SetIcon(button, [[Interface\ICONS\INV_Misc_QuestionMark]])
 
     local border = E:CreateBorder(button)
-    border:SetTexture(C.media.textures.border)
+    border:SetTexture(C.global.border.texture)
     border:SetSize(16)
     border:SetOffset(-4)
     button.Border = border
@@ -292,8 +292,8 @@ local function header_ForEachButton(self, method, ...)
 end
 
 local function header_UpdateConfig(self)
-    self._config = E:CopyTable(C.modules.auras[self._filter], self._config)
-    self._config.cooldown = E:CopyTable(C.modules.auras.cooldown, self._config.cooldown)
+    self._config = E:CopyTable(C.profile.modules.auras[self._filter], self._config)
+    self._config.cooldown = E:CopyTable(C.profile.modules.auras.cooldown, self._config.cooldown)
 end
 
 local function header_UpdateCooldownConfig(self)
@@ -317,7 +317,7 @@ local function header_UpdateCooldownConfig(self)
 end
 
 local function createHeader(filter)
-    local point = C.modules.auras[filter].point
+    local point = C.profile.modules.auras[filter].point
     local header
 
     if filter == "TOTEM" then
@@ -402,7 +402,7 @@ function M.IsInit()
 end
 
 function M.Init()
-    if not isInit and C.modules.auras.enabled then
+    if not isInit and C.profile.modules.auras.enabled then
         createHeader("HELPFUL")
         createHeader("HARMFUL")
         createHeader("TOTEM")

@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
@@ -46,7 +46,7 @@ do
     end
 
     function UF:CreateTargetFrame(frame)
-        local config = C.modules.unitframes.units[frame._layout or frame._unit]
+        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
         local level = frame:GetFrameLevel()
 
         local textParent = CreateFrame("Frame", nil, frame)
@@ -74,8 +74,8 @@ do
 
         -- Level and Race
         local info = textParent:CreateFontString(nil, "ARTWORK")
-        info:SetFont(C.media.fonts.condensed, 15, "OUTLINE")
-        info:SetTextColor(E:GetRGB(C.colors.light_gray))
+        info:SetFont(C.global.fonts.units.font, 15, "OUTLINE")
+        info:SetTextColor(E:GetRGB(C.global.colors.light_gray))
         info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
         frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
 
@@ -103,6 +103,7 @@ do
             self:UpdateHealthPrediction()
             self:UpdatePower()
             self:UpdateName()
+            self:UpdateCastbar()
             self:UpdateAuras()
             self:UpdateRaidTargetIndicator()
         else
@@ -126,6 +127,7 @@ do
         self:CreateHealthPrediction(frame, health, textParent)
 
         self:CreateName(frame, textParent)
+        self:CreateCastbar(frame)
         self:CreateAuras(frame, "target")
         self:CreateRaidTargetIndicator(frame)
 
@@ -133,7 +135,7 @@ do
         local arrow = frame:CreateTexture(nil, "ARTWORK")
         arrow:SetSize(18, 18)
         arrow:SetPoint("RIGHT", frame, "LEFT", -6, 0)
-        arrow:SetTexture(C.media.textures.arrow)
+        arrow:SetTexture(M.textures.arrow)
         arrow:SetVertexColor(0, 0, 0)
         arrow:SetAlpha(0.8)
         frame.arrow = arrow

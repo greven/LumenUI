@@ -28,7 +28,7 @@ local ID = "|cffffd100" .. _G.ID .. ":|r %d"
 local TOTAL = "|cffffd100" .. _G.TOTAL .. ":|r %d"
 
 local function addSpellInfo(tooltip, id, caster)
-    if not (id and C.modules.tooltips.id) then
+    if not (id and C.profile.modules.tooltips.id) then
         return
     end
 
@@ -55,7 +55,7 @@ local function addSpellInfo(tooltip, id, caster)
 end
 
 local function addGenericInfo(tooltip, id)
-    if not (id and C.modules.tooltips.id) then
+    if not (id and C.profile.modules.tooltips.id) then
         return
     end
 
@@ -83,7 +83,7 @@ local function addItemInfo(tooltip, id, showQuantity)
     local name = tooltip:GetName()
     local textLeft, textRight
 
-    if C.modules.tooltips.id then
+    if C.profile.modules.tooltips.id then
         textLeft = ID:format(id)
 
         for i = 2, tooltip:NumLines() do
@@ -95,7 +95,7 @@ local function addItemInfo(tooltip, id, showQuantity)
         end
     end
 
-    if showQuantity and C.modules.tooltips.count then
+    if showQuantity and C.profile.modules.tooltips.count then
         textRight = TOTAL:format(GetItemCount(id, true))
 
         for i = 2, tooltip:NumLines() do
@@ -149,7 +149,7 @@ local function tooltip_SetUnitAura(self, unit, index, filter)
         return
     end
 
-    local config = C.modules.tooltips
+    local config = C.profile.modules.tooltips
     local isShiftKeyDown = IsShiftKeyDown()
     local _, _, _, _, _, _, caster, _, _, id = UnitAura(unit, index, filter)
 
@@ -165,7 +165,7 @@ local function tooltip_SetSpell(self)
         return
     end
 
-    local config = C.modules.tooltips
+    local config = C.profile.modules.tooltips
     local isShiftKeyDown = IsShiftKeyDown()
     local _, id = self:GetSpell()
 

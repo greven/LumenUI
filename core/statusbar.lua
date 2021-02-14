@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local A, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -83,7 +83,7 @@ function E:HandleStatusBar(bar, isRecursive)
             bg = bar:CreateTexture(nil, "BACKGROUND")
         end
 
-        bg:SetColorTexture(E:GetRGB(C.colors.dark_gray))
+        bg:SetColorTexture(E:GetRGB(C.global.colors.dark_gray))
         bg:SetAllPoints()
         bar.Bg = bg
 
@@ -119,12 +119,12 @@ function E:SetStatusBarSkin(bar, texture, orientation)
         return
     end
 
-    bar:SetStatusBarTexture(texture or C.media.textures.statusbar)
-    bar:SetStatusBarColor(E:GetRGB(C.colors.dark_gray))
+    bar:SetStatusBarTexture(texture or C.global.statusbar.texture)
+    bar:SetStatusBarColor(E:GetRGB(C.global.colors.dark_gray))
     bar:SetOrientation(orientation or "HORIZONTAL")
 
     if bar.Bg then
-        bar.Bg:SetTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
+        bar.Bg:SetTexture(M.textures.vertlines, "REPEAT", "REPEAT")
         bar.Bg:SetAllPoints()
         bar.Bg:SetHorizTile(true)
         bar.Bg:SetVertTile(true)
@@ -239,8 +239,8 @@ do
     end
 
     local function updateColors(self)
-        self.Gain_:SetColorTexture(E:GetRGB(C.colors.gain))
-        self.Loss_:SetColorTexture(E:GetRGB(C.colors.loss))
+        self.Gain_:SetColorTexture(E:GetRGB(C.global.colors.gain))
+        self.Loss_:SetColorTexture(E:GetRGB(C.global.colors.loss))
     end
 
     local function updatePoints(self, orientation)

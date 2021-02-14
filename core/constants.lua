@@ -4,13 +4,14 @@ local E, C, L = ns.E, ns.C, ns.L
 -- Lua
 local _G = getfenv(0)
 local select = _G.select
-
 local m_min = _G.math.min
 local m_max = _G.math.max
 
 local UnitGUID = _G.UnitGUID
 local UnitName = _G.UnitName
 local GetRealmName = _G.GetRealmName
+
+-- ---------------
 
 E.ADDON_NAME = A
 E.LUMEN = "|cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r"
@@ -19,7 +20,7 @@ E.LUMEN = "|cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r"
 E.PLAYER_CLASS = select(2, UnitClass("player"))
 E.PLAYER_NAME = UnitName("player")
 E.NAME_REALM = UnitName("player") .. " - " .. GetRealmName()
-E.CLASS_COLOR = C.colors.class[E.PLAYER_CLASS]
+E.CLASS_COLOR = C.global.colors.class[E.PLAYER_CLASS]
 
 -- !ClassColors addon
 if (IsAddOnLoaded("!ClassColors") and CUSTOM_CLASS_COLORS) then
@@ -64,3 +65,14 @@ end
 function E:UpdateConstants()
     E.PLAYER_GUID = UnitGUID("player")
 end
+
+local function PlayerSpecializationChanged()
+    E:CheckPlayerRoles()
+end
+
+local function PlayerRolesAssigned()
+    E:CheckPlayerRoles()
+end
+
+E:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", PlayerSpecializationChanged)
+E:RegisterEvent("PLAYER_ROLES_ASSIGNED", PlayerRolesAssigned)

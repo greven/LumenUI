@@ -15,7 +15,7 @@ local objects = {}
 local units = {}
 
 function UF:For(unit, method, ...)
-    if units[unit] and C.modules.unitframes.units[unit].enabled then
+    if units[unit] and C.profile.modules.unitframes.units[unit].enabled then
         if unit == "party" then
             local header = objects[unit]
             if header then
@@ -61,7 +61,7 @@ function UF:GetUnits(ignoredUnits)
 end
 
 function UF:CreateHeader(unit, name)
-    local config = C.modules.unitframes.units
+    local config = C.profile.modules.unitframes.units
 
     -- Party
     do
@@ -123,7 +123,7 @@ function UF:Create(unit, name)
         elseif unit == "party" then
             local header = UF:CreateHeader("party", name .. "Frame")
 
-            E:SetPosition(header, C.modules.unitframes.units[unit].point)
+            E:SetPosition(header, C.profile.modules.unitframes.units[unit].point)
             objects[unit] = header
         else
             local object
@@ -136,7 +136,7 @@ function UF:Create(unit, name)
                 object = oUF:Spawn(unit, name .. "Frame")
             end
 
-            E:SetPosition(object, C.modules.unitframes.units[unit].point)
+            E:SetPosition(object, C.profile.modules.unitframes.units[unit].point)
             objects[unit] = object
         end
 
@@ -145,7 +145,7 @@ function UF:Create(unit, name)
 end
 
 function UF:CreateFrames()
-    local config = C.modules.unitframes.units
+    local config = C.profile.modules.unitframes.units
 
     oUF:Factory(
         function()
@@ -235,7 +235,7 @@ function UF:IsInit()
 end
 
 function UF:Init()
-    if not isInit and C.modules.unitframes.enabled then
+    if not isInit and C.profile.modules.unitframes.enabled then
         self:UpdateColors()
         UF:CreateFrames()
 

@@ -94,7 +94,7 @@ function M.HasBindings()
 end
 
 function M.SetUpBindings()
-    if not isInit and C.modules.misc.bindings.enabled then
+    if not isInit and C.profile.modules.misc.bindings.enabled then
         -- Summon Grand Expedition Yak
         local YakID = 0 -- Fallback to Random Mounts
         for i, v in pairs(C_MountJournal.GetMountIDs()) do

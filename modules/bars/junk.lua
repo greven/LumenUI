@@ -1,13 +1,14 @@
 local _, ns = ...
 local E, C, L = ns.E, ns.C, ns.L
-local M = E:GetModule("Bars")
+
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
 
 -- ---------------
 
-function M.CleanUp()
+function BARS.CleanUp()
     E:ForceHide(MainMenuBarArtFrame, true)
     E:ForceHide(MultiBarBottomLeft)
     E:ForceHide(MultiBarBottomRight)

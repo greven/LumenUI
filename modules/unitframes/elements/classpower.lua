@@ -111,12 +111,12 @@ do
                         self[i]:SetHeight(layout[i])
                     end
 
-                    self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+                    self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power.CHI))
                     if i == chargedIdx then
-                        self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-                        self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+                        self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power.CHI))
+                        self[i].Highlight:SetColorTexture(E:GetRGBA(C.global.colors.power.CHI, 0.4))
                     else
-                        self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+                        self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power[powerType]))
                         self[i].Highlight:SetColorTexture(0, 0, 0, 0)
                     end
                 end
@@ -127,12 +127,12 @@ do
             self._powerID = powerType
         elseif self._active and self._chargedIdx ~= chargedIdx then
             for i = 1, max do
-                self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
+                self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power.CHI))
                 if i == chargedIdx then
-                    self[i]:SetStatusBarColor(E:GetRGB(C.colors.power.CHI))
-                    self[i].Highlight:SetColorTexture(E:GetRGBA(C.colors.power.CHI, 0.4))
+                    self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power.CHI))
+                    self[i].Highlight:SetColorTexture(E:GetRGBA(C.global.colors.power.CHI, 0.4))
                 else
-                    self[i]:SetStatusBarColor(E:GetRGB(C.colors.power[powerType]))
+                    self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power[powerType]))
                     self[i].Highlight:SetColorTexture(0, 0, 0, 0)
                 end
             end
@@ -143,7 +143,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -164,7 +164,7 @@ do
     local function element_UpdateColors(self)
         if self._powerID then
             for i = 1, 10 do
-                self[i]:SetStatusBarColor(E:GetRGB(C.colors.power["CHI"]))
+                self[i]:SetStatusBarColor(E:GetRGB(C.global.colors.power["CHI"]))
             end
         end
     end
@@ -276,7 +276,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -397,12 +397,14 @@ do
         end
         local element = self.Stagger
 
-        element:SetStatusBarColor(E:GetGradientAsRGB((element.cur or 0) / (element.max or 1), C.colors.power.STAGGER))
+        element:SetStatusBarColor(
+            E:GetGradientAsRGB((element.cur or 0) / (element.max or 1), C.global.colors.power.STAGGER)
+        )
     end
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)

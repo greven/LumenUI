@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- ---------------
 
@@ -32,7 +32,7 @@ local function frame_Update(self)
 end
 
 function UF:CreateTargetTargetFrame(frame)
-    local config = C.modules.unitframes.units[frame._layout or frame._unit]
+    local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
     local level = frame:GetFrameLevel()
 
     local textParent = CreateFrame("Frame", nil, frame)
@@ -50,7 +50,7 @@ function UF:CreateTargetTargetFrame(frame)
     local arrow = frame:CreateTexture(nil, "ARTWORK")
     arrow:SetSize(18, 18)
     arrow:SetPoint("RIGHT", frame, "LEFT", -10, 0)
-    arrow:SetTexture(C.media.textures.arrow)
+    arrow:SetTexture(M.textures.arrow)
     arrow:SetVertexColor(0, 0, 0)
     arrow:SetAlpha(0.8)
     frame.arrow = arrow

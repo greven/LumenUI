@@ -125,7 +125,7 @@ function M.IsRestricted()
 end
 
 function M.SetupActionBarController()
-    if not isInit and C.modules.bars.restricted then
+    if not isInit and C.profile.modules.bars.restricted then
         barController = CreateFrame("Frame", "LumActionBarController", UIParent, "SecureHandlerStateTemplate")
         barController:SetSize(32, 32)
         barController:SetPoint("BOTTOM", 0, 0)

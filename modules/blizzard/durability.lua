@@ -6,10 +6,8 @@ local M = E:GetModule("Blizzard")
 -- Lua
 local _G = getfenv(0)
 
---[[ luacheck: globals
-	DurabilityFrame UIParent
-]]
--- Mine
+-- ---------------
+
 local isInit = false
 
 function M.HasDurabilityFrame()
@@ -17,9 +15,9 @@ function M.HasDurabilityFrame()
 end
 
 function M.SetUpDurabilityFrame()
-    if not isInit and C.modules.blizzard.durability.enabled then
+    if not isInit and C.profile.modules.blizzard.durability.enabled then
         DurabilityFrame:ClearAllPoints()
-        DurabilityFrame:SetPoint(unpack(C.modules.blizzard.durability.point))
+        DurabilityFrame:SetPoint(unpack(C.profile.modules.blizzard.durability.point))
         -- E.Movers:Create(DurabilityFrame)
 
         isInit = true

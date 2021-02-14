@@ -1,15 +1,17 @@
 -- ----------------------------------------
 -- > lumenUI (Kreoss @ Quel'Thalas EU) <
 -- ----------------------------------------
-local _, ns = ...
-local E = ns.E
+local Addon, ns = ...
+local E, C, D = ns.E, ns.C, ns.D
 
 E:RegisterEvent(
     "ADDON_LOADED",
     function(addonName)
-        if addonName ~= E.ADDON_NAME then
+        if addonName ~= Addon then
             return
         end
+
+        C.db = LibStub("AceDB-3.0"):New("LUM_UI_GLOBAL_CONFIG", D)
 
         -- Support AdiButtonAuras
         if AdiButtonAuras and AdiButtonAuras.RegisterLAB then
@@ -23,5 +25,12 @@ E:RegisterEvent(
                 E:InitModules()
             end
         )
+    end
+)
+
+E:RegisterEvent(
+    "PLAYER_ENTERING_WORLD",
+    function(initLogin, isReload)
+        E:CheckPlayerRoles()
     end
 )

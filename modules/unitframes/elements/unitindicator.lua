@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
@@ -27,15 +27,15 @@ local function update(self)
 
     if self.unit == "player" then
         if inCombat then
-            element:SetStatusBarColor(E:GetRGB(C.colors.red))
+            element:SetStatusBarColor(E:GetRGB(C.global.colors.red))
         elseif showRested and isResting then
-            element:SetStatusBarColor(E:GetRGB(C.colors.green))
+            element:SetStatusBarColor(E:GetRGB(C.global.colors.green))
         else
             element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
     elseif UnitPlayerControlled(self.unit) then -- Player controlled units
         if inCombat then
-            element:SetStatusBarColor(E:GetRGB(C.colors.red))
+            element:SetStatusBarColor(E:GetRGB(C.global.colors.red))
         else
             element:SetStatusBarColor(E:GetRGB(E:GetUnitColor(self.unit, true, true)))
         end
@@ -58,7 +58,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].unitIndicator, self._config)
+    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].unitIndicator, self._config)
 end
 
 local function element_UpdateSize(self)
@@ -85,7 +85,7 @@ end
 
 function UF:CreateUnitIndicator(frame, parent)
     local element = CreateFrame("StatusBar", nil, (parent or frame))
-    element:SetStatusBarTexture(C.media.textures.flat)
+    element:SetStatusBarTexture(M.textures.flat)
     element:SetOrientation("VERTICAL")
 
     E:SetBackdrop(element, E.SCREEN_SCALE * 3)

@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Bars")
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -46,7 +46,7 @@ local function bar_UpdateButtonConfig(self)
         }
     end
 
-    for k, v in next, C.colors.button do
+    for k, v in next, C.global.colors.button do
         self.buttonConfig.colors[k][1], self.buttonConfig.colors[k][2], self.buttonConfig.colors[k][3] = E:GetRGB(v)
     end
 
@@ -210,13 +210,13 @@ local function button_OnEnter(self)
     end
 end
 
-function M.CreatePetActionBar()
+function BARS.CreatePetActionBar()
     if not isInit then
         local bar = CreateFrame("Frame", "LumPetBar", UIParent, "SecureHandlerStateTemplate")
         bar._id = "bar6"
         bar._buttons = {}
 
-        M:AddBar(bar._id, bar)
+        BARS:AddBar(bar._id, bar)
 
         bar.Update = bar_Update
         bar.UpdateButtonConfig = bar_UpdateButtonConfig
@@ -290,7 +290,7 @@ function M.CreatePetActionBar()
         bar:RegisterEvent("UNIT_FLAGS")
         bar:RegisterEvent("UNIT_PET")
 
-        local point = C.modules.bars.bar6.point
+        local point = C.profile.modules.bars.bar6.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

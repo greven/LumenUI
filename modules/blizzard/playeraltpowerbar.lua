@@ -15,7 +15,7 @@ function M.HasAltPowerBar()
 end
 
 function M.SetUpAltPowerBar()
-    if not isInit and C.modules.blizzard.player_alt_power_bar.enabled then
+    if not isInit and C.profile.modules.blizzard.player_alt_power_bar.enabled then
         PlayerPowerBarAlt.ignoreFramePositionManager = true
         UIPARENT_ALTERNATE_FRAME_POSITIONS["PlayerPowerBarAlt_Top"] = nil
         UIPARENT_ALTERNATE_FRAME_POSITIONS["PlayerPowerBarAlt_Bottom"] = nil

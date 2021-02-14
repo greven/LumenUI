@@ -72,28 +72,28 @@ local function bar_ForEach(self, method, ...)
 end
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(C.modules.bars[self._id], self._config)
-    self._config.click_on_down = C.modules.bars.click_on_down
-    self._config.desaturation = E:CopyTable(C.modules.bars.desaturation, self._config.desaturation)
-    self._config.lock = C.modules.bars.lock
-    self._config.mana_indicator = C.modules.bars.mana_indicator
-    self._config.range_indicator = C.modules.bars.range_indicator
-    self._config.rightclick_selfcast = C.modules.bars.rightclick_selfcast
+    self._config = E:CopyTable(C.profile.modules.bars[self._id], self._config)
+    self._config.click_on_down = C.profile.modules.bars.click_on_down
+    self._config.desaturation = E:CopyTable(C.profile.modules.bars.desaturation, self._config.desaturation)
+    self._config.lock = C.profile.modules.bars.lock
+    self._config.mana_indicator = C.profile.modules.bars.mana_indicator
+    self._config.range_indicator = C.profile.modules.bars.range_indicator
+    self._config.rightclick_selfcast = C.profile.modules.bars.rightclick_selfcast
 
-    if C.modules.bars[self._id].cooldown then
-        self._config.cooldown = E:CopyTable(C.modules.bars[self._id].cooldown, self._config.cooldown)
-        self._config.cooldown = E:CopyTable(C.modules.bars.cooldown, self._config.cooldown)
+    if C.profile.modules.bars[self._id].cooldown then
+        self._config.cooldown = E:CopyTable(C.profile.modules.bars[self._id].cooldown, self._config.cooldown)
+        self._config.cooldown = E:CopyTable(C.profile.modules.bars.cooldown, self._config.cooldown)
     end
 
-    if C.modules.bars[self._id].count then
+    if C.profile.modules.bars[self._id].count then
         self._config.count = E:CopyTable(C.global.fonts.bars, self._config.count)
     end
 
-    if C.modules.bars[self._id].hotkey then
+    if C.profile.modules.bars[self._id].hotkey then
         self._config.hotkey = E:CopyTable(C.global.fonts.bars, self._config.hotkey)
     end
 
-    if C.modules.bars[self._id].macro then
+    if C.profile.modules.bars[self._id].macro then
         self._config.macro = E:CopyTable(C.global.fonts.bars, self._config.macro)
     end
 end
@@ -211,7 +211,7 @@ local vehicleController
 
 function M:UpdateBlizzVehicle()
     if not self:IsRestricted() then
-        if C.modules.bars.blizz_vehicle then
+        if C.profile.modules.bars.blizz_vehicle then
             -- MainMenuBar:SetParent(UIParent)
             OverrideActionBar:SetParent(UIParent)
 
@@ -283,20 +283,21 @@ function M.IsInit()
 end
 
 function M.Init()
-    if not isInit and C.modules.bars.enabled then
+    if not isInit and C.profile.modules.bars.enabled then
         M:SetupActionBarController()
         M:CreateActionBars()
         M:CreateStanceBar()
         M:CreatePetActionBar()
         M:CreateExtraButton()
+        M:CreateVehicleExitButton()
+        M:CreateXPBar()
+        M:CreateThreatBar()
+        M:ReassignBindings()
+        M:UpdateBlizzVehicle()
+        M:CleanUp()
         -- M:CreatePetBattleBar()
         -- M:CreateZoneButton()
         -- M:CreateMicroMenu()
-        M:CreateVehicleExitButton()
-        M:CreateXPBar()
-        M:ReassignBindings()
-        M:CleanUp()
-        M:UpdateBlizzVehicle()
 
         E:RegisterEvent("ACTIONBAR_HIDEGRID", resumeFading)
         E:RegisterEvent("ACTIONBAR_SHOWGRID", pauseFading)
@@ -312,8 +313,8 @@ function M.Init()
             M:ReassignBindings()
         end
 
-        SetCVar("ActionButtonUseKeyDown", C.modules.bars.click_on_down and 1 or 0)
-        SetCVar("lockActionBars", C.modules.bars.lock and 1 or 0)
+        SetCVar("ActionButtonUseKeyDown", C.profile.modules.bars.click_on_down and 1 or 0)
+        SetCVar("lockActionBars", C.profile.modules.bars.lock and 1 or 0)
 
         if NewPlayerExperience then
             disableNPE()

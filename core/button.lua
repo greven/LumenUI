@@ -100,7 +100,7 @@ local function setPushedTexture(button)
     end
 
     button:SetPushedTexture(C.global.buttons.texture.highlight)
-    button:GetPushedTexture():SetVertexColor(E:GetRGB(C.colors.cyan))
+    button:GetPushedTexture():SetVertexColor(E:GetRGB(C.global.colors.cyan))
     button:GetPushedTexture():SetInside()
 end
 
@@ -111,7 +111,7 @@ local function setHighlightTexture(button)
     end
 
     button:SetHighlightTexture(C.global.buttons.texture.highlight, "ADD")
-    button:GetHighlightTexture():SetVertexColor(E:GetRGB(C.colors.blue))
+    button:GetHighlightTexture():SetVertexColor(E:GetRGB(C.global.colors.blue))
     button:GetHighlightTexture():SetInside()
 end
 
@@ -167,7 +167,7 @@ local function skinButton(button, borderTexture)
     setIcon(bIcon)
 
     if bFlash then
-        bFlash:SetColorTexture(E:GetRGBA(C.colors.red, 0.65))
+        bFlash:SetColorTexture(E:GetRGBA(C.global.colors.red, 0.65))
         bFlash:SetAllPoints()
     end
 
@@ -281,7 +281,7 @@ do
         local button = self:GetParent()
 
         if button:IsEquipped() then
-            button.Border_:SetVertexColor(E:GetRGB(C.colors.green))
+            button.Border_:SetVertexColor(E:GetRGB(C.global.colors.green))
         else
             button.Border_:SetVertexColor(E:GetRGB(C.global.border.color))
         end

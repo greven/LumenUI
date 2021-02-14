@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
 local UF = E:GetModule("UnitFrames")
 
@@ -284,15 +284,13 @@ end
 
 local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration, debuffType)
     if aura.isDebuff then
-        aura.Border:SetVertexColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
+        aura.Border:SetVertexColor(E:GetRGB(C.global.colors.debuff[debuffType] or C.global.colors.debuff.None))
 
         if self._config.type then
             if self._config.type.debuff_type then
-                aura.AuraType:SetTexCoord(
-                    unpack(C.media.textures.aura_icons[debuffType] or C.media.textures.aura_icons["Debuff"])
-                )
+                aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons[debuffType] or M.textures.aura_icons["Debuff"]))
             else
-                aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Debuff"]))
+                aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Debuff"]))
             end
         end
 
@@ -309,12 +307,12 @@ local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
         -- Show cooldown border
         local border_swipe = self._config.cooldown.border_swipe
         if border_swipe and border_swipe.type then
-            aura.cd:SetSwipeColor(E:GetRGB(C.colors.debuff[debuffType] or C.colors.debuff.None))
+            aura.cd:SetSwipeColor(E:GetRGB(C.global.colors.debuff[debuffType] or C.global.colors.debuff.None))
         end
     else
         aura.Border:SetVertexColor(E:GetRGB(C.global.border.color))
         if self._config.type then
-            aura.AuraType:SetTexCoord(unpack(C.media.textures.aura_icons["Buff"]))
+            aura.AuraType:SetTexCoord(unpack(M.textures.aura_icons["Buff"]))
         end
 
         -- Zoom animation
@@ -343,11 +341,7 @@ local function element_CreateAuraIcon(self, index)
 
     local count = button.Count
     count:SetAllPoints()
-    count:SetFont(
-        config.count.font or C.media.fonts.normal,
-        config.count.size,
-        config.count.outline and "OUTLINE" or ""
-    )
+    count:SetFont(config.count.font or M.fonts.normal, config.count.size, config.count.outline and "OUTLINE" or "")
     count:SetJustifyH(config.count.h_alignment)
     count:SetJustifyV(config.count.v_alignment)
     count:SetWordWrap(false)
@@ -391,7 +385,7 @@ local function element_CreateAuraIcon(self, index)
 
     if config.cooldown.border_swipe then
         button:SetSize(button:GetWidth() - 2, button:GetWidth() - 2)
-        button.Border:SetVertexColor(E:GetRGBA(C.colors.black, 0.2))
+        button.Border:SetVertexColor(E:GetRGBA(C.global.colors.black, 0.2))
         button.cd:SetDrawSwipe(true)
         button.cd:SetFrameLevel(3)
         button.cd:SetSwipeTexture("Interface\\BUTTONS\\WHITE8X8")
@@ -427,12 +421,12 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].auras, self._config)
+    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].auras, self._config)
 
     local size =
         self._config.size_override ~= 0 and self._config.size_override or
         E:Round(
-            (C.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) /
+            (C.profile.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) /
                 self._config.per_row
         )
     self._config.size = m_min(m_max(size, 20), 64)
@@ -440,7 +434,7 @@ end
 
 local function element_UpdateFont(self)
     local config = self._config.count
-    local font = config.font or C.media.fonts.normal
+    local font = config.font or M.fonts.normal
     local count
 
     for i = 1, self.createdIcons do
@@ -487,8 +481,8 @@ local function element_UpdateCooldownConfig(self)
         self.cooldownConfig = {text = {}}
     end
 
-    self.cooldownConfig.exp_threshold = C.modules.unitframes.cooldown.exp_threshold
-    self.cooldownConfig.m_ss_threshold = C.modules.unitframes.cooldown.m_ss_threshold
+    self.cooldownConfig.exp_threshold = C.profile.modules.unitframes.cooldown.exp_threshold
+    self.cooldownConfig.m_ss_threshold = C.profile.modules.unitframes.cooldown.m_ss_threshold
     self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
 
     for i = 1, self.createdIcons do
@@ -565,7 +559,7 @@ local function frame_UpdateAuras(self)
 end
 
 function UF:CreateAuras(frame, unit)
-    local config = C.modules.unitframes.units[frame._layout or frame._unit].auras
+    local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].auras
 
     local element = CreateFrame("Frame", nil, frame)
     element:SetSize(48, 48)

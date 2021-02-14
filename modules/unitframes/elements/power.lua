@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
@@ -90,7 +90,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].power, self._config)
+        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].power, self._config)
     end
 
     local function element_UpdateSize(self)
@@ -139,18 +139,18 @@ do
     end
 
     function UF:CreatePowerBar(frame, textParent, textureOverride)
-        local config = C.modules.unitframes.units[frame._layout or frame._unit].power
+        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].power
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("BOTTOMLEFT", frame)
         element:SetPoint("BOTTOMRIGHT", frame)
-        element:SetStatusBarTexture(textureOverride or C.media.textures.neon)
+        element:SetStatusBarTexture(textureOverride or M.textures.neon)
         element:GetStatusBarTexture():SetVertTile(true)
         E:SmoothBar(element)
 
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
-        bg:SetTexture(C.media.textures.flat)
+        bg:SetTexture(M.textures.flat)
         bg:SetAlpha(0.5)
         bg.multiplier = 0.1
         element.bg = bg
@@ -202,7 +202,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].additional_power, self._config)
+        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].additional_power, self._config)
     end
 
     local function element_UpdateSize(self)
@@ -243,7 +243,7 @@ do
 
     function UF:CreateAdditionalPower(frame)
         local element = CreateFrame("StatusBar", nil, frame)
-        element:SetStatusBarTexture(C.media.textures.flat)
+        element:SetStatusBarTexture(M.textures.flat)
         element:GetStatusBarTexture():SetVertTile(true)
         element:GetStatusBarTexture():SetHorizTile(true)
         element:SetFrameLevel(frame:GetFrameLevel() + 1)
@@ -253,7 +253,7 @@ do
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
         element:SetFrameLevel(element:GetFrameLevel() + 1)
-        bg:SetTexture(C.media.textures.flat)
+        bg:SetTexture(M.textures.flat)
         bg:SetAlpha(0.5)
         bg.multiplier = 0.3
         element.bg = bg
@@ -284,13 +284,14 @@ do
         end
 
         local unit = self.__owner._layout or self.__owner._unit
-        self._config.power.enabled = C.modules.unitframes.units[unit].power.prediction.enabled
-        self._config.additional_power.enabled = C.modules.unitframes.units[unit].additional_power.prediction.enabled
+        self._config.power.enabled = C.profile.modules.unitframes.units[unit].power.prediction.enabled
+        self._config.additional_power.enabled =
+            C.profile.modules.unitframes.units[unit].additional_power.prediction.enabled
     end
 
     local function element_UpdateColors(self)
-        self.mainBar_:SetStatusBarColor(E:GetRGB(C.colors.prediction.power_cost))
-        self.altBar_:SetStatusBarColor(E:GetRGB(C.colors.prediction.power_cost))
+        self.mainBar_:SetStatusBarColor(E:GetRGB(C.global.colors.prediction.power_cost))
+        self.altBar_:SetStatusBarColor(E:GetRGB(C.global.colors.prediction.power_cost))
     end
 
     local function frame_UpdatePowerPrediction(frame)
@@ -355,13 +356,13 @@ do
 
     function UF:CreatePowerPrediction(frame, parent1, parent2)
         local mainBar = CreateFrame("StatusBar", nil, parent1)
-        mainBar:SetStatusBarTexture(C.media.textures.flat)
+        mainBar:SetStatusBarTexture(M.textures.flat)
         mainBar:SetReverseFill(true)
         E:SmoothBar(mainBar)
         parent1.CostPrediction = mainBar
 
         local altBar = CreateFrame("StatusBar", nil, parent2)
-        altBar:SetStatusBarTexture(C.media.textures.flat)
+        altBar:SetStatusBarTexture(M.textures.flat)
         altBar:SetReverseFill(true)
         E:SmoothBar(altBar)
         if parent2 then

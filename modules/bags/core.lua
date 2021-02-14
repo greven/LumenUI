@@ -29,7 +29,7 @@ function M.IsInit()
 end
 
 function M:Init()
-    if not isInit and C.modules.bags.enabled then
+    if not isInit and C.profile.modules.bags.enabled then
         local frame = CreateFrame("Frame", "LumBags")
 
         self:CreateSellFrame()

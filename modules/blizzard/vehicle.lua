@@ -18,12 +18,12 @@ local isInit = false
 local function updatePosition(_, _, anchor)
     if anchor == "MinimapCluster" or anchor == _G.MinimapCluster then
         _G.VehicleSeatIndicator:ClearAllPoints()
-        _G.VehicleSeatIndicator:SetPoint(unpack(C.modules.blizzard.vehicle.point))
+        _G.VehicleSeatIndicator:SetPoint(unpack(C.profile.modules.blizzard.vehicle.point))
     end
 end
 
 local function setUpVehicle(vehicleID)
-    local size = C.modules.blizzard.vehicle.size
+    local size = C.profile.modules.blizzard.vehicle.size
     _G.VehicleSeatIndicator:SetSize(size, size)
 
     local _, numSeatIndicators = GetVehicleUIIndicator(vehicleID)
@@ -46,13 +46,13 @@ function M.HasVehicleSeatFrame()
 end
 
 function M.SetUpVehicleSeatFrame()
-    if not isInit and C.modules.blizzard.vehicle.enabled then
+    if not isInit and C.profile.modules.blizzard.vehicle.enabled then
         local VehicleSeatIndicator = _G.VehicleSeatIndicator
         hooksecurefunc(VehicleSeatIndicator, "SetPoint", updatePosition)
         hooksecurefunc("VehicleSeatIndicator_SetUpVehicle", setUpVehicle)
         -- E.Movers:Create(VehicleSeatIndicator)
 
-        local size = C.modules.blizzard.vehicle.size
+        local size = C.profile.modules.blizzard.vehicle.size
         VehicleSeatIndicator:SetSize(size, size)
 
         if VehicleSeatIndicator.currSkin then

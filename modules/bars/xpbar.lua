@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Bars")
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -44,10 +44,10 @@ local LAYOUT = {
 }
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(M:IsRestricted() and CFG or C.modules.bars.xpbar, self._config)
+    self._config = E:CopyTable(BARS:IsRestricted() and CFG or C.profile.modules.bars.xpbar, self._config)
 
-    if M:IsRestricted() then
-        self._config.text = E:CopyTable(C.modules.bars.xpbar.text, self._config.text)
+    if BARS:IsRestricted() then
+        self._config.text = E:CopyTable(C.profile.modules.bars.xpbar.text, self._config.text)
     end
 
     self._config.text = E:CopyTable(C.global.fonts.bars, self._config.text)
@@ -98,7 +98,11 @@ local function bar_UpdateSize(self, width, height)
 
     self:SetSize(width, height)
 
-    -- if not M:IsRestricted() then E.Movers:Get(self):UpdateSize(width, height) end
+    -- if not BARS:IsRestricted() then E.Movers:Get(self):UpdateSize(width, height) end
+
+    self.Overlay:ClearAllPoints()
+    self.Overlay:SetPoint("TOPLEFT", self, E.SCREEN_SCALE * 3, -E.SCREEN_SCALE * 6)
+    self.Overlay:SetPoint("BOTTOMRIGHT", self, -E.SCREEN_SCALE * 3, -4)
 
     self._total = nil
 
@@ -121,7 +125,7 @@ local function bar_Update(self)
     self:UpdateTextVisibility()
     self:UpdateSize(self._config.width, self._config.height)
 
-    if not M:IsRestricted() then
+    if not BARS:IsRestricted() then
         self:UpdateFading()
     end
 end
@@ -141,12 +145,12 @@ local function bar_UpdateSegments(self)
             local cur, max = C_PetBattles.GetXP(1, i)
 
             self[index].tooltipInfo = {
-                header = NAME_TEMPLATE:format(C.colors.quality[rarity - 1].hex, name),
+                header = NAME_TEMPLATE:format(C.global.colors.quality[rarity - 1].hex, name),
                 -- line1 = L["LEVEL_TOOLTIP"]:format(level)
                 line1 = s_format("Level: |cffffffff%d|r", level)
             }
 
-            self[index]:Update(cur, max, 0, C.colors.xp[2])
+            self[index]:Update(cur, max, 0, C.global.colors.xp[2])
         end
     else
         -- Artifact
@@ -165,7 +169,7 @@ local function bar_UpdateSegments(self)
                 line2 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], pointsSpent)
             }
 
-            self[index]:Update(cur, max, 0, C.colors.artifact)
+            self[index]:Update(cur, max, 0, C.global.colors.artifact)
         end
 
         -- Azerite
@@ -182,7 +186,7 @@ local function bar_UpdateSegments(self)
                     line1 = s_format(L["ARTIFACT_LEVEL_TOOLTIP"], level)
                 }
 
-                self[index]:Update(cur, max, 0, C.colors.white, C.media.textures.statusbar_azerite)
+                self[index]:Update(cur, max, 0, C.global.colors.white, M.textures.statusbar_azerite)
             end
         end
 
@@ -208,8 +212,8 @@ local function bar_UpdateSegments(self)
                 cur,
                 max,
                 bonus,
-                bonus > 0 and C.colors.xp[1] or C.colors.xp[2],
-                C.modules.bars.xpbar.texture
+                bonus > 0 and C.global.colors.xp[1] or C.global.colors.xp[2],
+                C.profile.modules.bars.xpbar.texture
             )
         end
 
@@ -224,8 +228,8 @@ local function bar_UpdateSegments(self)
                 line1 = s_format(L["HONOR_LEVEL_TOOLTIP"], UnitHonorLevel("player"))
             }
 
-            -- self[index]:Update(cur, max, 0, C.colors.faction[UnitFactionGroup("player")])
-            self[index]:Update(cur, max, 0, C.colors.difficulty.impossible)
+            -- self[index]:Update(cur, max, 0, C.global.colors.faction[UnitFactionGroup("player")])
+            self[index]:Update(cur, max, 0, C.global.colors.difficulty.impossible)
         end
 
         -- Reputation
@@ -270,7 +274,7 @@ local function bar_UpdateSegments(self)
 
             self[index].tooltipInfo = {
                 header = L["REPUTATION"],
-                line1 = REPUTATION_TEMPLATE:format(name, C.colors.reaction[standing].hex, repTextLevel)
+                line1 = REPUTATION_TEMPLATE:format(name, C.global.colors.reaction[standing].hex, repTextLevel)
             }
 
             if isParagon and hasRewardPending then
@@ -283,7 +287,7 @@ local function bar_UpdateSegments(self)
                 self[index].tooltipInfo.line3 = nil
             end
 
-            self[index]:Update(cur, max, 0, C.colors.reaction[standing])
+            self[index]:Update(cur, max, 0, C.global.colors.reaction[standing])
         end
     end
 
@@ -321,7 +325,7 @@ local function bar_UpdateSegments(self)
             self[1]:Show()
 
             self[1]:UpdateText(1, 1)
-            self[1].Texture:SetVertexColor(E:GetRGB(C.colors.class[E.PLAYER_CLASS]))
+            self[1].Texture:SetVertexColor(E:GetRGB(C.global.colors.class[E.PLAYER_CLASS]))
         end
 
         self._total = index
@@ -443,17 +447,17 @@ local function segment_IsTextLocked(self)
     return self.textLocked
 end
 
-function M.HasXPBar()
+function BARS.HasXPBar()
     return isInit
 end
 
-function M.CreateXPBar()
-    if not isInit and (C.modules.bars.xpbar.enabled or M:IsRestricted()) then
-        local config = C.modules.bars.xpbar
+function BARS.CreateXPBar()
+    if not isInit and (C.profile.modules.bars.xpbar.enabled or BARS:IsRestricted()) then
+        local config = C.profile.modules.bars.xpbar
         local bar = CreateFrame("Frame", "LumXPBar", UIParent)
         bar._id = "xpbar"
 
-        M:AddBar(bar._id, bar)
+        BARS:AddBar(bar._id, bar)
 
         bar.ForEach = bar_ForEach
         bar.Update = bar_Update
@@ -474,12 +478,26 @@ function M.CreateXPBar()
         textParent:SetAllPoints()
         textParent:SetFrameLevel(bar:GetFrameLevel() + 10)
 
+        bar.Overlay =
+            E:SetBackdrop(
+            texParent,
+            E.SCREEN_SCALE * 3,
+            0.98,
+            nil,
+            {
+                bgFile = M.textures.vertlines,
+                tile = true,
+                tileSize = 8
+            }
+        )
+        bar.Overlay:SetBackdropColor(E:GetRGBA(C.global.backdrop.color))
+
         for i = 1, MAX_SEGMENTS do
             local segment = CreateFrame("StatusBar", "$parentSegment" .. i, bar)
             segment:SetFrameLevel(bar:GetFrameLevel() + 1)
-            segment:SetStatusBarTexture(C.media.textures.flat)
+            segment:SetStatusBarTexture(M.textures.flat)
             segment:GetStatusBarTexture():SetVertTile(true)
-            segment:SetHitRectInsets(0, 0, -4, -4)
+            segment:SetHitRectInsets(0, 0, E.SCREEN_SCALE * 3, E.SCREEN_SCALE * 3)
             segment:SetClipsChildren(true)
             segment:SetScript("OnEnter", segment_OnEnter)
             segment:SetScript("OnLeave", segment_OnLeave)
@@ -489,7 +507,7 @@ function M.CreateXPBar()
 
             if config.spark then
                 local spark = segment:CreateTexture(nil, "OVERLAY")
-                spark:SetTexture(C.media.textures.spark)
+                spark:SetTexture(M.textures.spark)
                 spark:SetSize(10, config.height)
                 spark:SetBlendMode("ADD")
                 spark:SetPoint("CENTER", segment:GetStatusBarTexture(), "RIGHT", 0, 0)
@@ -501,7 +519,7 @@ function M.CreateXPBar()
 
             local ext = CreateFrame("StatusBar", nil, segment)
             ext:SetFrameLevel(segment:GetFrameLevel())
-            ext:SetStatusBarTexture(C.media.textures.flat)
+            ext:SetStatusBarTexture(M.textures.flat)
             ext:GetStatusBarTexture():SetVertTile(true)
             ext:SetPoint("TOPLEFT", segment.Texture, "TOPRIGHT")
             ext:SetPoint("BOTTOMLEFT", segment.Texture, "BOTTOMRIGHT")
@@ -526,12 +544,12 @@ function M.CreateXPBar()
             segment.Text = text
 
             local bg = bar:CreateTexture(nil, "ARTWORK")
-            bg:SetTexture(C.media.textures.flat)
-            bg:SetVertexColor(C.colors.dark_gray)
-            bg:SetInside()
+            bg:SetTexture(M.textures.flat)
+            bg:SetVertexColor(C.global.colors.dark_gray)
+            bg:SetAllPoints()
             bg:SetAlpha(0.3)
-            E:SetBackdrop(bg, 1.5, 0.4)
-            E:CreateShadow(bg, 2)
+            -- E:SetBackdrop(bg, E.SCREEN_SCALE * 3, 0.5)
+            -- E:CreateShadow(bg, E.SCREEN_SCALE * 3)
             bar.bg = bg
 
             segment.IsTextLocked = segment_IsTextLocked
@@ -569,11 +587,11 @@ function M.CreateXPBar()
         -- rep
         bar:RegisterEvent("UPDATE_FACTION")
 
-        if M:IsRestricted() then
-            M:ActionBarController_AddWidget(bar, "XP_BAR")
+        if BARS:IsRestricted() then
+            BARS:ActionBarController_AddWidget(bar, "XP_BAR")
         else
             -- E.Movers:Create(bar)
-            local config = M:IsRestricted() and CFG or C.modules.bars.xpbar
+            local config = BARS:IsRestricted() and CFG or C.profile.modules.bars.xpbar
             local point = config.point
             bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         end

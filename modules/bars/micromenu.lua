@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Bars")
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -22,13 +22,13 @@ local Kiosk = _G.Kiosk
 
 local isInit = false
 
-function M:CreateMicroMenu()
+function BARS:CreateMicroMenu()
     if not isInit then
         local bar1 = CreateFrame("Frame", "LumMicroMenu1", UIParent)
         bar1._id = "micromenu1"
         bar1._buttons = {}
 
-        M:AddBar(bar1._id, bar1)
+        BARS:AddBar(bar1._id, bar1)
 
         bar1.Update = bar_Update
         bar1.UpdateButtonList = bar_UpdateButtonList
@@ -39,7 +39,7 @@ function M:CreateMicroMenu()
         bar2._id = "micromenu2"
         bar2._buttons = {}
 
-        M:AddBar(bar2._id, bar2)
+        BARS:AddBar(bar2._id, bar2)
 
         bar2.Update = bar_Update
         bar2.UpdateButtonList = bar_UpdateButtonList
@@ -52,6 +52,6 @@ function M:CreateMicroMenu()
     end
 end
 
-function M:UpdateMicroMenu()
+function BARS:UpdateMicroMenu()
     -- Update
 end

@@ -1,21 +1,21 @@
--- Credits: ls_UI
 local A, ns = ...
 
-local E, D, C, L, DB = {}, {}, {}, {}, {} -- Engine, Defaults, Config, Locale, Database
-ns.E, ns.D, ns.C, ns.L, ns.DB = E, D, C, L, DB
+local E, D, C, M, L = {}, {}, {}, {}, {} -- Engine, Defaults, Config, Media, Locale
+ns.E, ns.D, ns.C, ns.M, ns.L = E, D, C, M, L
 
-_G[A] = {[1] = ns.E, [2] = ns.D, [3] = ns.C, [4] = ns.L, [5] = ns.DB}
+_G[A] = {[1] = ns.E, [2] = ns.D, [3] = ns.C, [4] = ns.M, [5] = ns.L}
+
+D.global, D.profile = {}, {} -- Defaults
 
 -- Lua
 local _G = getfenv(0)
-
+local geterrorhandler = _G.geterrorhandler
 local assert = _G.assert
 local next = _G.next
 local pairs = _G.pairs
-local geterrorhandler = _G.geterrorhandler
 local xpcall = _G.xpcall
 local t_insert = _G.table.insert
-
+local s_split = _G.string.split
 local s_format = _G.string.format
 
 -- ---------------
@@ -136,4 +136,30 @@ do
         onLoadTasks[name] = onLoadTasks[name] or {}
         t_insert(onLoadTasks[name], func)
     end
+end
+
+-- ------------------
+-- > Slash Commands
+-- ------------------
+
+do
+    local commands = {}
+
+    SLASH_LUMUI1 = "/lumui"
+    SlashCmdList["LUMUI"] = function(msg)
+        msg = msg:gsub("^ +", "")
+        local command, arg = s_split(" ", msg, 2)
+        arg = arg and arg:gsub(" ", "")
+
+        if commands[command] then
+            commands[command].func(arg)
+        end
+    end
+
+    function E:AddCommand(command, handler, desc)
+        commands[command] = {func = handler, desc = desc or "no description"}
+    end
+
+    SLASH_RELOADUI1 = "/rl"
+    SlashCmdList["RELOADUI"] = ReloadUI
 end

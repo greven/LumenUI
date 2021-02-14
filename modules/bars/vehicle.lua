@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Bars")
+local BARS = E:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -40,13 +40,13 @@ local function bar_Update(self)
     -- E.Movers:Get(self):UpdateSize()
 end
 
-function M.CreateVehicleExitButton()
+function BARS.CreateVehicleExitButton()
     if not isInit then
         local bar = CreateFrame("Frame", "LumVehicleExitFrame", UIParent)
         bar._id = "vehicle"
         bar._buttons = {}
 
-        M:AddBar(bar._id, bar)
+        BARS:AddBar(bar._id, bar)
 
         bar.Update = bar_Update
         bar.UpdateCooldownConfig = nil
@@ -66,11 +66,11 @@ function M.CreateVehicleExitButton()
         button.Icon:SetTexture("Interface\\Vehicles\\UI-Vehicles-Button-Exit-Up")
         button.Icon:SetTexCoord(12 / 64, 52 / 64, 12 / 64, 52 / 64)
 
-        button.Border:SetVertexColor(E:GetRGB(C.colors.red))
+        button.Border:SetVertexColor(E:GetRGB(C.global.colors.red))
 
         button_onEvent(button)
 
-        local point = C.modules.bars.vehicle.point
+        local point = C.profile.modules.bars.vehicle.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

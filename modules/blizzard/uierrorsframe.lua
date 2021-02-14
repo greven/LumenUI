@@ -1,8 +1,8 @@
 -- Move Blizzard's UIErrorsFrame
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
-local M = E:GetModule("Blizzard")
+local BLIZZARD = E:GetModule("Blizzard")
 
 -- Lua
 local _G = getfenv(0)
@@ -18,7 +18,7 @@ local defaults = {
     width = 512,
     height = 60,
     text = {
-        font = C.media.fonts.normal,
+        font = M.fonts.normal,
         size = 14,
         outline = false,
         shadow = false
@@ -26,7 +26,7 @@ local defaults = {
 }
 
 local function updateFont(fontString, config)
-    fontString:SetFont(config.font or C.media.fonts.normal, config.size or 12, config.outline and "THINOUTLINE" or nil)
+    fontString:SetFont(config.font or M.fonts.normal, config.size or 12, config.outline and "THINOUTLINE" or nil)
 
     if config.shadow then
         fontString:SetShadowOffset(1, -1)
@@ -35,15 +35,15 @@ local function updateFont(fontString, config)
     end
 end
 
-function M.HasErrorsFrame()
+function BLIZZARD.HasErrorsFrame()
     return isInit
 end
 
-function M.SetUpErrorsFrame()
-    if not isInit and C.modules.blizzard.errors_frame.enabled then
+function BLIZZARD.SetUpErrorsFrame()
+    if not isInit and C.profile.modules.blizzard.errors_frame.enabled then
         local frame = UIErrorsFrame
         local config = E:CopyTable(defaults, config)
-        config = E:CopyTable(C.modules.blizzard.errors_frame, config)
+        config = E:CopyTable(C.profile.modules.blizzard.errors_frame, config)
 
         updateFont(frame, config.text)
         frame:SetSize(config.width, config.height)

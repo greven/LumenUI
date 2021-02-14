@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, M, L = ns.E, ns.C, ns.M, ns.L
 
 -- Lua
 local _G = getfenv(0)
@@ -48,8 +48,9 @@ local UnitGroupRolesAssigned = _G.UnitGroupRolesAssigned
 local GetInventoryItemLink = _G.GetInventoryItemLink
 local GetDetailedItemLevelInfo = _G.GetDetailedItemLevelInfo
 local GetInventoryItemTexture = _G.GetInventoryItemTexture
-local GetItemInfo = _G.GetItemInfo
 local GetInspectSpecialization = _G.GetInspectSpecialization
+local GetSpecializationRole = _G.GetSpecializationRole
+local GetItemInfo = _G.GetItemInfo
 
 -- ---------------
 -- > Math
@@ -362,7 +363,7 @@ end
 
 function E:CreateString(frame, size, color, font, name, anchor, x, y)
     local fs = frame:CreateFontString(name, "OVERLAY")
-    fs:SetFont(font or C.media.fonts.normal, size or 12, "OUTLINE")
+    fs:SetFont(font or M.fonts.normal, size or 12, "OUTLINE")
     fs:SetJustifyH("CENTER")
     fs:SetJustifyV("MIDDLE")
     fs:SetWordWrap(false)
@@ -370,7 +371,7 @@ function E:CreateString(frame, size, color, font, name, anchor, x, y)
     if color and type(color) == "boolean" then
         fs:SetTextColor(E:GetRGB(E.CLASS_COLOR))
     else
-        fs:SetTextColor(E:GetRGB(C.colors.white))
+        fs:SetTextColor(E:GetRGB(C.global.colors.white))
     end
 
     if anchor and x and y then
@@ -825,28 +826,28 @@ do
 
     function E:GetUnitColor(unit, colorByClass, colorByReaction)
         if not UnitIsConnected(unit) then
-            return C.colors.disconnected
+            return C.global.colors.disconnected
         elseif not UnitPlayerControlled(unit) and UnitIsTapDenied(unit) then
-            return C.colors.tapped
+            return C.global.colors.tapped
         elseif colorByClass and UnitIsPlayer(unit) then
             return self:GetUnitClassColor(unit)
         elseif colorByReaction then
             return self:GetUnitReactionColor(unit)
         end
 
-        return C.colors.dark_gray
+        return C.global.colors.dark_gray
     end
 
     function E:GetUnitClassColor(unit)
-        return C.colors.class[select(2, UnitClass(unit))] or C.colors.white
+        return C.global.colors.class[select(2, UnitClass(unit))] or C.global.colors.white
     end
 
     function E:GetUnitReactionColor(unit)
         if select(2, UnitDetailedThreatSituation("player", unit)) ~= nil then
-            return C.colors.reaction[2]
+            return C.global.colors.reaction[2]
         end
 
-        return C.colors.reaction[UnitReaction(unit, "player")] or C.colors.reaction[4]
+        return C.global.colors.reaction[UnitReaction(unit, "player")] or C.global.colors.reaction[4]
     end
 
     function E:GetUnitClassification(unit)
@@ -911,19 +912,42 @@ do
         return L["UNKNOWN"]
     end
 
+    -- TANK, HEALER, DAMAGER
+    function E:GetPlayerRole()
+        local assignedRole = UnitGroupRolesAssigned("player")
+        if assignedRole == "NONE" then
+            return E.PLAYER_SPEC_NUM and GetSpecializationRole(E.PLAYER_SPEC_NUM)
+        end
+        return assignedRole
+    end
+
+    -- Set Player Spec, Player Role and Dispel Classes
+    function E:CheckPlayerRoles()
+        self.PLAYER_SPEC_NUM = GetSpecialization() -- 1, 2, 3
+        self.PLAYER_SPEC = self:GetUnitSpecializationInfo("player") -- Spec Name
+        self.PLAYER_GROUP_ROLE = self:GetPlayerRole() -- TANK, HEALER, DAMAGER
+        -- TODO: https://git.tukui.org/elvui/elvui/-/blob/development/ElvUI/Core/API.lua#L128
+    end
+
+    -- TODO: IsDispellableByMe
+    -- function E:IsDispellableByMe(debuffType)
+    --     local dispel = self.DispelClasses[self.myclass]
+    --     return dispel and dispel[debuffType]
+    -- end
+
     -- GetRelativeDifficultyColor
     function E:GetRelativeDifficultyColor(unitLevel, challengeLevel)
         local diff = challengeLevel - unitLevel
         if diff >= 5 then
-            return C.colors.difficulty.impossible
+            return C.global.colors.difficulty.impossible
         elseif diff >= 3 then
-            return C.colors.difficulty.very_difficult
+            return C.global.colors.difficulty.very_difficult
         elseif diff >= -4 then
-            return C.colors.difficulty.difficult
+            return C.global.colors.difficulty.difficult
         elseif -diff <= UnitQuestTrivialLevelRange("player") then
-            return C.colors.difficulty.standard
+            return C.global.colors.difficulty.standard
         else
-            return C.colors.difficulty.trivial
+            return C.global.colors.difficulty.trivial
         end
     end
 
@@ -1006,6 +1030,7 @@ do
         end
     end
 
+    -- Unit Role (Tank, Healer, Damager)
     do
         local rosterInfo = {}
 

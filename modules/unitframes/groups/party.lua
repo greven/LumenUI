@@ -23,12 +23,13 @@ local function frame_Update(self)
     self:UpdatePower()
     self:UpdateHealthPrediction()
     self:UpdateName()
+    self:UpdateRaidTargetIndicator()
     self:UpdateThreatIndicator()
   end
 end
 
 function UF:CreatePartyFrame(frame)
-  local config = C.modules.unitframes.units[frame._layout or frame._unit]
+  local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
   local level = frame:GetFrameLevel()
 
   local textParent = CreateFrame("Frame", nil, frame)
@@ -42,6 +43,7 @@ function UF:CreatePartyFrame(frame)
   self:CreateHealthPrediction(frame, health, textParent)
 
   self:CreateName(frame, textParent)
+  self:CreateRaidTargetIndicator(frame)
   self:CreateThreatIndicator(frame)
 
   frame.Update = frame_Update

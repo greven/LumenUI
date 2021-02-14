@@ -1,6 +1,7 @@
 API:
   ☐ Maybe refactor CreateStatusbar to create statusbars with icons (thin and large), so we can refactor castbar, aurabars, etc. @low
   ☐ Buttons: Add the normal texture, right now I can't be able to skin the actionbars, other slots work fine @low
+  ☐ Finish E:CheckPlayerRoles() and E:IsDispellableByMe()
 
 Unitframes:
   ☐ [BUG] ClassPower: Can't update color? For example change the last element color on PostUpdate!! @bug
@@ -22,6 +23,14 @@ Unitframes:
   ☐ Castbar: Fade in / fade out animation
   ☐ Auras: Make border show  decreasing cooldown!
   ☐ Add fade in / fade out animations when showing and hiding
+
+Group Frames:
+  ☐ Create Party Frame
+  ☐ Create Raid Frame
+  ☐ Create Raid40, etc.
+  ☐ Add Debuff warnings / icons / borders
+  ☐ Add Overlay for I can Dispell debuffs (overlay or border, etc)
+  ☐ Add Corner Indicators (icons, or colored triangles?)
 
 AuraBars:
   ☐ Add option to color by debuff type, or class or just remaining time. @low
@@ -74,6 +83,7 @@ Blizzard:
   ☐ Reposition Text Warning (Out of mana, etc) frame
   ☐ Move The Maw level at the top of the screen.
   ☐ Tweak Flating combat text!
+  ☐ Character frame button, highlight texture is still the default, skin it! @low
 
 Bags:
   ☐ Show total money in server
@@ -81,11 +91,14 @@ Bags:
   ☐ Check NDUi
 
 Panel:
-  ☐ Add Main stats here...
+  ☐ Main Stat (Str, Agi, Int) + Crit + Haste + Mastery + Versatality
+  ☐ DPS
   ☐ Maybe Free Bag space?
   ☐ Maybe equipment repair?
-  ☐ Friends online?
-  ☐ ...
+  ☐ Latency?
+  ☐ In combat show something different from out of combat! (in combat mode / ooc mode)
+  ☐ InCombat: Stats + DPS + (Latency + FPS) (if it fits)
+  ☐ Out of Combat: Equipment Repair %, Free Bags, Mail (?) / Gold
 
 Loot:
   ☐ Something in the line of Butsu.

@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C, L = ns.E, ns.C, ns.L
 
+local UF = E:GetModule("UnitFrames")
+
 -- Lua
 local _G = getfenv(0)
 
@@ -9,13 +11,9 @@ local UnitExists = _G.UnitExists
 
 -- ---------------
 
-local UF = E:GetModule("UnitFrames")
-
--- ---------------
-
 local function element_UpdateConfig(self)
     local unit = self.__owner._unit
-    self._config = E:CopyTable(C.modules.unitframes.units[unit].threat, self._config)
+    self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].threat, self._config)
 end
 
 local function element_PostUpdate(self, _, status)

@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
@@ -108,7 +108,7 @@ do
             if config.reverse then
                 if not config.color.smooth then
                     if config.color.health then
-                        self.bg:SetVertexColor(E:GetRGB(C.colors.health))
+                        self.bg:SetVertexColor(E:GetRGB(C.global.colors.health))
                     else
                         self.bg:SetVertexColor(
                             E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction))
@@ -154,7 +154,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        local config = C.modules.unitframes.units[unit]
+        local config = C.profile.modules.unitframes.units[unit]
 
         self._config = E:CopyTable(config.health, self._config)
         if config.power then
@@ -175,10 +175,10 @@ do
         if config.reverse then
             self.colorClass = false
             self.colorSmooth = false
-            self:SetStatusBarTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
+            self:SetStatusBarTexture(M.textures.vertlines, "REPEAT", "REPEAT")
             self:SetAlpha(0.98)
 
-            self.bg:SetTexture(textureOverride or C.media.textures.flat)
+            self.bg:SetTexture(textureOverride or M.textures.flat)
             self.bg:SetAlpha(0.9)
         end
 
@@ -241,7 +241,7 @@ do
     end
 
     function UF:CreateHealthBar(frame, textParent, textureOverride)
-        local config = C.modules.unitframes.units[frame._layout or frame._unit].health
+        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit].health
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("TOPLEFT", frame)
@@ -253,11 +253,11 @@ do
         E:SmoothBar(element)
 
         element.Text = (textParent or element):CreateFontString("Text", "ARTWORK")
-        element.Text:SetTextColor(E:GetRGBA(config.text.color or C.colors.light_gray, config.text.alpha or 1))
+        element.Text:SetTextColor(E:GetRGBA(config.text.color or C.global.colors.light_gray, config.text.alpha or 1))
 
         if config.perc then
             local perc = element:CreateFontString("Percent", "BACKGROUND")
-            perc:SetTextColor(E:GetRGBA(config.perc.color or C.colors.light_gray, config.perc.alpha or 1))
+            perc:SetTextColor(E:GetRGBA(config.perc.color or C.global.colors.light_gray, config.perc.alpha or 1))
             element.Text.perc = perc
         end
 
@@ -266,7 +266,7 @@ do
 
         local bg = element:CreateTexture(nil, "BACKGROUND")
         bg:SetAllPoints()
-        bg:SetTexture(C.media.textures.vertlines, "REPEAT", "REPEAT")
+        bg:SetTexture(M.textures.vertlines, "REPEAT", "REPEAT")
         bg:SetHorizTile(true)
         bg:SetVertTile(true)
         bg:SetAlpha(0.5)
@@ -274,13 +274,13 @@ do
         element.bg = bg
 
         kr = element:CreateTexture(nil, "OVERLAY")
-        kr:SetTexture(C.media.textures.flat)
+        kr:SetTexture(M.textures.flat)
         kr:SetVertexColor(1, 1, 1)
         kr:SetBlendMode("ADD")
         kr:SetAlpha(0.5)
 
         kr.spark = element:CreateTexture(nil, "OVERLAY")
-        kr.spark:SetTexture(C.media.textures.vertlines)
+        kr.spark:SetTexture(M.textures.vertlines)
         kr.spark:SetVertexColor(1, 0.25, 0.25)
         kr.spark:SetBlendMode("ADD")
         kr.spark:SetAlpha(0.6)
@@ -310,7 +310,7 @@ end
 do
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.modules.unitframes.units[unit].health.prediction, self._config)
+        self._config = E:CopyTable(C.profile.modules.unitframes.units[unit].health.prediction, self._config)
         self._config.absorb_text = E:CopyTable(C.global.fonts.units, self._config.absorb_text)
         self._config.heal_absorb_text = E:CopyTable(C.global.fonts.units, self._config.heal_absorb_text)
     end
@@ -335,9 +335,9 @@ do
     end
 
     local function element_UpdateColors(self)
-        self.myBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.my_heal))
-        self.otherBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.other_heal))
-        self.healAbsorbBar._texture:SetColorTexture(E:GetRGBA(C.colors.prediction.heal_absorb))
+        self.myBar._texture:SetColorTexture(E:GetRGBA(C.global.colors.prediction.my_heal))
+        self.otherBar._texture:SetColorTexture(E:GetRGBA(C.global.colors.prediction.other_heal))
+        self.healAbsorbBar._texture:SetColorTexture(E:GetRGBA(C.global.colors.prediction.heal_absorb))
     end
 
     local function frame_UpdateHealthPrediction(self)
@@ -403,7 +403,7 @@ do
 
         local myBar = CreateFrame("StatusBar", nil, parent)
         myBar:SetFrameLevel(level)
-        myBar:SetStatusBarTexture(C.media.textures.flat)
+        myBar:SetStatusBarTexture(M.textures.flat)
         myBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
         E:SmoothBar(myBar)
         parent.MyHeal = myBar
@@ -413,7 +413,7 @@ do
 
         local otherBar = CreateFrame("StatusBar", nil, parent)
         otherBar:SetFrameLevel(level)
-        otherBar:SetStatusBarTexture(C.media.textures.flat)
+        otherBar:SetStatusBarTexture(M.textures.flat)
         otherBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
         E:SmoothBar(otherBar)
         parent.OtherHeal = otherBar
@@ -423,13 +423,13 @@ do
 
         local absorbBar = CreateFrame("StatusBar", nil, parent)
         absorbBar:SetFrameLevel(level + 1)
-        absorbBar:SetStatusBarTexture(C.media.textures.flat)
+        absorbBar:SetStatusBarTexture(M.textures.flat)
         absorbBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
         E:SmoothBar(absorbBar)
         parent.DamageAbsorb = absorbBar
 
         local overlay = absorbBar:CreateTexture(nil, "ARTWORK", nil, 1)
-        overlay:SetTexture(C.media.textures.absorb, "REPEAT", "REPEAT")
+        overlay:SetTexture(M.textures.absorb, "REPEAT", "REPEAT")
         overlay:SetAlpha(0.8)
         overlay:SetHorizTile(true)
         overlay:SetVertTile(true)
@@ -441,7 +441,7 @@ do
         local healAbsorbBar = CreateFrame("StatusBar", nil, parent)
         healAbsorbBar:SetReverseFill(true)
         healAbsorbBar:SetFrameLevel(level + 1)
-        healAbsorbBar:SetStatusBarTexture(C.media.textures.flat)
+        healAbsorbBar:SetStatusBarTexture(M.textures.flat)
         healAbsorbBar:GetStatusBarTexture():SetColorTexture(0, 0, 0, 0)
         E:SmoothBar(healAbsorbBar)
         parent.HealAbsorb = healAbsorbBar

@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
 
 -- ---------------
 
@@ -33,7 +33,6 @@ do
             self:UpdateAuras()
             self:UpdateUnitIndicator()
             self:UpdatePvPIndicator()
-            self:UpdateThreatIndicator()
         else
             if self:IsEnabled() then
                 self:Disable()
@@ -42,7 +41,7 @@ do
     end
 
     function UF:CreatePlayerFrame(frame)
-        local config = C.modules.unitframes.units[frame._layout or frame._unit]
+        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
         local level = frame:GetFrameLevel()
 
         local textParent = CreateFrame("Frame", nil, frame)
@@ -72,18 +71,17 @@ do
         self:CreatePortrait(frame, portraitParent)
         self:CreateAuras(frame, "player")
         self:CreateUnitIndicator(frame, portraitParent)
-        self:CreateThreatIndicator(frame)
 
         -- Level and Spec
         local info = textParent:CreateFontString(nil, "ARTWORK")
-        info:SetFont(C.media.fonts.condensed, 14, "OUTLINE")
+        info:SetFont(C.global.fonts.units.font, 14, "OUTLINE")
         info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 1, 24)
         frame:Tag(info, "[lum:color_unit][lum:spec]")
 
         -- PvP Indicator and timer
         local pvpIndicator = self:CreatePvPIndicator(frame, portraitParent)
         local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
-        pvpTimer:SetFont(C.media.fonts.condensed, 15, "OUTLINE")
+        pvpTimer:SetFont(C.global.fonts.units.font, 15, "OUTLINE")
         pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPLEFT", 0, 0)
         pvpTimer:SetTextColor(1, 0.82, 0)
         pvpTimer:SetJustifyH("RIGHT")
@@ -141,7 +139,7 @@ do
     end
 
     function UF:CreatePlayerPlateFrame(frame)
-        local config = C.modules.unitframes.units[frame._layout or frame._unit]
+        local config = C.profile.modules.unitframes.units[frame._layout or frame._unit]
         local level = frame:GetFrameLevel()
 
         local textParent = CreateFrame("Frame", nil, frame)

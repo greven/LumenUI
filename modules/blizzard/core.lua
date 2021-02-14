@@ -13,7 +13,7 @@ function M:IsInit()
 end
 
 function M:Init()
-    if not isInit and C.modules.blizzard.enabled then
+    if not isInit and C.profile.modules.blizzard.enabled then
         self:SetUpCharacterFrame()
         -- self:SetUpCommandBar()
         -- self:SetUpDigsiteBar()
