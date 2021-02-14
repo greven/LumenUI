@@ -1,6 +1,6 @@
 local _, ns = ...
 
-local E, D, C, L, DB, oUF = ns.E, ns.D, ns.C, ns.L, ns.DB, ns.oUF
+local E, C, D, L, M, P, oUF = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P, ns.oUF
 
 -- Lua
 local _G = getfenv(0)

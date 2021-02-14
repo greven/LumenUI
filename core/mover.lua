@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
@@ -15,6 +15,9 @@ local t_remove = _G.table.remove
 local t_wipe = _G.table.wipe
 local type = _G.type
 local unpack = _G.unpack
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 
@@ -112,7 +115,66 @@ function E.Movers:Create(object, isSimple)
   return mover
 end
 
-E:AddCommand(
+function E.Movers:Get(object, inclDisabled)
+  if type(object) == "table" then
+    object = object:GetName()
+  end
+
+  if not object then
+    return
+  end
+
+  if inclDisabled and disabledMovers[object .. "Mover"] then
+    return disabledMovers[object .. "Mover"], true
+  end
+
+  return enabledMovers[object .. "Mover"], false
+end
+
+function E.Movers:ToggleAll()
+  if InCombatLockdown() then
+    return
+  end
+  areToggledOn = not areToggledOn
+
+  for _, mover in next, enabledMovers do
+    if not mover.isSimple then
+      mover:SetShown(areToggledOn)
+    end
+  end
+
+  if areToggledOn then
+    showGrid()
+
+    tracker:SetScript("OnUpdate", tracker_OnUpdate)
+  else
+    hideGrid()
+
+    tracker:SetScript("OnUpdate", nil)
+  end
+end
+
+P.Movers = {}
+
+function P.Movers:UpdateConfig()
+  E:UpdateTable(defaults, C.db.profile.movers[E.UI_LAYOUT])
+
+  for _, mover in next, enabledMovers do
+    updatePosition(mover, nil, "UIParent")
+
+    if mover.isSimple then
+      mover:Show()
+    else
+      if mover:WasMoved() then
+        mover.Bg:SetColorTexture(E:GetRGBA(C.db.global.colors.orange, 0.6))
+      else
+        mover.Bg:SetColorTexture(E:GetRGBA(C.db.global.colors.blue, 0.6))
+      end
+    end
+  end
+end
+
+P:AddCommand(
   "movers",
   function()
     E.Movers:ToggleAll()

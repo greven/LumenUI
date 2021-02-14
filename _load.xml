@@ -4,5 +4,6 @@
 	<Include file="locale\_locale.xml" />
   <Script file="init.lua" />
 	<Include file="modules\_modules.xml" />
+	<Include file="config\_config.xml" />
 	<Script file="core\dev.lua" />
 </Ui>

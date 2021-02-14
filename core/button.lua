@@ -1,9 +1,10 @@
 -- Credits: ls_UI
 local A, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
+local CreateFrame = _G.CreateFrame
 local hooksecurefunc = _G.hooksecurefunc
 local s_gsub = _G.string.gsub
 local s_utf8sub = _G.string.utf8sub

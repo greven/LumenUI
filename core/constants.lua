@@ -1,5 +1,5 @@
 local A, ns = ...
-local E, D, L = ns.E, ns.D, ns.L
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
@@ -7,6 +7,8 @@ local select = _G.select
 local m_min = _G.math.min
 local m_max = _G.math.max
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local UnitGUID = _G.UnitGUID
 local UnitName = _G.UnitName
 local GetRealmName = _G.GetRealmName

@@ -1,9 +1,9 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
 -- ---------------
 
-local UF = E:GetModule("UnitFrames")
+local UF = P:GetModule("UnitFrames")
 
 -- ---------------
 

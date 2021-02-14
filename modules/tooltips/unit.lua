@@ -1,8 +1,8 @@
 -- Tooltip Info: SpellID, AuraID, ItemInfo...
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local TOOLTIPS = E:GetModule("Tooltips")
+local TOOLTIPS = P:GetModule("Tooltips")
 
 local _G = getfenv(0)
 local hooksecurefunc = _G.hooksecurefunc

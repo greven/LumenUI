@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Blizzard")
+local BLIZZARD = P:GetModule("Blizzard")
 
 -- Lua
 local _G = getfenv(0)
@@ -197,11 +197,11 @@ local function updateAllSlots()
     end
 end
 
-function M:HasCharacterFrame()
+function BLIZZARD:HasCharacterFrame()
     return isInit
 end
 
-function M:SetUpCharacterFrame()
+function BLIZZARD:SetUpCharacterFrame()
     if not isInit and C.db.profile.modules.blizzard.character_frame.enabled then
         if CharacterFrame:IsShown() then
             HideUIPanel(CharacterFrame)
@@ -348,7 +348,7 @@ function M:SetUpCharacterFrame()
     end
 end
 
-function M:UpdateCharacterFrame()
+function BLIZZARD:UpdateCharacterFrame()
     if not isInit then
         return
     end

@@ -1,17 +1,16 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
-local oUF = ns.oUF
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
-local UF = E:GetModule("UnitFrames")
+local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
 local pcall = pcall
 
 -- Blizzard
+local CreateFrame = _G.CreateFrame
 local GetTime = _G.GetTime
 local UnitAura = _G.UnitAura
-local CreateFrame = _G.CreateFrame
 local UnitIsEnemy = _G.UnitIsEnemy
 local UnitReaction = _G.UnitReaction
 local GameTooltip = _G.GameTooltip

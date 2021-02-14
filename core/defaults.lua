@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, D, C, M = ns.E, ns.D, ns.C, ns.M
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- ---------------
 
@@ -1063,7 +1063,7 @@ D.profile = {
                     },
                     power = {
                         enabled = true,
-                        height = 3,
+                        height = 2,
                         gap = 1,
                         change_threshold = 0.01,
                         color = {

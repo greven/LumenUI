@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
 -- Lua
 local _G = getfenv(0)

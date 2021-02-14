@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local MISC = E:AddModule("Misc")
+local MISC = P:AddModule("Misc")
 
 -- Lua
 local _G = getfenv(0)

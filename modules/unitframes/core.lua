@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L, oUF = ns.E, ns.C, ns.L, ns.oUF
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
-local UF = E:AddModule("UnitFrames")
+local UF = P:AddModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)

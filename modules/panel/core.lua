@@ -1,10 +1,13 @@
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local PANEL = E:AddModule("Panel")
+local PANEL = P:AddModule("Panel")
 
 -- Lua
 local _G = getfenv(0)
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 

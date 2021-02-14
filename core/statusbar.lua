@@ -1,18 +1,19 @@
 -- Credits: ls_UI
 local A, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
 local m_abs = _G.math.abs
 local m_max = _G.math.max
 local m_min = _G.math.min
-
 local s_match = _G.string.match
 local s_split = _G.string.split
-
 local next = _G.next
 local unpack = _G.unpack
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 

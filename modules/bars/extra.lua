@@ -1,11 +1,14 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Bars")
+local BARS = P:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
 local hooksecurefunc = _G.hooksecurefunc
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 
@@ -47,13 +50,13 @@ local function button_OnEnter(self)
     end
 end
 
-function M.CreateExtraButton()
+function BARS.CreateExtraButton()
     if not isInit then
         local bar = CreateFrame("Frame", "LumExtraActionBar", UIParent, "SecureHandlerStateTemplate")
         bar._id = "extra"
         bar._buttons = {}
 
-        M:AddBar("extra", bar)
+        BARS:AddBar("extra", bar)
 
         bar.Update = function(self)
             self:UpdateConfig()

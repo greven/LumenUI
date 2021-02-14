@@ -1,9 +1,13 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
+
+local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local UnitFactionGroup = _G.UnitFactionGroup
 local UnitIsMercenary = _G.UnitIsMercenary
 local UnitIsPVP = _G.UnitIsPVP
@@ -11,9 +15,6 @@ local UnitIsPVPFreeForAll = _G.UnitIsPVPFreeForAll
 
 -- ---------------
 
-local UF = E:GetModule("UnitFrames")
-
--- ---------------
 local function element_Override(self, _, unit)
     if unit ~= self.unit then
         return

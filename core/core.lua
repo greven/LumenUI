@@ -1,15 +1,19 @@
 local A, ns = ...
 
-local E, D, C, M, L = {}, {}, {}, {}, {} -- Engine, Defaults, Config, Media, Locale
-ns.E, ns.D, ns.C, ns.M, ns.L = E, D, C, M, L
+local E, D, C, M, L, P = {}, {}, {}, {}, {}, {} -- Engine, Defaults, Config, Media, Locale, Private
+ns.E, ns.D, ns.C, ns.M, ns.L, ns.P = E, D, C, M, L, P
 
-_G[A] = {[1] = ns.E, [2] = ns.D, [3] = ns.C, [4] = ns.M, [5] = ns.L}
+_G[A] = {
+    [1] = ns.E,
+    [2] = ns.M,
+    [3] = ns.C,
+    [4] = ns.L
+}
 
 D.global, D.profile = {}, {} -- Defaults
 
 -- Lua
 local _G = getfenv(0)
-local geterrorhandler = _G.geterrorhandler
 local assert = _G.assert
 local next = _G.next
 local pairs = _G.pairs
@@ -17,6 +21,8 @@ local xpcall = _G.xpcall
 local t_insert = _G.table.insert
 local s_split = _G.string.split
 local s_format = _G.string.format
+local CreateFrame = _G.CreateFrame
+local geterrorhandler = _G.geterrorhandler
 
 -- ---------------
 
@@ -35,22 +41,22 @@ end
 do
     local modules = {}
 
-    function E:AddModule(name)
+    function P:AddModule(name)
         modules[name] = {}
         return modules[name]
     end
 
-    function E:GetModule(name)
+    function P:GetModule(name)
         return modules[name]
     end
 
-    function E:InitModules()
+    function P:InitModules()
         for _, module in next, modules do
             E:Call(module.Init, module)
         end
     end
 
-    function E:UpdateModules()
+    function P:UpdateModules()
         for _, module in next, modules do
             if module.Update then
                 E:Call(module.Update, module)
@@ -156,7 +162,7 @@ do
         end
     end
 
-    function E:AddCommand(command, handler, desc)
+    function P:AddCommand(command, handler, desc)
         commands[command] = {func = handler, desc = desc or "no description"}
     end
 

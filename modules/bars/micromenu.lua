@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local BARS = E:GetModule("Bars")
+local BARS = P:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -14,6 +14,7 @@ local t_wipe = _G.table.wipe
 local unpack = _G.unpack
 
 -- Blizz
+local CreateFrame = _G.CreateFrame
 local C_CurrencyInfo = _G.C_CurrencyInfo
 local C_Timer = _G.C_Timer
 local Kiosk = _G.Kiosk

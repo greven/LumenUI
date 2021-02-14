@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
-local UF = E:GetModule("UnitFrames")
+local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
@@ -13,6 +13,8 @@ local next = _G.next
 local select = _G.select
 local unpack = _G.unpack
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local GetTime = _G.GetTime
 local UnitIsFriend = _G.UnitIsFriend
 

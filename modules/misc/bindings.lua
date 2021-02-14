@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local MISC = E:GetModule("Misc")
+local MISC = P:GetModule("Misc")
 
 -- Lua
 local _G = getfenv(0)
@@ -11,6 +11,8 @@ local m_rand = _G.math.random
 local t_wipe = _G.table.wipe
 local t_insert = _G.table.insert
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local InCombatLockdown = _G.InCombatLockdown
 local PlayerHasToy = _G.PlayerHasToy
 

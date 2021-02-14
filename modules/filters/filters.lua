@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:AddModule("Filters")
+local FILTERS = P:AddModule("Filters")
 
 -- Lua
 local _G = getfenv(0)
@@ -245,20 +245,18 @@ local class_debuffs = {
     ["WARRIOR"] = {state = true, onlyShowPlayer = true}
 }
 
-function M.CreateAuraFilters()
+function FILTERS.CreateAuraFilters()
     for filter, v in next, aura_filters do
         if not C.db.global.aura_filters[filter].is_init then
             E:CopyTable(v, C.db.global.aura_filters[filter])
             C.db.global.aura_filters[filter].is_init = true
         end
     end
-
     -- Class Debuffs filters
     if not C.db.global.aura_filters["Class Debuffs"].is_init then
         E:CopyTable(class_debuffs[E.PLAYER_CLASS], C.db.global.aura_filters["Class Debuffs"])
         C.db.global.aura_filters["Class Debuffs"].is_init = true
     end
-
     -- Class Buffs filters
     if not C.db.global.aura_filters["Class Buffs"].is_init then
         E:CopyTable(class_buffs[E.PLAYER_CLASS], C.db.global.aura_filters["Class Buffs"])
@@ -266,19 +264,19 @@ function M.CreateAuraFilters()
     end
 end
 
-function M:IsInit()
+function FILTERS:IsInit()
     return isInit
 end
 
-function M:Init()
+function FILTERS:Init()
     if not isInit then
-        M.CreateAuraFilters()
+        FILTERS.CreateAuraFilters()
 
         isInit = true
     end
 end
 
-function M:ResetAuraFilter(filter)
+function FILTERS:ResetAuraFilter(filter)
     if aura_filters[filter] then
         t_wipe(C.db.global.aura_filters[filter])
 

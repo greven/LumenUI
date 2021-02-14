@@ -1,13 +1,15 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Misc")
-local Bags = E:GetModule("Bags")
+local MISC = P:GetModule("Misc")
+local BAGS = P:GetModule("Bags")
 
 -- Lua
 local _G = getfenv(0)
 local s_format = _G.string.format
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local IsInGuild = _G.IsInGuild
 local CanMerchantRepair = _G.CanMerchantRepair
 local GetRepairAllCost = _G.GetRepairAllCost
@@ -22,10 +24,10 @@ local isInit = false
 do
     local repairStatus, repairType, repairCost, canRepair
 
-    function M.AutoRepairOutput()
+    function MISC.AutoRepairOutput()
         if repairType == "GUILD" then
             if repairStatus == "GUILD_REPAIR_FAILED" then
-                M:AttemptAutoRepair(true) -- Try using player money instead
+                MISC:AttemptAutoRepair(true) -- Try using player money instead
             else
                 E:Print(s_format(L["ITEMS_REPAIRED_GUILD_FUNDS"], GetMoneyString(repairCost, true)))
             end
@@ -38,7 +40,7 @@ do
         end
     end
 
-    function M.AttemptAutoRepair(playerOverride)
+    function MISC.AttemptAutoRepair(playerOverride)
         local useGuildFunds = C.db.profile.modules.misc.merchant.auto_repair.use_guild_funds
         repairType = useGuildFunds and "GUILD" or "PLAYER"
 
@@ -53,7 +55,7 @@ do
             end
 
             RepairAllItems(useGuild)
-            E:Delay(0.5, M.AutoRepairOutput)
+            E:Delay(0.5, MISC.AutoRepairOutput)
         end
     end
 end
@@ -61,7 +63,7 @@ end
 local function frame_OnEvent(self, event, ...)
     if event == "MERCHANT_SHOW" then
         if C.db.profile.modules.misc.merchant.vendor_grays.enabled then
-            E:Delay(0.5, Bags.VendorGrays)
+            E:Delay(0.5, BAGS.VendorGrays)
         end
 
         if not C.db.profile.modules.misc.merchant.auto_repair.enabled or IsShiftKeyDown() or not CanMerchantRepair() then
@@ -72,7 +74,7 @@ local function frame_OnEvent(self, event, ...)
         self:RegisterEvent("UI_ERROR_MESSAGE")
         self:RegisterEvent("MERCHANT_CLOSED")
 
-        M.AttemptAutoRepair()
+        MISC.AttemptAutoRepair()
     elseif event == "UI_ERROR_MESSAGE" then
         local messageType = select(1, ...)
 
@@ -89,7 +91,7 @@ local function frame_OnEvent(self, event, ...)
     end
 end
 
-function M.SetUpMerchant()
+function MISC.SetUpMerchant()
     if not isInit and C.db.profile.modules.misc.merchant.enabled then
         local frame = CreateFrame("Frame", nil, UIParent)
 

@@ -1,8 +1,8 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local MINIMAP = E:AddModule("Minimap")
+local MINIMAP = P:AddModule("Minimap")
 
 local isInit = false
 local isSquare = false
@@ -29,6 +29,7 @@ local t_sort = _G.table.sort
 local t_wipe = _G.table.wipe
 
 -- Blizz
+local CreateFrame = _G.CreateFrame
 local C_Calendar = _G.C_Calendar
 local C_DateAndTime = _G.C_DateAndTime
 local C_Garrison = _G.C_Garrison

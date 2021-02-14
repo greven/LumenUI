@@ -1,19 +1,19 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
+
+local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local UnitHealthMax = _G.UnitHealthMax
 local UnitStagger = _G.UnitStagger
 
+-- ---------------
+
 local gap = 5
-
--- ---------------
-
-local UF = E:GetModule("UnitFrames")
-
--- ---------------
 
 local function bar_OnValueChanged(self, value)
     local _, max = self:GetMinMaxValues()

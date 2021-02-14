@@ -1,11 +1,14 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:AddModule("Bags")
+local BAGS = P:AddModule("Bags")
 
 -- Lua
 local _G = getfenv(0)
 local t_wipe = _G.table.wipe
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 
@@ -13,22 +16,22 @@ local isInit = false
 
 local function frame_OnEvent(self, event)
     if event == "MERCHANT_CLOSED" then
-        M.SellFrame:Hide()
+        BAGS.SellFrame:Hide()
 
-        M.SellFrame.Info.progressTimer = 0
-        M.SellFrame.Info.sellInterval = 0.2
-        M.SellFrame.Info.progressMax = 0
-        M.SellFrame.Info.goldGained = 0
-        M.SellFrame.Info.itemsSold = 0
-        t_wipe(M.SellFrame.Info.items)
+        BAGS.SellFrame.Info.progressTimer = 0
+        BAGS.SellFrame.Info.sellInterval = 0.2
+        BAGS.SellFrame.Info.progressMax = 0
+        BAGS.SellFrame.Info.goldGained = 0
+        BAGS.SellFrame.Info.itemsSold = 0
+        t_wipe(BAGS.SellFrame.Info.items)
     end
 end
 
-function M.IsInit()
+function BAGS.IsInit()
     return isInit
 end
 
-function M:Init()
+function BAGS:Init()
     if not isInit and C.db.profile.modules.bags.enabled then
         local frame = CreateFrame("Frame", "LumBags")
 

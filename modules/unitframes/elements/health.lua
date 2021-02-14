@@ -1,9 +1,11 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
 -- Lua
 local _G = getfenv(0)
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local UnitGUID = _G.UnitGUID
 local UnitIsConnected = _G.UnitIsConnected
 local UnitIsDeadOrGhost = _G.UnitIsDeadOrGhost
@@ -12,7 +14,7 @@ local CreateColor = _G.CreateColor
 
 -- ---------------
 
-local UF = E:GetModule("UnitFrames")
+local UF = P:GetModule("UnitFrames")
 
 -- ---------------
 

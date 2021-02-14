@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Tooltips")
+local TOOLTIPS = P:GetModule("Tooltips")
 
 local _G = getfenv(0)
 local hooksecurefunc = _G.hooksecurefunc
@@ -42,7 +42,7 @@ local function INSPECT_READY(unitGUID)
     E:UnregisterEvent("INSPECT_READY", INSPECT_READY)
 end
 
-function M:AddInspectInfo(tooltip, unit, numTries)
+function TOOLTIPS:AddInspectInfo(tooltip, unit, numTries)
     if not CanInspect(unit, true) or numTries > 3 then
         return
     end
@@ -63,7 +63,7 @@ function M:AddInspectInfo(tooltip, unit, numTries)
             return C_Timer.After(
                 0.33,
                 function()
-                    M.AddInspectInfo(tooltip, unit, numTries + 1)
+                    TOOLTIPS.AddInspectInfo(tooltip, unit, numTries + 1)
                 end
             )
         end

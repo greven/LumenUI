@@ -1,13 +1,14 @@
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local TOOLTIPS = E:AddModule("Tooltips")
+local TOOLTIPS = P:AddModule("Tooltips")
 
 local _G = getfenv(0)
 local hooksecurefunc = _G.hooksecurefunc
 local pairs = _G.pairs
 
 -- Blizz
+local CreateFrame = _G.CreateFrame
 local GetItemInfo = _G.GetItemInfo
 local GetItem = _G.GetItem
 local ItemRefTooltip = _G.ItemRefTooltip

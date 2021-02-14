@@ -1,12 +1,15 @@
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local BARS = E:GetModule("Bars")
+local BARS = P:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
 local next = _G.next
 local unpack = _G.unpack
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 

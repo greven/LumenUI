@@ -1,8 +1,8 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Bars")
+local BARS = P:GetModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -10,6 +10,7 @@ local next = _G.next
 local unpack = _G.unpack
 
 -- Blizz
+local CreateFrame = _G.CreateFrame
 local C_Timer = _G.C_Timer
 
 -- ---------------
@@ -60,7 +61,7 @@ local WIDGETS = {
     }
 }
 
-function M.ActionBarController_AddWidget(_, frame, slot)
+function BARS.ActionBarController_AddWidget(_, frame, slot)
     if isInit then
         local widget = WIDGETS[slot]
         if widget and not widget.frame then
@@ -120,11 +121,11 @@ function M.ActionBarController_AddWidget(_, frame, slot)
     end
 end
 
-function M.IsRestricted()
+function BARS.IsRestricted()
     return isInit
 end
 
-function M.SetupActionBarController()
+function BARS.SetupActionBarController()
     if not isInit and C.db.profile.modules.bars.restricted then
         barController = CreateFrame("Frame", "LumActionBarController", UIParent, "SecureHandlerStateTemplate")
         barController:SetSize(32, 32)

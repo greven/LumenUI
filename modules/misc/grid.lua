@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local MISC = E:GetModule("Misc")
+local MISC = P:GetModule("Misc")
 
 -- Lua
 local _G = getfenv(0)
@@ -9,6 +9,9 @@ local m_floor = _G.math.floor
 local next = _G.next
 local t_insert = _G.table.insert
 local t_remove = _G.table.remove
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 
@@ -120,7 +123,7 @@ function MISC.SetUpGridLines()
     Grid:SetFrameStrata("BACKGROUND")
     Grid:Hide()
 
-    E:AddCommand(
+    P:AddCommand(
       "grid",
       function()
         if not InCombatLockdown() then

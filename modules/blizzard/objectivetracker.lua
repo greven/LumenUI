@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Blizzard")
+local BLIZZARD = P:GetModule("Blizzard")
 
 -- Lua
 local _G = getfenv(0)
@@ -11,15 +11,18 @@ local IsAltKeyDown = _G.IsAltKeyDown
 local IsControlKeyDown = _G.IsControlKeyDown
 local IsShiftKeyDown = _G.IsShiftKeyDown
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
+
 -- ---------------
 
 local isInit = false
 
-function M.HasObjectiveTracker()
+function BLIZZARD.HasObjectiveTracker()
     return isInit
 end
 
-function M.SetUpObjectiveTracker()
+function BLIZZARD.SetUpObjectiveTracker()
     if not isInit and C.db.profile.modules.blizzard.objective_tracker.enabled then
         local holder = CreateFrame("Frame", "LumOTFrameHolder", UIParent)
         holder:SetFrameStrata("LOW")
@@ -47,7 +50,7 @@ function M.SetUpObjectiveTracker()
     end
 end
 
-function M.UpdateObjectiveTracker()
+function BLIZZARD.UpdateObjectiveTracker()
     if isInit then
         ObjectiveTrackerFrame:SetHeight(C.db.profile.modules.blizzard.objective_tracker.height)
     end

@@ -1,8 +1,8 @@
 -- Credits: ElvUI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Blizzard")
+local BLIZZARD = P:GetModule("Blizzard")
 
 -- Lua
 local _G = getfenv(0)
@@ -41,11 +41,11 @@ local function setUpVehicle(vehicleID)
     end
 end
 
-function M.HasVehicleSeatFrame()
+function BLIZZARD.HasVehicleSeatFrame()
     return isInit
 end
 
-function M.SetUpVehicleSeatFrame()
+function BLIZZARD.SetUpVehicleSeatFrame()
     if not isInit and C.db.profile.modules.blizzard.vehicle.enabled then
         local VehicleSeatIndicator = _G.VehicleSeatIndicator
         hooksecurefunc(VehicleSeatIndicator, "SetPoint", updatePosition)
@@ -63,7 +63,7 @@ function M.SetUpVehicleSeatFrame()
     end
 end
 
-function M.UpdateVehicleSeatFrame()
+function BLIZZARD.UpdateVehicleSeatFrame()
     if isInit then
         if _G.VehicleSeatIndicator.currSkin then
             VehicleSeatIndicator_SetUpVehicle(_G.VehicleSeatIndicator.currSkin)

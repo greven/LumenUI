@@ -1,8 +1,8 @@
 -- Tooltip Info: SpellID, AuraID, ItemInfo...
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Tooltips")
+local TOOLTIPS = P:GetModule("Tooltips")
 
 local _G = getfenv(0)
 local hooksecurefunc = _G.hooksecurefunc
@@ -312,8 +312,8 @@ local function tooltip_SetItem(self)
     handleLink(self, link, true)
 end
 
-function M:SetupTooltipInfo()
-    if not M:IsInit() then
+function TOOLTIPS:SetupTooltipInfo()
+    if not TOOLTIPS:IsInit() then
         -- Spells
         GameTooltip:HookScript("OnTooltipSetSpell", tooltip_SetSpell)
         hooksecurefunc(GameTooltip, "SetUnitAura", tooltip_SetUnitAura)

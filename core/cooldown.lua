@@ -1,13 +1,16 @@
 -- Credits: ls_UI
 local A, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
-local hooksecurefunc = _G.hooksecurefunc
 local m_abs = _G.math.abs
 local next = _G.next
 local unpack = _G.unpack
+
+-- Blizz
+local CreateFrame = _G.CreateFrame
+local hooksecurefunc = _G.hooksecurefunc
 local GetTime = _G.GetTime
 
 -- ---------------

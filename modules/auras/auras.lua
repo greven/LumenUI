@@ -1,8 +1,8 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:AddModule("Auras")
+local AURAS = P:AddModule("Auras")
 
 -- Lua
 local _G = getfenv(0)
@@ -10,6 +10,7 @@ local next = _G.next
 local unpack = _G.unpack
 
 -- Blizz
+local CreateFrame = _G.CreateFrame
 local GetInventoryItemTexture = _G.GetInventoryItemTexture
 local GetTime = _G.GetTime
 local GetWeaponEnchantInfo = _G.GetWeaponEnchantInfo
@@ -399,11 +400,11 @@ local function createHeader(filter)
     RegisterStateDriver(header, "visibility", "[petbattle] hide; show")
 end
 
-function M.IsInit()
+function AURAS.IsInit()
     return isInit
 end
 
-function M.Init()
+function AURAS.Init()
     if not isInit and C.db.profile.modules.auras.enabled then
         createHeader("HELPFUL")
         createHeader("HARMFUL")
@@ -414,15 +415,15 @@ function M.Init()
 
         isInit = true
 
-        M:ForEachHeader("Update")
+        AURAS:ForEachHeader("Update")
     end
 end
 
-function M:Update()
+function AURAS:Update()
     self:ForEachHeader("Update")
 end
 
-function M:ForEachHeader(method, ...)
+function AURAS:ForEachHeader(method, ...)
     for _, header in next, headers do
         if header[method] then
             header[method](header, ...)
@@ -430,7 +431,7 @@ function M:ForEachHeader(method, ...)
     end
 end
 
-function M:ForHeader(header, method, ...)
+function AURAS:ForHeader(header, method, ...)
     if headers[header] and headers[header][method] then
         headers[header][method](headers[header], ...)
     end

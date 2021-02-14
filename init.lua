@@ -2,7 +2,7 @@
 -- > lumenUI (Kreoss @ Quel'Thalas EU) <
 -- ----------------------------------------
 local Addon, ns = ...
-local E, C, D = ns.E, ns.C, ns.D
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 E:RegisterEvent(
     "ADDON_LOADED",
@@ -22,11 +22,11 @@ E:RegisterEvent(
             "PLAYER_LOGIN",
             function()
                 E:UpdateConstants()
-                E:InitModules()
+                P:InitModules()
             end
         )
 
-        ns.C, ns.D, ns.L = nil, nil, nil
+        ns.C, ns.D, ns.L, ns.P = nil, nil, nil, nil
     end
 )
 

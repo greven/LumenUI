@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Blizzard")
+local BLIZZARD = P:GetModule("Blizzard")
 
 -- Lua
 local _G = getfenv(0)
@@ -19,11 +19,11 @@ local function closeTalkingHead()
     end
 end
 
-function M.HasTalkingHead()
+function BLIZZARD.HasTalkingHead()
     return isInit
 end
 
-function M.SetUpTalkingHead()
+function BLIZZARD.SetUpTalkingHead()
     if not isInit and C.db.profile.modules.blizzard.talking_head.enabled then
         local isLoaded = true
 

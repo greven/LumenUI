@@ -1,5 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
+
+local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
@@ -7,9 +9,8 @@ local m_abs = _G.math.abs
 local m_min = _G.math.min
 local m_max = _G.math.max
 
--- ---------------
-
-local UF = E:GetModule("UnitFrames")
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 

@@ -1,9 +1,10 @@
 local _, ns = ...
-local E, C, oUF = ns.E, ns.C, ns.oUF
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
 
--- ---------------
+local UF = P:GetModule("UnitFrames")
 
-local UF = E:GetModule("UnitFrames")
+-- Blizz
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 

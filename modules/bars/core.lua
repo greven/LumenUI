@@ -1,8 +1,8 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:AddModule("Bars")
+local BARS = P:AddModule("Bars")
 
 -- Lua
 local _G = getfenv(0)
@@ -18,6 +18,7 @@ local type = _G.type
 local xpcall = _G.xpcall
 
 -- Blizz
+local CreateFrame = _G.CreateFrame
 local C_PetBattles = _G.C_PetBattles
 
 -- ---------------
@@ -25,11 +26,11 @@ local C_PetBattles = _G.C_PetBattles
 local isInit = false
 local bars = {}
 
-function M.GetBars()
+function BARS.GetBars()
     return bars
 end
 
-function M.GetBar(_, barID)
+function BARS.GetBar(_, barID)
     return bars[barID]
 end
 
@@ -131,7 +132,7 @@ local function bar_UpdateVisibility(self)
     end
 end
 
-function M.AddBar(_, barID, bar)
+function BARS.AddBar(_, barID, bar)
     bars[barID] = bar
     bar.UpdateConfig = bar_UpdateConfig
     bar.UpdateCooldownConfig = bar_UpdateCooldownConfig
@@ -146,7 +147,7 @@ function M.AddBar(_, barID, bar)
     E:SetUpFading(bar)
 end
 
-function M.UpdateBars(_, method, ...)
+function BARS.UpdateBars(_, method, ...)
     for _, bar in next, bars do
         if bar[method] then
             bar[method](bar, ...)
@@ -154,7 +155,7 @@ function M.UpdateBars(_, method, ...)
     end
 end
 
-function M:ForEach(method, ...)
+function BARS:ForEach(method, ...)
     for _, bar in next, bars do
         if bar[method] then
             bar[method](bar, ...)
@@ -162,7 +163,7 @@ function M:ForEach(method, ...)
     end
 end
 
-function M:ForBar(id, method, ...)
+function BARS:ForBar(id, method, ...)
     if bars[id] and bars[id][method] then
         bars[id][method](bars[id], ...)
     end
@@ -179,7 +180,7 @@ local rebindable = {
     bar7 = true
 }
 
-function M.ReassignBindings()
+function BARS.ReassignBindings()
     if not InCombatLockdown() then
         for barID, bar in next, bars do
             if rebindable[barID] then
@@ -197,7 +198,7 @@ function M.ReassignBindings()
     end
 end
 
-function M.ClearBindings()
+function BARS.ClearBindings()
     if not InCombatLockdown() then
         for barID, bar in next, bars do
             if rebindable[barID] then
@@ -209,7 +210,7 @@ end
 
 local vehicleController
 
-function M:UpdateBlizzVehicle()
+function BARS:UpdateBlizzVehicle()
     if not self:IsRestricted() then
         if C.db.profile.modules.bars.blizz_vehicle then
             -- MainMenuBar:SetParent(UIParent)
@@ -278,39 +279,39 @@ end
 
 -----
 
-function M.IsInit()
+function BARS.IsInit()
     return isInit
 end
 
-function M.Init()
+function BARS.Init()
     if not isInit and C.db.profile.modules.bars.enabled then
-        M:SetupActionBarController()
-        M:CreateActionBars()
-        M:CreateStanceBar()
-        M:CreatePetActionBar()
-        M:CreateExtraButton()
-        M:CreateVehicleExitButton()
-        M:CreateXPBar()
-        M:CreateThreatBar()
-        M:ReassignBindings()
-        M:UpdateBlizzVehicle()
-        M:CleanUp()
-        -- M:CreatePetBattleBar()
-        -- M:CreateZoneButton()
-        -- M:CreateMicroMenu()
+        BARS:SetupActionBarController()
+        BARS:CreateActionBars()
+        BARS:CreateStanceBar()
+        BARS:CreatePetActionBar()
+        BARS:CreateExtraButton()
+        BARS:CreateVehicleExitButton()
+        BARS:CreateXPBar()
+        BARS:CreateThreatBar()
+        BARS:ReassignBindings()
+        BARS:UpdateBlizzVehicle()
+        BARS:CleanUp()
+        -- BARS:CreatePetBattleBar()
+        -- BARS:CreateZoneButton()
+        -- BARS:CreateMicroMenu()
 
         E:RegisterEvent("ACTIONBAR_HIDEGRID", resumeFading)
         E:RegisterEvent("ACTIONBAR_SHOWGRID", pauseFading)
         E:RegisterEvent("PET_BAR_HIDEGRID", resumeFading)
         E:RegisterEvent("PET_BAR_SHOWGRID", pauseFading)
-        E:RegisterEvent("PET_BATTLE_CLOSE", M.ReassignBindings)
-        E:RegisterEvent("PET_BATTLE_OPENING_DONE", M.ClearBindings)
-        E:RegisterEvent("UPDATE_BINDINGS", M.ReassignBindings)
+        E:RegisterEvent("PET_BATTLE_CLOSE", BARS.ReassignBindings)
+        E:RegisterEvent("PET_BATTLE_OPENING_DONE", BARS.ClearBindings)
+        E:RegisterEvent("UPDATE_BINDINGS", BARS.ReassignBindings)
 
         if C_PetBattles.IsInBattle() then
-            M:ClearBindings()
+            BARS:ClearBindings()
         else
-            M:ReassignBindings()
+            BARS:ReassignBindings()
         end
 
         SetCVar("ActionButtonUseKeyDown", C.db.profile.modules.bars.click_on_down and 1 or 0)
@@ -326,8 +327,8 @@ function M.Init()
     end
 end
 
-function M.Update()
+function BARS.Update()
     if isInit then
-        M:UpdateBars("Update")
+        BARS:UpdateBars("Update")
     end
 end

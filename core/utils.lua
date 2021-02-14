@@ -1,6 +1,6 @@
 -- Credits: ls_UI
 local _, ns = ...
-local E, C, M, L = ns.E, ns.C, ns.M, ns.L
+local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
@@ -51,6 +51,7 @@ local GetInventoryItemTexture = _G.GetInventoryItemTexture
 local GetInspectSpecialization = _G.GetInspectSpecialization
 local GetSpecializationRole = _G.GetSpecializationRole
 local GetItemInfo = _G.GetItemInfo
+local CreateFrame = _G.CreateFrame
 
 -- ---------------
 -- > Math

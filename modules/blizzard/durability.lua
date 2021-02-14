@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C, L = ns.E, ns.C, ns.L
+local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
-local M = E:GetModule("Blizzard")
+local BLIZZARD = P:GetModule("Blizzard")
 
 -- Lua
 local _G = getfenv(0)
@@ -10,11 +10,11 @@ local _G = getfenv(0)
 
 local isInit = false
 
-function M.HasDurabilityFrame()
+function BLIZZARD.HasDurabilityFrame()
     return isInit
 end
 
-function M.SetUpDurabilityFrame()
+function BLIZZARD.SetUpDurabilityFrame()
     if not isInit and C.db.profile.modules.blizzard.durability.enabled then
         DurabilityFrame:ClearAllPoints()
         DurabilityFrame:SetPoint(unpack(C.db.profile.modules.blizzard.durability.point))

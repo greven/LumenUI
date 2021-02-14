@@ -1,14 +1,14 @@
 local _, ns = ...
-local E, C, M, oUF = ns.E, ns.C, ns.M, ns.oUF
+local E, C, L, M, P, oUF = ns.E, ns.C, ns.L, ns.M, ns.P, ns.oUF
+
+local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
 
+-- Blizz
+local CreateFrame = _G.CreateFrame
 local UnitGUID = _G.UnitGUID
-
--- ---------------
-
-local UF = E:GetModule("UnitFrames")
 
 -- ---------------
 
