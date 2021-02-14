@@ -3,9 +3,8 @@
 ## Version: @project-version@
 ## Title: |cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r |cFFccccccUI|r
 ## Notes: WoW UI Kreoss @ Quel'Thalas EU
-## SavedVariables: LumenDB
-## X-SavedVariables: LumenDB
-## X-SlashCmdList: /lum
+## SavedVariablesPerCharacter: LUM_UI_CHAR_CONFIG
+## SavedVariables: LUM_UI_GLOBAL_CONFIG
 ## X-Category: UnitFrame
 ## OptionalDeps: AdiButtonAuras
 

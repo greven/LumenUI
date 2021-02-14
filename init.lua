@@ -4,6 +4,11 @@
 local Addon, ns = ...
 local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
+local function updateAll()
+    P:UpdateModules()
+    P.Movers:UpdateConfig()
+end
+
 E:RegisterEvent(
     "ADDON_LOADED",
     function(addonName)
@@ -18,6 +23,10 @@ E:RegisterEvent(
             AdiButtonAuras:RegisterLAB("LibActionButton-1.0-ls")
         end
 
+        C.db:RegisterCallback("OnProfileChanged", updateAll)
+        C.db:RegisterCallback("OnProfileCopied", updateAll)
+        C.db:RegisterCallback("OnProfileReset", updateAll)
+
         E:RegisterEvent(
             "PLAYER_LOGIN",
             function()
@@ -26,13 +35,14 @@ E:RegisterEvent(
             end
         )
 
-        ns.C, ns.D, ns.L, ns.P = nil, nil, nil, nil
-    end
-)
+        E:RegisterEvent(
+            "PLAYER_ENTERING_WORLD",
+            function(initLogin, isReload)
+                E:CheckPlayerRoles()
+            end
+        )
 
-E:RegisterEvent(
-    "PLAYER_ENTERING_WORLD",
-    function(initLogin, isReload)
-        E:CheckPlayerRoles()
+        -- Hide namespaced tables
+        ns.C, ns.D, ns.L, ns.P = nil, nil, nil, nil
     end
 )
