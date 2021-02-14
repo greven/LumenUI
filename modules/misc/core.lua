@@ -16,7 +16,6 @@ end
 
 function MISC:Init()
     if not isInit and C.db.profile.modules.misc.enabled then
-        self:SetUpGridLines()
         self:SetUpBindings()
         self:SetUpMerchant()
 
