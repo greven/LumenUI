@@ -62,7 +62,12 @@ UF.filterFunctions = {
         -- black and whitelists
         for filter, enabled in next, config.custom do
             if enabled then
-                filter = C.db.global.aura_filters[filter]
+                if filter == "Class Buffs" or filter == "Class Debuffs" then
+                    filter = C.db.global.aura_filters[filter][E.PLAYER_CLASS]
+                else
+                    filter = C.db.global.aura_filters[filter]
+                end
+
                 if filter and filter[spellID] then
                     if filter.onlyShowPlayer then
                         if aura.isPlayer or (caster and UnitIsUnit(caster, "pet")) then
@@ -423,12 +428,12 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].auras, self._config)
+    self._config = E:CopyTable(C.db.profile.unitframes.units[unit].auras, self._config)
 
     local size =
         self._config.size_override ~= 0 and self._config.size_override or
         E:Round(
-            (C.db.profile.modules.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) /
+            (C.db.profile.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) /
                 self._config.per_row
         )
     self._config.size = m_min(m_max(size, 20), 64)
@@ -483,8 +488,8 @@ local function element_UpdateCooldownConfig(self)
         self.cooldownConfig = {text = {}}
     end
 
-    self.cooldownConfig.exp_threshold = C.db.profile.modules.unitframes.cooldown.exp_threshold
-    self.cooldownConfig.m_ss_threshold = C.db.profile.modules.unitframes.cooldown.m_ss_threshold
+    self.cooldownConfig.exp_threshold = C.db.profile.unitframes.cooldown.exp_threshold
+    self.cooldownConfig.m_ss_threshold = C.db.profile.unitframes.cooldown.m_ss_threshold
     self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
 
     for i = 1, self.createdIcons do
@@ -561,7 +566,7 @@ local function frame_UpdateAuras(self)
 end
 
 function UF:CreateAuras(frame, unit)
-    local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].auras
+    local config = C.db.profile.unitframes.units[frame._layout or frame._unit].auras
 
     local element = CreateFrame("Frame", nil, frame)
     element:SetSize(48, 48)

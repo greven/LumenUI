@@ -1,4 +1,3 @@
--- Credits: ls_UI
 local _, ns = ...
 local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
@@ -295,8 +294,8 @@ local function header_ForEachButton(self, method, ...)
 end
 
 local function header_UpdateConfig(self)
-    self._config = E:CopyTable(C.db.profile.modules.auras[self._filter], self._config)
-    self._config.cooldown = E:CopyTable(C.db.profile.modules.auras.cooldown, self._config.cooldown)
+    self._config = E:CopyTable(C.db.profile.auras[self._filter], self._config)
+    self._config.cooldown = E:CopyTable(C.db.profile.auras.cooldown, self._config.cooldown)
 end
 
 local function header_UpdateCooldownConfig(self)
@@ -320,7 +319,7 @@ local function header_UpdateCooldownConfig(self)
 end
 
 local function createHeader(filter)
-    local point = C.db.profile.modules.auras[filter].point
+    local point = C.db.profile.auras[filter].point
     local header
 
     if filter == "TOTEM" then
@@ -405,7 +404,7 @@ function AURAS.IsInit()
 end
 
 function AURAS.Init()
-    if not isInit and C.db.profile.modules.auras.enabled then
+    if not isInit and C.db.profile.auras.enabled then
         createHeader("HELPFUL")
         createHeader("HARMFUL")
         createHeader("TOTEM")

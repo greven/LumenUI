@@ -40,7 +40,7 @@ do
   end
 
   local function frame_UpdateConfig(self)
-    local config = C.db.profile.modules.unitframes.units
+    local config = C.db.profile.unitframes.units
     self._config = E:CopyTable(config[self._layout or self._unit], self._config, configIgnoredKeys)
   end
 

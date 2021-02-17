@@ -1,4 +1,3 @@
--- Credits: NDui
 local _, ns = ...
 local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 

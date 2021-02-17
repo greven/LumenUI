@@ -45,10 +45,10 @@ local LAYOUT = {
 }
 
 local function bar_UpdateConfig(self)
-    self._config = E:CopyTable(BARS:IsRestricted() and CFG or C.db.profile.modules.bars.xpbar, self._config)
+    self._config = E:CopyTable(BARS:IsRestricted() and CFG or C.db.profile.bars.xpbar, self._config)
 
     if BARS:IsRestricted() then
-        self._config.text = E:CopyTable(C.db.profile.modules.bars.xpbar.text, self._config.text)
+        self._config.text = E:CopyTable(C.db.profile.bars.xpbar.text, self._config.text)
     end
 
     self._config.text = E:CopyTable(C.db.global.fonts.bars, self._config.text)
@@ -214,7 +214,7 @@ local function bar_UpdateSegments(self)
                 max,
                 bonus,
                 bonus > 0 and C.db.global.colors.xp[1] or C.db.global.colors.xp[2],
-                C.db.profile.modules.bars.xpbar.texture
+                C.db.profile.bars.xpbar.texture
             )
         end
 
@@ -453,8 +453,8 @@ function BARS.HasXPBar()
 end
 
 function BARS.CreateXPBar()
-    if not isInit and (C.db.profile.modules.bars.xpbar.enabled or BARS:IsRestricted()) then
-        local config = C.db.profile.modules.bars.xpbar
+    if not isInit and (C.db.profile.bars.xpbar.enabled or BARS:IsRestricted()) then
+        local config = C.db.profile.bars.xpbar
         local bar = CreateFrame("Frame", "LumXPBar", UIParent)
         bar._id = "xpbar"
 
@@ -592,7 +592,7 @@ function BARS.CreateXPBar()
             BARS:ActionBarController_AddWidget(bar, "XP_BAR")
         else
             -- E.Movers:Create(bar)
-            local config = BARS:IsRestricted() and CFG or C.db.profile.modules.bars.xpbar
+            local config = BARS:IsRestricted() and CFG or C.db.profile.bars.xpbar
             local point = config.point
             bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         end

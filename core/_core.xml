@@ -14,4 +14,5 @@
   <Script file="fading.lua" />
   <Script file="mover.lua" />
   <Script file="statusbar.lua" />
+  <Script file="tools.lua" />
 </Ui>

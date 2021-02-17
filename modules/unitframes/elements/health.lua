@@ -160,7 +160,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        local config = C.db.profile.modules.unitframes.units[unit]
+        local config = C.db.profile.unitframes.units[unit]
 
         self._config = E:CopyTable(config.health, self._config)
         if config.power then
@@ -247,7 +247,7 @@ do
     end
 
     function UF:CreateHealthBar(frame, textParent, textureOverride)
-        local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].health
+        local config = C.db.profile.unitframes.units[frame._layout or frame._unit].health
 
         local element = CreateFrame("StatusBar", nil, frame)
         element:SetPoint("TOPLEFT", frame)
@@ -316,7 +316,7 @@ end
 do
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].health.prediction, self._config)
+        self._config = E:CopyTable(C.db.profile.unitframes.units[unit].health.prediction, self._config)
         self._config.absorb_text = E:CopyTable(C.db.global.fonts.units, self._config.absorb_text)
         self._config.heal_absorb_text = E:CopyTable(C.db.global.fonts.units, self._config.heal_absorb_text)
     end

@@ -1,4 +1,3 @@
--- Credits: ls_UI
 local _, ns = ...
 local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
@@ -503,7 +502,7 @@ end
 local function button_OnUpdate(self)
     local degrees = getPosition(nil, GetCursorPosition())
 
-    C.db.profile.modules.minimap.buttons[self:GetName()] = degrees
+    C.db.profile.minimap.buttons[self:GetName()] = degrees
 
     updatePosition(self, degrees)
 end
@@ -534,11 +533,11 @@ local function getTooltipPoint(self)
 end
 
 local function minimap_UpdateConfig(self)
-    self._config = E:CopyTable(C.db.profile.modules.minimap, self._config)
-    self._config.buttons = E:CopyTable(C.db.profile.modules.minimap.buttons, self._config.buttons)
-    self._config.collect = E:CopyTable(C.db.profile.modules.minimap.collect, self._config.collect)
-    self._config.color = E:CopyTable(C.db.profile.modules.minimap.color, self._config.color)
-    self._config.size = C.db.profile.modules.minimap.size
+    self._config = E:CopyTable(C.db.profile.minimap, self._config)
+    self._config.buttons = E:CopyTable(C.db.profile.minimap.buttons, self._config.buttons)
+    self._config.collect = E:CopyTable(C.db.profile.minimap.collect, self._config.collect)
+    self._config.color = E:CopyTable(C.db.profile.minimap.color, self._config.color)
+    self._config.size = C.db.profile.minimap.size
 end
 
 local function minimap_UpdateSize(self)
@@ -615,12 +614,12 @@ function MINIMAP:IsInit()
 end
 
 function MINIMAP:Init()
-    if not isInit and C.db.profile.modules.bars.enabled then
+    if not isInit and C.db.profile.bars.enabled then
         if not IsAddOnLoaded("Blizzard_TimeManager") then
             LoadAddOn("Blizzard_TimeManager")
         end
 
-        isSquare = C.db.profile.modules.minimap.square
+        isSquare = C.db.profile.minimap.square
 
         -- local level = Minimap:GetFrameLevel()
         -- local holder = CreateFrame("Frame", "LumMinimapHolder", UIParent)
@@ -688,7 +687,7 @@ function MINIMAP:Init()
         --     Minimap.Collection = button
 
         --     button:SetScript("OnEnter", function(self)
-        --         if C.db.profile.modules.minimap.collect.tooltip then
+        --         if C.db.profile.minimap.collect.tooltip then
         --             local p, rP, x, y = getTooltipPoint(self)
 
         --             GameTooltip:SetOwner(self, "ANCHOR_NONE")
@@ -810,7 +809,7 @@ function MINIMAP:Init()
         -- end
 
         -- local function handleChildren()
-        --     local shouldCollect = C.db.profile.modules.minimap.collect.enabled
+        --     local shouldCollect = C.db.profile.minimap.collect.enabled
 
         --     for i = 1, select("#", Minimap:GetChildren()) do
         --         local child = select(i, Minimap:GetChildren())

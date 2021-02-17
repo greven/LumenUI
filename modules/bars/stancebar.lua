@@ -186,7 +186,7 @@ function BARS.CreateStanceBar()
         bar:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
         bar:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 
-        local point = C.db.profile.modules.bars.bar7.point
+        local point = C.db.profile.bars.bar7.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

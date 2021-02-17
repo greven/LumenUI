@@ -254,12 +254,12 @@ function FILTERS.CreateAuraFilters()
     end
     -- Class Debuffs filters
     if not C.db.global.aura_filters["Class Debuffs"].is_init then
-        E:CopyTable(class_debuffs[E.PLAYER_CLASS], C.db.global.aura_filters["Class Debuffs"])
+        E:CopyTable(class_debuffs, C.db.global.aura_filters["Class Debuffs"])
         C.db.global.aura_filters["Class Debuffs"].is_init = true
     end
     -- Class Buffs filters
     if not C.db.global.aura_filters["Class Buffs"].is_init then
-        E:CopyTable(class_buffs[E.PLAYER_CLASS], C.db.global.aura_filters["Class Buffs"])
+        E:CopyTable(class_buffs, C.db.global.aura_filters["Class Buffs"])
         C.db.global.aura_filters["Class Buffs"].is_init = true
     end
 end

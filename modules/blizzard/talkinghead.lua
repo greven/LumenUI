@@ -14,7 +14,7 @@ local t_remove = _G.table.remove
 local isInit = false
 
 local function closeTalkingHead()
-    if C.db.profile.modules.blizzard.talking_head.hide then
+    if C.db.profile.blizzard.talking_head.hide then
         TalkingHeadFrame_CloseImmediately()
     end
 end
@@ -24,7 +24,7 @@ function BLIZZARD.HasTalkingHead()
 end
 
 function BLIZZARD.SetUpTalkingHead()
-    if not isInit and C.db.profile.modules.blizzard.talking_head.enabled then
+    if not isInit and C.db.profile.blizzard.talking_head.enabled then
         local isLoaded = true
 
         if not IsAddOnLoaded("Blizzard_TalkingHeadUI") then

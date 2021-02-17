@@ -16,12 +16,26 @@ E:RegisterEvent(
             return
         end
 
-        C.db = LibStub("AceDB-3.0"):New("LUM_UI_GLOBAL_CONFIG", D)
+        C.db = LibStub("AceDB-3.0"):New("LUMUI_GLOBAL_CONFIG", D, true)
 
         -- Support AdiButtonAuras
         if AdiButtonAuras and AdiButtonAuras.RegisterLAB then
             AdiButtonAuras:RegisterLAB("LibActionButton-1.0-ls")
         end
+
+        C.db:RegisterCallback(
+            "OnDatabaseShutdown",
+            function()
+                P.Movers:CleanUpConfig()
+            end
+        )
+
+        C.db:RegisterCallback(
+            "OnProfileShutdown",
+            function()
+                P.Movers:CleanUpConfig()
+            end
+        )
 
         C.db:RegisterCallback("OnProfileChanged", updateAll)
         C.db:RegisterCallback("OnProfileCopied", updateAll)

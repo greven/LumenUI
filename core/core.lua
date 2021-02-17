@@ -165,7 +165,4 @@ do
     function P:AddCommand(command, handler, desc)
         commands[command] = {func = handler, desc = desc or "no description"}
     end
-
-    SLASH_RELOADUI1 = "/rl"
-    SlashCmdList["RELOADUI"] = ReloadUI
 end

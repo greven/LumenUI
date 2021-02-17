@@ -116,7 +116,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].aura_bars, self._config)
+    self._config = E:CopyTable(C.db.profile.unitframes.units[unit].aura_bars, self._config)
 end
 
 local function element_UpdatePosition(self)
@@ -218,7 +218,7 @@ local function frame_UpdateAuraBars(self)
 end
 
 function UF:CreateAuraBars(frame, unit)
-    local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].aura_bars
+    local config = C.db.profile.unitframes.units[frame._layout or frame._unit].aura_bars
 
     local element = CreateFrame("Frame", "$parent_AuraBars", frame)
     element:SetSize(1, 1)

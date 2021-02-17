@@ -80,7 +80,7 @@ local function tooltipBar_Hook(self)
     if self:IsForbidden() or self:GetParent():IsForbidden() then
         return
     end
-    local config = C.db.profile.modules.tooltips
+    local config = C.db.profile.tooltips
 
     if self:IsShown() then
         if self.Text and (config.health.text.show or IsShiftKeyDown()) then
@@ -119,7 +119,7 @@ local function tooltip_SetDefaultAnchor(self, parent)
     end
 
     if parent then
-        if C.db.profile.modules.tooltips.anchor_cursor then
+        if C.db.profile.tooltips.anchor_cursor then
             self:SetOwner(parent, "ANCHOR_CURSOR")
             return
         else
@@ -194,7 +194,7 @@ function TOOLTIPS:SetupTooltipFonts()
 end
 
 function TOOLTIPS:ReskinStatusBar(self)
-    local config = C.db.profile.modules.tooltips
+    local config = C.db.profile.tooltips
     local statusbar = self.StatusBar
 
     E:HandleStatusBar(statusbar)
@@ -220,7 +220,7 @@ function TOOLTIPS:ReskinTooltip()
         return
     end
 
-    local config = C.db.profile.modules.tooltips
+    local config = C.db.profile.tooltips
     self:SetScale(config.scale)
 
     if not self.styled then
@@ -232,7 +232,7 @@ function TOOLTIPS:ReskinTooltip()
             {
                 bgFile = M.textures.flat,
                 edgeFile = M.textures.backdrop_border,
-                edgeSize = C.db.profile.modules.tooltips.border.size,
+                edgeSize = C.db.profile.tooltips.border.size,
                 tile = false
             }
         )
@@ -273,7 +273,7 @@ function TOOLTIPS.IsInit()
 end
 
 function TOOLTIPS:Init()
-    local config = C.db.profile.modules.tooltips
+    local config = C.db.profile.tooltips
 
     if not isInit and config.enabled then
         GameTooltip.StatusBar = GameTooltipStatusBar
@@ -310,6 +310,6 @@ end
 function TOOLTIPS.Update()
     if isInit then
         TOOLTIPS.ReskinTooltip(GameTooltip)
-        GameTooltipStatusBar:SetHeight(C.db.profile.modules.tooltips.health.height)
+        GameTooltipStatusBar:SetHeight(C.db.profile.tooltips.health.height)
     end
 end

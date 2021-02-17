@@ -41,7 +41,7 @@ do
     end
 
     function MISC.AttemptAutoRepair(playerOverride)
-        local useGuildFunds = C.db.profile.modules.misc.merchant.auto_repair.use_guild_funds
+        local useGuildFunds = C.db.profile.misc.merchant.auto_repair.use_guild_funds
         repairType = useGuildFunds and "GUILD" or "PLAYER"
 
         repairCost, canRepair = GetRepairAllCost()
@@ -62,11 +62,11 @@ end
 
 local function frame_OnEvent(self, event, ...)
     if event == "MERCHANT_SHOW" then
-        if C.db.profile.modules.misc.merchant.vendor_grays.enabled then
+        if C.db.profile.misc.merchant.vendor_grays.enabled then
             E:Delay(0.5, BAGS.VendorGrays)
         end
 
-        if not C.db.profile.modules.misc.merchant.auto_repair.enabled or IsShiftKeyDown() or not CanMerchantRepair() then
+        if not C.db.profile.misc.merchant.auto_repair.enabled or IsShiftKeyDown() or not CanMerchantRepair() then
             return
         end
 
@@ -92,7 +92,7 @@ local function frame_OnEvent(self, event, ...)
 end
 
 function MISC.SetUpMerchant()
-    if not isInit and C.db.profile.modules.misc.merchant.enabled then
+    if not isInit and C.db.profile.misc.merchant.enabled then
         local frame = CreateFrame("Frame", nil, UIParent)
 
         frame:SetScript("OnEvent", frame_OnEvent)

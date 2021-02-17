@@ -127,7 +127,7 @@ function BARS.HasThreatBar()
 end
 
 function BARS.CreateThreatBar()
-  if not isInit and C.db.profile.modules.bars.threatbar.enabled then
+  if not isInit and C.db.profile.bars.threatbar.enabled then
     local element = CreateFrame("Frame", "LumThreatBar", UIParent)
     element._id = "threatbar"
     element.list = {}
@@ -177,6 +177,7 @@ function BARS.CreateThreatBar()
     element:RegisterEvent("UNIT_PET")
 
     element:Update()
+    element:UpdateVisibility()
 
     isInit = true
   end

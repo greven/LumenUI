@@ -1,4 +1,3 @@
--- Credits: ls_UI
 local _, ns = ...
 local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
@@ -13,7 +12,7 @@ function BLIZZARD:IsInit()
 end
 
 function BLIZZARD:Init()
-    if not isInit and C.db.profile.modules.blizzard.enabled then
+    if not isInit and C.db.profile.blizzard.enabled then
         self:SetUpCharacterFrame()
         -- self:SetUpCommandBar()
         -- self:SetUpDigsiteBar()

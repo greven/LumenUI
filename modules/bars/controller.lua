@@ -1,4 +1,3 @@
--- Credits: ls_UI
 local _, ns = ...
 local E, C, L, M, P = ns.E, ns.C, ns.L, ns.M, ns.P
 
@@ -126,7 +125,7 @@ function BARS.IsRestricted()
 end
 
 function BARS.SetupActionBarController()
-    if not isInit and C.db.profile.modules.bars.restricted then
+    if not isInit and C.db.profile.bars.restricted then
         barController = CreateFrame("Frame", "LumActionBarController", UIParent, "SecureHandlerStateTemplate")
         barController:SetSize(32, 32)
         barController:SetPoint("BOTTOM", 0, 0)

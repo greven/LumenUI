@@ -293,7 +293,7 @@ function BARS.CreatePetActionBar()
         bar:RegisterEvent("UNIT_FLAGS")
         bar:RegisterEvent("UNIT_PET")
 
-        local point = C.db.profile.modules.bars.bar6.point
+        local point = C.db.profile.bars.bar6.point
         bar:SetPoint(point.p, point.anchor, point.ap, point.x, point.y)
         -- E.Movers:Create(bar)
 

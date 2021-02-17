@@ -127,7 +127,7 @@ local function tooltip_SetUnit(self)
 
     if UnitIsPlayer(unit) then
         local name, realm = UnitName(unit)
-        name = C.db.profile.modules.tooltips.title and UnitPVPName(unit) or name
+        name = C.db.profile.tooltips.title and UnitPVPName(unit) or name
 
         if realm and realm ~= "" then
             if isShiftKeyDown then
@@ -211,7 +211,7 @@ local function tooltip_SetUnit(self)
                 UnitClass(unit)
             )
 
-            if C.db.profile.modules.tooltips.inspect and isShiftKeyDown and level > 10 then
+            if C.db.profile.tooltips.inspect and isShiftKeyDown and level > 10 then
                 TOOLTIPS:AddInspectInfo(self, unit, 0)
             end
         end
@@ -282,7 +282,7 @@ local function tooltip_SetUnit(self)
     end
 
     -- Show Target info
-    if C.db.profile.modules.tooltips.target then
+    if C.db.profile.tooltips.target then
         local unitTarget = unit .. "target"
         if UnitExists(unitTarget) then
             local name = UnitName(unitTarget)
@@ -328,12 +328,12 @@ function TOOLTIPS:UpdateStatusBarColor(self)
 
     if UnitIsPlayer(unit) then
         -- Border color
-        if C.db.profile.modules.tooltips.border.color_class and self.bg then
+        if C.db.profile.tooltips.border.color_class and self.bg then
             self.bg:SetBackdropBorderColor(E:GetRGB(E:GetUnitClassColor(unit)))
         end
 
         -- Statusbar color
-        if C.db.profile.modules.tooltips.health.color_class then
+        if C.db.profile.tooltips.health.color_class then
             self:SetStatusBarColor(E:GetRGB(E:GetUnitClassColor(unit)))
         end
     end

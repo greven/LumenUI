@@ -3,6 +3,10 @@ local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- Lua
 local _G = getfenv(0)
+local string = _G.string
+local pairs = _G.pairs
+local type = _G.type
+local unpack = _G.unpack
 local select = _G.select
 local m_min = _G.math.min
 local m_max = _G.math.max
@@ -21,7 +25,7 @@ E.LUMEN = "|cFF0d87d5L|r|cFF3f6abdu|r|cFF85419cm|r|cFFc81a7de|r|cFFf20269n|r"
 -- Player Specific
 E.PLAYER_CLASS = select(2, UnitClass("player"))
 E.PLAYER_NAME = UnitName("player")
-E.NAME_REALM = UnitName("player") .. " - " .. GetRealmName()
+E.NAME_REALM = E.PLAYER_NAME .. " - " .. GetRealmName()
 E.CLASS_COLOR = D.global.colors.class[E.PLAYER_CLASS]
 
 -- !ClassColors addon
@@ -38,6 +42,11 @@ E.NOOP = function()
 end
 
 E.DAY, E.HOUR, E.MINUTE = 86400, 3600, 60
+
+E.VER = {
+    string = _G.GetAddOnMetadata(A, "Version")
+}
+E.VER.number = tonumber(E.VER.string:gsub("%D", ""), nil)
 
 -- Screen Size and UI Scale
 do

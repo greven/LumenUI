@@ -30,7 +30,7 @@ local function frame_Update(self)
 end
 
 function UF:CreatePartyFrame(frame)
-  local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit]
+  local config = C.db.profile.unitframes.units[frame._layout or frame._unit]
   local level = frame:GetFrameLevel()
 
   local textParent = CreateFrame("Frame", nil, frame)

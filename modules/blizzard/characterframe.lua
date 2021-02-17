@@ -115,10 +115,7 @@ local function scanSlot(slotID)
 end
 
 local function updateSlot(slotID)
-    if
-        not (C.db.profile.modules.blizzard.character_frame.ilvl or
-            C.db.profile.modules.blizzard.character_frame.enhancements)
-     then
+    if not (C.db.profile.blizzard.character_frame.ilvl or C.db.profile.blizzard.character_frame.enhancements) then
         _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetText("")
         _G[EQUIP_SLOTS[slotID]].EnchantText:SetText("")
         _G[EQUIP_SLOTS[slotID]].GemText:SetText("")
@@ -128,14 +125,14 @@ local function updateSlot(slotID)
 
     local isOk, iLvl, enchant, gem1, gem2, gem3 = scanSlot(slotID)
     if isOk then
-        if C.db.profile.modules.blizzard.character_frame.ilvl then
+        if C.db.profile.blizzard.character_frame.ilvl then
             _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetText(iLvl)
             _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetTextColor(getItemLevelColor(iLvl))
         else
             _G[EQUIP_SLOTS[slotID]].ItemLevelText:SetText("")
         end
 
-        if C.db.profile.modules.blizzard.character_frame.enhancements then
+        if C.db.profile.blizzard.character_frame.enhancements then
             _G[EQUIP_SLOTS[slotID]].EnchantText:SetText(enchant)
             _G[EQUIP_SLOTS[slotID]].GemText:SetText(s_trim(gem1 .. gem2 .. gem3))
         else
@@ -153,10 +150,7 @@ local function updateSlot(slotID)
 end
 
 local function updateAllSlots()
-    if
-        not (C.db.profile.modules.blizzard.character_frame.ilvl or
-            C.db.profile.modules.blizzard.character_frame.enhancements)
-     then
+    if not (C.db.profile.blizzard.character_frame.ilvl or C.db.profile.blizzard.character_frame.enhancements) then
         for _, slotName in next, EQUIP_SLOTS do
             _G[slotName].ItemLevelText:SetText("")
             _G[slotName].EnchantText:SetText("")
@@ -168,8 +162,8 @@ local function updateAllSlots()
 
     local scanComplete = true
     local showILvl, showEnchants =
-        C.db.profile.modules.blizzard.character_frame.ilvl,
-        C.db.profile.modules.blizzard.character_frame.enhancements
+        C.db.profile.blizzard.character_frame.ilvl,
+        C.db.profile.blizzard.character_frame.enhancements
     local isOk, iLvl, enchant, gem1, gem2, gem3
     for slotID, slotName in next, EQUIP_SLOTS do
         isOk, iLvl, enchant, gem1, gem2, gem3 = scanSlot(slotID)
@@ -202,7 +196,7 @@ function BLIZZARD:HasCharacterFrame()
 end
 
 function BLIZZARD:SetUpCharacterFrame()
-    if not isInit and C.db.profile.modules.blizzard.character_frame.enabled then
+    if not isInit and C.db.profile.blizzard.character_frame.enabled then
         if CharacterFrame:IsShown() then
             HideUIPanel(CharacterFrame)
         end

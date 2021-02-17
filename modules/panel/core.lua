@@ -16,7 +16,7 @@ local elements = {}
 local Panel
 
 local function panel_UpdateConfig(self)
-    self._config = E:CopyTable(C.db.profile.modules.panel, self._config)
+    self._config = E:CopyTable(C.db.profile.panel, self._config)
 end
 
 local function panel_UpdateSize(self)
@@ -48,7 +48,7 @@ local function element_UpdateVisibility(self)
 end
 
 local function element_UpdateConfig(self)
-    self._config = E:CopyTable(C.db.profile.modules.panel[self._id], self._config)
+    self._config = E:CopyTable(C.db.profile.panel[self._id], self._config)
 end
 
 local function element_UpdatePoints(self)
@@ -82,7 +82,7 @@ function PANEL:IsInit()
 end
 
 function PANEL:Init()
-    if not isInit and C.db.profile.modules.panel.enabled then
+    if not isInit and C.db.profile.panel.enabled then
         Panel = CreateFrame("Frame", "LumPanel", _G.UIParent)
 
         Panel.UpdateConfig = panel_UpdateConfig

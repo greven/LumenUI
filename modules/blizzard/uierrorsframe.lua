@@ -40,10 +40,10 @@ function BLIZZARD.HasErrorsFrame()
 end
 
 function BLIZZARD.SetUpErrorsFrame()
-    if not isInit and C.db.profile.modules.blizzard.errors_frame.enabled then
+    if not isInit and C.db.profile.blizzard.errors_frame.enabled then
         local frame = UIErrorsFrame
         local config = E:CopyTable(defaults, config)
-        config = E:CopyTable(C.db.profile.modules.blizzard.errors_frame, config)
+        config = E:CopyTable(C.db.profile.blizzard.errors_frame, config)
 
         updateFont(frame, config.text)
         frame:SetSize(config.width, config.height)

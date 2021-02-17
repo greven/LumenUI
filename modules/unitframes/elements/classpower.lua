@@ -143,7 +143,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.db.profile.unitframes.units[unit].class_power, self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -276,7 +276,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.db.profile.unitframes.units[unit].class_power, self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)
@@ -404,7 +404,7 @@ do
 
     local function element_UpdateConfig(self)
         local unit = self.__owner._layout or self.__owner._unit
-        self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].class_power, self._config, ignoredKeys)
+        self._config = E:CopyTable(C.db.profile.unitframes.units[unit].class_power, self._config, ignoredKeys)
     end
 
     local function element_UpdateSize(self)

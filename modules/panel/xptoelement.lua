@@ -123,7 +123,7 @@ function PANEL:HasThreatBar()
 end
 
 function PANEL:CreateThreatBar()
-  if not isInit and C.db.profile.modules.panel.threatbar.enabled then
+  if not isInit and C.db.profile.panel.threatbar.enabled then
     local element = CreateFrame("Frame", "LumThreatBar", UIParent)
     element._id = "threatbar"
     element.list = {}

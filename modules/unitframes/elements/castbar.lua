@@ -30,6 +30,7 @@ local function element_PostCastStart(self)
 
     if self.notInterruptible then
         self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.notinterruptible))
+        self:GetStatusBarTexture():SetDesaturated(true)
 
         if self.Icon and unit ~= "player" then
             self.Icon:SetDesaturated(true)
@@ -64,7 +65,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].castbar, self._config)
+    self._config = E:CopyTable(C.db.profile.unitframes.units[unit].castbar, self._config)
 end
 
 local function element_UpdateFonts(self)
@@ -228,7 +229,7 @@ local function frame_UpdateCastbar(self)
 end
 
 function UF:CreateCastbar(frame)
-    local config = C.db.profile.modules.unitframes.units[frame._layout or frame._unit].castbar
+    local config = C.db.profile.unitframes.units[frame._layout or frame._unit].castbar
 
     local holder = CreateFrame("Frame", "$parentCastbarHolder", frame)
     holder._width = 0

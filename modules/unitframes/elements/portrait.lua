@@ -23,7 +23,7 @@ end
 
 local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
-    self._config = E:CopyTable(C.db.profile.modules.unitframes.units[unit].portrait, self._config)
+    self._config = E:CopyTable(C.db.profile.unitframes.units[unit].portrait, self._config)
 end
 
 local function element_UpdateFonts(self)
@@ -84,7 +84,7 @@ local function element_PostUpdate(self)
 end
 
 local function frame_UpdatePortrait(self)
-    if C.db.profile.modules.unitframes.units[self._unit].portrait.style == "2D" then
+    if C.db.profile.unitframes.units[self._unit].portrait.style == "2D" then
         self.Portrait = self.Portrait2D
         self.Portrait3D:ClearAllPoints()
         self.Portrait3D:Hide()

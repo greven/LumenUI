@@ -15,7 +15,7 @@ function MISC:IsInit()
 end
 
 function MISC:Init()
-    if not isInit and C.db.profile.modules.misc.enabled then
+    if not isInit and C.db.profile.misc.enabled then
         self:SetUpBindings()
         self:SetUpMerchant()
 
