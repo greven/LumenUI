@@ -28,13 +28,10 @@ function BARS.CleanUp()
     StatusTrackingBarManager:Hide()
 
     MainMenuBar:EnableMouse(false)
-    MainMenuBar:SetScript(
-        "OnShow",
-        function()
-            UpdateMicroButtonsParent(MicroButtonAndBagsBar)
-            MoveMicroButtons("BOTTOMLEFT", MicroButtonAndBagsBar, "BOTTOMLEFT", 6, 3, false)
-        end
-    )
+    MainMenuBar:SetScript("OnShow", function()
+        UpdateMicroButtonsParent(MicroButtonAndBagsBar)
+        MoveMicroButtons("BOTTOMLEFT", MicroButtonAndBagsBar, "BOTTOMLEFT", 6, 3, false)
+    end)
 
     UpdateMicroButtonsParent(MicroButtonAndBagsBar)
 

@@ -146,10 +146,11 @@ function BARS.CreateThreatBar()
     bar:SetValue(0.5)
     bar:SetStatusBarColor(E:GetRGB(C.db.global.colors.threat[1]))
     bar.Bg:SetAlpha(0.3)
+
     bar.Overlay =
       E:SetBackdrop(
       texParent,
-      E.SCREEN_SCALE * 3,
+      0,
       0.98,
       nil,
       {
@@ -159,6 +160,7 @@ function BARS.CreateThreatBar()
       }
     )
     bar.Overlay:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
+
     element.Bar = bar
     E:SmoothBar(bar)
     bar:Hide()
@@ -177,7 +179,6 @@ function BARS.CreateThreatBar()
     element:RegisterEvent("UNIT_PET")
 
     element:Update()
-    element:UpdateVisibility()
 
     isInit = true
   end

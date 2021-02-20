@@ -100,7 +100,9 @@ end
 
 local function bar_UpdateCooldownConfig(self)
     if not self.cooldownConfig then
-        self.cooldownConfig = {text = {}}
+        self.cooldownConfig = {
+            text = {}
+        }
     end
 
     self.cooldownConfig.exp_threshold = self._config.cooldown.exp_threshold
@@ -218,9 +220,7 @@ function BARS:UpdateBlizzVehicle()
             if not vehicleController then
                 vehicleController = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
                 vehicleController:SetFrameRef("bar", OverrideActionBar)
-                vehicleController:SetAttribute(
-                    "_onstate-vehicle",
-                    [[
+                vehicleController:SetAttribute("_onstate-vehicle", [[
 					if newstate == "override" then
 						if (self:GetFrameRef("bar"):GetAttribute("actionpage") or 0) > 10 then
 							newstate = "vehicle"
@@ -240,8 +240,7 @@ function BARS:UpdateBlizzVehicle()
 					else
 						self:GetFrameRef("bar"):ClearBindings()
 					end
-				]]
-                )
+				]])
             end
 
             RegisterStateDriver(vehicleController, "vehicle", "[overridebar] override; [vehicleui] vehicle; novehicle")
@@ -288,16 +287,16 @@ function BARS.Init()
         BARS:CreateActionBars()
         BARS:CreateStanceBar()
         BARS:CreatePetActionBar()
+        -- BARS:CreatePetBattleBar()
         BARS:CreateExtraButton()
+        -- BARS:CreateZoneButton()
         BARS:CreateVehicleExitButton()
+        BARS:CreateMicroMenu()
         BARS:CreateXPBar()
         BARS:CreateThreatBar()
         BARS:ReassignBindings()
-        BARS:UpdateBlizzVehicle()
         BARS:CleanUp()
-        -- BARS:CreatePetBattleBar()
-        -- BARS:CreateZoneButton()
-        BARS:CreateMicroMenu()
+        BARS:UpdateBlizzVehicle()
 
         E:RegisterEvent("ACTIONBAR_HIDEGRID", resumeFading)
         E:RegisterEvent("ACTIONBAR_SHOWGRID", pauseFading)

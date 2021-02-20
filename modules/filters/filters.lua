@@ -109,20 +109,33 @@ local aura_filters = {
 }
 
 local class_buffs = {
-    ["DEATHKNIGHT"] = {state = true},
-    ["DEMONHUNTER"] = {state = true},
+    ["DEATHKNIGHT"] = {
+        state = true
+    },
+    ["DEMONHUNTER"] = {
+        state = true
+    },
     ["DRUID"] = {
         state = true
         -- [191034] = true -- Starfall
     },
-    ["HUNTER"] = {state = true},
-    ["MAGE"] = {state = true},
-    ["MONK"] = {state = true},
-    ["PALADIN"] = {state = true},
+    ["HUNTER"] = {
+        state = true
+    },
+    ["MAGE"] = {
+        state = true
+    },
+    ["MONK"] = {
+        state = true
+    },
+    ["PALADIN"] = {
+        state = true
+    },
     ["PRIEST"] = {
         state = true,
         [17] = true, -- Power Word: Shield
-        [194249] = true -- Voidform
+        [194249] = true, -- Voidform
+        [343144] = true -- Dissonant Echoes
     },
     ["ROGUE"] = {
         state = true,
@@ -147,9 +160,16 @@ local class_buffs = {
         -- [32645] = true, -- Envenom
         -- [121153] = true, -- Blindside
     },
-    ["SHAMAN"] = {state = true},
-    ["WARLOCK"] = {state = true},
-    ["WARRIOR"] = {state = true}
+    ["SHAMAN"] = {
+        state = true,
+        [77762] = true -- Lava Surge
+    },
+    ["WARLOCK"] = {
+        state = true
+    },
+    ["WARRIOR"] = {
+        state = true
+    }
 }
 
 local class_debuffs = {
@@ -160,7 +180,10 @@ local class_debuffs = {
         [194310] = true, -- Festering Wound
         [191587] = true -- Virulent Plague
     },
-    ["DEMONHUNTER"] = {state = true, onlyShowPlayer = true},
+    ["DEMONHUNTER"] = {
+        state = true,
+        onlyShowPlayer = true
+    },
     ["DRUID"] = {
         state = true,
         onlyShowPlayer = true,
@@ -186,7 +209,10 @@ local class_debuffs = {
         [122] = true, -- Frost Nova
         [228358] = true -- Winter's Chill
     },
-    ["MONK"] = {state = true, onlyShowPlayer = true},
+    ["MONK"] = {
+        state = true,
+        onlyShowPlayer = true
+    },
     ["PALADIN"] = {
         state = true,
         onlyShowPlayer = true,
@@ -242,7 +268,10 @@ local class_debuffs = {
         [30108] = true, -- Unstable Affliction
         [48181] = true -- Haunt
     },
-    ["WARRIOR"] = {state = true, onlyShowPlayer = true}
+    ["WARRIOR"] = {
+        state = true,
+        onlyShowPlayer = true
+    }
 }
 
 function FILTERS.CreateAuraFilters()

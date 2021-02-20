@@ -63,9 +63,21 @@ E.colors = {
 
 D.global = {
     fonts = {
-        bars = {font = M.fonts.normal, outline = true, shadow = false},
-        units = {font = M.fonts.condensed, outline = false, shadow = true},
-        cooldown = {font = M.fonts.normal, outline = true, shadow = false}
+        bars = {
+            font = M.fonts.normal,
+            outline = true,
+            shadow = false
+        },
+        units = {
+            font = M.fonts.condensed,
+            outline = false,
+            shadow = true
+        },
+        cooldown = {
+            font = M.fonts.normal,
+            outline = true,
+            shadow = false
+        }
     },
     backdrop = {
         texture = M.textures.flat,
@@ -104,10 +116,18 @@ D.global = {
         texture = M.textures.statusbar
     },
     aura_filters = {
-        ["Blacklist"] = {is_init = false},
-        ["M+ Affixes"] = {is_init = false},
-        ["Class Debuffs"] = {is_init = false},
-        ["Class Buffs"] = {is_init = false}
+        ["Blacklist"] = {
+            is_init = false
+        },
+        ["M+ Affixes"] = {
+            is_init = false
+        },
+        ["Class Debuffs"] = {
+            is_init = false
+        },
+        ["Class Buffs"] = {
+            is_init = false
+        }
     },
     colors = {
         text = rgb(250, 250, 250),
@@ -157,16 +177,9 @@ D.global = {
             [2] = rgb(253, 224, 71),
             [3] = rgb(22, 163, 74)
         },
-        smooth = {
-            185 / 255,
-            28 / 255,
-            28 / 255, -- rgb(185, 28, 28)
-            253 / 255,
-            224 / 255,
-            71 / 255, -- rgb(253, 224, 71)
-            22 / 255,
-            163 / 255,
-            74 / 255 -- rgb(22, 163, 74)
+        smooth = {185 / 255, 28 / 255, 28 / 255, -- rgb(185, 28, 28)
+        253 / 255, 224 / 255, 71 / 255, -- rgb(253, 224, 71)
+        22 / 255, 163 / 255, 74 / 255 -- rgb(22, 163, 74)
         },
         button = {
             normal = rgb(255, 255, 255),
@@ -215,6 +228,7 @@ D.global = {
             [6] = E.colors.green, -- Honored
             [7] = E.colors.green, -- Revered
             [8] = E.colors.green -- Exalted
+            
         },
         difficulty = {
             impossible = rgb(230, 48, 54),
@@ -254,7 +268,9 @@ D.global = {
             Disease = rgb(153, 102, 0),
             Poison = rgb(0, 153, 0)
         },
-        buff = {Enchant = rgb(123, 44, 181)},
+        buff = {
+            Enchant = rgb(123, 44, 181)
+        },
         power = {
             MANA = rgb(15, 135, 235),
             RAGE = rgb(240, 26, 48),
@@ -284,6 +300,7 @@ D.global = {
             [1] = E.colors.red, -- Blood
             [2] = E.colors.blue, -- Frost
             [3] = E.colors.green -- Unholy
+            
         }
     }
 }
@@ -322,15 +339,23 @@ D.profile = {
                 v_alignment = "TOP"
             },
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "BOTTOM"}
+                text = {
+                    enabled = true,
+                    size = 12,
+                    v_alignment = "BOTTOM"
+                }
             },
-            type = {size = 12, position = "TOPLEFT", debuff_type = false},
+            type = {
+                size = 12,
+                position = "TOPLEFT",
+                debuff_type = false
+            },
             point = {
                 p = "TOPRIGHT",
-                anchor = "UIParent",
-                ap = "TOPRIGHT",
+                anchor = "Minimap",
+                ap = "TOPLEFT",
                 x = -8,
-                y = -8
+                y = 0
             }
         },
         HARMFUL = {
@@ -352,15 +377,23 @@ D.profile = {
                 v_alignment = "TOP"
             },
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "BOTTOM"}
+                text = {
+                    enabled = true,
+                    size = 12,
+                    v_alignment = "BOTTOM"
+                }
             },
-            type = {size = 12, position = "TOPLEFT", debuff_type = false},
+            type = {
+                size = 12,
+                position = "TOPLEFT",
+                debuff_type = false
+            },
             point = {
-                p = "TOPRIGHT",
-                anchor = "UIParent",
-                ap = "TOPRIGHT",
+                p = "BOTTOMRIGHT",
+                anchor = "Minimap",
+                ap = "BOTTOMLEFT",
                 x = -8,
-                y = -114
+                y = 0
             }
         },
         TOTEM = {
@@ -371,7 +404,11 @@ D.profile = {
             y_growth = "DOWN",
             per_row = 4,
             cooldown = {
-                text = {enabled = true, size = 12, v_alignment = "BOTTOM"}
+                text = {
+                    enabled = true,
+                    size = 12,
+                    v_alignment = "BOTTOM"
+                }
             },
             point = {
                 p = "TOPRIGHT",
@@ -398,7 +435,11 @@ D.profile = {
             exp_threshold = 5,
             m_ss_threshold = 120 -- [91; 3599]
         },
-        desaturation = {unusable = true, mana = true, range = true},
+        desaturation = {
+            unusable = true,
+            mana = true,
+            range = true
+        },
         bar1 = {
             -- MainMenuBar
             flyout_dir = "UP",
@@ -420,11 +461,24 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 12},
-            macro = {enabled = false, size = 12},
-            count = {enabled = true, size = 12},
+            hotkey = {
+                enabled = true,
+                size = 12
+            },
+            macro = {
+                enabled = false,
+                size = 12
+            },
+            count = {
+                enabled = true,
+                size = 12
+            },
             cooldown = {
-                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 13,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "TOP",
@@ -455,11 +509,24 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 12},
-            macro = {enabled = false, size = 12},
-            count = {enabled = true, size = 12},
+            hotkey = {
+                enabled = true,
+                size = 12
+            },
+            macro = {
+                enabled = false,
+                size = 12
+            },
+            count = {
+                enabled = true,
+                size = 12
+            },
             cooldown = {
-                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 13,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "BOTTOM",
@@ -490,11 +557,24 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 12},
-            macro = {enabled = false, size = 12},
-            count = {enabled = true, size = 12},
+            hotkey = {
+                enabled = true,
+                size = 12
+            },
+            macro = {
+                enabled = false,
+                size = 12
+            },
+            count = {
+                enabled = true,
+                size = 12
+            },
             cooldown = {
-                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 13,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "BOTTOM",
@@ -525,11 +605,24 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 12},
-            macro = {enabled = false, size = 12},
-            count = {enabled = true, size = 12},
+            hotkey = {
+                enabled = true,
+                size = 12
+            },
+            macro = {
+                enabled = false,
+                size = 12
+            },
+            count = {
+                enabled = true,
+                size = 12
+            },
             cooldown = {
-                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 13,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "RIGHT",
@@ -560,11 +653,24 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 12},
-            macro = {enabled = false, size = 12},
-            count = {enabled = true, size = 12},
+            hotkey = {
+                enabled = true,
+                size = 12
+            },
+            macro = {
+                enabled = false,
+                size = 12
+            },
+            count = {
+                enabled = true,
+                size = 12
+            },
             cooldown = {
-                text = {enabled = true, size = 13, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 13,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "RIGHT",
@@ -595,9 +701,16 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 10},
+            hotkey = {
+                enabled = true,
+                size = 10
+            },
             cooldown = {
-                text = {enabled = true, size = 10, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 10,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "BOTTOM",
@@ -627,9 +740,16 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 10},
+            hotkey = {
+                enabled = true,
+                size = 10
+            },
             cooldown = {
-                text = {enabled = true, size = 10, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 10,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "BOTTOM",
@@ -657,7 +777,10 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 12},
+            hotkey = {
+                enabled = true,
+                size = 12
+            },
             point = {
                 p = "BOTTOM",
                 anchor = "UIParent",
@@ -680,9 +803,16 @@ D.profile = {
                 min_alpha = 0,
                 max_alpha = 1
             },
-            hotkey = {enabled = true, size = 14},
+            hotkey = {
+                enabled = true,
+                size = 14
+            },
             cooldown = {
-                text = {enabled = true, size = 14, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 14,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "BOTTOM",
@@ -707,7 +837,11 @@ D.profile = {
                 max_alpha = 1
             },
             cooldown = {
-                text = {enabled = true, size = 14, v_alignment = "MIDDLE"}
+                text = {
+                    enabled = true,
+                    size = 14,
+                    v_alignment = "MIDDLE"
+                }
             },
             point = {
                 p = "BOTTOM",
@@ -742,21 +876,22 @@ D.profile = {
         micromenu = {
             visible = true,
             fade = {
-                enabled = false,
-                out_delay = 0.75,
-                out_duration = 0.15,
+                enabled = true,
+                out_delay = 4,
+                out_duration = 0.2,
                 in_delay = 0,
                 in_duration = 0.15,
-                min_alpha = 0,
+                min_alpha = 0.1,
                 max_alpha = 1
             },
             bars = {
                 micromenu1 = {
                     enabled = true,
+                    -- visibility = "[mod:alt] show; hide",
                     num = 13,
                     per_row = 13,
-                    width = 18,
-                    height = 24,
+                    width = 22,
+                    height = 28,
                     spacing = 4,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
@@ -770,10 +905,11 @@ D.profile = {
                 },
                 micromenu2 = {
                     enabled = true,
+                    -- visibility = "[mod:alt] show; hide",
                     num = 13,
                     per_row = 13,
-                    width = 18,
-                    height = 24,
+                    width = 22,
+                    height = 28,
                     spacing = 4,
                     x_growth = "RIGHT",
                     y_growth = "DOWN"
@@ -784,14 +920,14 @@ D.profile = {
                     per_row = 4,
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
-                    size = 32,
+                    size = 30,
                     spacing = 4,
                     point = {
                         p = "BOTTOMRIGHT",
                         anchor = "UIParent",
                         ap = "BOTTOMRIGHT",
                         x = -4,
-                        y = 32
+                        y = 38
                     }
                 }
             },
@@ -807,17 +943,54 @@ D.profile = {
                     tooltip = true,
                     currency = {}
                 },
-                spellbook = {enabled = true, parent = "micromenu1"},
-                talent = {enabled = true, parent = "micromenu1"},
-                achievement = {enabled = true, parent = "micromenu1"},
-                quest = {enabled = true, parent = "micromenu1", tooltip = true},
-                guild = {enabled = true, parent = "micromenu1"},
-                lfd = {enabled = true, parent = "micromenu1", tooltip = true},
-                collection = {enabled = true, parent = "micromenu1"},
-                ej = {enabled = true, parent = "micromenu1", tooltip = true},
-                store = {enabled = false, parent = "micromenu1"},
-                main = {enabled = true, parent = "micromenu1", tooltip = true},
-                help = {enabled = false, parent = "micromenu1"}
+                spellbook = {
+                    enabled = true,
+                    parent = "micromenu1"
+                },
+                talent = {
+                    enabled = true,
+                    parent = "micromenu1"
+                },
+                achievement = {
+                    enabled = true,
+                    parent = "micromenu1"
+                },
+                quest = {
+                    enabled = true,
+                    parent = "micromenu1",
+                    tooltip = true
+                },
+                guild = {
+                    enabled = true,
+                    parent = "micromenu1"
+                },
+                lfd = {
+                    enabled = true,
+                    parent = "micromenu1",
+                    tooltip = true
+                },
+                collection = {
+                    enabled = true,
+                    parent = "micromenu1"
+                },
+                ej = {
+                    enabled = true,
+                    parent = "micromenu1",
+                    tooltip = true
+                },
+                store = {
+                    enabled = false,
+                    parent = "micromenu1"
+                },
+                main = {
+                    enabled = true,
+                    parent = "micromenu1",
+                    tooltip = true
+                },
+                help = {
+                    enabled = false,
+                    parent = "micromenu1"
+                }
             }
         },
         xpbar = {
@@ -853,8 +1026,8 @@ D.profile = {
         },
         threatbar = {
             enabled = true,
-            width = 427,
-            height = 18,
+            width = 426,
+            height = 20,
             point = {
                 p = "BOTTOM",
                 anchor = "UIParent",
@@ -866,8 +1039,15 @@ D.profile = {
     },
     blizzard = {
         enabled = true,
-        character_frame = {enabled = true, ilvl = true, enhancements = true},
-        durability = {enabled = true, point = {"TOPRIGHT", -4, -196}},
+        character_frame = {
+            enabled = true,
+            ilvl = true,
+            enhancements = true
+        },
+        durability = {
+            enabled = true,
+            point = {"TOPRIGHT", -4, -196}
+        },
         errors_frame = {
             enabled = true,
             width = 512,
@@ -878,16 +1058,29 @@ D.profile = {
                 outline = false,
                 shadow = true
             },
-            point = {p = "TOP", x = 0, y = -250}
+            point = {
+                p = "TOP",
+                x = 0,
+                y = -250
+            }
         },
         objective_tracker = {
             enabled = true,
             height = 600,
-            point = {"TOPRIGHT", -192, -192}
+            point = {"TOPRIGHT", "Minimap", "BOTTOMRIGHT", -120, -48}
         },
-        player_alt_power_bar = {enabled = true},
-        talking_head = {enabled = true, hide = false},
-        vehicle = {enabled = true, size = 100, point = {"TOPLEFT", 4, -196}}
+        player_alt_power_bar = {
+            enabled = true
+        },
+        talking_head = {
+            enabled = true,
+            hide = false
+        },
+        vehicle = {
+            enabled = true,
+            size = 100,
+            point = {"TOPRIGHT", "Minimap", "BOTTOMRIGHT", 0, -32}
+        }
     },
     movers = {},
     minimap = {
@@ -911,25 +1104,37 @@ D.profile = {
             GarrisonLandingPageMinimapButton = 210,
             QueueStatusMinimapButton = 320
         },
-        color = {border = false, zone_text = true},
-        point = {"BOTTOMRIGHT", -20, 100}
+        color = {
+            border = false,
+            zone_text = true
+        },
+        point = {"TOPRIGHT", -18, -7}
     },
     misc = {
         enabled = true,
-        bindings = {enabled = true},
+        bindings = {
+            enabled = true
+        },
         merchant = {
             enabled = true,
-            auto_repair = {enabled = true, use_guild_funds = true},
-            vendor_grays = {enabled = true}
+            auto_repair = {
+                enabled = true,
+                use_guild_funds = true
+            },
+            vendor_grays = {
+                enabled = true
+            }
         }
     },
     panel = {
         enabled = true,
         visible = true,
-        width = 427,
-        height = 20,
+        width = 426,
+        height = 22,
         visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
-        text = {size = 10},
+        text = {
+            size = 10
+        },
         point = {
             p = "BOTTOM",
             anchor = "UIParent",
@@ -942,11 +1147,18 @@ D.profile = {
         enabled = true,
         scale = 1,
         alpha = 0.9,
-        border = {size = 10, color_quality = true, color_class = false},
+        border = {
+            size = 10,
+            color_quality = true,
+            color_class = false
+        },
         health = {
             height = 5,
             color_class = true,
-            text = {show = false, size = 12}
+            text = {
+                show = false,
+                size = 12
+            }
         },
         id = true,
         spell_id = "SHOW", -- SHOW, HIDE, ON_SHIFT_DOWN
@@ -960,13 +1172,16 @@ D.profile = {
             p = "BOTTOMRIGHT",
             anchor = "UIParent",
             ap = "BOTTOMRIGHT",
-            x = -76,
-            y = 126
+            x = -64,
+            y = 108
         }
     },
     unitframes = {
         enabled = true,
-        shadows = {enabled = true, alpha = D.global.shadows.alpha},
+        shadows = {
+            enabled = true,
+            alpha = D.global.shadows.alpha
+        },
         cooldown = {
             exp_threshold = 5, -- [1; 10]
             m_ss_threshold = 600 -- [91; 3599]
@@ -1086,14 +1301,23 @@ D.profile = {
                             y = 0
                         }
                     },
-                    prediction = {enabled = true}
+                    prediction = {
+                        enabled = true
+                    }
                 },
-                class_power = {enabled = false, prediction = {enabled = false}},
+                class_power = {
+                    enabled = false,
+                    prediction = {
+                        enabled = false
+                    }
+                },
                 additional_power = {
                     enabled = true,
                     width = playerWidth,
                     height = 3,
-                    prediction = {enabled = true},
+                    prediction = {
+                        enabled = true
+                    },
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "",
@@ -1115,7 +1339,11 @@ D.profile = {
                         position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 6
                     },
-                    text = {size = 15, outline = true, shadow = false},
+                    text = {
+                        size = 15,
+                        outline = true,
+                        shadow = false
+                    },
                     point = {
                         p = "BOTTOM",
                         anchor = "UIParent",
@@ -1206,7 +1434,10 @@ D.profile = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
-                    animate = {buff = false, debuff = false},
+                    animate = {
+                        buff = false,
+                        debuff = false
+                    },
                     count = {
                         size = 10,
                         outline = true,
@@ -1227,7 +1458,10 @@ D.profile = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
+                        custom = {
+                            ["Blacklist"] = true,
+                            ["M+ Affixes"] = true
+                        },
                         friendly = {
                             buff = {
                                 boss = true,
@@ -1285,7 +1519,9 @@ D.profile = {
                         y = -12
                     }
                 },
-                threat = {enabled = true}
+                threat = {
+                    enabled = true
+                }
             },
             target = {
                 enabled = true,
@@ -1413,7 +1649,11 @@ D.profile = {
                         position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 5
                     },
-                    text = {size = 13, outline = true, shadow = false},
+                    text = {
+                        size = 13,
+                        outline = true,
+                        shadow = false
+                    },
                     point = {
                         p = "TOPLEFT",
                         anchor = "Health",
@@ -1503,7 +1743,10 @@ D.profile = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
-                    animate = {buff = false, debuff = false},
+                    animate = {
+                        buff = false,
+                        debuff = false
+                    },
                     count = {
                         size = 10,
                         outline = true,
@@ -1524,7 +1767,10 @@ D.profile = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
+                        custom = {
+                            ["Blacklist"] = true,
+                            ["M+ Affixes"] = true
+                        },
                         friendly = {
                             buff = {
                                 boss = true,
@@ -1593,7 +1839,10 @@ D.profile = {
                         y = 0
                     }
                 },
-                threat = {enabled = true, feedback_unit = "player"}
+                threat = {
+                    enabled = true,
+                    feedback_unit = "player"
+                }
             },
             targettarget = {
                 enabled = true,
@@ -1717,7 +1966,10 @@ D.profile = {
                         y = 0
                     }
                 },
-                threat = {enabled = true, feedback_unit = "player"}
+                threat = {
+                    enabled = true,
+                    feedback_unit = "player"
+                }
             },
             focus = {
                 enabled = true,
@@ -1833,7 +2085,9 @@ D.profile = {
                             y = 0
                         }
                     },
-                    prediction = {enabled = true}
+                    prediction = {
+                        enabled = true
+                    }
                 },
                 castbar = {
                     enabled = true,
@@ -1848,7 +2102,11 @@ D.profile = {
                         position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {size = 12, outline = true, shadow = false},
+                    text = {
+                        size = 12,
+                        outline = true,
+                        shadow = false
+                    },
                     point = {
                         p = "BOTTOMRIGHT",
                         anchor = "Health",
@@ -1882,7 +2140,10 @@ D.profile = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
-                    animate = {buff = false, debuff = false},
+                    animate = {
+                        buff = false,
+                        debuff = false
+                    },
                     count = {
                         size = 10,
                         outline = true,
@@ -1903,7 +2164,10 @@ D.profile = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
+                        custom = {
+                            ["Blacklist"] = true,
+                            ["M+ Affixes"] = true
+                        },
                         friendly = {
                             buff = {
                                 boss = false,
@@ -1972,7 +2236,10 @@ D.profile = {
                         y = 20
                     }
                 },
-                threat = {enabled = true, feedback_unit = "player"}
+                threat = {
+                    enabled = true,
+                    feedback_unit = "player"
+                }
             },
             focustarget = {
                 enabled = false,
@@ -2082,7 +2349,11 @@ D.profile = {
                         position = "NONE", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {size = 13, outline = true, shadow = false},
+                    text = {
+                        size = 13,
+                        outline = true,
+                        shadow = false
+                    },
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "Health",
@@ -2118,7 +2389,10 @@ D.profile = {
                         y = 1
                     }
                 },
-                threat = {enabled = true, feedback_unit = "player"}
+                threat = {
+                    enabled = true,
+                    feedback_unit = "player"
+                }
             },
             pet = {
                 enabled = true,
@@ -2247,7 +2521,11 @@ D.profile = {
                         position = "NONE", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {size = 12, outline = true, shadow = false},
+                    text = {
+                        size = 12,
+                        outline = true,
+                        shadow = false
+                    },
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "",
@@ -2281,7 +2559,10 @@ D.profile = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
-                    animate = {buff = false, debuff = false},
+                    animate = {
+                        buff = false,
+                        debuff = false
+                    },
                     count = {
                         size = 10,
                         outline = true,
@@ -2302,7 +2583,10 @@ D.profile = {
                         debuff_type = false
                     },
                     filter = {
-                        custom = {["Blacklist"] = true, ["M+ Affixes"] = true},
+                        custom = {
+                            ["Blacklist"] = true,
+                            ["M+ Affixes"] = true
+                        },
                         friendly = {
                             buff = {
                                 boss = true,
@@ -2477,7 +2761,9 @@ D.profile = {
                             y = 0
                         }
                     },
-                    prediction = {enabled = true}
+                    prediction = {
+                        enabled = true
+                    }
                 },
                 class_power = {
                     enabled = true,
@@ -2485,8 +2771,13 @@ D.profile = {
                     height = 3,
                     change_threshold = 0.01,
                     orientation = "HORIZONTAL",
-                    prediction = {enabled = true},
-                    runes = {color_by_spec = true, sort_order = "none"},
+                    prediction = {
+                        enabled = true
+                    },
+                    runes = {
+                        color_by_spec = true,
+                        sort_order = "none"
+                    },
                     point = {
                         p = "BOTTOM",
                         anchor = "",
@@ -2499,7 +2790,9 @@ D.profile = {
                     enabled = false,
                     width = playerPlateWidth,
                     height = 1.5,
-                    prediction = {enabled = false},
+                    prediction = {
+                        enabled = false
+                    },
                     point = {
                         p = "TOPLEFT",
                         anchor = "Health",
@@ -2518,7 +2811,13 @@ D.profile = {
                     enable_mouse = true,
                     spark = true,
                     sort = false, -- Sort by remaining time
-                    name = {text = {size = 13, outline = true, shadow = false}},
+                    name = {
+                        text = {
+                            size = 13,
+                            outline = true,
+                            shadow = false
+                        }
+                    },
                     time = {
                         exp_threshold = 5, -- [1; 10]
                         m_ss_threshold = 600, -- [91; 3599]
@@ -2530,7 +2829,9 @@ D.profile = {
                         }
                     },
                     filter = {
-                        custom = {["Class Buffs"] = true},
+                        custom = {
+                            ["Class Buffs"] = true
+                        },
                         friendly = {
                             buff = {
                                 boss = false,
@@ -2539,7 +2840,7 @@ D.profile = {
                                 mount = false,
                                 selfcast = false,
                                 selfcast_permanent = false,
-                                player = true,
+                                player = false,
                                 player_permanent = false,
                                 misc = false
                             },
@@ -2704,7 +3005,9 @@ D.profile = {
                             y = 0
                         }
                     },
-                    prediction = {enabled = true}
+                    prediction = {
+                        enabled = true
+                    }
                 },
                 castbar = {
                     enabled = true,
@@ -2719,7 +3022,11 @@ D.profile = {
                         position = "RIGHT", -- "LEFT", "RIGHT" or "NONE"
                         gap = 4
                     },
-                    text = {size = 12, outline = true, shadow = false},
+                    text = {
+                        size = 12,
+                        outline = true,
+                        shadow = false
+                    },
                     point = {
                         p = "BOTTOMLEFT",
                         anchor = "Health",
@@ -2753,7 +3060,10 @@ D.profile = {
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
-                    animate = {buff = false, debuff = true},
+                    animate = {
+                        buff = false,
+                        debuff = true
+                    },
                     sort = false, -- Sort by remaining time
                     count = {
                         size = 10,
@@ -2846,10 +3156,10 @@ D.profile = {
             },
             party = {
                 enabled = true,
-                width = 110,
-                height = 25,
-                x_offset = 5,
-                y_offset = 5,
+                width = 82,
+                height = 24,
+                x_offset = 6,
+                y_offset = 6,
                 orientation = "HORIZONTAL", -- HORIZONTAL or VERTICAL
                 show_solo = false,
                 point = {
@@ -2940,7 +3250,7 @@ D.profile = {
                 power = {
                     enabled = true,
                     height = 2,
-                    gap = 1,
+                    gap = 2,
                     color = {
                         power = false,
                         tapping = false,
@@ -2990,7 +3300,9 @@ D.profile = {
                         y = 24
                     }
                 },
-                threat = {enabled = true}
+                threat = {
+                    enabled = true
+                }
             }
         }
     }

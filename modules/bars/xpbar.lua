@@ -102,7 +102,7 @@ local function bar_UpdateSize(self, width, height)
     -- if not BARS:IsRestricted() then E.Movers:Get(self):UpdateSize(width, height) end
 
     self.Overlay:ClearAllPoints()
-    self.Overlay:SetPoint("TOPLEFT", self, E.SCREEN_SCALE * 3, -E.SCREEN_SCALE * 6)
+    self.Overlay:SetPoint("TOPLEFT", self, E.SCREEN_SCALE * 3, -E.SCREEN_SCALE * 3)
     self.Overlay:SetPoint("BOTTOMRIGHT", self, -E.SCREEN_SCALE * 3, -4)
 
     self._total = nil
@@ -482,7 +482,7 @@ function BARS.CreateXPBar()
         bar.Overlay =
             E:SetBackdrop(
             texParent,
-            E.SCREEN_SCALE * 3,
+            0,
             0.98,
             nil,
             {
@@ -498,7 +498,6 @@ function BARS.CreateXPBar()
             segment:SetFrameLevel(bar:GetFrameLevel() + 1)
             segment:SetStatusBarTexture(M.textures.flat)
             segment:GetStatusBarTexture():SetVertTile(true)
-            segment:SetHitRectInsets(0, 0, E.SCREEN_SCALE * 3, E.SCREEN_SCALE * 3)
             segment:SetClipsChildren(true)
             segment:SetScript("OnEnter", segment_OnEnter)
             segment:SetScript("OnLeave", segment_OnLeave)
@@ -546,11 +545,9 @@ function BARS.CreateXPBar()
 
             local bg = bar:CreateTexture(nil, "ARTWORK")
             bg:SetTexture(M.textures.flat)
-            bg:SetVertexColor(C.db.global.colors.dark_gray)
-            bg:SetAllPoints()
+            bg:SetVertexColor(E:GetRGB(C.db.global.colors.dark_gray))
             bg:SetAlpha(0.3)
-            -- E:SetBackdrop(bg, E.SCREEN_SCALE * 3, 0.5)
-            -- E:CreateShadow(bg, E.SCREEN_SCALE * 3)
+            bg:SetAllPoints()
             bar.bg = bg
 
             segment.IsTextLocked = segment_IsTextLocked

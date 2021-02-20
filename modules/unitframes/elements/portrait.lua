@@ -98,6 +98,7 @@ local function frame_UpdatePortrait(self)
     self.Portrait3D.ForceUpdate = self.Portrait2D.ForceUpdate
 
     local element = self.Portrait
+    E:SetBackdrop(element, 0, 1)
     element:UpdateConfig()
     element:Hide()
 

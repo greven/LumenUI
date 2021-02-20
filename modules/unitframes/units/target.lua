@@ -70,8 +70,10 @@ do
         self:CreateAuras(frame, "target")
         self:CreateUnitIndicator(frame, portraitParent)
         self:CreateRaidTargetIndicator(frame)
-        self:CreateThreatIndicator(frame)
         self:CreatePvPIndicator(frame, portraitParent)
+
+        local threatBorder = self:CreateThreatIndicator(frame, portraitParent)
+        threatBorder:SetOffset(-5)
 
         -- Level and Race
         local info = textParent:CreateFontString(nil, "ARTWORK")

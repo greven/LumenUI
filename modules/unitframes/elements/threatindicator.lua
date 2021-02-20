@@ -24,8 +24,11 @@ local function element_PostUpdate(self, _, status)
     end
 
     if status and status > 0 then
-        self.glow:SetVertexColor(self:GetVertexColor())
-        self.glow:Show()
+        -- self.glow:Show()
+        -- print(status)
+        self:Show()
+        -- self.glow:SetVertexColor(self:GetVertexColor())
+        self.glow:SetVertexColor(E:GetRGB(C.db.global.colors.red))
     else
         self.glow:Hide()
     end
@@ -55,9 +58,17 @@ local function frame_UpdateThreatIndicator(self, event)
 end
 
 function UF:CreateThreatIndicator(frame, parent)
-    local element = E:CreateBorder(parent or frame)
+    local holder = CreateFrame("Frame", nil, (parent or frame))
+    holder:SetFrameLevel((parent or frame):GetFrameLevel() + 10)
+    holder:SetAllPoints()
 
-    local glow = E:CreateGlow(parent or frame, 8)
+    local glowParent = CreateFrame("Frame", nil, holder)
+    glowParent:SetFrameLevel(frame:GetFrameLevel() - 1)
+    glowParent:SetAllPoints()
+
+    local element = E:CreateBorder(holder, "OVERLAY")
+
+    local glow = E:CreateGlow(glowParent, 10)
     element.glow = glow
 
     element.PostUpdate = element_PostUpdate

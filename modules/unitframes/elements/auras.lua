@@ -27,22 +27,8 @@ for _, id in next, C_MountJournal.GetMountIDs() do
 end
 
 UF.filterFunctions = {
-    default = function(
-        self,
-        unit,
-        aura,
-        name,
-        _,
-        count,
-        debuffType,
-        duration,
-        expiration,
-        caster,
-        isStealable,
-        _,
-        spellID,
-        _,
-        isBossAura)
+    default = function(self, unit, aura, name, _, count, debuffType, duration, expiration, caster, isStealable, _,
+        spellID, _, isBossAura)
         local config = self._config and self._config.filter or nil
         if not config then
             return
@@ -56,8 +42,8 @@ UF.filterFunctions = {
         aura.duration = duration
         aura.noTime = duration == 0 and expiration == 0
         aura.isStealable = isStealable
-        aura.canDispell =
-            (not aura.isDebuff and isStealable) or (aura.isDebuff and debuffType and E:IsDispellable(debuffType))
+        aura.canDispell = (not aura.isDebuff and isStealable) or
+                              (aura.isDebuff and debuffType and E:IsDispellable(debuffType))
 
         -- black and whitelists
         for filter, enabled in next, config.custom do
@@ -147,22 +133,8 @@ UF.filterFunctions = {
 
         return config.misc
     end,
-    boss = function(
-        self,
-        unit,
-        aura,
-        name,
-        _,
-        count,
-        debuffType,
-        duration,
-        expiration,
-        caster,
-        isStealable,
-        _,
-        spellID,
-        _,
-        isBossAura)
+    boss = function(self, unit, aura, name, _, count, debuffType, duration, expiration, caster, isStealable, _, spellID,
+        _, isBossAura)
         local config = self._config and self._config.filter or nil
         if not config then
             return
@@ -176,8 +148,8 @@ UF.filterFunctions = {
         aura.duration = duration
         aura.noTime = duration == 0 and expiration == 0
         aura.isStealable = isStealable
-        aura.canDispell =
-            (not aura.isDebuff and isStealable) or (aura.isDebuff and debuffType and E:IsDispellable(debuffType))
+        aura.canDispell = (not aura.isDebuff and isStealable) or
+                              (aura.isDebuff and debuffType and E:IsDispellable(debuffType))
 
         -- black and whitelists
         for filter, enabled in next, config.custom do
@@ -269,6 +241,7 @@ local function element_SortAuras(self)
     if self._config and self._config.sort then
         t_sort(self, UF.SortAuras)
         return 1, #self -- Prevent things from going crazy!
+        
     end
 end
 
@@ -430,12 +403,9 @@ local function element_UpdateConfig(self)
     local unit = self.__owner._layout or self.__owner._unit
     self._config = E:CopyTable(C.db.profile.unitframes.units[unit].auras, self._config)
 
-    local size =
-        self._config.size_override ~= 0 and self._config.size_override or
-        E:Round(
-            (C.db.profile.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) + 2) /
-                self._config.per_row
-        )
+    local size = self._config.size_override ~= 0 and self._config.size_override or
+                     E:Round((C.db.profile.unitframes.units[unit].width - (self.spacing * (self._config.per_row - 1)) +
+                                 2) / self._config.per_row)
     self._config.size = m_min(m_max(size, 20), 64)
 end
 
@@ -465,10 +435,8 @@ local function element_UpdateSize(self)
     self.size = config.size
     self.numTotal = config.per_row * config.rows
 
-    self:SetSize(
-        config.size * config.per_row + self.spacing * (config.per_row - 1),
-        config.size * config.rows + self.spacing * (config.rows - 1)
-    )
+    self:SetSize(config.size * config.per_row + self.spacing * (config.per_row - 1),
+        config.size * config.rows + self.spacing * (config.rows - 1))
 end
 
 local function element_UpdatePoints(self)
@@ -485,7 +453,9 @@ end
 
 local function element_UpdateCooldownConfig(self)
     if not self.cooldownConfig then
-        self.cooldownConfig = {text = {}}
+        self.cooldownConfig = {
+            text = {}
+        }
     end
 
     self.cooldownConfig.exp_threshold = C.db.profile.unitframes.cooldown.exp_threshold

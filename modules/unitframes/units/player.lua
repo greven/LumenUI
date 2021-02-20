@@ -33,6 +33,7 @@ do
             self:UpdatePortrait()
             self:UpdateAuras()
             self:UpdateUnitIndicator()
+            self:UpdateThreatIndicator()
             self:UpdatePvPIndicator()
         else
             if self:IsEnabled() then
@@ -72,6 +73,9 @@ do
         self:CreatePortrait(frame, portraitParent)
         self:CreateAuras(frame, "player")
         self:CreateUnitIndicator(frame, portraitParent)
+
+        local threatBorder = self:CreateThreatIndicator(frame, portraitParent)
+        threatBorder:SetOffset(-5)
 
         -- Level and Spec
         local info = textParent:CreateFontString(nil, "ARTWORK")
@@ -123,7 +127,6 @@ do
             self:UpdatePowerPrediction()
             self:UpdateClassPower()
             self:UpdateAuraBars()
-            self:UpdateThreatIndicator()
 
             if self.Runes then
                 self:UpdateRunes()
@@ -163,7 +166,6 @@ do
         self:CreateClassPower(frame)
 
         self:CreateAuraBars(frame)
-        self:CreateThreatIndicator(frame)
 
         -- TODO: Attach to Blizzard's Personal Resource Display
         -- Attach PlayerPlate to Blizzard's Personal Resource Display

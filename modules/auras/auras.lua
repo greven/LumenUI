@@ -353,7 +353,7 @@ local function createHeader(filter)
             totem.Icon = E:SetIcon(icon)
 
             border = E:CreateBorder(totem)
-            border:SetTexture("Interface\\AddOns\\ls_UI\\assets\\border-thin")
+            border:SetTexture(C.db.global.border.texture)
             border:SetSize(16)
             border:SetOffset(-4)
             totem.Border = border

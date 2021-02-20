@@ -11,7 +11,8 @@ E.DEVS = {
   ["Kreoss - Quel'Thalas"] = true,
   ["Lumen - Quel'Thalas"] = true,
   ["Elun - Quel'Thalas"] = true,
-  ["Lua - Quel'Thalas"] = true
+  ["Lua - Quel'Thalas"] = true,
+  ["Luz - Quel'Thalas"] = true
 }
 
 local function isDeveloper()

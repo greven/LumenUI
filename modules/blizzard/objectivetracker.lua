@@ -35,16 +35,13 @@ function BLIZZARD.SetUpObjectiveTracker()
         ObjectiveTrackerFrame:SetParent(holder)
         ObjectiveTrackerFrame:ClearAllPoints()
         ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 47, 0)
-        ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:HookScript(
-            "OnClick",
-            function()
-                if ObjectiveTrackerFrame.collapsed then
-                    ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 26, 0)
-                else
-                    ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 47, 0)
-                end
+        ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:HookScript("OnClick", function()
+            if ObjectiveTrackerFrame.collapsed then
+                ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 26, 0)
+            else
+                ObjectiveTrackerFrame:SetPoint("TOPRIGHT", holder, "TOPRIGHT", 47, 0)
             end
-        )
+        end)
 
         isInit = true
     end
