@@ -3155,7 +3155,7 @@ D.profile = {
                 }
             },
             party = {
-                enabled = disable,
+                enabled = true,
                 width = 82,
                 height = 24,
                 x_offset = 6,

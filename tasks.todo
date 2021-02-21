@@ -33,6 +33,9 @@ Group Frames:
   ☐ Add Corner Indicators (icons, or colored triangles?)
   ☐ Add summoning indicator
 
+Party Frames:
+  ☐ Only the first player updates! :o @bug
+
 AuraBars:
   ☐ Add option to color by debuff type, or class or just remaining time. @low
 
@@ -52,6 +55,7 @@ Map:
 
 Actionbars:
   ☐ Make the glow for when spell can be cast (available resources) different from the proc glow @low
+  ☐ Make Blizzard quick keybinding work with the bars!
   ☐ Extra Button: Not resizing... @bug
   ☐ Create PetAction Bar
   ☐ Create PetBattle Bar
