@@ -253,8 +253,8 @@ do
         element:SetPoint("TOPLEFT", frame)
         element:SetPoint("TOPRIGHT", frame)
         element:SetStatusBarTexture(textureOverride or C.db.global.statusbar.texture)
-        element:GetStatusBarTexture():SetHorizTile(true)
-        element:GetStatusBarTexture():SetVertTile(true)
+        element:GetStatusBarTexture():SetHorizTile(config.reverse)
+        element:GetStatusBarTexture():SetVertTile(config.reverse)
         element:SetStatusBarColor(E:GetRGB(C.db.global.statusbar.color))
         E:SmoothBar(element)
 

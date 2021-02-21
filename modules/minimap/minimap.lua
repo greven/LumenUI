@@ -202,7 +202,6 @@ local function handleButton(button, isRecursive)
             return button
         end
 
-        -- local t = button == GameTimeFrame and "BIG" or "SMALL"
         local offset = 8
 
         button:SetSize(36, 36)
@@ -260,10 +259,7 @@ local function handleButton(button, isRecursive)
             border = button:CreateTexture()
         end
 
-        border:SetTexture(M.textures.border)
-        border:SetTexCoord(90 / 256, 162 / 256, 1 / 256, 73 / 256)
-        border:SetDrawLayer("ARTWORK", 1)
-        border:SetAllPoints(button)
+        border:SetTexture(nil)
         button.Border = border
 
         if not bg then
@@ -271,11 +267,16 @@ local function handleButton(button, isRecursive)
         end
 
         bg:SetAlpha(1)
-        bg:SetColorTexture(0, 0, 0, 0.6)
+        bg:SetColorTexture(0, 0, 0, 0.8)
         bg:SetDrawLayer("BACKGROUND", 0)
         bg:SetAllPoints()
         bg:AddMaskTexture(mask)
         button.Background = bg
+
+        if button == MiniMapTrackingButton then
+            button.HighlightTexture:ClearAllPoints()
+            bg:SetAlpha(0)
+        end
 
         return button
     end
@@ -469,12 +470,15 @@ end
 
 local function updatePosition(button, degrees)
     local angle = m_rad(degrees)
-    local w = Minimap:GetWidth() / 2 + 5
-    local h = Minimap:GetHeight() / 2 + 5
+    local scale = button:GetScale()
+    local w = (Minimap:GetWidth() / 2) * (1 / scale)
+    local h = (Minimap:GetHeight() / 2)* (1 / scale)
 
     if isSquare then
-        button:SetPoint("CENTER", Minimap, "CENTER", m_max(-w, m_min(m_cos(angle) * (1.4142135623731 * w - 10), w)),
-            m_max(-h, m_min(m_sin(angle) * (1.4142135623731 * h - 10), h)))
+        button:SetPoint("CENTER", Minimap, "CENTER",
+            m_max(-w, m_min(m_cos(angle) * (1.4142135623731 * w), w)),
+            m_max(-h, m_min(m_sin(angle) * (1.4142135623731 * h), h))
+        )
     else
         button:SetPoint("CENTER", Minimap, "CENTER", m_cos(angle) * w, m_sin(angle) * h)
     end
@@ -531,12 +535,12 @@ local function minimap_UpdateButtons(self)
     local config = self._config
 
     if config.collect.enabled then
-        MinimapButtonCollection:Show()
-        updatePosition(MinimapButtonCollection, config.buttons["MinimapButtonCollection"])
+        LumMinimapButtonCollection:Show()
+        updatePosition(LumMinimapButtonCollection, config.buttons["MinimapButtonCollection"])
     else
-        MinimapButtonCollection.isShown = false
-        MinimapButtonCollection:Hide()
-        MinimapButtonCollection.Shadow:SetScale(0.001)
+        LumMinimapButtonCollection.isShown = false
+        LumMinimapButtonCollection:Hide()
+        LumMinimapButtonCollection.Shadow:SetScale(0.001)
     end
 
     if config.collect.enabled and config.collect.calendar then
@@ -655,7 +659,340 @@ function MINIMAP:Init()
             textureParent:SetPoint("TOPLEFT", 0, 0)
         end
 
-        -- Hide Stuff
+        -- .Collection
+        do
+            local button = CreateFrame("Button", "LumMinimapButtonCollection", Minimap)
+            button:SetFrameLevel(level + 3)
+            button:RegisterForDrag("LeftButton")
+            button:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+            button:SetScript("OnDragStart", button_OnDragStart)
+            button:SetScript("OnDragStop", button_OnDragStop)
+            Minimap.Collection = button
+
+            button:SetScript("OnEnter", function(self)
+                if C.db.profile.minimap.collect.tooltip then
+                    local p, rP, x, y = getTooltipPoint(self)
+
+                    GameTooltip:SetOwner(self, "ANCHOR_NONE")
+                    GameTooltip:SetPoint(p, self, rP, x, y)
+                    GameTooltip:AddLine(L["MINIMAP_BUTTONS"], 1, 1, 1)
+                    GameTooltip:AddLine(L["MINIMAP_BUTTONS_TOOLTIP"])
+                    GameTooltip:Show()
+                end
+            end)
+
+            button:SetScript("OnLeave", function()
+                GameTooltip:Hide()
+            end)
+
+            local border = button:CreateTexture(nil, "OVERLAY")
+            border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+
+            local background = button:CreateTexture(nil, "BACKGROUND")
+            background:SetTexture("Interface\\Minimap\\UI-Minimap-Background")
+
+            local icon = button:CreateTexture(nil, "ARTWORK")
+            icon:SetTexture("Interface\\LFGFRAME\\WaitAnim")
+            icon:SetTexCoord(64 / 128, 128 / 128, 64 / 128, 128 / 128)
+            button.Icon = icon
+
+            handleButton(button)
+
+            local shadow = button:CreateTexture(nil, "BACKGROUND")
+            shadow:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
+            shadow:SetVertexColor(0, 0, 0)
+            shadow:SetPoint("CENTER")
+            shadow:SetAlpha(0.6)
+            shadow:SetScale(0.001)
+            button.Shadow = shadow
+
+            local agIn = button:CreateAnimationGroup()
+            button.AGIn = agIn
+
+            agIn:SetScript("OnPlay", function()
+                shadow:SetScale(1)
+
+                for i = 1, #consolidatedButtons do
+                    consolidatedButtons[i]:SetAlpha(0)
+                    consolidatedButtons[i]:Show_()
+                end
+            end)
+
+            agIn:SetScript("OnStop", function()
+                shadow:SetScale(1)
+
+                for i = 1, #consolidatedButtons do
+                    consolidatedButtons[i]:SetAlpha(1)
+                end
+            end)
+
+            agIn:SetScript("OnFinished", function()
+                shadow:SetScale(1)
+
+                for i = 1, #consolidatedButtons do
+                    consolidatedButtons[i]:SetAlpha(1)
+                end
+            end)
+
+            local agOut = button:CreateAnimationGroup()
+            button.AGOut = agOut
+
+            agOut:SetScript("OnPlay", function()
+                shadow:SetScale(1)
+
+                for i = 1, #consolidatedButtons do
+                    consolidatedButtons[i]:SetAlpha(1)
+                end
+            end)
+
+            agOut:SetScript("OnStop", function()
+                shadow:SetScale(0.001)
+
+                for i = 1, #consolidatedButtons do
+                    consolidatedButtons[i]:SetAlpha(0)
+                    consolidatedButtons[i]:Hide_()
+                end
+            end)
+
+            agOut:SetScript("OnFinished", function()
+                shadow:SetScale(0.001)
+
+                for i = 1, #consolidatedButtons do
+                    consolidatedButtons[i]:SetAlpha(0)
+                    consolidatedButtons[i]:Hide_()
+                end
+            end)
+
+            local anim = agIn:CreateAnimation("Scale")
+            anim:SetTarget(shadow)
+            anim:SetOrder(1)
+            anim:SetFromScale(0.001, 0.001)
+            anim:SetToScale(1, 1)
+            anim:SetDuration(0.08)
+            button.ScaleIn = anim
+
+            anim = agOut:CreateAnimation("Scale")
+            anim:SetTarget(shadow)
+            anim:SetOrder(2)
+            anim:SetToScale(0.001, 0.001)
+            anim:SetFromScale(1, 1)
+            anim:SetDuration(0.08)
+            button.ScaleOut = anim
+
+            button.AGDisabled = button:CreateAnimationGroup()
+
+            button:SetScript("OnClick", function(self)
+                if not self.isShown then
+                    agOut:Stop()
+                    agIn:Play()
+
+                    self.isShown = true
+                else
+                    agIn:Stop()
+                    agOut:Play()
+
+                    self.isShown = false
+                end
+            end)
+
+            ignoredChildren[button] = true
+        end
+
+        -- .Queue
+        do
+            local button = handleButton(QueueStatusMinimapButton)
+            button:RegisterForDrag("LeftButton")
+            button:SetParent(textureParent)
+            button:ClearAllPoints()
+            Minimap.Queue = button
+
+            button:HookScript("OnEnter", function(self)
+                local p, rP, x, y = getTooltipPoint(self)
+
+                QueueStatusFrame:ClearAllPoints()
+                QueueStatusFrame:SetPoint(p, self, rP, x, y)
+            end)
+
+            button:HookScript("OnClick", function(self)
+                local menu = UIDropDownMenu_GetCurrentDropDown()
+                if menu and menu == self.DropDown then
+                    local p, rP, x, y = getTooltipPoint(self)
+
+                    DropDownList1:ClearAllPoints()
+                    DropDownList1:SetPoint(p, self, rP, x, y)
+
+                    QueueStatusFrame:Hide()
+                end
+            end)
+            button:SetScript("OnDragStart", button_OnDragStart)
+            button:SetScript("OnDragStop", button_OnDragStop)
+
+            button.Background:SetAlpha(0)
+            button.Icon:SetAllPoints()
+        end
+
+        -- .Clock
+        do
+            local button = TimeManagerClockButton
+            button:SetFlattensRenderLayers(true)
+            button:SetFrameLevel(level + 2)
+            button:SetSize(32, 32)
+            button:SetHitRectInsets(0, 0, 0, 0)
+            button:SetScript("OnMouseUp", nil)
+            button:SetScript("OnMouseDown", nil)
+            Minimap.Clock = button
+
+            button:HookScript("OnEnter", function(self)
+                if GameTooltip:IsOwned(self) then
+                    local p, rP, x, y = getTooltipPoint(self)
+
+                    GameTooltip:SetOwner(self, "ANCHOR_NONE")
+                    GameTooltip:ClearAllPoints()
+                    GameTooltip:SetPoint(p, self, rP, x, y)
+                end
+            end)
+
+            local bg, ticker, glow = button:GetRegions()
+
+            bg:SetTexture(nil)
+
+            ticker:ClearAllPoints()
+            ticker:SetPoint("TOPLEFT", 0, 0)
+            ticker:SetPoint("BOTTOMRIGHT", 0, 0)
+            ticker:SetFont(M.fonts.normal, 12, "OUTLINE")
+            ticker:SetJustifyH("RIGHT")
+            ticker:SetJustifyV("MIDDLE")
+            button.Ticker = ticker
+
+            glow:SetTexture(nil)
+
+            if isSquare then
+                button:ClearAllPoints()
+                button:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", -4, -4)
+            end
+
+            ignoredChildren[button] = true
+        end
+
+        -- .Garrison Report
+        do
+            local button = handleButton(GarrisonLandingPageMinimapButton)
+            button:RegisterForDrag("LeftButton")
+            button:SetParent(textureParent)
+            button:ClearAllPoints()
+            Minimap.Garrison = button
+
+            hooksecurefunc(button, "SetPoint", function(self, _, parent)
+                if parent == "MinimapBackdrop" then
+                    self:ClearAllPoints()
+                    self:SetScale(0.8)
+                    updatePosition(self, C.db.profile.minimap.buttons["GarrisonLandingPageMinimapButton"])
+                end
+            end)
+
+            button:HookScript("OnEnter", function(self)
+                if GameTooltip:IsOwned(self) then
+                    local p, rP, x, y = getTooltipPoint(self)
+
+                    GameTooltip:ClearAllPoints()
+                    GameTooltip:SetPoint(p, self, rP, x, y)
+                end
+            end)
+            button:SetScript("OnDragStart", button_OnDragStart)
+            button:SetScript("OnDragStop", button_OnDragStop)
+        end
+
+        -- -- .Mail
+        -- do
+        --     local button = handleButton(MiniMapMailFrame)
+        --     button:RegisterForDrag("LeftButton")
+        --     button:SetParent(Minimap)
+        --     button:ClearAllPoints()
+        --     Minimap.Mail = button
+
+        --     button:HookScript("OnEnter", function(self)
+        --         if GameTooltip:IsOwned(self) then
+        --             local p, rP, x, y = getTooltipPoint(self)
+
+        --             GameTooltip:ClearAllPoints()
+        --             GameTooltip:SetPoint(p, self, rP, x, y)
+        --         end
+        --     end)
+        --     button:SetScript("OnDragStart", button_OnDragStart)
+        --     button:SetScript("OnDragStop", button_OnDragStop)
+        -- end
+
+        -- .Tracking
+        do
+            MiniMapTrackingButton:SetParent(textureParent)
+            MiniMapTrackingButton:ClearAllPoints()
+
+            MiniMapTracking:SetParent(MiniMapTrackingButton)
+            MiniMapTracking:SetAllPoints()
+            MiniMapTrackingIcon:SetParent(MiniMapTrackingButton)
+            MiniMapTrackingBackground:SetParent(MiniMapTrackingButton)
+
+            local button = handleButton(MiniMapTrackingButton)
+            button:RegisterForDrag("LeftButton")
+            Minimap.Tracking = button
+
+            button:SetScript("OnMouseDown", nil)
+            button:SetScript("OnMouseUp", nil)
+            button:HookScript("OnEnter", function(self)
+                if GameTooltip:IsOwned(self) then
+                    local p, rP, x, y = getTooltipPoint(self)
+
+                    GameTooltip:ClearAllPoints()
+                    GameTooltip:SetPoint(p, self, rP, x, y)
+                end
+            end)
+            button:SetScript("OnClick", function(self)
+                MiniMapTracking_OnMouseDown(self)
+
+                local menu = UIDropDownMenu_GetCurrentDropDown()
+                if menu and menu == MiniMapTrackingDropDown then
+                    local p, rP, x, y = getTooltipPoint(self)
+
+                    DropDownList1:ClearAllPoints()
+                    DropDownList1:SetPoint(p, self, rP, x, y)
+
+                    GameTooltip:Hide()
+                end
+            end)
+            button:SetScript("OnDragStart", button_OnDragStart)
+            button:SetScript("OnDragStop", button_OnDragStop)
+        end
+
+        -- .Compass
+        -- MinimapCompassTexture:SetParent(textureParent)
+        -- MinimapCompassTexture:ClearAllPoints()
+        -- MinimapCompassTexture:SetPoint("CENTER", 0, 0)
+        -- MinimapCompassTexture:SetSize(272, 272)
+        -- MinimapCompassTexture:SetScale(1)
+        -- Minimap.Compass = MinimapCompassTexture
+
+        -- .ChallengeModeFlag, .DifficultyFlag, .GuildDifficultyFlag
+        MiniMapChallengeMode:SetSize(38, 46)
+        Minimap.ChallengeModeFlag = MiniMapChallengeMode
+
+        Minimap.DifficultyFlag = MiniMapInstanceDifficulty
+        Minimap.GuildDifficultyFlag = GuildInstanceDifficulty
+
+        if isSquare then
+            MiniMapChallengeMode:SetParent(textureParent)
+            MiniMapChallengeMode:ClearAllPoints()
+            MiniMapChallengeMode:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 7, 5)
+
+            MiniMapInstanceDifficulty:SetParent(textureParent)
+            MiniMapInstanceDifficulty:ClearAllPoints()
+            MiniMapInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 7, 6)
+
+            GuildInstanceDifficulty:SetParent(textureParent)
+            GuildInstanceDifficulty:ClearAllPoints()
+            GuildInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 7, 6)
+        end
+
+        -- Hide artwork textures
         for _, name in next,
             {"MinimapBackdrop", "MinimapBorder", "MinimapBorderTop", "MinimapCluster", "MiniMapRecordingButton",
              "MiniMapTrackingIconOverlay", "MiniMapVoiceChatFrame", "MiniMapWorldMapButton", "MinimapZoomIn",
@@ -663,9 +1000,22 @@ function MINIMAP:Init()
             E:ForceHide(_G[name])
         end
 
+        local function handleHybridMinimap()
+            if isSquare then
+                HybridMinimap.MapCanvas:SetMaskTexture("Interface\\BUTTONS\\WHITE8X8")
+                HybridMinimap.CircleMask:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+            end
+        end
+
+        if HybridMinimap then
+            handleHybridMinimap()
+        else
+            E:AddOnLoadTask("Blizzard_HybridMinimap", handleHybridMinimap)
+        end
+
         Minimap.UpdateConfig = minimap_UpdateConfig
         Minimap.UpdateSize = minimap_UpdateSize
-        -- Minimap.UpdateButtons = minimap_UpdateButtons
+        Minimap.UpdateButtons = minimap_UpdateButtons
 
         isInit = true
 
@@ -677,6 +1027,10 @@ function MINIMAP:Update()
     if isInit then
         Minimap:UpdateConfig()
         Minimap:UpdateSize()
-        -- Minimap:UpdateButtons()
+        Minimap:UpdateButtons()
     end
+end
+
+function MINIMAP:GetMinimap()
+    return Minimap
 end

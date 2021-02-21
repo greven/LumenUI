@@ -106,7 +106,7 @@ D.global = {
     },
     shadows = {
         enabled = true,
-        alpha = 0.4
+        alpha = 0.25
     },
     castbar = {
         texture = M.textures.neon,
@@ -228,7 +228,7 @@ D.global = {
             [6] = E.colors.green, -- Honored
             [7] = E.colors.green, -- Revered
             [8] = E.colors.green -- Exalted
-            
+
         },
         difficulty = {
             impossible = rgb(230, 48, 54),
@@ -300,7 +300,7 @@ D.global = {
             [1] = E.colors.red, -- Blood
             [2] = E.colors.blue, -- Frost
             [3] = E.colors.green -- Unholy
-            
+
         }
     }
 }
@@ -1067,7 +1067,7 @@ D.profile = {
         objective_tracker = {
             enabled = true,
             height = 600,
-            point = {"TOPRIGHT", "Minimap", "BOTTOMRIGHT", -120, -48}
+            point = {"TOPRIGHT", "Minimap", "BOTTOMRIGHT", -132, -48}
         },
         player_alt_power_bar = {
             enabled = true
@@ -1078,8 +1078,8 @@ D.profile = {
         },
         vehicle = {
             enabled = true,
-            size = 100,
-            point = {"TOPRIGHT", "Minimap", "BOTTOMRIGHT", 0, -32}
+            size = 90,
+            point = {"TOPRIGHT", "Minimap", "BOTTOMRIGHT", 8, -42}
         }
     },
     movers = {},
@@ -1098,11 +1098,11 @@ D.profile = {
         },
         buttons = {
             MinimapButtonCollection = 0,
-            MiniMapTrackingButton = 22.5,
+            MiniMapTrackingButton = 22,
             GameTimeFrame = 45,
             MiniMapMailFrame = 135,
-            GarrisonLandingPageMinimapButton = 210,
-            QueueStatusMinimapButton = 320
+            GarrisonLandingPageMinimapButton = 180,
+            QueueStatusMinimapButton = 270
         },
         color = {
             border = false,
@@ -3155,7 +3155,7 @@ D.profile = {
                 }
             },
             party = {
-                enabled = true,
+                enabled = disable,
                 width = 82,
                 height = 24,
                 x_offset = 6,

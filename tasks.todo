@@ -31,6 +31,7 @@ Group Frames:
   ☐ Add Debuff warnings / icons / borders
   ☐ Add Overlay for I can Dispell debuffs (overlay or border, etc)
   ☐ Add Corner Indicators (icons, or colored triangles?)
+  ☐ Add summoning indicator
 
 AuraBars:
   ☐ Add option to color by debuff type, or class or just remaining time. @low
@@ -43,7 +44,8 @@ AuraWatchers:
 Minimap:
   ☐ WIP
   ☐ Start from scratch, refactor everything, config, minimap_UpdateConfig -> element_UpdateConfig
-  ☐ Add coordinates
+  ☐ Add coordinates to the left corner
+  ☐ Allow position of icons other than radius
 
 Map:
   ☐ Add coordinates
