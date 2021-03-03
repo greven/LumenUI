@@ -116,8 +116,15 @@ local class_buffs = {
         state = true
     },
     ["DRUID"] = {
-        state = true
-        -- [191034] = true -- Starfall
+        state = true,
+        [1850] = true, -- Dash
+        [191034] = true, -- Starfall
+        [192081] = true, -- Iron Fur
+        [77764] = true, -- Stampeding Roar
+        [774] = true, -- Rejuvenation
+        [8936] = true, -- Regrowth
+        [194223] = true, -- Celestial Alignment
+        [106951] = true, -- Berserk
     },
     ["HUNTER"] = {
         state = true
@@ -191,7 +198,8 @@ local class_debuffs = {
         [164812] = true, -- Moonfire
         [155722] = true, -- Rake
         [1079] = true, -- Rip
-        [164815] = true -- Sunfire
+        [164815] = true, -- Sunfire
+        [106830] = true -- Thrash
     },
     ["HUNTER"] = {
         state = true,

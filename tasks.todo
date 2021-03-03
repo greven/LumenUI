@@ -49,6 +49,7 @@ Minimap:
   ☐ Start from scratch, refactor everything, config, minimap_UpdateConfig -> element_UpdateConfig
   ☐ Add coordinates to the left corner
   ☐ Allow position of icons other than radius
+  ☐ Minimap SetPoint loc:808 -> Right click frame @bug
 
 Map:
   ☐ Add coordinates
@@ -84,7 +85,7 @@ XPBar:
   ☐ In LS:UI in order to track we shift click (check the honor screen) @low
 
 Blizzard:
-  ☐ Object Watcher Frame: Reskin
+  ☐ Object Watcher Frame: Reskin + Try to anchor to right action bars!
   ☐ Reposition PvP Timers and PvP Score frame at the top of the screen
   ☐ Reposition Text Warning (Out of mana, etc) frame
   ☐ Move The Maw level at the top of the screen.

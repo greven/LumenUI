@@ -118,8 +118,8 @@ local function element_UpdateSize(self)
   self:SetSize(width, height)
 
   self.Bar.Overlay:ClearAllPoints()
-  self.Bar.Overlay:SetPoint("TOPLEFT", self, E.SCREEN_SCALE * 3, -E.SCREEN_SCALE * 3)
-  self.Bar.Overlay:SetPoint("BOTTOMRIGHT", self, -E.SCREEN_SCALE * 3, -4)
+  self.Bar.Overlay:SetPoint("TOPLEFT", self, E.SCREEN_SCALE * 2, -E.SCREEN_SCALE * 2)
+  self.Bar.Overlay:SetPoint("BOTTOMRIGHT", self, -E.SCREEN_SCALE * 2, -4)
 end
 
 function BARS.HasThreatBar()
@@ -160,6 +160,7 @@ function BARS.CreateThreatBar()
       }
     )
     bar.Overlay:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
+    bar.Overlay:SetParent(bar)
 
     element.Bar = bar
     E:SmoothBar(bar)

@@ -85,7 +85,7 @@ do
 
         -- PvP Indicator and timer
         local pvpIndicator = self:CreatePvPIndicator(frame, portraitParent)
-        local pvpTimer = portraitParent:CreateFontString(nil, "ARTWORK")
+        local pvpTimer = textParent:CreateFontString(nil, "ARTWORK")
         pvpTimer:SetFont(C.db.global.fonts.units.font, 15, "OUTLINE")
         pvpTimer:SetPoint("TOPLEFT", portraitParent, "TOPLEFT", 0, 0)
         pvpTimer:SetTextColor(1, 0.82, 0)

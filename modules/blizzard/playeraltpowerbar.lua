@@ -26,7 +26,7 @@ function BLIZZARD.SetUpAltPowerBar()
 
         local holder = CreateFrame("Frame", "LumPowerBarAltHolder", _G.UIParent)
         holder:SetSize(64, 64)
-        holder:SetPoint("TOP", 0, -200)
+        holder:SetPoint("TOP", 0, -275)
         -- E.Movers:Create(holder)
 
         PlayerPowerBarAlt:SetMovable(true)
