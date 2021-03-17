@@ -64,8 +64,8 @@ do
 
         if config then
             if config.reverse and config.color.smooth then
-                local color = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
-                self.bg:SetVertexColor(E:GetRGB(color))
+                local gradient = CreateColor(oUF:ColorGradient(cur, max, unpack(oUF.colors.smooth)))
+                self.bg:SetVertexColor(E:GetRGBA(gradient, 1))
             end
 
             -- Text
@@ -114,12 +114,16 @@ do
             if config.reverse then
                 if not config.color.smooth then
                     if config.color.health then
-                        self.bg:SetVertexColor(E:GetRGB(C.db.global.colors.health))
+                        self.bg:SetVertexColor(E:GetRGBA(C.db.global.colors.health, 1))
                     else
                         self.bg:SetVertexColor(
-                            E:GetRGB(E:GetUnitColor(unit, config.color.class, config.color.reaction))
+                            E:GetRGBA(E:GetUnitColor(unit, config.color.class, config.color.reaction), 1)
                         )
                     end
+                end
+
+                if not UnitIsConnected(unit) or UnitIsDeadOrGhost(unit) then
+                    self.bg:SetVertexColor(E:GetRGBA(C.db.global.colors.dark_red, 0.2))
                 end
             end
         end
@@ -260,6 +264,9 @@ do
 
         element.Text = (textParent or element):CreateFontString("Text", "ARTWORK")
         element.Text:SetTextColor(E:GetRGBA(config.text.color or C.db.global.colors.light_gray, config.text.alpha or 1))
+        if config.text.hide_when_max then
+            element.Text:Hide()
+        end
 
         if config.perc then
             local perc = element:CreateFontString("Percent", "BACKGROUND")

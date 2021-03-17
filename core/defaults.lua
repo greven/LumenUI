@@ -220,8 +220,8 @@ D.global = {
             [3] = rgb(26, 26, 26)
         },
         reaction = {
-            [1] = E.colors.red, -- Hated
-            [2] = E.colors.red, -- Hostile
+            [1] = E.colors.dark_red, -- Hated
+            [2] = E.colors.dark_red, -- Hostile
             [3] = E.colors.orange, -- Unfriendly
             [4] = E.colors.amber, -- Neutral
             [5] = E.colors.green, -- Friendly
@@ -398,10 +398,10 @@ D.profile = {
         },
         TOTEM = {
             num = 4,
-            size = 32,
+            size = 28,
             spacing = 6,
             x_growth = "LEFT",
-            y_growth = "DOWN",
+            y_growth = "UP",
             per_row = 4,
             cooldown = {
                 text = {
@@ -411,11 +411,11 @@ D.profile = {
                 }
             },
             point = {
-                p = "TOPRIGHT",
-                anchor = "UIParent",
-                ap = "TOPRIGHT",
-                x = -182,
-                y = -148
+                p = "BOTTOMRIGHT",
+                anchor = "Minimap",
+                ap = "BOTTOMLEFT",
+                x = -6,
+                y = 34
             }
         }
     },
@@ -1005,7 +1005,7 @@ D.profile = {
                 size = 10,
                 format = "NUM_PERC", -- "NUM or NUM_PERC"
                 visibility = 2, -- 1 - always, 2 - mouseover
-                position = "TOP" -- "TOP", "CENTER"
+                position = "CENTER" -- "TOP", "CENTER"
             },
             point = {
                 p = "BOTTOM",
@@ -1217,7 +1217,7 @@ D.profile = {
                         reaction = false
                     },
                     text = {
-                        tag = "[lum:health_cur(true)]",
+                        tag = "[lum:health_cur(true,true)]",
                         size = 14,
                         outline = true,
                         shadow = false,
@@ -2967,7 +2967,7 @@ D.profile = {
                         }
                     },
                     perc = {
-                        tag = "[lum:health_cur_perc]",
+                        tag = "[lum:health_cur(true,true)] [lum:color(gray)][lum:health_perc]",
                         size = 15,
                         color = E.colors.light_gray,
                         alpha = 0.9,
@@ -3181,9 +3181,9 @@ D.profile = {
                     reverse = true,
                     color = {
                         smooth = false,
-                        health = false,
+                        health = true,
                         tapping = false,
-                        disconnected = false,
+                        disconnected = true,
                         class = true,
                         reaction = false
                     },

@@ -81,8 +81,8 @@ function E:FormatNumber(val, colorCap)
     local SECOND_NUMBER_CAP = "%s.%d" .. _G.SECOND_NUMBER_CAP_NO_SPACE
 
     if colorCap then
-        FIRST_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.FIRST_NUMBER_CAP_NO_SPACE .. "|r"
-        SECOND_NUMBER_CAP = "%s.%d|cffBBBBBB" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
+        FIRST_NUMBER_CAP = "%s.%d|cffAAAAAA" .. _G.FIRST_NUMBER_CAP_NO_SPACE .. "|r"
+        SECOND_NUMBER_CAP = "%s.%d|cffAAAAAA" .. _G.SECOND_NUMBER_CAP_NO_SPACE .. "|r"
     end
 
     if val >= 1E6 then

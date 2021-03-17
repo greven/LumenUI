@@ -5,6 +5,7 @@ local UF = P:GetModule("UnitFrames")
 
 -- Lua
 local _G = getfenv(0)
+local m_pi = math.pi
 
 -- Blizz
 local CreateFrame = _G.CreateFrame
@@ -90,6 +91,21 @@ end
 
 -- Target Plate Frame
 do
+    local function frame_UpdateArrows(self, event, unit)
+        if event == "UNIT_TARGET" and unit ~= "player" then return end
+
+        if UnitExists("PlayerTarget") then
+            local name = UnitName("TargetTarget")
+            if name and name == E.PLAYER_NAME then
+                self.arrow:SetPoint("RIGHT", self, "LEFT", -2, 0)
+                self.targetedArrow:Show()
+            else
+                self.arrow:SetPoint("RIGHT", self, "LEFT", -6, 0)
+                self.targetedArrow:Hide()
+            end
+        end
+    end
+
     local function frame_Update(self)
         self:UpdateConfig()
 
@@ -109,6 +125,9 @@ do
             self:UpdateCastbar()
             self:UpdateAuras()
             self:UpdateRaidTargetIndicator()
+
+            self:RegisterEvent("PLAYER_TARGET_CHANGED", frame_UpdateArrows, true)
+            self:RegisterEvent("UNIT_TARGET", frame_UpdateArrows, true)
         else
             if self:IsEnabled() then
                 self:Disable()
@@ -140,8 +159,19 @@ do
         arrow:SetPoint("RIGHT", frame, "LEFT", -6, 0)
         arrow:SetTexture(M.textures.arrow)
         arrow:SetVertexColor(0, 0, 0)
-        arrow:SetAlpha(0.8)
+        arrow:SetAlpha(0.9)
         frame.arrow = arrow
+
+        -- Player Targeted Arrow indicator
+        local ttArrow = frame:CreateTexture(nil, "ARTWORK")
+        ttArrow:SetSize(18, 18)
+        ttArrow:SetPoint("RIGHT", frame, "LEFT", -12, 0)
+        ttArrow:SetTexture(M.textures.arrow)
+        ttArrow:SetRotation(m_pi)
+        ttArrow:SetVertexColor(0, 0, 0)
+        ttArrow:SetAlpha(0.9)
+        ttArrow:Hide()
+        frame.targetedArrow = ttArrow
 
         frame.Update = frame_Update
 

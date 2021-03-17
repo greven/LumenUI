@@ -7,6 +7,9 @@ local UF = P:GetModule("UnitFrames")
 local _G = getfenv(0)
 local next = _G.next
 
+-- Blizzard
+local InCombatLockdown = _G.InCombatLockdown
+
 -- ---------------
 
 -- Shared Styles
@@ -20,7 +23,7 @@ do
     class_power = true,
     combat_feedback = true,
     debuff = true,
-    health = true,
+    health = false,
     name = true,
     portrait = true,
     power = true,
@@ -32,11 +35,26 @@ do
   local function frame_OnEnter(self)
     self = self.__owner or self
     UnitFrame_OnEnter(self)
+
+    -- Show Health Text on hover
+    if self.Health.Text then
+      if not self.Health.Text:IsShown() then
+        self.Health.Text:Show()
+      end
+    end
   end
 
   local function frame_OnLeave(self)
     self = self.__owner or self
     UnitFrame_OnLeave(self)
+    self:UpdateConfig()
+
+    -- Hide Health Text on leave
+    if self.Health.Text and self._config.health.text then
+      if self._config.health.text.hide_when_max and not InCombatLockdown() then
+        self.Health.Text:Hide()
+      end
+    end
   end
 
   local function frame_UpdateConfig(self)

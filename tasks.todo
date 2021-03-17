@@ -50,6 +50,7 @@ Minimap:
   ☐ Add coordinates to the left corner
   ☐ Allow position of icons other than radius
   ☐ Minimap SetPoint loc:808 -> Right click frame @bug
+  ☐ Fix the clock (at least on 0:00... its cropping the text) @bug
 
 Map:
   ☐ Add coordinates
