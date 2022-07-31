@@ -352,10 +352,10 @@ D.profile = {
             },
             point = {
                 p = "TOPRIGHT",
-                anchor = "Minimap",
-                ap = "TOPLEFT",
+                anchor = "UIParent",
+                ap = "TOPRIGHT",
                 x = -8,
-                y = 0
+                y = -8
             }
         },
         HARMFUL = {
@@ -1108,7 +1108,7 @@ D.profile = {
             border = false,
             zone_text = true
         },
-        point = {"TOPRIGHT", -18, -7}
+        point = {"BOTTOMRIGHT", -8, 44}
     },
     misc = {
         enabled = true,
@@ -1170,10 +1170,10 @@ D.profile = {
         anchor_cursor = false,
         point = {
             p = "BOTTOMRIGHT",
-            anchor = "UIParent",
-            ap = "BOTTOMRIGHT",
-            x = -64,
-            y = 108
+            anchor = "Minimap",
+            ap = "BOTTOMLEFT",
+            x = -8,
+            y = -1
         }
     },
     unitframes = {
@@ -1192,16 +1192,11 @@ D.profile = {
                 width = playerWidth,
                 height = playerHeight,
                 point = {
-                    -- p = "BOTTOMLEFT",
-                    -- anchor = "UIParent",
-                    -- ap = "BOTTOMLEFT",
-                    -- x = 83 + 43,
-                    -- y = 45
-                    p = "TOPLEFT",
+                    p = "BOTTOMLEFT",
                     anchor = "UIParent",
-                    ap = "TOPLEFT",
-                    x = 83 + 23,
-                    y = -60
+                    ap = "BOTTOMLEFT",
+                    x = 83 + 43,
+                    y = 45
                 },
                 health = {
                     enabled = true,
@@ -1548,7 +1543,7 @@ D.profile = {
                         health = false,
                         tapping = true,
                         disconnected = true,
-                        class = true,
+                        class = false,
                         reaction = true
                     },
                     text = {
@@ -1869,7 +1864,7 @@ D.profile = {
                         health = false,
                         tapping = true,
                         disconnected = true,
-                        class = true,
+                        class = false,
                         reaction = true
                     },
                     text = {
