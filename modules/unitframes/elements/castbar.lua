@@ -28,11 +28,11 @@ end
 local function element_PostCastStart(self)
     local unit = self.__owner.unit
 
-    if self.notInterruptible then
+    if self.notInterruptible and unit ~= "player" then
         self:SetStatusBarColor(E:GetRGB(C.db.global.colors.castbar.notinterruptible))
         self:GetStatusBarTexture():SetDesaturated(true)
 
-        if self.Icon and unit ~= "player" then
+        if self.Icon then
             self.Icon:SetDesaturated(true)
         end
     else

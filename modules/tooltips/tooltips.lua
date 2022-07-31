@@ -156,7 +156,6 @@ local function tooltip_SetSharedBackdropStyle(self)
     if not self.styled then
         return
     end
-    self:SetBackdrop(nil)
 end
 
 function TOOLTIPS:StyleTooltips()

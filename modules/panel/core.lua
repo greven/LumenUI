@@ -15,6 +15,20 @@ local isInit = false
 local elements = {}
 local Panel
 
+local function panel_OnEnter(self)
+    self = self.__owner or self
+    UnitFrame_OnEnter(self)
+
+    print("OnEnter Panel")
+  end
+
+  local function panel_OnLeave(self)
+    self = self.__owner or self
+    UnitFrame_OnLeave(self)
+
+    print("OnLeave Panel")
+  end
+
 local function panel_UpdateConfig(self)
     self._config = E:CopyTable(C.db.profile.panel, self._config)
 end
@@ -84,6 +98,10 @@ end
 function PANEL:Init()
     if not isInit and C.db.profile.panel.enabled then
         Panel = CreateFrame("Frame", "LumPanel", _G.UIParent)
+
+        -- TODO: We want this to trigger so we have 2 states: Hover and not hover so we can change texts to display accordingly, on hover: XP (secondary), etc, nothover: combat stats, etc (main display). Right now this is not triggering... maybe it has to due with the fact that xpbar and threatbar are on top?
+        -- Panel:SetScript("OnEnter", panel_OnEnter)
+        -- Panel:SetScript("OnLeave", panel_OnLeave)
 
         Panel.UpdateConfig = panel_UpdateConfig
         Panel.UpdateSize = panel_UpdateSize
