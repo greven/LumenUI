@@ -101,10 +101,6 @@ local function bar_UpdateSize(self, width, height)
 
     -- if not BARS:IsRestricted() then E.Movers:Get(self):UpdateSize(width, height) end
 
-    self.Overlay:ClearAllPoints()
-    self.Overlay:SetPoint("TOPLEFT", self, E.SCREEN_SCALE * 3, -E.SCREEN_SCALE * 3)
-    self.Overlay:SetPoint("BOTTOMRIGHT", self, -E.SCREEN_SCALE * 3, -4)
-
     self._total = nil
 
     self:UpdateSegments()
@@ -288,7 +284,7 @@ local function bar_UpdateSegments(self)
                 self[index].tooltipInfo.line3 = nil
             end
 
-            self[index]:Update(cur, max, 0, C.db.global.colors.reaction[standing])
+            self[index]:Update(cur, max, 0, C.db.global.colors.reaction[standing], C.db.profile.bars.xpbar.texture)
         end
     end
 
@@ -458,6 +454,8 @@ function BARS.CreateXPBar()
         local bar = CreateFrame("Frame", "LumXPBar", UIParent)
         bar._id = "xpbar"
 
+        E:SetBackdrop(bar, 1.5, 0.9)
+
         BARS:AddBar(bar._id, bar)
 
         bar.ForEach = bar_ForEach
@@ -479,24 +477,10 @@ function BARS.CreateXPBar()
         textParent:SetAllPoints()
         textParent:SetFrameLevel(bar:GetFrameLevel() + 10)
 
-        bar.Overlay =
-            E:SetBackdrop(
-            texParent,
-            0,
-            0.98,
-            nil,
-            {
-                bgFile = M.textures.vertlines,
-                tile = true,
-                tileSize = 8
-            }
-        )
-        bar.Overlay:SetBackdropColor(E:GetRGBA(C.db.global.backdrop.color))
-
         for i = 1, MAX_SEGMENTS do
             local segment = CreateFrame("StatusBar", "$parentSegment" .. i, bar)
             segment:SetFrameLevel(bar:GetFrameLevel() + 1)
-            segment:SetStatusBarTexture(M.textures.flat)
+            segment:SetStatusBarTexture(C.db.profile.bars.xpbar.texture)
             segment:GetStatusBarTexture():SetVertTile(true)
             segment:SetClipsChildren(true)
             segment:SetScript("OnEnter", segment_OnEnter)
@@ -542,13 +526,6 @@ function BARS.CreateXPBar()
             text:SetWordWrap(false)
             text:Hide()
             segment.Text = text
-
-            local bg = bar:CreateTexture(nil, "ARTWORK")
-            bg:SetTexture(M.textures.flat)
-            bg:SetVertexColor(E:GetRGB(C.db.global.colors.dark_gray))
-            bg:SetAlpha(0.3)
-            bg:SetAllPoints()
-            bar.bg = bg
 
             segment.IsTextLocked = segment_IsTextLocked
             segment.LockText = segment_LockText

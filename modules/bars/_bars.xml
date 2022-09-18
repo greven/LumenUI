@@ -9,7 +9,7 @@
 	<!-- <Script file="petbattle.lua"/> -->
 	<Script file="stancebar.lua"/>
 	<Script file="vehicle.lua"/>
-	<!-- <Script file="xpbar.lua"/> -->
+	<Script file="xpbar.lua"/>
 	<!-- <Script file="threatbar.lua"/> -->
 	<!-- <Script file="zone.lua"/> -->
 </Ui>

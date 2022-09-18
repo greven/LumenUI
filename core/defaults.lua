@@ -533,7 +533,7 @@ D.profile = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 25
+                y = 20
             }
         },
         bar3 = {
@@ -581,7 +581,7 @@ D.profile = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = 24 + 36
+                y = 20 + 36
             }
         },
         bar4 = {
@@ -997,7 +997,7 @@ D.profile = {
             enabled = true,
             visible = true,
             width = 427,
-            height = 22,
+            height = 4,
             texture = M.textures.statusbar,
             visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
             spark = true,
@@ -1012,7 +1012,7 @@ D.profile = {
                 anchor = "UIParent",
                 ap = "BOTTOM",
                 x = 0,
-                y = -2
+                y = 10
             },
             fade = {
                 enabled = false,
@@ -1124,23 +1124,6 @@ D.profile = {
             vendor_grays = {
                 enabled = true
             }
-        }
-    },
-    panel = {
-        enabled = true,
-        visible = true,
-        width = 426,
-        height = 22,
-        visibility = "[vehicleui][petbattle][overridebar][possessbar] hide; show",
-        text = {
-            size = 10
-        },
-        point = {
-            p = "BOTTOM",
-            anchor = "UIParent",
-            ap = "BOTTOM",
-            x = 0,
-            y = -2
         }
     },
     tooltips = {
@@ -2891,7 +2874,7 @@ D.profile = {
                 }
             },
             targetplate = {
-                enabled = true,
+                enabled = false,
                 width = targetPlateWidth,
                 height = targetPlateHeight,
                 visibility = "[petbattle,overridebar,possessbar] hide; [harm,nodead][exists,combat][exists,nocombat,mod:alt][vehicleui,exists] show; [] hide; show",
