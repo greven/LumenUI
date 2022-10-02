@@ -79,9 +79,10 @@ do
 
         -- Level and Spec
         local info = textParent:CreateFontString(nil, "ARTWORK")
-        info:SetFont(C.db.global.fonts.units.font, 14, "OUTLINE")
-        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 1, 24)
-        frame:Tag(info, "[lum:color_unit][lum:spec]")
+        info:SetFont(C.db.global.fonts.units.font, 15, "OUTLINE")
+        info:SetTextColor(E:GetRGB(C.db.global.colors.light_gray))
+        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
+        frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:spec]")
 
         -- PvP Indicator and timer
         local pvpIndicator = self:CreatePvPIndicator(frame, portraitParent)

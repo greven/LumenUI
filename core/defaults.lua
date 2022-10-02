@@ -3,12 +3,12 @@ local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 
 -- ---------------
 
-local playerHeight = 24
-local playerWidth = 212
+local playerHeight = 28
+local playerWidth = 220
 local playerPlateHeight = 11
 local playerPlateWidth = 200
-local targetWidth = 296
-local targetHeight = 28
+local targetWidth = playerWidth
+local targetHeight = playerHeight
 local targetPlateWidth = 153
 local targetPlateHeight = playerPlateHeight
 
@@ -1175,28 +1175,28 @@ D.profile = {
                 width = playerWidth,
                 height = playerHeight,
                 point = {
-                    p = "BOTTOMLEFT",
+                    p = "CENTER",
                     anchor = "UIParent",
-                    ap = "BOTTOMLEFT",
-                    x = 83 + 43,
-                    y = 45
+                    ap = "CENTER",
+                    x = -240,
+                    y = -288
                 },
                 health = {
                     enabled = true,
                     kill_range = false,
                     change_threshold = 0.001,
-                    reverse = true,
+                    reverse = false,
                     color = {
-                        smooth = true,
-                        health = true,
+                        smooth = false,
+                        health = false,
                         tapping = false,
                         disconnected = false,
-                        class = false,
+                        class = true,
                         reaction = false
                     },
                     text = {
                         tag = "[lum:health_cur(true,true)]",
-                        size = 14,
+                        size = 16,
                         outline = true,
                         shadow = false,
                         h_alignment = "RIGHT",
@@ -1261,7 +1261,7 @@ D.profile = {
                 power = {
                     enabled = true,
                     height = 2,
-                    gap = 1,
+                    gap = 2,
                     change_threshold = 0.01,
                     color = {
                         power = true,
@@ -1312,7 +1312,7 @@ D.profile = {
                 castbar = {
                     enabled = true,
                     width = 427,
-                    height = 24,
+                    height = 26,
                     thin = true,
                     color = E.colors.dark_blue,
                     color_by_class = true,
@@ -1323,7 +1323,7 @@ D.profile = {
                         gap = 6
                     },
                     text = {
-                        size = 15,
+                        size = 16,
                         outline = true,
                         shadow = false
                     },
@@ -1336,38 +1336,38 @@ D.profile = {
                     }
                 },
                 name = {
-                    tag = "[lum:color_difficulty][lum:level]|r [lum:name(24)]",
-                    size = 20,
+                    tag = "[lum:name(24)]",
+                    size = 16,
                     outline = true,
                     shadow = false,
                     h_alignment = "LEFT",
                     v_alignment = "BOTTOM",
                     word_wrap = false,
                     point = {
-                        p = "BOTTOMLEFT",
-                        anchor = "Health",
-                        ap = "TOPLEFT",
-                        x = 0,
-                        y = 4
+                        p = "LEFT",
+                        anchor = "",
+                        ap = "LEFT",
+                        x = 5,
+                        y = 1.5
                     }
                 },
                 portrait = {
                     enabled = true,
                     style = "3D",
-                    width = 64,
-                    height = 64,
+                    width = targetHeight * 1.75,
+                    height = targetHeight,
                     model_alpha = 1.0,
                     desaturation = 0,
                     point = {
-                        p = "BOTTOMRIGHT",
+                        p = "RIGHT",
                         anchor = "",
-                        ap = "BOTTOMLEFT",
-                        x = -8,
+                        ap = "LEFT",
+                        x = -7,
                         y = 0
                     },
                     text = {
-                        tag = "",
-                        size = 12,
+                        tag = "[lum:npc_type(true)]",
+                        size = 15,
                         outline = true,
                         shadow = false,
                         h_alignment = "CENTER",
@@ -1377,14 +1377,14 @@ D.profile = {
                             anchor = "",
                             ap = "TOP",
                             x = 0,
-                            y = 0
+                            y = 4
                         }
                     }
                 },
                 unitIndicator = {
                     enabled = true,
-                    width = 2.5,
-                    height = 64,
+                    width = 2,
+                    height = playerHeight,
                     rested = true,
                     hide_out_of_combat = false,
                     point = {
@@ -1511,11 +1511,11 @@ D.profile = {
                 width = targetWidth,
                 height = targetHeight,
                 point = {
-                    p = "TOP",
+                    p = "CENTER",
                     anchor = "UIParent",
-                    ap = "TOP",
-                    x = 0,
-                    y = -100
+                    ap = "CENTER",
+                    x = 240,
+                    y = -288
                 },
                 health = {
                     enabled = true,
@@ -1531,7 +1531,7 @@ D.profile = {
                     },
                     text = {
                         tag = "[lum:health_cur(true,true)]",
-                        size = 17,
+                        size = 16,
                         outline = true,
                         shadow = false,
                         h_alignment = "RIGHT",
@@ -1621,8 +1621,8 @@ D.profile = {
                 },
                 castbar = {
                     enabled = true,
-                    width = targetWidth,
-                    height = 20,
+                    width = 440,
+                    height = 26,
                     thin = true,
                     color = E.colors.dark_blue,
                     class_colored = false,
@@ -1630,24 +1630,24 @@ D.profile = {
                     latency = false,
                     icon = {
                         position = "LEFT", -- "LEFT", "RIGHT" or "NONE"
-                        gap = 5
+                        gap = 6
                     },
                     text = {
-                        size = 13,
+                        size = 16,
                         outline = true,
                         shadow = false
                     },
                     point = {
-                        p = "TOPLEFT",
-                        anchor = "Health",
-                        ap = "BOTTOMLEFT",
+                        p = "TOP",
+                        anchor = "UIParent",
+                        ap = "TOP",
                         x = 0,
-                        y = -76
+                        y = -200
                     }
                 },
                 name = {
                     tag = "[lum:name(32)]",
-                    size = 17,
+                    size = 16,
                     outline = true,
                     shadow = false,
                     h_alignment = "LEFT",
@@ -1669,10 +1669,10 @@ D.profile = {
                     model_alpha = 1.0,
                     desaturation = 0,
                     point = {
-                        p = "RIGHT",
+                        p = "LEFT",
                         anchor = "",
-                        ap = "LEFT",
-                        x = -7,
+                        ap = "RIGHT",
+                        x = 7,
                         y = 0
                     },
                     text = {
@@ -1697,10 +1697,10 @@ D.profile = {
                     height = targetHeight,
                     hide_out_of_combat = false,
                     point = {
-                        p = "RIGHT",
+                        p = "LEFT",
                         anchor = "Portrait",
-                        ap = "LEFT",
-                        x = -6,
+                        ap = "RIGHT",
+                        x = 6,
                         y = 0
                     }
                 },
@@ -1722,7 +1722,7 @@ D.profile = {
                     rows = 3,
                     per_row = 10,
                     spacing = 5,
-                    size_override = auraWidth(targetWidth, 10, 5),
+                    size_override = auraWidth(targetWidth, 8, 4),
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
@@ -1828,7 +1828,7 @@ D.profile = {
                 }
             },
             targettarget = {
-                enabled = true,
+                enabled = false,
                 width = 144,
                 height = 18,
                 point = {
@@ -2639,7 +2639,7 @@ D.profile = {
                     anchor = "UIParent",
                     ap = "CENTER",
                     x = 0,
-                    y = -240
+                    y = -242
                 },
                 health = {
                     enabled = true,
