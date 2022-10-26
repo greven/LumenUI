@@ -81,7 +81,7 @@ do
         local info = textParent:CreateFontString(nil, "ARTWORK")
         info:SetFont(C.db.global.fonts.units.font, 15, "OUTLINE")
         info:SetTextColor(E:GetRGB(C.db.global.colors.light_gray))
-        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
+        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", -2, 4)
         frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:spec]")
 
         -- PvP Indicator and timer

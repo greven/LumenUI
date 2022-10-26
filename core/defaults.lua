@@ -1534,14 +1534,14 @@ D.profile = {
                         size = 16,
                         outline = true,
                         shadow = false,
-                        h_alignment = "RIGHT",
+                        h_alignment = "LEFT",
                         v_alignment = "MIDDLE",
                         hide_when_max = false,
                         point = {
-                            p = "RIGHT",
+                            p = "LEFT",
                             anchor = "",
-                            ap = "RIGHT",
-                            x = -5,
+                            ap = "LEFT",
+                            x = 5,
                             y = 1.5
                         }
                     },
@@ -1581,13 +1581,13 @@ D.profile = {
                         alpha = 0.9,
                         outline = true,
                         shadow = false,
-                        h_alignment = "RIGHT",
+                        h_alignment = "LEFT",
                         v_alignment = "MIDDLE",
                         hide_when_max = true,
                         point = {
-                            p = "BOTTOMRIGHT",
+                            p = "BOTTOMLEFT",
                             anchor = "",
-                            ap = "TOPRIGHT",
+                            ap = "TOPLEFT",
                             x = 2,
                             y = 4
                         }
@@ -1650,14 +1650,14 @@ D.profile = {
                     size = 16,
                     outline = true,
                     shadow = false,
-                    h_alignment = "LEFT",
+                    h_alignment = "RIGHT",
                     v_alignment = "MIDDLE",
                     word_wrap = false,
                     point = {
-                        p = "LEFT",
+                        p = "RIGHT",
                         anchor = "",
-                        ap = "LEFT",
-                        x = 5,
+                        ap = "RIGHT",
+                        x = -5,
                         y = 1.5
                     }
                 },
@@ -1722,7 +1722,7 @@ D.profile = {
                     rows = 3,
                     per_row = 10,
                     spacing = 5,
-                    size_override = auraWidth(targetWidth, 8, 4),
+                    size_override = auraWidth(targetWidth, 7, 4),
                     x_growth = "RIGHT",
                     y_growth = "DOWN",
                     disable_mouse = false,
@@ -1785,7 +1785,7 @@ D.profile = {
                                 healer = true,
                                 mount = true,
                                 selfcast = true,
-                                selfcast_permanent = true,
+                                selfcast_permanent = false,
                                 player = true,
                                 player_permanent = true,
                                 dispellable = true,
@@ -1956,7 +1956,7 @@ D.profile = {
             },
             focus = {
                 enabled = true,
-                width = targetPlateWidth,
+                width = playerWidth,
                 height = targetPlateHeight,
                 point = {
                     p = "RIGHT",
@@ -2037,9 +2037,9 @@ D.profile = {
                         point = {
                             p = "RIGHT",
                             anchor = "",
-                            ap = "LEFT",
-                            x = -6,
-                            y = 0
+                            ap = "TOPRIGHT",
+                            x = 0,
+                            y = 10
                         }
                     }
                 },
@@ -2074,7 +2074,7 @@ D.profile = {
                 },
                 castbar = {
                     enabled = true,
-                    width = targetPlateWidth + 34,
+                    width = playerWidth,
                     height = 18,
                     thin = true,
                     color = E.colors.dark_blue,

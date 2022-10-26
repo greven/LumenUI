@@ -80,7 +80,8 @@ do
         local info = textParent:CreateFontString(nil, "ARTWORK")
         info:SetFont(C.db.global.fonts.units.font, 15, "OUTLINE")
         info:SetTextColor(E:GetRGB(C.db.global.colors.light_gray))
-        info:SetPoint("BOTTOMLEFT", frame.Health, "TOPLEFT", 0, 4)
+        info:SetJustifyH("RIGHT")
+        info:SetPoint("BOTTOMRIGHT", frame.Health, "TOPRIGHT", 3, 4)
         frame:Tag(info, "[lum:color_difficulty][lum:level]|r [lum:race] [lum:color_unit][lum:class]")
 
         frame.Update = frame_Update
