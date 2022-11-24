@@ -1352,7 +1352,7 @@ D.profile = {
                     }
                 },
                 portrait = {
-                    enabled = true,
+                    enabled = false,
                     style = "3D",
                     width = targetHeight * 1.75,
                     height = targetHeight,
@@ -1662,7 +1662,7 @@ D.profile = {
                     }
                 },
                 portrait = {
-                    enabled = true,
+                    enabled = false,
                     style = "3D",
                     width = targetHeight * 1.75,
                     height = targetHeight,

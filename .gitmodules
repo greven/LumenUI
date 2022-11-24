@@ -7,3 +7,6 @@
 [submodule "embeds/LibButtonGlow-1.0"]
 	path = embeds/LibButtonGlow-1.0
 	url = https://repos.wowace.com/wow/libbuttonglow-1-0
+[submodule "embeds/LibDropDown"]
+	path = embeds/LibDropDown
+	url = git@github.com:ls-/LibDropDown.git

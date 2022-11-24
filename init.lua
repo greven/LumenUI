@@ -14,26 +14,12 @@ E:RegisterEvent("ADDON_LOADED", function(addonName)
         return
     end
 
-    -- TODO: For now let's ignore creating profiles
-    -- C.db = LibStub("AceDB-3.0"):New("LUMUI_GLOBAL_CONFIG", D, true)
     C.db = D
 
     -- Support AdiButtonAuras
     if AdiButtonAuras and AdiButtonAuras.RegisterLAB then
         AdiButtonAuras:RegisterLAB("LibActionButton-1.0-ls")
     end
-
-    -- C.db:RegisterCallback("OnDatabaseShutdown", function()
-    --     P.Movers:CleanUpConfig()
-    -- end)
-
-    -- C.db:RegisterCallback("OnProfileShutdown", function()
-    --     P.Movers:CleanUpConfig()
-    -- end)
-
-    -- C.db:RegisterCallback("OnProfileChanged", updateAll)
-    -- C.db:RegisterCallback("OnProfileCopied", updateAll)
-    -- C.db:RegisterCallback("OnProfileReset", updateAll)
 
     E:RegisterEvent("PLAYER_LOGIN", function()
         E:UpdateConstants()
