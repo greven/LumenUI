@@ -241,7 +241,7 @@ local function element_SortAuras(self)
     if self._config and self._config.sort then
         t_sort(self, UF.SortAuras)
         return 1, #self -- Prevent things from going crazy!
-        
+
     end
 end
 
@@ -287,7 +287,7 @@ local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
         -- Show cooldown border
         local border_swipe = self._config.cooldown.border_swipe
         if border_swipe and border_swipe.type then
-            aura.cd:SetSwipeColor(E:GetRGB(C.db.global.colors.debuff[debuffType] or C.db.global.colors.debuff.None))
+            aura.Cooldown:SetSwipeColor(E:GetRGB(C.db.global.colors.debuff[debuffType] or C.db.global.colors.debuff.None))
         end
     else
         aura.Border:SetVertexColor(E:GetRGB(C.db.global.border.color))
@@ -307,7 +307,7 @@ local function element_PostUpdateIcon(self, _, aura, _, _, duration, expiration,
     end
 end
 
-local function element_CreateAuraIcon(self, index)
+local function element_CreateButton(self, index)
     local config = self._config
     if not config then
         self:UpdateConfig()
@@ -335,18 +335,17 @@ local function element_CreateAuraIcon(self, index)
     button.count = count
     button.Count = nil
 
-    button.cd = button.CD
-    button.CD = nil
+    button.Cooldown = button.Cooldown
+    button.Cooldown = nil
 
-    if button.cd.UpdateConfig then
-        button.cd:UpdateConfig(self.cooldownConfig or {})
-        button.cd:UpdateFont()
+    if button.Cooldown.UpdateConfig then
+        button.Cooldown:UpdateConfig(self.cooldownConfig or {})
+        button.Cooldown:UpdateFont()
     end
 
     button:SetPushedTexture("")
     button:SetHighlightTexture("")
 
-    -- TODO: Update the stealable texture
     local stealable = button.FGParent:CreateTexture(nil, "OVERLAY", nil, 2)
     stealable:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Stealable")
     stealable:SetTexCoord(2 / 32, 30 / 32, 2 / 32, 30 / 32)
@@ -366,12 +365,12 @@ local function element_CreateAuraIcon(self, index)
     if config.cooldown.border_swipe then
         button:SetSize(button:GetWidth() - 2, button:GetWidth() - 2)
         button.Border:SetVertexColor(E:GetRGBA(C.db.global.colors.black, 0.2))
-        button.cd:SetDrawSwipe(true)
-        button.cd:SetFrameLevel(3)
-        button.cd:SetSwipeTexture("Interface\\BUTTONS\\WHITE8X8")
-        button.cd:SetSwipeColor(1, 1, 1, 1)
-        button.cd:SetPoint("TOPLEFT", -1.5, 1.5)
-        button.cd:SetPoint("BOTTOMRIGHT", 1.5, -1.5)
+        button.Cooldown:SetDrawSwipe(true)
+        button.Cooldown:SetFrameLevel(3)
+        button.Cooldown:SetSwipeTexture("Interface\\BUTTONS\\WHITE8X8")
+        button.Cooldown:SetSwipeColor(1, 1, 1, 1)
+        button.Cooldown:SetPoint("TOPLEFT", -1.5, 1.5)
+        button.Cooldown:SetPoint("BOTTOMRIGHT", 1.5, -1.5)
     end
 
     -- Create animation for new auras
@@ -414,7 +413,7 @@ local function element_UpdateFont(self)
     local font = config.font or M.fonts.normal
     local count
 
-    for i = 1, self.createdIcons do
+    for i = 1, self.createdButtons do
         count = self[i].count
         count:SetFont(font, config.size, config.outline and "OUTLINE" or "")
         count:SetJustifyH(config.h_alignment)
@@ -462,13 +461,13 @@ local function element_UpdateCooldownConfig(self)
     self.cooldownConfig.m_ss_threshold = C.db.profile.unitframes.cooldown.m_ss_threshold
     self.cooldownConfig.text = E:CopyTable(self._config.cooldown.text, self.cooldownConfig.text)
 
-    for i = 1, self.createdIcons do
-        if not self[i].cd.UpdateConfig then
+    for i = 1, self.createdButtons do
+        if not self[i].Cooldown.UpdateConfig then
             break
         end
 
-        self[i].cd:UpdateConfig(self.cooldownConfig)
-        self[i].cd:UpdateFont()
+        self[i].Cooldown:UpdateConfig(self.cooldownConfig)
+        self[i].Cooldown:UpdateFont()
     end
 end
 
@@ -497,7 +496,7 @@ local function element_UpdateAuraTypeIcon(self)
     local config = self._config.type
     local auraType
 
-    for i = 1, self.createdIcons do
+    for i = 1, self.createdButtons do
         auraType = self[i].AuraType
         auraType:ClearAllPoints()
         auraType:SetPoint(config.position, 0, 0)
@@ -553,7 +552,7 @@ function UF:CreateAuras(frame, unit)
     element.UpdateAuraTypeIcon = element_UpdateAuraTypeIcon
     element.UpdateColors = element_UpdateColors
     element.UpdateMouse = element_UpdateMouse
-    element.CreateIcon = element_CreateAuraIcon
+    element.CreateIcon = element_CreateButton
     element.PostUpdateIcon = element_PostUpdateIcon
     element.PreSetPosition = element_SortAuras
     element.CustomFilter = UF.filterFunctions[unit] or UF.filterFunctions.default
