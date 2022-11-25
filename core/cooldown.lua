@@ -19,9 +19,18 @@ local handledCooldowns = {}
 local activeCooldowns = {}
 
 local defaults = {
-    exp_threshold = 5, -- [1; 10]
-    m_ss_threshold = 0, -- [91; 3599]
-    text = {enabled = true, size = 12, v_alignment = "MIDDLE"}
+	exp_threshold = 5, -- [1; 10]
+	m_ss_threshold = 0, -- [91; 3599]
+	s_ms_threshold = 5, -- [1; 10]
+	swipe = {
+		enabled = true,
+		reversed = false,
+	},
+	text = {
+		enabled = true,
+		size = 12,
+		v_alignment = "MIDDLE",
+	},
 }
 
 local updateTime = 0
@@ -124,6 +133,13 @@ local function cooldown_UpdateFont(self)
     end
 end
 
+local function cooldown_UpdateSwipe(self)
+	local config = self.config.swipe
+
+	self:SetDrawSwipe(config.enabled)
+	self:SetReverse(config.reversed)
+end
+
 local function cooldown_UpdateConfig(self, config)
     if config then
         self.config = E:CopyTable(defaults, self.config)
@@ -160,9 +176,11 @@ function E.Cooldowns.Handle(cooldown)
 
     cooldown.UpdateConfig = cooldown_UpdateConfig
     cooldown.UpdateFont = cooldown_UpdateFont
+    cooldown.UpdateSwipe = cooldown_UpdateSwipe
 
     cooldown:UpdateConfig(defaults)
     cooldown:UpdateFont()
+    cooldown:UpdateSwipe()
 
     handledCooldowns[cooldown] = true
 

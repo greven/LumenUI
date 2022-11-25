@@ -4,7 +4,7 @@ local E, C, D, L, M, P = ns.E, ns.C, ns.D, ns.L, ns.M, ns.P
 -- ---------------
 
 local playerHeight = 28
-local playerWidth = 220
+local playerWidth = 190
 local playerPlateHeight = 11
 local playerPlateWidth = 200
 local targetWidth = playerWidth
@@ -73,11 +73,16 @@ D.global = {
             outline = false,
             shadow = true
         },
+        numbers = {
+            font = M.fonts.normal,
+            outline = false,
+            shadow = true,
+        },
         cooldown = {
             font = M.fonts.normal,
             outline = true,
             shadow = false
-        }
+        },
     },
     backdrop = {
         texture = M.textures.flat,
@@ -148,7 +153,8 @@ D.global = {
             WARRIOR = rgb(198, 155, 109),
             DEATHKNIGHT = rgb(196, 30, 58),
             MONK = rgb(0, 255, 150),
-            DEMONHUNTER = rgb(163, 48, 201)
+            DEMONHUNTER = rgb(163, 48, 201),
+            EVOKER = rgb(51, 147, 127),
         },
         threat = {
             [1] = rgb(175, 175, 175),
@@ -277,11 +283,13 @@ D.global = {
             FOCUS = rgb(242, 128, 64),
             ENERGY = rgb(246, 190, 50),
             COMBO_POINTS = rgb(240, 26, 48),
+            COMBO_POINTS_CHARGED = rgb(62, 169, 126),
             RUNES = rgb(0, 200, 228),
             RUNIC_POWER = rgb(134, 239, 254),
             SOUL_SHARDS = rgb(162, 92, 244),
             LUNAR_POWER = rgb(90, 152, 235),
             HOLY_POWER = rgb(245, 245, 124),
+            ALTERNATE = rgb(149, 134, 242),
             MAELSTROM = rgb(25, 160, 240),
             INSANITY = rgb(136, 72, 210),
             CHI = rgb(10, 205, 155),
@@ -294,7 +302,8 @@ D.global = {
                 [1] = rgb(132, 181, 26), -- Low
                 [2] = rgb(220, 180, 52), -- Medium
                 [3] = rgb(182, 34, 32) -- High
-            }
+            },
+            ESSENCE = rgb(79, 188, 225),
         },
         runes = {
             [1] = E.colors.red, -- Blood
@@ -1166,8 +1175,13 @@ D.profile = {
             alpha = D.global.shadows.alpha
         },
         cooldown = {
-            exp_threshold = 5, -- [1; 10]
-            m_ss_threshold = 600 -- [91; 3599]
+			exp_threshold = 5, -- [1; 10]
+			m_ss_threshold = 600, -- [91; 3599]
+			s_ms_threshold = 5, -- [1; 10]
+            swipe = {
+				enabled = true,
+				reversed = true,
+			},
         },
         units = {
             player = {
@@ -1241,7 +1255,7 @@ D.profile = {
                     },
                     perc = {
                         tag = "[lum:health_perc]",
-                        size = 18,
+                        size = 16,
                         color = E.colors.light_gray,
                         alpha = 0.9,
                         outline = true,
@@ -1576,7 +1590,7 @@ D.profile = {
                     },
                     perc = {
                         tag = "[lum:health_perc]",
-                        size = 18,
+                        size = 16,
                         color = E.colors.light_gray,
                         alpha = 0.9,
                         outline = true,

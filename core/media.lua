@@ -6,8 +6,8 @@ local M = ns.M
 local MediaPath = "Interface\\AddOns\\LumenUI\\media\\"
 
 M.fonts = {
-    normal = MediaPath .. "fonts\\Oswald.ttf",
     light = MediaPath .. "fonts\\Oswald-Light.ttf",
+    normal = MediaPath .. "fonts\\Oswald.ttf",
     medium = MediaPath .. "fonts\\Oswald-Medium.ttf",
     condensed = MediaPath .. "fonts\\BigNoodleTitling.ttf"
 }
